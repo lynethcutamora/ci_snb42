@@ -629,6 +629,7 @@ class Pages extends CI_Controller {
 			$this->post();
 		}
 	}
+	#THIS SECTION IS FOR GROUP SECTION
 	public function countGroups(){
 		$this->db->select('groupId');
 		$this->db->from('group_md');
@@ -637,5 +638,25 @@ class Pages extends CI_Controller {
 
 		return $num_results;
 
+	}
+	public function createGroup(){
+		$this->form_validation->set_rules('inputGroupName', 'Group Name', 'required|alpha_numeric_spaces');
+		$this->form_validation->set_rules('inputDescription', 'Group Description', 'alpha_numeric_spaces|trim');
+
+		if ($this->form_validation->run()==FALSE){
+			$this->group();
+		}else{
+			$groupId = uniqid('gi'); 
+
+			$data = array(
+				'groupId' => $groupId,
+				'groupname' => $this->input->post('inputGroupName'),
+				'groupdescription'=> $this->input->post('inputDescription'),
+				'userId' => $this->session->userdata('userId')
+			);
+
+			$this->db->insert('group_md',$data);
+			$this->group();
+		}
 	}
 }

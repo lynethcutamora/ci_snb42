@@ -4,7 +4,6 @@
         <section class="content-header">
           <h1>
             Group Page 
-            <span style="visibility:hidden;">
               <div class="btn-group">
                 <button type="button" class="btn btn-default">Action</button>
                 <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
@@ -18,7 +17,6 @@
                   <li><a href="#">Edit Group Description</a></li>
                 </ul>
               </div>
-            </span>
           </h1>
           <ol class="breadcrumb">
             <li><a href="../dashboard/index.php"><i class="fa fa-dashboard"></i> Home</a></li>

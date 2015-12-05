@@ -5,7 +5,7 @@
         <h3><i class="fa fa-group" style="color:gray;"></i>&nbsp;&nbsp;Create Group</h3><hr/>
           <div class="row">
             <div class="col-md-8">
-              <form>
+              <form action="createGroup" method="post">
                 <div class="form-group">
                   <label for="inputGroupName" class="col-sm-2 control-label">Group Name</label>
                     <div class="col-sm-9">
