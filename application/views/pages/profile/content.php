@@ -1,4 +1,40 @@
 <!-- Content Wrapper. Contains page content -->
+      <?php
+      //$badge = $totalRep;
+      
+      
+      
+
+      $this->db->select('*');
+      $this->db->from('badge_dtl');
+      $this->db->where('voteBadge','1');
+      $this->db->where('userId',$this->session->userdata('userId'));
+      $query = $this->db->get();
+      $gold = $query->num_rows();
+
+      $this->db->select('*');
+      $this->db->from('badge_dtl');
+      $this->db->where('voteBadge','2');
+      $this->db->where('userId',$this->session->userdata('userId'));
+      $query = $this->db->get();
+      $silver = $query->num_rows();
+
+      $this->db->select('*');
+      $this->db->from('badge_dtl');
+      $this->db->where('voteBadge','3');
+      $this->db->where('userId',$this->session->userdata('userId'));
+      $query = $this->db->get();
+      $bronze = $query->num_rows();
+
+      $this->db->select('*');
+      $this->db->from('badge_dtl');
+      $this->db->where('voteBadge','4');
+      $this->db->where('userId',$this->session->userdata('userId'));
+      $query = $this->db->get();
+      $black = $query->num_rows();
+
+      $rep = (($gold*20)+($silver*10)+($bronze*5))-($black*15);
+      ?>
       <div class="content-wrapper">
         <!-- Content Header (Page header) -->
         <section class="content-header">
@@ -19,38 +55,71 @@
 
               <div class="box box-widget widget-user">
                 <!-- Add the bg color to the header using any of the bg-* classes -->
-                <div class="widget-user-header bg-black" style="background: url('../../dist/img/photo1.png') center center;">
-                  <h3 class="widget-user-username">Lyneth C. Cutamora</h3>
-                  <h5 class="widget-user-desc">Web Designer</h5>
+                <div class="widget-user-header bg-black" style="background: url('../../dist/img/boxed-bg.jpg') center center;">
+                  
                 </div>
                 <div class="widget-user-image">
-                  <img class="img-circle" src="../../images/team/index0.png" alt="User Avatar">
+                  <img class="img-circle" src="../../images/userlogin.png" alt="User Avatar">
                 </div>
 
                 <div class="box-footer">
-                <p>Reputation:<span class="pull-right"><i class="fa fa-star" style="color:#ffd700;"></i><b> &nbsp;&nbsp;1024</b></span></p>
+                <h3><?php 
+                            foreach($data as $row):
+                              if($row['user_Type']=='Ideator'||$row['user_Type']=='Investor')
+                              {
+                                  if($row['user_midInit']==null)
+                                     echo $row['user_fName']."  ".$row['user_lName']; 
+                                   else
+                                     echo $row['user_fName']." ".$row['user_midInit'].". ".$row['user_lName'];
+                              }
+                              else
+                              {
+                                echo $row['company_name'];
+                              }                  
+                      ?></h3>
+                      <?php  endforeach;?>
+                      
+                <p>Reputation:<span class="pull-right">
+                <?php
+                 if ($gold>=$silver && $gold>=$bronze) 
+                 {
+                     ?><i class='fa fa-star' style="color:Gold"></i><?php   
+                 } 
+                 elseif ($silver>$gold && $silver>=$bronze)
+                 {
+                     ?><i class='fa fa-star' style="color:Silver"></i><?php
+                 }
+                 elseif ($bronze>$gold && $bronze>$silver)
+                 {
+                     ?><i class='fa fa-star' style="color:SandyBrown"></i><?php
+                 }
+                  else
+                    echo "Give this user a badge!";
+                  
+                ?>
+                </i><b> &nbsp;&nbsp;<?php echo $rep;?></span></p>
                   <div class="row">
                     <div class="col-sm-3 border-right">
                       <div class="description-block">
-                        <h5 class="description-header">24</h6>
+                      <span class="label label-primary"><?php echo $gold;?></span> 
                         <span class="description-text">GOLD</span>
                       </div><!-- /.description-block -->
                     </div><!-- /.col -->
                     <div class="col-sm-3 border-right">
                       <div class="description-block">
-                        <h5 class="description-header">11</h5>
+                      <span class="label label-primary"><?php echo $silver;?></span> 
                         <span class="description-text">SILVER</span>
                       </div><!-- /.description-block -->
                     </div><!-- /.col -->
                     <div class="col-sm-3 border-right">
                       <div class="description-block">
-                        <h5 class="description-header">2</h5>
+                      <span class="label label-primary"><?php echo $bronze;?></span> 
                         <span class="description-text">BRONZE</span>
                       </div><!-- /.description-block -->
                     </div><!-- /.col -->
-                    <div class="col-sm-3">
+                    <div class="col-sm-3 border-right">
                       <div class="description-block">
-                        <h5 class="description-header">0</h5>
+                      <span class="label label-primary"><?php echo $black;?></span>
                         <span class="description-text">BLACK</span>
                       </div><!-- /.description-block -->
                     </div><!-- /.col -->
