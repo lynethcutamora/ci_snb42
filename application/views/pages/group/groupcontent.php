@@ -3,20 +3,7 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
           <h1>
-            Group Page 
-              <div class="btn-group">
-                <button type="button" class="btn btn-default">Action</button>
-                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                  <span class="caret"></span>
-                  <span class="sr-only">Toggle Dropdown</span>
-                </button>
-                <ul class="dropdown-menu" role="menu">
-                  <li><a href="#">Change Cover Photo</a></li>
-                  <li><a href="#">Add Group Member</a></li>
-                  <li><a href="#">Add Project</a></li>
-                  <li><a href="#">Edit Group Description</a></li>
-                </ul>
-              </div>
+            Group Page
             <div class="btn-group">
               <button type="button" class="btn btn-default">Action</button>
               <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">

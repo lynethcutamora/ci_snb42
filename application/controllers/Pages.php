@@ -66,7 +66,7 @@ class Pages extends CI_Controller {
 
 	public function _dashboard()
 	{
-
+		$data['countgroup']=$this->countGroups();
 		$query=$this->_userData();
 		$data['data']=$query->result_array();
 		$data['pages']='dashboard';
@@ -82,6 +82,7 @@ class Pages extends CI_Controller {
 	{
 		if(($this->session->userdata('userId')!=""))
 		{
+		$data['countgroup']=$this->countGroups();
 		$query=$this->_userData();
 		$data['data']=$query->result_array();
 		$data['pages']='newsfeed';
@@ -97,6 +98,7 @@ class Pages extends CI_Controller {
 	{
 		if(($this->session->userdata('userId')!=""))
 		{
+		$data['countgroup']=$this->countGroups();
 		$query=$this->_userData();
 		$data['data']=$query->result_array();
 		$data['pages']='newsfeed';
@@ -114,6 +116,7 @@ class Pages extends CI_Controller {
 	{
 		if(($this->session->userdata('userId')!=""))
 		{
+		$data['countgroup']=$this->countGroups();
 		$query=$this->_userData();
 		$data['data']=$query->result_array();
 		$data['pages']='newsfeed';
@@ -129,6 +132,7 @@ class Pages extends CI_Controller {
 	{
 		if(($this->session->userdata('userId')!=""))
 		{
+		$data['countgroup']=$this->countGroups();
 		$query=$this->_userData();
 		$data['data']=$query->result_array();
 		$data['pages']='timeline';
@@ -145,10 +149,12 @@ class Pages extends CI_Controller {
 	{
 		if(($this->session->userdata('userId')!=""))
 		{
+		$data['countgroup']=$this->countGroups();
 		$query=$this->_userData();
 		$data['data']=$query->result_array();
 		$data['pages']='startup';
 		$this->load->view('pages/dashboard/fixed',$data);
+		
 		$this->load->view('pages/Products/content'); 
 		$this->load->view('pages/dashboard/controlsidebar');
 		$this->load->view('pages/dashboard/end');
@@ -161,11 +167,16 @@ class Pages extends CI_Controller {
 	{
 		if(($this->session->userdata('userId')!=""))
 		{
+		$data['countgroup']=$this->countGroups();
 		$query=$this->_userData();
 		$data['data']=$query->result_array();
 		$data['pages']='group';
 		$this->load->view('pages/dashboard/fixed',$data);
-		$this->load->view('pages/group/groupcontent'); 
+		if ($data['countgroup']==0){
+			$this->load->view('pages/group/creategroup'); 
+		}else{
+			$this->load->view('pages/group/groupcontent'); 
+		}
 		$this->load->view('pages/dashboard/controlsidebar');
 		$this->load->view('pages/dashboard/end');
 		}else{
@@ -176,6 +187,7 @@ class Pages extends CI_Controller {
 	public function profile()
 	{	if(($this->session->userdata('userId')!=""))
 		{
+		$data['countgroup']=$this->countGroups();
 		$query=$this->_userData();
 		$data['data']=$query->result_array();
 		$data['pages']='profile';
@@ -191,6 +203,7 @@ class Pages extends CI_Controller {
 		public function post()
 	{	if(($this->session->userdata('userId')!=""))
 		{
+		$data['countgroup']=$this->countGroups();
 		$query=$this->_userData();
 		$data['data']=$query->result_array();
 		$data['pages']='post';
@@ -616,7 +629,6 @@ class Pages extends CI_Controller {
 			$this->post();
 		}
 	}
-
 	#THIS SECTION IS FOR GROUP SECTION
 	public function countGroups(){
 		$this->db->select('groupId');
