@@ -3,7 +3,7 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
           <h1>
-            Group Page 
+            Group Page
             <div class="btn-group">
               <button type="button" class="btn btn-default">Action</button>
               <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
@@ -28,11 +28,16 @@
           <div class="col-md-12">
             <div class="col-md-9">
               <div class="box box-widget widget-user">
+                <?php foreach($groupdetails as $row):?>
+
                 <!-- Add the bg color to the header using any of the bg-* classes -->
                 <div class="widget-user-header bg-black" style="background: url('../../images/bg.png') center center;">
-                  <h3 class="widget-user-username">$index[5]</h3>
-                  <h5 class="widget-user-desc">"We can make imaginations to reality"</h5>
+                  <h3 class="widget-user-username"><?php echo $row['groupname']; ?></h3>
+                  <h5 class="widget-user-desc"><?php echo $row['groupdescription']; ?></h5>
                 </div>
+
+                <?php endforeach;?>
+
                 <div class="box-footer">
                   <div class="row">
                     <div class="col-sm-3 border-right">
