@@ -131,12 +131,13 @@
                 <a class="btn btn-app" data-toogle="tooltip" title="Send Message" style="background-color:#3C8DBC;color:white;">
                   <i class="fa fa-envelope"></i>Message
                 </a>
-                <a class="btn btn-app" data-toogle="tooltip" title="Rate this User"style="background-color:#3C8DBC;color:white;">
-                  <i class="fa fa-star"></i>Badge
-                </a>
+                <button type="button" class="btn btn-app" data-toggle="modal" data-target="#badge" title="Rate this User" style="background-color:#3C8DBC;color:white;">
+                <i class="fa fa-star"></i>Badge</button>
+                
                 <a class="btn btn-app" data-toogle="tooltip" title="Send a Group Request"style="background-color:#3C8DBC;color:white;">
                   <i class="fa fa-group"></i>Group
                 </a>
+
               </div>
 
               <!-- About Me Box -->
@@ -357,3 +358,92 @@
 
         </section><!-- /.content -->
       </div><!-- /.content-wrapper -->
+
+      <div id="badge" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+    <!-- Modal content-->
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <h4 class="modal-title">Rate this user</h4>
+            </div>
+            <div class="modal-body">
+              <div class="col-md-12">
+
+              <div class="box box-widget widget-user">
+                <!-- Add the bg color to the header using any of the bg-* classes -->
+                <div class="widget-user-header bg-black" style="background: url('../../dist/img/boxed-bg.jpg') center center;">
+                  
+                </div>
+                <div class="widget-user-image">
+                  <img class="img-circle" src="../../images/userlogin.png" alt="User Avatar">
+                </div>
+
+                <div class="box-footer">
+                <h3><?php 
+                            foreach($data as $row):
+                              if($row['user_Type']=='Ideator'||$row['user_Type']=='Investor')
+                              {
+                                  if($row['user_midInit']==null)
+                                     echo $row['user_fName']."  ".$row['user_lName']; 
+                                   else
+                                     echo $row['user_fName']." ".$row['user_midInit'].". ".$row['user_lName'];
+                              }
+                              else
+                              {
+                                echo $row['company_name'];
+                              }                  
+                      ?></h3>
+                      <?php  endforeach;?>
+                      
+                <p>Reputation:<span>
+                <?php
+                 if ($gold>=$silver && $gold>=$bronze) 
+                 {
+                     ?><i class='fa fa-star' style="color:Gold"></i><?php   
+                 } 
+                 elseif ($silver>$gold && $silver>=$bronze)
+                 {
+                     ?><i class='fa fa-star' style="color:Silver"></i><?php
+                 }
+                 elseif ($bronze>$gold && $bronze>$silver)
+                 {
+                     ?><i class='fa fa-star' style="color:SandyBrown"></i><?php
+                 }
+                  else
+                    echo "Give this user a badge!";
+                  
+                ?>
+                </i><b> &nbsp;&nbsp;<?php echo $rep;?></span></p>
+                  <div class="row">
+                    <div class="col-sm-3 border-right">
+                      <div class="description-block"> 
+                        <span class="description-text"><button class='btn btn-default btn-lg'><i class='fa fa-star' style="color:Gold;"></i> </button></span>
+                      </div><!-- /.description-block -->
+                    </div><!-- /.col -->
+                    <div class="col-sm-3 border-right">
+                      <div class="description-block"> 
+                        <span class="description-text"><button class='btn btn-default btn-lg'><i class='fa fa-star' style="color:Silver;"></i> </button></span>
+                      </div><!-- /.description-block -->
+                    </div><!-- /.col -->
+                    <div class="col-sm-3 border-right">
+                      <div class="description-block">
+                        <span class="description-text"><button class='btn btn-default btn-lg'><i class='fa fa-star' style="color:SandyBrown;"></i> </button></span>
+                      </div><!-- /.description-block -->
+                    </div><!-- /.col -->
+                    <div class="col-sm-3">
+                      <div class="description-block">
+               
+                        <span class="description-text"><button class='btn btn-default btn-lg'><i class='fa fa-star' style="color:Black;"></i> </button></span>
+                      </div><!-- /.description-block -->
+                    </div><!-- /.col -->
+                  </div><!-- /.row -->
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+            </div>
+            </div>
+        </div>
+      </div>
