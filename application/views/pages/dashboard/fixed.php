@@ -309,7 +309,7 @@
             </li>
             <li class="treeview <?php if($pages=='group') {echo "active";}else echo "";?>">
               <a href="<?php echo base_url();?>pages/group">
-                <i class="fa fa-group"></i> <span>MyGroup</span>
+                <i class="fa fa-group"></i> <span>MyGroup<span class="label bg-green pull-right"><?php echo $countgroup ?></span></span>
               </a>
 
               

@@ -167,15 +167,19 @@ class Pages extends CI_Controller {
 	{
 		if(($this->session->userdata('userId')!=""))
 		{
-		$data['countgroup']=$this->countGroups();
-		$query=$this->_userData();
-		$data['data']=$query->result_array();
-		$data['pages']='group';
-		$this->load->view('pages/dashboard/fixed',$data);
+			$data['countgroup']=$this->countGroups();
+			$query=$this->_userData();
+			$data['data']=$query->result_array();
+			$data['pages']='group';
+			$this->load->view('pages/dashboard/fixed',$data);
+
+			$querygroup=$this->groupdetails();
+			$data['groupdetails']=$querygroup->result_array();
+
 		if ($data['countgroup']==0){
 			$this->load->view('pages/group/creategroup'); 
 		}else{
-			$this->load->view('pages/group/groupcontent'); 
+			$this->load->view('pages/group/groupcontent',$data); 
 		}
 		$this->load->view('pages/dashboard/controlsidebar');
 		$this->load->view('pages/dashboard/end');
@@ -640,8 +644,8 @@ class Pages extends CI_Controller {
 
 	}
 	public function createGroup(){
-		$this->form_validation->set_rules('inputGroupName', 'Group Name', 'required|alpha_numeric_spaces');
-		$this->form_validation->set_rules('inputDescription', 'Group Description', 'alpha_numeric_spaces|trim');
+		$this->form_validation->set_rules('inputGroupName', 'Group Name', 'required');
+		$this->form_validation->set_rules('inputDescription', 'Group Description', 'trim');
 
 		if ($this->form_validation->run()==FALSE){
 			$this->group();
@@ -652,11 +656,19 @@ class Pages extends CI_Controller {
 				'groupId' => $groupId,
 				'groupname' => $this->input->post('inputGroupName'),
 				'groupdescription'=> $this->input->post('inputDescription'),
-				'userId' => $this->session->userdata('userId')
+				'userId' => $this->session->userdata('userId'),
 			);
 
 			$this->db->insert('group_md',$data);
 			$this->group();
 		}
+	}
+	public function groupdetails(){
+		$this->db->select('*');
+		$this->db->from('group_md');
+		$this->db->where('userId',$this->session->userdata('userId'));
+		$query=$this->db->get();
+
+		return $query;
 	}
 }
