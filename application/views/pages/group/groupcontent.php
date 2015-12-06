@@ -42,25 +42,25 @@
                   <div class="row">
                     <div class="col-sm-3 border-right">
                       <div class="description-block">
-                        <h5 class="description-header">5</h5>
+                        <h5 class="description-header">1</h5>
                         <span class="description-text">MEMBERS</span>
                       </div><!-- /.description-block -->
                     </div><!-- /.col -->
                     <div class="col-sm-3 border-right">
                       <div class="description-block">
-                        <h5 class="description-header">2</h5>
+                        <h5 class="description-header">0</h5>
                         <span class="description-text">PROJECTS</span>
                       </div><!-- /.description-block -->
                     </div><!-- /.col -->
                     <div class="col-sm-3 border-right">
                       <div class="description-block">
-                        <h5 class="description-header">1</h5>
+                        <h5 class="description-header">0</h5>
                         <span class="description-text">COMPLETED PROJECTS</span>
                       </div><!-- /.description-block -->
                     </div><!-- /.col -->
                     <div class="col-sm-3">
                       <div class="description-block">
-                        <h5 class="description-header">11</h5>
+                        <h5 class="description-header">0</h5>
                         <span class="description-text">FILES</span>
                       </div><!-- /.description-block -->
                     </div><!-- /.col -->
@@ -297,39 +297,20 @@
                   </div><!-- /.box-header -->
                     <div class='box-header with-border'>
                       <div class='user-block'>
-                        <img class='img-circle' src='../../images/team/index0.png' alt='user image'>
+                      <?php foreach($data as $row):?>
+                        <img class='img-circle' src='<?php echo base_url();?>/user/<?php echo $row['avatar_name']?>' alt='user image'>
                           <span class='username'><a href="#">Lyneth C. Cutamora</a></span>
                           <span class='description'>Reputation:<span class="pull-right"><i class='fa fa-star' style="color:#ffd700;"></i><b>&nbsp;&nbsp;1024</b></span></span>
                       </div><!-- /.user-block -->
+                      <?php  endforeach;?>
                     </div><!-- /.box-header -->
-                    <div class='box-header with-border'>
-                      <div class='user-block'>
-                        <img class='img-circle' src='../../images/team/index1.jpg' alt='user image'>
-                          <span class='username'><a href="#">Jason D. Pitogo</a></span>
-                          <span class='description'>Reputation:<span class="pull-right"><i class='fa fa-star' style="color:#ffd700;"></i><b>&nbsp;&nbsp;1024</b></span></span>
-                      </div><!-- /.user-block -->
-                    </div><!-- /.box-header -->
-                    <div class='box-header with-border'>
-                      <div class='user-block'>
-                        <img class='img-circle' src='../../images/team/index2.jpg' alt='user image'>
-                          <span class='username'><a href="#">Alfie Dimpas</a></span>
-                          <span class='description'>Reputation:<span class="pull-right"><i class='fa fa-star' style="color:#ffd700;"></i><b>&nbsp;&nbsp;1024</b></span></span>
-                      </div><!-- /.user-block -->
-                    </div><!-- /.box-header -->
-                    <div class='box-header with-border'>
-                      <div class='user-block'>
-                        <img class='img-circle' src='../../images/team/index3.jpg' alt='user image'>
-                          <span class='username'><a href="#">Edelito D. Albaracin Jr.</a></span>
-                          <span class='description'>Reputation:<span class="pull-right"><i class='fa fa-star' style="color:#ffd700;"></i><b>&nbsp;&nbsp;1024</b></span></span>
-                      </div><!-- /.user-block -->
-                    </div><!-- /.box-header -->
-                    <div class='box-header with-border'>
-                      <div class='user-block'>
-                        <img class='img-circle' src='../../images/team/index4.jpg' alt='user image'>
-                          <span class='username'><a href="#">Isidro Estoce Jr.</a></span>
-                          <span class='description'>Reputation:<span class="pull-right"><i class='fa fa-star' style="color:#ffd700;"></i><b>&nbsp;&nbsp;1024</b></span></span>
-                      </div><!-- /.user-block -->
-                    </div><!-- /.box-header -->
+                    <div class="box-footer">
+                      <div class="input-group">
+                        <div class="input-group-btn">
+                          <button class="btn btn-success pull-right" value="addmember"><i class="fa fa-user-plus"></i>&nbsp;&nbsp;&nbsp;Add member</button>
+                        </div>
+                      </div>
+                    </div>
                 </div><!-- /.box -->
 
                 <div class="box-body">

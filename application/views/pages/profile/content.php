@@ -312,7 +312,11 @@
                           <input type="file" name="fileToUpload" id="fileToUpload">
                         </div>
                       </div><hr>
-                      <?php include ('../register/ideator.php');?>
+                      <?php foreach ($data as $row):?>
+                        <?php if($row['user_Type']=='Ideator'){
+                            $this->load->view('pages/register/ideator');
+                          } ?>
+                      <?php endforeach;?>
                   </div><!-- /.tab-pane -->
                 </div><!-- /.tab-content -->
               </div><!-- /.nav-tabs-custom -->
@@ -451,4 +455,7 @@
             </div>
         </div>
       </div>
+<<<<<<< HEAD
     
+=======
+>>>>>>> bc0d36ae6798792f9c1437cd2eb0b912b51e179b
