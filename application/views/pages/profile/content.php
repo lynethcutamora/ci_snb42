@@ -358,7 +358,7 @@
 
         </section><!-- /.content -->
       </div><!-- /.content-wrapper -->
-
+      
       <div id="badge" class="modal fade" role="dialog">
         <div class="modal-dialog">
 
@@ -416,29 +416,33 @@
                   
                 ?>
                 </i><b> &nbsp;&nbsp;<?php echo $rep;?></span></p>
+                <?php echo form_open('../pages/badge',"class=form-horizontal"); ?>
+                
                   <div class="row">
                     <div class="col-sm-3 border-right">
                       <div class="description-block"> 
-                        <span class="description-text"><button class='btn btn-default btn-lg'><i class='fa fa-star' style="color:Gold;"></i> </button></span>
+                        <span class="description-text"><button type="submit" class='btn btn-default btn-lg' name="gold" id="gold" value="<?php echo set_value('1'); ?>"><i class='fa fa-star' style="color:Gold;"></i> </button></span>
                       </div><!-- /.description-block -->
                     </div><!-- /.col -->
                     <div class="col-sm-3 border-right">
                       <div class="description-block"> 
-                        <span class="description-text"><button class='btn btn-default btn-lg'><i class='fa fa-star' style="color:Silver;"></i> </button></span>
+                        <span class="description-text"><button type="submit" class='btn btn-default btn-lg' name="silver" id="silver" value="<?php echo set_value('2'); ?>"><i class='fa fa-star' style="color:Silver;"></i> </button></span>
                       </div><!-- /.description-block -->
                     </div><!-- /.col -->
                     <div class="col-sm-3 border-right">
                       <div class="description-block">
-                        <span class="description-text"><button class='btn btn-default btn-lg'><i class='fa fa-star' style="color:SandyBrown;"></i> </button></span>
+                        <span class="description-text"><button type="submit" class='btn btn-default btn-lg' name="bronze" id="bronze" value="<?php echo set_value('3'); ?>"><i class='fa fa-star' style="color:SandyBrown;"></i> </button></span>
                       </div><!-- /.description-block -->
                     </div><!-- /.col -->
                     <div class="col-sm-3">
                       <div class="description-block">
                
-                        <span class="description-text"><button class='btn btn-default btn-lg'><i class='fa fa-star' style="color:Black;"></i> </button></span>
+                        <span class="description-text"><button type="submit" class='btn btn-default btn-lg' name="black" id="black" value="<?php echo set_value('4'); ?>"><i class='fa fa-star' style="color:Black;"></i> </button></span>
                       </div><!-- /.description-block -->
                     </div><!-- /.col -->
                   </div><!-- /.row -->
+                  </form>
+                 
                 </div>
               </div>
             </div>
@@ -447,3 +451,4 @@
             </div>
         </div>
       </div>
+    
