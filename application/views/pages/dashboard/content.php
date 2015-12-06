@@ -1,4 +1,4 @@
-
+      <?php  ?>
       <!-- Content Wrapper. Contains page content -->
       <div class="content-wrapper">
         <!-- Content Header (Page header) -->
@@ -55,60 +55,74 @@
                           </tr>
                         </thead>
                         <tbody>
-                          <tr>
-                            <td>1</td>
-                            <td><a href="#">Start and Boost</a></td>
-                            <td>$index[5]</td>
-                            <td><i class="fa fa-star" style="color:#ffd700;"></i>&nbsp;<span class="label label-default">1024</span></td>
+                        <?php 
+
+
+                  
+           
+ 
+                        $this->db->select('*');
+                        $this->db->from('userpost a');
+
+                        $this->db->join('user_md b', 'b.userId=a.userId','left');
+                        $top = $this->db->get();
+                             $i = 0;
+                                foreach($top->result() as $row):
+                             $i++;
+                        $this->db->select('*');
+                        $this->db->from('badge_dtl');
+                        $this->db->where('voteBadge','1');
+                        $this->db->where('userId',$row->userId);
+                        $query = $this->db->get();
+                        $gold = $query->num_rows();
+
+                        $this->db->select('*');
+                        $this->db->from('badge_dtl');
+                        $this->db->where('voteBadge','2');
+                        $this->db->where('userId',$row->userId);
+                        $query = $this->db->get();
+                        $silver = $query->num_rows();
+
+                        $this->db->select('*');
+                        $this->db->from('badge_dtl');
+                        $this->db->where('voteBadge','3');
+                        $this->db->where('userId',$row->userId);
+                        $query = $this->db->get();
+                        $bronze = $query->num_rows();
+
+                        $this->db->select('*');
+                        $this->db->from('badge_dtl');
+                        $this->db->where('voteBadge','4');
+                        $this->db->where('userId',$row->userId);
+                        $query = $this->db->get();
+                        $black = $query->num_rows();
+
+                        $rep = (($gold*20)+($silver*10)+($bronze*5))-($black*15);
+
+                        $this->db->select('*');
+                        $this->db->from('upvote_dtl');
+                        $this->db->where('voteType','1');
+                        $this->db->where('postId',$row->postId);
+                        $query = $this->db->get();
+                        $like = $query->num_rows();
+
+                
+                        ?>
+
+
+
+                      
+
+                        <tr>
+                            <td><?php echo $i;?></td>
+                            <td><a href="#"><?php echo $row->postTitle;?></a></td>
+                            <td><?php echo $row->user_Type;?></td>
+                            <td><i class="fa fa-star" style="color:#ffd700;"></i>&nbsp;<span class="label label-default"><?php echo $rep;?></span></td>
                             <td>
-                              <span class="label label-default"><i class="fa fa-thumbs-up">&nbsp;1.5k</i></span>
-                              <span class="label label-default"><i class="fa fa-share">&nbsp;507</i></span>
-                              <span class="label label-default"><i class="fa fa-comments">&nbsp;1.2k</i></span>
+                              <span class="label label-default"><i class="fa fa-thumbs-up">&nbsp;<?php echo $like;?></i></span>
                             </td>
                           </tr>
-                          <tr>
-                            <td>2</td>
-                            <td><a href="#">Car Inn</a></td>
-                            <td>$index[5]</td>
-                            <td><i class="fa fa-star" style="color:#ffd700;"></i>&nbsp;<span class="label label-default">1024</span></td>
-                            <td>
-                              <span class="label label-default"><i class="fa fa-thumbs-up">&nbsp;985</i></span>
-                              <span class="label label-default"><i class="fa fa-share">&nbsp;580</i></span>
-                              <span class="label label-default"><i class="fa fa-comments">&nbsp;510</i></span>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>3</td>
-                            <td><a href="#">Resort Locator</a></td>
-                            <td>Wang Kig</td>
-                            <td><i class="fa fa-star" style="color:#d4d4d4;"></i>&nbsp;<span class="label label-default">711</span></td>
-                            <td>
-                              <span class="label label-default"><i class="fa fa-thumbs-up">&nbsp;763</i></span>
-                              <span class="label label-default"><i class="fa fa-share">&nbsp;455</i></span>
-                              <span class="label label-default"><i class="fa fa-comments">&nbsp;401</i></span>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>4</td>
-                            <td><a href="#">Applock</a></td>
-                            <td>Bob Uy</td>
-                            <td><i class="fa fa-star" style="color:#d4d4d4;"></i>&nbsp;<span class="label label-default">831</span></td>
-                            <td>
-                              <span class="label label-default"><i class="fa fa-thumbs-up">&nbsp;512</i></span>
-                              <span class="label label-default"><i class="fa fa-share">&nbsp;320</i></span>
-                              <span class="label label-default"><i class="fa fa-comments">&nbsp;297</i></span>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>5</td>
-                            <td><a href="#">Students Personal Profile</a></td>
-                            <td>Booh Ang</td>
-                            <td><i class="fa fa-star" style="color:#d4d4d4;"></i>&nbsp;<span class="label label-default">504</span></td>
-                            <td>
-                              <span class="label label-default"><i class="fa fa-thumbs-up">&nbsp;320</i></span>
-                              <span class="label label-default"><i class="fa fa-share">&nbsp;103</i></span>
-                              <span class="label label-default"><i class="fa fa-comments">&nbsp;111</i></span>
-                            </td>
+                          <?php  endforeach;?>
                           </tr>
                         </tbody>
                       </table>
