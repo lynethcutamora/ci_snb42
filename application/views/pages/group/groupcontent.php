@@ -2,22 +2,14 @@
       <div class="content-wrapper">
         <!-- Content Header (Page header) -->
         <section class="content-header">
-          <h1>
-            Group Page
-            <div class="btn-group">
-              <button type="button" class="btn btn-default">Action</button>
-              <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                <span class="caret"></span>
-                <span class="sr-only">Toggle Dropdown</span>
-              </button>
-              <ul class="dropdown-menu" role="menu">
-                <li><a href="#">Change Cover Photo</a></li>
-                <li><a href="#">Add Group Member</a></li>
-                <li><a href="#">Add Project</a></li>
-                <li><a href="#">Edit Group Description</a></li>
-              </ul>
+          <div class="col-md-2">
+            <h4 class="text-muted"><b>Group Page</b></h4>
+          </div>
+            <div class="btn-group col-md-7">
+              <button type="button" class="btn btn-default pull-right" data-toogle="tooltip" title="Group Settings"><i class="fa fa-gear"></i></button>
+              <button type="button" class="btn btn-default pull-right" data-toogle="tooltip" title="change coverphoto"><i class="fa fa-camera"></i></button>              
+              <button type="button" class="btn btn-default pull-right" data-toogle="tooltip" title="add project" data-toggle="modal" data-target="#addproject" title="Add group project"><i class="fa fa-plus"></i>&nbsp;&nbsp;Project</button>
             </div>
-          </h1>
           <ol class="breadcrumb">
             <li><a href="../dashboard/index.php"><i class="fa fa-dashboard"></i> Home</a></li>
             <li class="active">Group Page</li>
@@ -31,18 +23,16 @@
                 <?php foreach($groupdetails as $row):?>
 
                 <!-- Add the bg color to the header using any of the bg-* classes -->
-                <div class="widget-user-header bg-black" style="background: url('../../images/bg.png') center center;">
+                <div class="widget-user-header bg-blue" style="background: url('<?php echo base_url();?>/user/<?php echo $row['groupCoverPic']?>') center center;">
                   <h3 class="widget-user-username"><?php echo $row['groupname']; ?></h3>
                   <h5 class="widget-user-desc"><?php echo $row['groupdescription']; ?></h5>
                 </div>
-
-                <?php endforeach;?>
 
                 <div class="box-footer">
                   <div class="row">
                     <div class="col-sm-3 border-right">
                       <div class="description-block">
-                        <h5 class="description-header">1</h5>
+                        <h5 class="description-header"><?php echo count($row['membersid']);?></h5>
                         <span class="description-text">MEMBERS</span>
                       </div><!-- /.description-block -->
                     </div><!-- /.col -->
@@ -66,6 +56,8 @@
                     </div><!-- /.col -->
                   </div><!-- /.row -->
                 </div><!-- /.footer-->
+
+                <?php endforeach;?>
               </div><!-- /.widget-user -->
 
               <!-- Custom Tabs (Pulled to the right) -->
@@ -313,21 +305,42 @@
                     </div>
                 </div><!-- /.box -->
 
-                <div class="box-body">
-                  <p><b>About Start&Boost Project:</b></p>
-                  <p>Start&Boost is a Web and mobile based startup ideas repository and exploration.</p>
-                  <p><b>Investor(s):</b></p>
-                  <div class='box-header'>
-                      <div class='user-block'>
-                        <img class='img-circle' src='../../images/team/index0.png' alt='user image'>
-                          <span class='username'><a href="#">Ms. Universe</a></span>
-                          <span class='description'>Reputation:<span class="pull-right"><i class='fa fa-star' style="color:#ffd700;"></i><b>&nbsp;&nbsp;1024</b></span></span>
-                      </div><!-- /.user-block -->
-                    </div><!-- /.box-header -->
-                </div>
+                <?php foreach($groupdetails as $row):?>
+                  <div class="box-body">
+                    <p><b>About <?php echo $row['projectname']?></b></p>
+                    <p><?php echo $row['projectdescription']?>.</p>
+                    <p><b>Investor(s):</b></p>
+                    <div class='box-header'>
+                        <div class='user-block'>
+                          <img class='img-circle' src='../../images/team/index0.png' alt='user image'>
+                            <span class='username'><a href="#">Ms. Universe</a></span>
+                            <span class='description'>Reputation:<span class="pull-right"><i class='fa fa-star' style="color:#ffd700;"></i><b>&nbsp;&nbsp;1024</b></span></span>
+                        </div><!-- /.user-block -->
+                      </div><!-- /.box-header -->
+                  </div>
+                <?php endforeach;?>
               </div><!-- /.col -->
+          </div><!--/.col-12-->
+        </div><!--/.row-->
 
-
-          </div>
-        </div>
+        <div id="addproject" class="modal fade" role="dialog">
+          <div class="modal-dialog">
+          <!-- Modal content-->
+            <div class="modal-content">
+              <form action="addproject" method="post">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  <h4 class="modal-title">Add group project</h4>
+                </div>
+                <div class="modal-body">
+                  <input type="text" class="form-control" name="inputProjectName" id="inputProjectName" placeholder="Project Title"  required="required" value=""/><br/>
+                  <textarea class="form-control" name="inputDescription" id="inputDescription" placeholder="Short Project Description"  required="required" value=""></textarea>
+                </div>
+                <div class="modal-footer">
+                  <button type="submit" class="btn btn-primary pull-right">Add Project</button>
+                </div><!--/.modal footer-->
+              </form>
+            </div><!--/.modal content-->   
+          </div><!--/.modal dialog-->
+        </div><!--add project-->
       </div><!--/.content wrapper-->

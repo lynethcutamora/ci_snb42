@@ -196,7 +196,7 @@ class Pages extends CI_Controller {
 		$data['data']=$query->result_array();
 		$data['pages']='profile';
 		$this->load->view('pages/dashboard/fixed',$data);
-		$this->load->view('pages/profile/content'); 
+		$this->load->view('pages/profile/content',$data); 
 		$this->load->view('pages/dashboard/controlsidebar');
 		$this->load->view('pages/dashboard/end');
 		}else{
@@ -641,8 +641,8 @@ class Pages extends CI_Controller {
 		$num_results=$this->db->count_all_results();
 
 		return $num_results;
-
 	}
+
 	public function createGroup(){
 		$this->form_validation->set_rules('inputGroupName', 'Group Name', 'required');
 		$this->form_validation->set_rules('inputDescription', 'Group Description', 'trim');
@@ -656,19 +656,48 @@ class Pages extends CI_Controller {
 				'groupId' => $groupId,
 				'groupname' => $this->input->post('inputGroupName'),
 				'groupdescription'=> $this->input->post('inputDescription'),
+				'groupCoverPic' =>'defaultcover.png',
 				'userId' => $this->session->userdata('userId'),
 			);
 
+			$data2 = array(
+				'groupId' => $groupId,
+				'membersid' => $this->session->userdata('userId'),
+			);
+
 			$this->db->insert('group_md',$data);
+			$this->db->insert('group_dtl',$data2);
 			$this->group();
 		}
 	}
 	public function groupdetails(){
 		$this->db->select('*');
-		$this->db->from('group_md');
-		$this->db->where('userId',$this->session->userdata('userId'));
+		$this->db->from('group_md a');
+		$this->db->join('group_dtl b','b.groupId=a.groupId','left');
+		$this->db->where('a.userId',$this->session->userdata('userId'));
 		$query=$this->db->get();
 
 		return $query;
+	}
+
+	public function addproject(){
+		$this->form_validation->set_rules('inputProjectName', 'Project Name', 'required');
+		$this->form_validation->set_rules('inputDescription', 'Project Description', 'trim');
+
+		if ($this->form_validation->run()==FALSE){
+			$this->group();
+		}else{
+			$projId = uniqid('pr');
+
+			$data = array(
+				'projectid' => $projId,
+				'projectname' => $this->input->post('inputProjectName'),
+				'projectdescription' => $this->input->post('inputDescription'),
+			);
+
+			$this->db->update('group_md',$data);
+			$this->db->where('userId',$this->session->userdata('userId'));
+			$this->group();
+		}
 	}
 }
