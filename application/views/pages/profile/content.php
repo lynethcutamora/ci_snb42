@@ -319,12 +319,7 @@
                       <?php endforeach;?>
                   </div><!-- /.tab-pane -->
                 </div><!-- /.tab-content -->
-              </div><!-- /.nav-tabs-custom -->
-            </div><!-- /.col -->
-
-            <!-- ============================================= -->
-            <!--GROUP NAV-->
-            <div class="col-md-2">
+                <div class="col-md-2">
               <div class="info-box">
                 <span class="info-box-icon bg-yellow"><i class="fa fa-files-o"></i></span>
                 <div class="info-box-content">
@@ -358,6 +353,12 @@
               </div><!-- /.info-box -->
 
             </div><!-- /.col -->
+            </div><!-- /.col -->
+
+
+            <!-- ============================================= -->
+            <!--GROUP NAV-->
+            
           </div><!-- /.row -->
 
         </section><!-- /.content -->
@@ -420,35 +421,35 @@
                   
                 ?>
                 </i><b> &nbsp;&nbsp;<?php echo $rep;?></span></p>
-                <?php echo form_open('../pages/badge',"class=form-horizontal"); ?>
                 
+                <?php echo form_open('../pages/badge'); ?>
+                 
                   <div class="row">
                     <div class="col-sm-3 border-right">
                       <div class="description-block"> 
-                        <span class="description-text"><button type="submit" class='btn btn-default btn-lg' name="gold" id="gold" value="<?php echo set_value('1'); ?>"><i class='fa fa-star' style="color:Gold;"></i> </button></span>
+                        <span class="description-text"><button type="submit" class='btn btn-default btn-lg' name="btnRate" id="gold" value="gold"><i class='fa fa-star' style="color:Gold;"></i> </button></span>
                       </div><!-- /.description-block -->
                     </div><!-- /.col -->
                     <div class="col-sm-3 border-right">
                       <div class="description-block"> 
-                        <span class="description-text"><button type="submit" class='btn btn-default btn-lg' name="silver" id="silver" value="<?php echo set_value('2'); ?>"><i class='fa fa-star' style="color:Silver;"></i> </button></span>
+                        <span class="description-text"><button type="submit" class='btn btn-default btn-lg' name="btnRate" id="silver" value="silver"><i class='fa fa-star' style="color:Silver;"></i> </button></span>
                       </div><!-- /.description-block -->
                     </div><!-- /.col -->
                     <div class="col-sm-3 border-right">
                       <div class="description-block">
-                        <span class="description-text"><button type="submit" class='btn btn-default btn-lg' name="bronze" id="bronze" value="<?php echo set_value('3'); ?>"><i class='fa fa-star' style="color:SandyBrown;"></i> </button></span>
+                        <span class="description-text"><button type="submit" class='btn btn-default btn-lg' name="btnRate" id="bronze" value="bronze"><i class='fa fa-star' style="color:SandyBrown;"></i> </button></span>
                       </div><!-- /.description-block -->
                     </div><!-- /.col -->
                     <div class="col-sm-3">
                       <div class="description-block">
-               
-                        <span class="description-text"><button type="submit" class='btn btn-default btn-lg' name="black" id="black" value="<?php echo set_value('4'); ?>"><i class='fa fa-star' style="color:Black;"></i> </button></span>
+                        <span class="description-text"><button type="submit" class='btn btn-default btn-lg' name="btnRate" id="black" value="black"><i class='fa fa-star' style="color:Black;"></i> </button></span>
                       </div><!-- /.description-block -->
                     </div><!-- /.col -->
                   </div><!-- /.row -->
-                  </form>
-                 
-                </div>
+                  </div>    
               </div>
+              </form>
+
             </div>
             <div class="modal-footer">
             </div>

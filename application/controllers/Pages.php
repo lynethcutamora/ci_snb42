@@ -689,72 +689,78 @@ class Pages extends CI_Controller {
 
 	public function badge()
 	{
-		if(($this->session->userdata('userId')!=""))
+		if(($this->session->userdata('userId')==""))
 		{
-			$this->index();
-		}
-		else if($this->input->post('gold'))
-		{	
-			$userId = "reciever";
-			$fromUserId = "sender";
-
-			$data = array(
-			'userId' => $userId,
-			'fromUserId' =>	$fromUserId,
-			'voteBadge' => '1'
-			);
-
-			$this->db->insert('badge_dtl', $data);
 			$this->load->view('pages/profile/index');
-			
-		}
-		else if ($this->input->post('silver')) 
-		{
-			$userId = "reciever";
-			$fromUserId = "sender";
-			$data = array(
-			'userId' => $userId,
-			'fromUserId' =>	$fromUserId,
-			'voteBadge' => '2'
-			);
-
-			$this->db->insert('badge_dtl', $data);
-			
-			$this->load->view('pages/profile/index');
-			
-		}
-		else if ($this->input->post('bronze')) 
-		{
-			$userId = "reciever";
-			$fromUserId = "sender";
-			$data = array(
-			'userId' => $userId,
-			'fromUserId' =>	$fromUserId,
-			'voteBadge' => '3'
-			);
-
-			$this->db->insert('badge_dtl', $data);
-			
-			$this->load->view('pages/profile/index');
-			
-		}
-		else if ($this->input->post('black')) 
-		{
-			$userId = "reciever";
-			$fromUserId = "sender";
-			$data = array(
-			'userId' => $userId,
-			'fromUserId' =>	$fromUserId,
-			'voteBadge' => '4'
-			);
-
-			$this->db->insert('badge_dtl', $data);
-			
-			$this->load->view('pages/profile/index');	
-			
 		}
 		else
-			$this->load->view('pages/profile/index');
+		{	
+			$post=$this->input->post('btnRate');
+			if(!isset($post))
+			{
+				$this->load->view('pages/profile/index');
+			}
+			else if($post=='gold')
+			{
+				$userId = "reciever";
+				$fromUserId = "sender";
+
+				$data = array(
+				'userId' => $userId,
+				'fromUserId' =>	$fromUserId,
+				'voteBadge' => '1'
+				);
+
+				$this->db->insert('badge_dtl', $data);
+				$this->load->view('pages/profile/index');
+			}
+			else if($post=='silver')
+			{
+				$userId = "reciever";
+				$fromUserId = "sender";
+				$data = array(
+				'userId' => $userId,
+				'fromUserId' =>	$fromUserId,
+				'voteBadge' => '2'
+				);
+
+				$this->db->insert('badge_dtl', $data);
+			
+				$this->load->view('pages/profile/index');
+			}
+			else if($post=='bronze')
+			{
+				$userId = "reciever";
+				$fromUserId = "sender";
+				$data = array(
+				'userId' => $userId,
+				'fromUserId' =>	$fromUserId,
+				'voteBadge' => '3'
+				);
+
+				$this->db->insert('badge_dtl', $data);
+			
+				$this->load->view('pages/profile/index');
+			}
+			elseif ($post=='black') 
+			{
+				$userId = "reciever";
+				$fromUserId = "sender";
+				$data = array(
+				'userId' => $userId,
+				'fromUserId' =>	$fromUserId,
+				'voteBadge' => '4'
+				);
+
+				$this->db->insert('badge_dtl', $data);
+			
+				$this->load->view('pages/profile/index');
+			}
+		
+			else{
+				$this->load->view('pages/profile/index');
+				}
+		}
 	}	
 
 	public function showpost()
