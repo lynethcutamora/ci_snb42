@@ -61,13 +61,10 @@
                   
            
  
-                        $this->db->select('*');
-                        $this->db->from('userpost a');
-
-                        $this->db->join('user_md b', 'b.userId=a.userId','left');
-                        $top = $this->db->get();
+                        
+                        $query = $this->db->query("SELECT *, COUNT(c.postId) as number_of_votes from upvote_dtl c left join userpost v on c.postId = v.postId left join user_md b on v.userid = b.userid where voteType = '1' group by c.postId order by number_of_votes desc limit 5");
                              $i = 0;
-                                foreach($top->result() as $row):
+                                foreach($query->result() as $row):
                              $i++;
                         $this->db->select('*');
                         $this->db->from('badge_dtl');
@@ -106,10 +103,23 @@
                         $query = $this->db->get();
                         $like = $query->num_rows();
 
+                        $this->db->select('*');
+                        $this->db->from('upvote_dtl');
+                        $this->db->where('voteType','2');
+                        $this->db->where('postId',$row->postId);
+                        $query = $this->db->get();
+                        $share = $query->num_rows();
+
+                        $this->db->select('*');
+                        $this->db->from('upvote_dtl');
+                        $this->db->where('voteType','3');
+                        $this->db->where('postId',$row->postId);
+                        $query = $this->db->get();
+                        $comment = $query->num_rows();
+
+      
                 
                         ?>
-
-
 
                       
 
@@ -120,6 +130,8 @@
                             <td><i class="fa fa-star" style="color:#ffd700;"></i>&nbsp;<span class="label label-default"><?php echo $rep;?></span></td>
                             <td>
                               <span class="label label-default"><i class="fa fa-thumbs-up">&nbsp;<?php echo $like;?></i></span>
+                              <span class="label label-default"><i class="fa fa-share">&nbsp;<?php echo $share;?></i></span>
+                              <span class="label label-default"><i class="fa fa-comments">&nbsp;<?php echo $comment;?></i></span>
                             </td>
                           </tr>
                           <?php  endforeach;?>
@@ -302,10 +314,25 @@
 
                     <div class="box">
                       <div class="box-header with-border">
-                        <p>Startup Ideas</p>
-                        <div class="box-tools pull-right">
+                      <div class="box-tools pull-right">
                           <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
                         </div>
+                        <p>Startup Ideas</p>
+                        <?php 
+
+
+                  
+           
+ 
+                        $this->db->select('*');
+                        $this->db->from('userpost a');
+ 
+                       $this->db->join('user_md b', 'b.userId=a.userId','left');
+                        $this->db->join('user_dtl c', 'c.userId=b.userId','left');
+                        $top = $this->db->get();
+                                foreach($top->result() as $row):
+                        ?>
+                        
                       </div><!-- /.box-header -->
                       <div class="box-body">
                         <ul class="products-list product-list-in-box">
@@ -314,34 +341,12 @@
                               <img src="../../dist/img/default-50x50.gif" alt="Product Image">
                             </div>
                             <div class="product-info">
-                              <a href="javascript::;" class="product-title">Samsung TV <span class="label label-warning pull-right">$1800</span></a>
-                              <span class="product-description">
-                                Samsung 32" 1080p 60Hz LED Smart HDTV.
+                              <a href="javascript::;" class="product-title"><?php echo $row->postTitle;?></a></br>
+                                by: <?php echo $row->user_lName?>, <?php echo $row->user_fName?>
                               </span>
                             </div>
                           </li><!-- /.item -->
-                          <li class="item">
-                            <div class="product-img">
-                              <img src="../../dist/img/default-50x50.gif" alt="Product Image">
-                            </div>
-                            <div class="product-info">
-                              <a href="javascript::;" class="product-title">Bicycle <span class="label label-info pull-right">$700</span></a>
-                              <span class="product-description">
-                                26" Mongoose Dolomite Men's 7-speed, Navy Blue.
-                              </span>
-                            </div>
-                          </li><!-- /.item -->
-                          <li class="item">
-                            <div class="product-img">
-                              <img src="../../dist/img/default-50x50.gif" alt="Product Image">
-                            </div>
-                            <div class="product-info">
-                              <a href="javascript::;" class="product-title">Xbox One <span class="label label-danger pull-right">$350</span></a>
-                              <span class="product-description">
-                                Xbox One Console Bundle with Halo Master Chief Collection.
-                              </span>
-                            </div>
-                          </li><!-- /.item -->
+                          <?php  endforeach;?>
                         </ul>
                       </div><!-- /.box-body -->
                       <div class="box-footer text-center">
