@@ -702,8 +702,8 @@ class Pages extends CI_Controller {
 			}
 			else if($post=='gold')
 			{
-				$userId = "reciever";
-				$fromUserId = "sender";
+				$userId = "5666e164e0";
+				$fromUserId = "565fcbb98d";
 
 				$data = array(
 				'userId' => $userId,
@@ -716,8 +716,8 @@ class Pages extends CI_Controller {
 			}
 			else if($post=='silver')
 			{
-				$userId = "reciever";
-				$fromUserId = "sender";
+				$userId = "5666e164e0";
+				$fromUserId = "565fcbb98d";
 				$data = array(
 				'userId' => $userId,
 				'fromUserId' =>	$fromUserId,
@@ -730,8 +730,8 @@ class Pages extends CI_Controller {
 			}
 			else if($post=='bronze')
 			{
-				$userId = "reciever";
-				$fromUserId = "sender";
+				$userId = "5666e164e0";
+				$fromUserId = "565fcbb98d";
 				$data = array(
 				'userId' => $userId,
 				'fromUserId' =>	$fromUserId,
@@ -744,8 +744,8 @@ class Pages extends CI_Controller {
 			}
 			elseif ($post=='black') 
 			{
-				$userId = "reciever";
-				$fromUserId = "sender";
+				$userId = "5666e164e0";
+				$fromUserId = "565fcbb98d";
 				$data = array(
 				'userId' => $userId,
 				'fromUserId' =>	$fromUserId,

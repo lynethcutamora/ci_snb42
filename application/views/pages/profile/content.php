@@ -420,7 +420,7 @@
                     echo "Give this user a badge!";
                   
                 ?>
-                </i><b> &nbsp;&nbsp;<?php echo $rep;?></span></p>
+                </i><b> &nbsp;&nbsp;<?php echo $rep;?></b></span></p>
                 
                 <?php echo form_open('../pages/badge'); ?>
                  
@@ -448,8 +448,6 @@
                   </div><!-- /.row -->
                   </div>    
               </div>
-              </form>
-
             </div>
             <div class="modal-footer">
             </div>
