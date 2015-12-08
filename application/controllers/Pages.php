@@ -581,16 +581,7 @@ class Pages extends CI_Controller {
 			
 	}
 
-	public function showPost()
-	{
-		$query=$this->_userData();
-		$data['data']=$query->result_array();
-		$data['pages']='post';
 
-		$query=$this->_alluserData();
-		$data['alldata']=$query->result_array();
-		$this->load->view('pages/post/post',$data);
-	}
 	public function showComment()
 	{
 		$query=$this->_userData();
@@ -765,4 +756,98 @@ class Pages extends CI_Controller {
 		else
 			$this->load->view('pages/profile/index');
 	}	
+
+	public function showpost()
+	{
+		$query = $this->_alluserData();
+		foreach ($query->result_array() as $postdtl) {
+			echo "
+			<div class='box box-widget'>
+                <div class='box-header with-border'>
+                  <div class='user-block'>
+                    <img class='img-circle' src='../../images/team/index2.jpg' alt='user image'>
+                    <span class='username'>
+                    <a href='#'>";
+
+                                  if($postdtl['user_Type']=='Ideator'||$postdtl['user_Type']=='Investor')
+                                  {
+                                      if($postdtl['user_midInit']==null)
+                                         echo $postdtl['user_fName']."  ".$postdtl['user_lName'];
+                                       else
+                                         echo $postdtl['user_fName']." ".$postdtl['user_midInit'].". ".$postdtl['user_lName'];
+                                  }
+                                  else
+                                  {
+                                    echo $postdtl['company_name'];
+                                  }
+                        
+            echo "</a></span>
+                    &nbsp;&nbsp;&nbsp;<button class='btn btn-default btn-xs'><i class='fa fa-star' style='color:Gold'></i> <span class='label label-primary'>10</span> </button><button class='btn btn-default btn-xs'><i class='fa fa-star' style='color:Silver'></i><span class='label label-primary'>5</span> </button><button class='btn btn-default btn-xs'><i class='fa fa-star' style='color:SandyBrown'></i><span class='label label-primary'>20</span> </button>
+                   <span class='description'>Posted - 7:30 PM Today</span>
+                  </div><!-- /.user-block -->
+                </div><!-- /.box-header -->
+                <div class='box-body'>
+                  <p>";
+				 echo $postdtl['postContent'];
+				  $postId = $postdtl['postId'];
+             echo "</p>
+             	<table>
+            		  <tr><td><button class='btn btn-default btn-xs'><i class='fa fa-share'></i> Share</button></td>
+             	  <form method='post' action='".base_url()."pages/upvote'>
+             	  <input type=text hidden='true' value='$postId' name='postId'>
+                  ";
+
+                  if($this->validUpvote($postId)=='false'){
+            	  echo "<td><button id='add' class='btn btn-default btn-xs'><i class='fa fa-arrow-circle-up'></i> Upvote</button> </form></td>";
+            	 }
+            	  else{
+            	   	echo "<td><button class='btn btn-default btn-xs disabled' disabled><i class='fa fa-arrow-circle-up'></i> Upvoted</button></form></td>";
+            	  }
+
+                echo "</table>
+                  <span class='pull-right text-muted'>";
+                
+                  $this->post->upvotecount($postId);
+                 
+            echo "</span>
+                </div><!-- /.box-body -->
+               
+                
+              </div><!-- /.box -->";
+             
+
+		}
+
+	
+	}
+	public function validUpvote($postId)
+	{
+		$this->db->where('postId', $postId);
+		$this->db->where('userId', $this->session->userdata('userId'));
+        $query = $this->db->get('upvote_dtl');
+        if($query->num_rows()>0){
+        	return 'true';
+        }
+        else
+        	return 'false';
+	
+	}
+	public function upvote()
+	{
+		if($this->input->post('postId')!=''){
+		$data = array(
+				'voteStat' => '1',
+				'voteType' => '1',
+				'postId' => $this->input->post('postId'),
+				'userId' => $this->session->userdata('userId'),
+				'voteId' =>uniqid()
+			);
+
+			$this->db->insert('upvote_dtl',$data);
+			$this->post();
+		}else
+		$this->post();
+	}
+
+
 }
