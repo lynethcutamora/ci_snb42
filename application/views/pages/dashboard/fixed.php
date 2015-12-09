@@ -145,7 +145,7 @@
               <!-- User Account: style can be found in dropdown.less -->
               <li class="dropdown user user-menu">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                   <img src="<?php echo base_url();?>/user/<?php echo $row['avatar_name']?>" class="user-image" alt="User Image">
+                   <img src="<?php echo base_url();?>/user/<?php echo $row['avatar_name'];?>" class="user-image" alt="User Image">
                   <span class="hidden-xs">  
               <?php
                               if($row['user_Type']=='Ideator'||$row['user_Type']=='Investor')
@@ -239,26 +239,23 @@
             </div>
             <div class="pull-left info">
               <p>
-
-              <?php 
-                            foreach($data as $row):
-                              if($row['user_Type']=='Ideator'||$row['user_Type']=='Investor')
-                              {
-                                  if($row['user_midInit']==null)
-                                     echo $row['user_fName']." ".$row['user_lName'];
-                                   else
-                                     echo $row['user_fName']." ".$row['user_midInit'].". ".$row['user_lName'];
-                              }
-                              else
-                              {
-                                echo $row['company_name'];
-                              }
-
-                          
-                       
-                      ?>
-                         <?php  endforeach;?>
-
+                <a href="<?php echo base_url();?>pages/profile">
+                <?php 
+                  foreach($data as $row):
+                    if($row['user_Type']=='Ideator'||$row['user_Type']=='Investor')
+                     {
+                        if($row['user_midInit']==null)
+                         echo $row['user_fName']." ".$row['user_lName'];
+                        else
+                         echo $row['user_fName']." ".$row['user_midInit'].". ".$row['user_lName'];
+                        }
+                        else
+                        {
+                          echo $row['company_name'];
+                        }    
+                  ?>
+                  <?php  endforeach;?>
+                </a>
               </p>
               <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
             </div>
@@ -276,11 +273,21 @@
           <!-- sidebar menu: : style can be found in sidebar.less -->
           <ul class="sidebar-menu">
             <li class="header">MAIN NAVIGATION</li>
+            
             <li class="treeview <?php if($pages=='dashboard') {echo "active";}else echo "";?>">
               <a href="<?php echo base_url();?>pages/index">
                 <i class="fa fa-dashboard"></i> <span>Dashboard</span> <!--<i class="fa fa-angle-left pull-right">--></i>
+              </a>            
+            </li>
+            <li class="treeview <?php if($pages=='profile') {echo "active";}else echo "";?>">
+              <a href="<?php echo base_url();?>pages/profile">
+                <i class="fa fa-edit"></i> <span>Post Idea</span>
               </a>
-             
+            </li>
+            <li class="treeview <?php if($pages=='startup') {echo "active";}else echo "";?>">
+              <a href="<?php echo base_url();?>pages/startupproduct">
+                <i class="fa fa-paper-plane"></i> <span>Startup Products</span>
+              </a>
             </li>
             <li class="treeview <?php if($pages=='newsfeed') {echo "active";}else echo "";?>">
               <a href="#">
@@ -299,13 +306,6 @@
                     <i class="fa fa-calendar"></i> <span>Timeline</span>
                  </a>
              
-            </li>
-            <li class="treeview <?php if($pages=='startup') {echo "active";}else echo "";?>">
-              <a href="<?php echo base_url();?>pages/startupproduct">
-                <i class="fa fa-paper-plane"></i> <span>Startup Products</span>
-              </a>
-
-              
             </li>
             <li class="treeview <?php if($pages=='group') {echo "active";}else echo "";?>">
               <a href="<?php echo base_url();?>pages/group">

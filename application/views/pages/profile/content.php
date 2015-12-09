@@ -1,9 +1,7 @@
 <!-- Content Wrapper. Contains page content -->
       <?php
       //$badge = $totalRep;
-      
-      
-      
+                  
 
       $this->db->select('*');
       $this->db->from('badge_dtl');
@@ -52,32 +50,31 @@
 
           <div class="row">
             <div class="col-md-3">
-
-              <div class="box box-widget widget-user">
-                <!-- Add the bg color to the header using any of the bg-* classes -->
-                <div class="widget-user-header bg-black" style="background: url('../../dist/img/boxed-bg.jpg') center center;">
+              <?php foreach($data as $row):
+                echo '<div class="box box-widget widget-user">';
+                # Add the bg color to the header using any of the bg-* classes -->
+                echo '<div class="widget-user-header bg-black" style="background: url(\''.base_url().'/user/defaultcover_user.png\') center center; background-size:contain;">';
                   
+                echo '</div>
+                <div class="widget-user-image">';
+                  echo'<img class="img-circle" src="'.base_url().'/user/'.$row['avatar_name'].'" alt="User Avatar">
                 </div>
-                <div class="widget-user-image">
-                  <img class="img-circle" src="../../images/userlogin.png" alt="User Avatar">
-                </div>
-
                 <div class="box-footer">
-                <h3><?php 
-                            foreach($data as $row):
-                              if($row['user_Type']=='Ideator'||$row['user_Type']=='Investor')
-                              {
-                                  if($row['user_midInit']==null)
-                                     echo $row['user_fName']."  ".$row['user_lName']; 
-                                   else
-                                     echo $row['user_fName']." ".$row['user_midInit'].". ".$row['user_lName'];
-                              }
-                              else
-                              {
-                                echo $row['company_name'];
-                              }                  
-                      ?></h3>
-                      <?php  endforeach;?>
+                <h3>';
+                  if($row['user_Type']=='Ideator'||$row['user_Type']=='Investor')
+                  {
+                    if($row['user_midInit']==null)
+                      echo $row['user_fName']."  ".$row['user_lName']; 
+                    else
+                      echo $row['user_fName']." ".$row['user_midInit'].". ".$row['user_lName'];
+                  }
+                    else
+                  {
+                    echo $row['company_name'];
+                  }                  
+                  ?>
+                </h3>
+              <?php  endforeach;?>
                       
                 <p>Reputation:<span class="pull-right">
                 <?php
@@ -94,33 +91,32 @@
                      ?><i class='fa fa-star' style="color:SandyBrown"></i><?php
                  }
                   else
-                    echo "Give this user a badge!";
-                  
+                    echo "Give this user a badge!";         
                 ?>
-                </i><b> &nbsp;&nbsp;<?php echo $rep;?></span></p>
+                </i><b> &nbsp;&nbsp;<?php echo $rep;?></b></span></p>
                   <div class="row">
                     <div class="col-sm-3 border-right">
                       <div class="description-block">
-                      <span class="label label-primary"><?php echo $gold;?></span> 
-                        <span class="description-text">GOLD</span>
+                      <span><?php echo $gold;?></span>
+                        <span class="description-text text-muted">GOLD</span>
                       </div><!-- /.description-block -->
                     </div><!-- /.col -->
                     <div class="col-sm-3 border-right">
                       <div class="description-block">
-                      <span class="label label-primary"><?php echo $silver;?></span> 
-                        <span class="description-text">SILVER</span>
+                      <span><?php echo $silver;?></span> 
+                        <span class="description-text text-muted">SILVER</span>
                       </div><!-- /.description-block -->
                     </div><!-- /.col -->
                     <div class="col-sm-3 border-right">
                       <div class="description-block">
-                      <span class="label label-primary"><?php echo $bronze;?></span> 
-                        <span class="description-text">BRONZE</span>
+                      <span><?php echo $bronze;?></span> 
+                        <span class="description-text text-muted">BRONZE</span>
                       </div><!-- /.description-block -->
                     </div><!-- /.col -->
                     <div class="col-sm-3 border-right">
                       <div class="description-block">
-                      <span class="label label-primary"><?php echo $black;?></span>
-                        <span class="description-text">BLACK</span>
+                      <span><?php echo $black;?></span>
+                        <span class="description-text text-muted">BLACK</span>
                       </div><!-- /.description-block -->
                     </div><!-- /.col -->
                   </div><!-- /.row -->
@@ -146,7 +142,7 @@
                   <h3 class="box-title">About Me</h3>
                 </div><!-- /.box-header -->
                 <div class="box-body">
-                  <strong><i class="fa fa-book margin-r-5"></i>  Education</strong>
+                  <strong><i class="fa fa-book margin-r-5"></i>  Self Description</strong>
                   <p class="text-muted">
                     B.S. in Information Technology in University of Cebu
                   </p>
@@ -375,18 +371,17 @@
             <div class="modal-body">
               <div class="col-md-12">
 
-              <div class="box box-widget widget-user">
-                <!-- Add the bg color to the header using any of the bg-* classes -->
-                <div class="widget-user-header bg-black" style="background: url('../../dist/img/boxed-bg.jpg') center center;">
+              <?php foreach($data as $row):
+                echo '<div class="box box-widget widget-user">';
+                # Add the bg color to the header using any of the bg-* classes -->
+                echo '<div class="widget-user-header bg-black" style="background: url(\''.base_url().'/user/defaultcover_user.png\') center center; background-size:contain;">';
                   
+                echo '</div>
+                <div class="widget-user-image">';
+                  echo'<img class="img-circle" src="'.base_url().'/user/'.$row['avatar_name'].'" alt="User Avatar">
                 </div>
-                <div class="widget-user-image">
-                  <img class="img-circle" src="../../images/userlogin.png" alt="User Avatar">
-                </div>
-
                 <div class="box-footer">
-                <h3><?php 
-                            foreach($data as $row):
+                <h3>';
                               if($row['user_Type']=='Ideator'||$row['user_Type']=='Investor')
                               {
                                   if($row['user_midInit']==null)

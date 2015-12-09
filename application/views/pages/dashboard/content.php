@@ -22,9 +22,10 @@
             </div><!-- /.box-header -->
             <div class="box-body">
               <div class="callout callout-info">
-                <?php print_r($data)?>
-                <h4>Hello Lyneth! You caught us before we're ready.</h4>
+              <?php foreach($data as $row):?>
+                <h4>Hello <?php echo $row['user_fName'];?>! You caught us before we're ready.</h4>
                 <p>Development team $index[5] is working hard to put finishing touches onto Start&Boost. Things are going well and it should be heady to help you with lean startup soon.<br/><br/>Thanks! :-)</p>
+              <?php endforeach;?>
               </div>
             </div>
           </div><!-- /.box -->
