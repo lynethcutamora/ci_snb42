@@ -331,21 +331,21 @@ class Pages extends CI_Controller {
 	#MAO NI ANG VALIDATION UG INSERTION PARA SA IDEATOR NGA USERS
 	public function _validationIdeator()
 	{
-		 $this->form_validation->set_rules('inputLName', 'Last Name', 'required|alpha_numeric_spaces');
-         $this->form_validation->set_rules('inputFName', 'First Name', 'required|alpha_numeric_spaces');
-         $this->form_validation->set_rules('inputMI', 'Middle Initial', 'alpha');
-         $this->form_validation->set_rules('inputAge', 'Age', 'required|numeric');
+		 $this->form_validation->set_rules('inputLName', 'Last Name', 'required|alpha_numeric_spaces|min_length[1]|max_length[30]');
+         $this->form_validation->set_rules('inputFName', 'First Name', 'required|alpha_numeric_spaces|min_length[1]|max_length[30]');
+         $this->form_validation->set_rules('inputMI', 'Middle Initial', 'alpha|max_length[2]');
+         $this->form_validation->set_rules('inputAge', 'Age', 'required|numeric|greater_than[8]|less_than[110]');
          $this->form_validation->set_rules('r3', 'Gender', 'required');
-         $this->form_validation->set_rules('inputEmail', 'Email Address', 'required|is_unique[user_md.user_emailAdd]');
-         $this->form_validation->set_rules('inputPassword', 'Password', 'required');
-	     $this->form_validation->set_rules('inputRepassword', 'Password Confirmation', 'required|matches[inputPassword]');
-         $this->form_validation->set_rules('inputAdress1', 'Address1', 'trim');
-         $this->form_validation->set_rules('inputAdress2', 'Address2', 'trim');
-         $this->form_validation->set_rules('inputCity', 'City', 'trim');
-         $this->form_validation->set_rules('inputRegion', 'Region/State', 'trim');
-         $this->form_validation->set_rules('inputZIP', 'Zip Code', 'alpha_numeric');
-         $this->form_validation->set_rules('inputCounty', 'Country', 'trim');
-         $this->form_validation->set_rules('inputDescription', 'Short Description', 'trim');
+         $this->form_validation->set_rules('inputEmail', 'Email Address', 'required|is_unique[user_md.user_emailAdd]|max_length[50]');
+         $this->form_validation->set_rules('inputPassword', 'Password', 'required|max_length[40]');
+	     $this->form_validation->set_rules('inputRepassword', 'Password Confirmation', 'required|matches[inputPassword]|max_length[40]');
+         $this->form_validation->set_rules('inputAdress1', 'Address1', 'trim|max_length[255]');
+         $this->form_validation->set_rules('inputAdress2', 'Address2', 'trim|max_length[255]');
+         $this->form_validation->set_rules('inputCity', 'City', 'trim|max_length[30]');
+         $this->form_validation->set_rules('inputRegion', 'Region/State', 'trim|max_length[45]');
+         $this->form_validation->set_rules('inputZIP', 'Zip Code', 'alpha_numeric|max_length[10]');
+         $this->form_validation->set_rules('inputCounty', 'Country', 'trim|max_length[13]');
+         $this->form_validation->set_rules('inputDescription', 'Short Description', 'trim|max_length[100]');
          $this->form_validation->set_rules('checkbox1', 'Terms and Condition', 'required');
 
 
@@ -374,9 +374,9 @@ class Pages extends CI_Controller {
 
 			$data1 = array(
 			'userId' => $userId,
-			'user_lName' => $this->input->post('inputLName'),
-			'user_fName' => $this->input->post('inputFName'),
-			'user_midInit' => $this->input->post('inputMI'),
+			'user_lName' => ucfirst(strtolower($this->input->post('inputLName'))),
+			'user_fName' => ucfirst(strtolower($this->input->post('inputFName'))),
+			'user_midInit' => strtoupper($this->input->post('inputMI')),
 			'user_age' => $this->input->post('inputAge'),
 			'user_gender' => $this->input->post('r3'),
 			'user_shortSelfDescription' => $this->input->post('inputDescription'),
@@ -390,7 +390,7 @@ class Pages extends CI_Controller {
 			'location_city' => $this->input->post('inputCity'),
 			'location_prov' => $this->input->post('inputRegion'),
 			'location_zipcode' => $this->input->post('inputZIP'),
-			'location_country' => $this->input->post('inputCounty'),
+			'location_country' => ucfirst(strtolower($this->input->post('inputCounty'))),
 			);
 
 			$data3 = array(
@@ -409,23 +409,23 @@ class Pages extends CI_Controller {
 	#MAO NI ANG VALIDATION UG INSERTION PARA SA INVESTOR NGA USERS
 	public function _validationInvestor()
 	{
-		 $this->form_validation->set_rules('inputLName', 'Last Name', 'required|alpha_numeric_spaces');
-         $this->form_validation->set_rules('inputFName', 'First Name', 'required|alpha_numeric_spaces');
-         $this->form_validation->set_rules('inputMI', 'Middle Initial', 'alpha');
-         $this->form_validation->set_rules('inputAge', 'Age', 'required|numeric');
+		 $this->form_validation->set_rules('inputLName', 'Last Name', 'required|alpha_numeric_spaces|min_length[1]|max_length[30]');
+         $this->form_validation->set_rules('inputFName', 'First Name', 'required|alpha_numeric_spaces|min_length[1]|max_length[30]');
+         $this->form_validation->set_rules('inputMI', 'Middle Initial', 'alpha|max_length[2]');
+         $this->form_validation->set_rules('inputAge', 'Age', 'required|numeric|greater_than[8]|less_than[110]');
          $this->form_validation->set_rules('r3', 'Gender', 'required');
-         $this->form_validation->set_rules('inputEmail', 'Email Address', 'required|is_unique[user_md.user_emailAdd]');
-         $this->form_validation->set_rules('inputPassword', 'Password', 'required');
-	     $this->form_validation->set_rules('inputRepassword', 'Password Confirmation', 'required|matches[inputPassword]');
-         $this->form_validation->set_rules('inputAdress1', 'Address1', 'trim');
-         $this->form_validation->set_rules('inputAdress2', 'Address2', 'trim');
-         $this->form_validation->set_rules('inputCity', 'City', 'trim');
-         $this->form_validation->set_rules('inputRegion', 'Region/State', 'trim');
-         $this->form_validation->set_rules('inputZIP', 'Zip Code', 'alpha_numeric');
-         $this->form_validation->set_rules('inputCounty', 'Country', 'trim');
-         $this->form_validation->set_rules('inputBusiness', 'Business Name', 'trim');
-         $this->form_validation->set_rules('inputBusinessType', 'Business Type', 'trim');
-         $this->form_validation->set_rules('inputDescription', 'Short Description', 'trim');
+         $this->form_validation->set_rules('inputEmail', 'Email Address', 'required|is_unique[user_md.user_emailAdd]|max_length[50]');
+         $this->form_validation->set_rules('inputPassword', 'Password', 'required|max_length[40]');
+	     $this->form_validation->set_rules('inputRepassword', 'Password Confirmation', 'required|matches[inputPassword]|max_length[40]');
+         $this->form_validation->set_rules('inputAdress1', 'Address1', 'trim|max_length[255]');
+         $this->form_validation->set_rules('inputAdress2', 'Address2', 'trim|max_length[255]');
+         $this->form_validation->set_rules('inputCity', 'City', 'trim|max_length[30]');
+         $this->form_validation->set_rules('inputRegion', 'Region/State', 'trim|max_length[45]');
+         $this->form_validation->set_rules('inputZIP', 'Zip Code', 'alpha_numeric|max_length[10]');
+         $this->form_validation->set_rules('inputCounty', 'Country', 'trim|max_length[13]');
+         $this->form_validation->set_rules('inputBusiness', 'Business Name', 'trim|max_length[45]');
+         $this->form_validation->set_rules('inputBusinessType', 'Business Type', 'trim|max_length[15]');
+         $this->form_validation->set_rules('inputDescription', 'Short Description', 'trim|max_length[100]');
          $this->form_validation->set_rules('checkbox1', 'Terms and Condition', 'required');
 
 
@@ -454,9 +454,9 @@ class Pages extends CI_Controller {
 
 			$data1 = array(
 			'userId' => $userId,
-			'user_lName' => $this->input->post('inputLName'),
-			'user_fName' => $this->input->post('inputFName'),
-			'user_midInit' => $this->input->post('inputMI'),
+			'user_lName' => ucfirst(strtolower($this->input->post('inputLName'))),
+			'user_fName' => ucfirst(strtolower($this->input->post('inputFName'))),
+			'user_midInit' => strtoupper($this->input->post('inputMI')),
 			'user_age' => $this->input->post('inputAge'),
 			'user_gender' => $this->input->post('r3'),
 			'user_shortSelfDescription' => $this->input->post('inputDescription'),
@@ -492,16 +492,16 @@ class Pages extends CI_Controller {
 	#MAO NI ANG VALIDATION UG INSERTION PARA SA COMPANY NGA USERS
 	public function _validationCompany()
 	{
-		 $this->form_validation->set_rules('inputLName', 'Last Name', 'required|alpha_numeric_spaces');
-         $this->form_validation->set_rules('inputFName', 'First Name', 'required|alpha_numeric_spaces');
-         $this->form_validation->set_rules('inputMI', 'Middle Initial', 'alpha|trim');
-         $this->form_validation->set_rules('inputCName', 'Company Name', 'required|trim');
+		 $this->form_validation->set_rules('inputLName', 'Last Name', 'required|alpha_numeric_spaces|min_length[1]|max_length[30]');
+         $this->form_validation->set_rules('inputFName', 'First Name', 'required|alpha_numeric_spaces|min_length[1]|max_length[30]');
+         $this->form_validation->set_rules('inputMI', 'Middle Initial', 'alpha|max_length[2]');
+         $this->form_validation->set_rules('inputCName', 'Company Name', 'required|trim|min_length[1]|max_length[30]');
          $this->form_validation->set_rules('inputEmail', 'Email Address', 'required|is_unique[user_md.user_emailAdd]');
          $this->form_validation->set_rules('inputPassword', 'Password', 'required');
 	     $this->form_validation->set_rules('inputRepassword', 'Password Confirmation', 'required|matches[inputPassword]');
          $this->form_validation->set_rules('inputBusinessType', 'business Type', 'trim|alpha_numeric_spaces');
-         $this->form_validation->set_rules('inputYear', 'Year Founded', 'trim|alpha_numeric_spaces');
-         $this->form_validation->set_rules('inputDescription', 'Short Business Description', 'trim|alpha_numeric_spaces');
+         $this->form_validation->set_rules('inputYear', 'Year Founded', 'trim|alpha_numeric_spaces|min_length[4]|max_length[4]');
+         $this->form_validation->set_rules('inputDescription', 'Short Business Description', 'trim|alpha_numeric_spaces|max_length[255]');
          $this->form_validation->set_rules('checkbox1', 'Terms and Condition', 'required');
 
 
@@ -530,11 +530,11 @@ class Pages extends CI_Controller {
 
 			$data1 = array(
 			'userId' => $userId,
-			'company_lName' => $this->input->post('inputLName'),
-			'company_fName' => $this->input->post('inputFName'),
-			'company_midInit' => $this->input->post('inputMI'),
+			'company_lName' => ucfirst(strtolower($this->input->post('inputLName'))),
+			'company_fName' => ucfirst(strtolower($this->input->post('inputFName'))),
+			'company_midInit' => strtolower($this->input->post('inputMI')),
 			'company_yearFounded' => $this->input->post('inputYear'),
-			'company_name' => $this->input->post('inputCName'),
+			'company_name' => ucfirst(strtolower($this->input->post('inputCName'))),
 			'company_businessType' => $this->input->post('inputBusinessType'),
 			'company_about' => $this->input->post('inputDescription'),
 			);
