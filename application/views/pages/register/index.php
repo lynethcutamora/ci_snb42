@@ -34,7 +34,7 @@
   <body class="hold-transition register-page">
     <div class="container">
       <div class="register-logo">
-        <a href="../../index2.html"><b>Start</b>&Boost</a>
+        <a href="<?php echo base_url()."pages/index";?>"><b>Start</b>&Boost</a>
       </div>
 
       <div class="register-box-body">

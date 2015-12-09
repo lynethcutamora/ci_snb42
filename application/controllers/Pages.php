@@ -19,7 +19,8 @@ class Pages extends CI_Controller {
 	#MAO NI ANG pang Display og Pages.....ang UNDERSCORE kai mao ni para dili maka access ang mga users sa domain...
 	public function _landing()
 	{
-		$this->load->view('pages/content');
+		$data['error']="";
+		$this->load->view('pages/content',$data);
 		$this->load->view('pages/footer');
 	}
 	#MAO NI ang MO GAWAS BASTA MAKA LOGIN NA ANG USER
@@ -297,34 +298,36 @@ class Pages extends CI_Controller {
 
 	public function login()
 	{
-
+		$isCheck=false;
 		$this->db->where('user_emailAdd', $this->input->post('email'));
 		$this->db->where('user_password', md5($this->input->post('password')));
 		$query = $this->db->get('user_md');
 		
-		if($query->num_rows == 1)
+		if($query->num_rows()==1)
 		{
-			$query = true;
+			$isCheck = true;
 		}
-		foreach ($query->result() as $row)
+		
+		if($isCheck) // if the user's credentials validated...
 		{
-       		$userId = $row->userId;
+			foreach ($query->result() as $row)
+			{
+	       		$userId = $row->userId;
 
-		}
-		if($query) // if the user's credentials validated...
-		{
+			}
 			$data = array(
 				'userId' => $userId,
 				'user_emailAdd' => $this->input->post('email')
 				
 			);
 			$this->session->set_userdata($data);
-			redirect('../pages/index');
+			$this->index();
 		}
 		else // incorrect username or password
 		{
-
-			$this->index();
+			$data['error']="incorrect username or password";
+		$this->load->view('pages/content',$data);
+		$this->load->view('pages/footer');
 		}
 	}
 
