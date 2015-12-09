@@ -7,6 +7,7 @@
     		$_SESSION['pages']='profile';
     include("../dashboard/fixed.php");?>
     <?php include("content.php");?>
-    <?php include("../dashboard/footer.php");?>
+    
     <?php include("../dashboard/controlsidebar.php");?>
-    <?php include("../dashboard/end.php");}?>
+    <?php include("../dashboard/end.php");?>
+    <?php include("../dashboard/footer.php");}?>
