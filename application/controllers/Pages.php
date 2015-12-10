@@ -56,8 +56,8 @@ class Pages extends CI_Controller {
 		$this->db->select('*');
 		$this->db->from('user_md a');
 		$this->db->join('user_dtl b', 'a.userId=b.userId','left');
-		$this->db->join('company_dtl c', 'c.userId=b.userId','left');
-		$this->db->join('userpost d', 'd.userId=b.userId');
+		$this->db->join('company_dtl c', 'c.userId=a.userId','left');
+		$this->db->join('userpost d', 'd.userId=a.userId');
 		$this->db->join('avatar_dtl e', 'e.userId=d.userId');
 		$this->db->order_by('postDate', 'DESC');
 		$query = $this->db->get();
@@ -807,10 +807,10 @@ class Pages extends CI_Controller {
                   ";
 
                   if($this->validUpvote($postId)=='false'){
-            	  echo "<td><button id='add' class='btn btn-default btn-xs'><i class='fa fa-arrow-circle-up'></i> Upvote</button> </form></td>";
+            	  echo "<td><button id='add' class='btn btn-default btn-xs'><i class='fa fa-arrow-circle-up'></i> Upvote</button> </td></form>";
             	 }
             	  else{
-            	   	echo "<td><button class='btn btn-default btn-xs disabled' disabled><i class='fa fa-arrow-circle-up'></i> Upvoted</button></form></td>";
+            	   	echo "<td><button class='btn btn-default btn-xs disabled' disabled><i class='fa fa-arrow-circle-up'></i> Upvoted</button></td></form>";
             	  }
 
                 echo "</table>
@@ -829,20 +829,13 @@ class Pages extends CI_Controller {
 
 	
 	}
-	public function validUpvote($postId)
-	{
-		$this->db->where('postId', $postId);
-		$this->db->where('userId', $this->session->userdata('userId'));
-        $query = $this->db->get('upvote_dtl');
-        if($query->num_rows()>0){
-        	return 'true';
-        }
-        else
-        	return 'false';
-	
-	}
 	public function upvote()
 	{
+
+		$this->form_validation->set_rules('postId', 'Post Id', 'callback_postIdCheck');
+		if ($this->form_validation->run()==FALSE){
+			$this->post();
+		}else{
 		if($this->input->post('postId')!=''){
 		$data = array(
 				'voteStat' => '1',
@@ -855,8 +848,29 @@ class Pages extends CI_Controller {
 			$this->db->insert('upvote_dtl',$data);
 			$this->post();
 		}else
-		$this->post();
+		$this->index();
 	}
-
+	}
+	public function postIdCheck($str)
+	{	
+		$isCheck=false;
+		$this->db->where('postId', $str);
+		$this->db->where('userId', $this->session->userdata('userId'));
+		$query = $this->db->get('upvote_dtl');
+		
+		if($query->num_rows()>=1)
+		{
+			$isCheck = true;
+		}
+		
+		if ($isCheck==true)
+		{
+			return FALSE;
+		}
+		else
+		{
+			return TRUE;
+		}
+	}
 
 }

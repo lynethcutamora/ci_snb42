@@ -45,7 +45,7 @@
                       <div class="form-group">
                         <label for="inputLinks" class="col-sm-2 control-label">Links</label>
                         <div class="col-sm-10">
-
+                        <?php echo form_error('relatedlinks'); ?>
                           <input type="text" class="form-control"name="relatedlinks" id="relatedlinks" placeholder="Related Links (Separated by comma)" value="<?php echo set_value('relatedlinks'); ?>"/>
                         </div>
                       </div>
@@ -100,159 +100,25 @@
                   </div><!-- /.box-tools -->
                 </div><!-- /.box-header -->
                 <div class='box-body'>
-                  <h3><b><?php echo $postdtl['postTitle'];?></b></h3>
+                  <h3><b><a href="" ><?php echo $postdtl['postTitle'];?></a></b></h3>
                   <p><?php echo $postdtl['postContent'];?></p>
-                  <button class='btn btn-default btn-xs'><i class='fa fa-share'></i> Share</button>
-                  <button class='btn btn-default btn-xs'><i class='fa fa-arrow-circle-up'></i> Upvote</button>
-                  <span class='pull-right text-muted'>127 Upvotes - 3 comments</span>
+                  <table><tr><td>
+                  <button class='btn btn-default btn-xs'><i class='fa fa-share'></i> Share</button></td>
+                  <form method="POST" action="<?php echo base_url()."pages/upvote";?>"> 
+                  
+                    <input type="text" hidden="true" name="postId" value="<?php echo $postdtl['postId'];?>">
+                      <?php if($this->post->validUpvote($postdtl['postId'])=='false'){
+                echo "<td><button id='add' class='btn btn-default btn-xs'><i class='fa fa-arrow-circle-up'></i> Upvote</button> </td></form>";
+               }
+                else{
+                  echo "<td><button class='btn btn-default btn-xs disabled' disabled><i class='fa fa-arrow-circle-up'></i> Upvoted</button></td></form>";
+                }?></table>
+                </form>
+                  <span class='pull-right text-muted'><?php $this->post->upvotecount($postdtl['postId']);?> - 3 comments</span>
                 </div><!-- /.box-body -->
-                <?php
+               
 
-                    $this->db->select('*');
-                    $this->db->from('user_md a');
-
-                    $this->db->join('company_dtl c', 'c.userId=a.userId','left');
-                    $this->db->join('comment_dtl b', 'b.userId=a.userId','left');
-                    $this->db->join('avatar_dtl d', 'd.userId=a.userId','left');
-                    $this->db->join('user_dtl e', 'e.userId=a.userId','left');
-                    $this->db->where('postId', $postdtl['postId']);
-                    $this->db->where('commentType', '1');
-                    $query = $this->db->get();
-
-                    foreach ($query->result() as $row2)
-                    {
-                           echo "  <div class='box-footer box-comments'>
-                           
-                            <div class='box-comment'>
-                              <!-- User image -->
-                              <img class='img-circle img-sm' src='".base_url()."/user/".$row2->avatar_name."' alt='user image'>
-                              <div class='comment-text'>
-                                <span class='username'>
-                                ";
-                                if($row2->user_Type=='Ideator'||$row2->user_Type=='Investor')
-                                  {
-                                      if($row2->user_midInit==null)
-                                         echo $row2->user_fName."  ".$row2->user_lName;
-                                       else
-                                         echo $row2->user_fName." ".$row2->user_midInit.". ".$row2->user_lName;
-                                  }
-                                  else
-                                  {
-                                    echo $row2->company_name;
-                                  };
-                              echo " <span class='text-muted pull-right'>8:03 PM Today</span>
-                                </span><!-- /.username -->
-                                ".$row2->commentContent."
-                               <br/>
-                                <button class='btn btn-default btn-xs'><i class='fa fa-thumbs-o-up'></i> Upvote</button>
-                                <button class='btn btn-default btn-xs'><i class='fa fa-reply'></i> Reply</button><br/>
-                                    ";  
-
-
-                        $this->db->select('*');
-                        $this->db->from('user_md a');
-
-                        $this->db->join('company_dtl c', 'c.userId=a.userId','left');
-                        $this->db->join('comment_dtl b', 'b.userId=a.userId','left');
-                        $this->db->join('avatar_dtl d', 'd.userId=a.userId','left');
-                        $this->db->join('user_dtl e', 'e.userId=a.userId','left');
-                        $this->db->where('postId', $row2->postId);
-                        $this->db->where('commentId', $row2->commentId);
-                        $this->db->where('commentType', '2');
-                        $query = $this->db->get();
-                       if($query->num_rows()>0){
-                          echo "";
-                        }
-                        else{
-                          echo "<div class='box-footer'>
-
-                            <form action='#' method='post'>
-                              <img class='img-responsive img-circle img-sm' src='".base_url()."/user/".$userdtl['avatar_name']."' alt='alt text'>
-                              <!-- .img-push is used to add margin to elements next to floating images -->
-                              <div class='img-push'>
-                                <input type='text' name='comment' class='form-control input-sm' placeholder='Press enter to post comment'>
-                                   <input type='text' hidden='true' name='postId' value='".$postdtl["postId"]."'>
-                                   <input type='text' hidden='true' name='commentid' value='".$row2->commentId."'>
-                                   <input type='submit' name='btnComment' hidden='true' value='2' />
-                              </div>
-                            </form>
-                          </div><!-- /.box-footer -->";
-                        }
-                        foreach ($query->result() as $row)
-                        {
-                                echo "
-                                <div class='box-footer box-comments'>
-
-                            <div class='box-comment'>
-                              <!-- User image -->
-                              <img class='img-circle img-sm' src='".base_url()."/user/".$row->avatar_name."' alt='user image'>
-                              <div class='comment-text'>
-                                <span class='username'>
-                                  ";
-                                if($row->user_Type=='Ideator'||$row->user_Type=='Investor')
-                                  {
-                                      if($row->user_midInit==null)
-                                         echo $row->user_fName."  ".$row->user_lName;
-                                       else
-                                         echo $row->user_fName." ".$row->user_midInit.". ".$row->user_lName;
-                                  }
-                                  else
-                                  {
-                                    echo $row->company_name;
-                                  };
-                              echo "
-                                  <span class='text-muted pull-right'>8:03 PM Today</span>
-                                </span><!-- /.username -->
-                                ".$row->commentContent."<br/>
-                                <button class='btn btn-default btn-xs'><i class='fa fa-thumbs-o-up'></i> Upvote</button>
-                                <button class='btn btn-default btn-xs'><i class='fa fa-reply'></i> Reply</button><br/>
-                               
-                              </div><!-- /.comment-text -->
-                              ";
-                              if($query->num_rows()>0){
-                          echo "";
-                        }
-                        else{
-                          echo "<div class='box-footer'>
-
-                            <form action='#' method='post'>
-                              <img class='img-responsive img-circle img-sm' src='".base_url()."/user/".$userdtl['avatar_name']."' alt='alt text'>
-                              <!-- .img-push is used to add margin to elements next to floating images -->
-                              <div class='img-push'>
-                                <input type='text' name='comment' class='form-control input-sm' placeholder='Press enter to post comment'>
-                                   <input type='text' hidden='true' name='postId' value='".$postdtl["postId"]."'>
-                                   <input type='text' hidden='true' name='commentid' value='".$row->commentId."'>
-                                   <input type='submit' name='btnComment' hidden='true' value='2' />
-                              </div>
-                            </form>
-                          </div><!-- /.box-footer -->";
-                        }
-                           echo "   </div>
-                            </div><!-- /.box-comment -->
-                            ";
-                              }
-                         echo" </div><!-- /.comment-text -->
-                            </div><!-- /.box-comment -->
-                          </div><!-- /.box-footer -->";
-                    }
-                ?>  
-
-
-
-                          <div class="box-footer">
-                    
-                            <form action="../pages/comment" method="post">
-                              <img class="img-responsive img-circle img-sm" src="<?php echo base_url();?>/user/<?php echo $userdtl['avatar_name']?>" alt="alt text">
-                              <!-- .img-push is used to add margin to elements next to floating images -->
-                              <div class="img-push">
-                                <input type="text" name="comment" class="form-control input-sm" placeholder="Press enter to post comment">
-                                <input type="text" hidden="true" name="postId" value="<?php echo $postdtl['postId'];?>">
-                                <input type='text' hidden='true' name='commentid' value='<?php echo uniqid();?>'>
-                                <input type="submit" name="btnComment" hidden="true" value="1" />
-                              </div>
-                            </form>
-                       
-                          </div><!-- /.box-footer -->
+                          
               </div><!-- /.box -->
               
                   </div>
