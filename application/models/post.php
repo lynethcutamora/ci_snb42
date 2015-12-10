@@ -44,7 +44,19 @@ class Post extends CI_Model {
 
                 return $query;
         }
-
+        public function save($content, $type,$postId)
+        {
+                if($content==null){
+                        
+                }else
+                {
+                        $this->db->set('extContent', $content);
+                        $this->db->set('extId', uniqid());
+                        $this->db->set('extType',$type);
+                        $this->db->set('postId',$postId);
+                        $this->db->insert('userpost_ext');
+                }
+        }
         
 
       

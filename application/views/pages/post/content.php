@@ -26,7 +26,7 @@
                     <p>Post New Idea</p>
                   </div><!-- /.box-header -->
                   <!-- form start -->
-                 <?php echo form_open('../pages/postIdea',"class=form-horizontal"); ?>
+                 <?php echo form_open_multipart('../pages/postIdea',"class=form-horizontal"); ?>
                     <div class="box-body">
                       <div class="form-group">
                         <label for="ideatitle" class="col-sm-2 control-label">Title*</label>
@@ -51,10 +51,10 @@
                       </div>
                     </div><!-- /.box-body -->
                     <div class="box-footer">
-                      <form action="" method="post" enctype="multipart/form-data">
-                          <input class="pull-left" type="file" name="fileToUpload" id="fileToUpload">
+                     
+                         <?php echo form_upload('pic'); ?>
                           <input class="btn btn-info pull-right" type="submit" value="Post Idea" id="submit" name="button">
-                      </form>
+                  </form>
                     
                     </div><!-- /.box-footer -->
                  

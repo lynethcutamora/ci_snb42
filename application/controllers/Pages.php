@@ -621,7 +621,8 @@ class Pages extends CI_Controller {
          	$this->post();
         }
         else
-		{
+		{	
+			$url = $this->do_upload();
      	 	$datetime = date('Y-m-d H:i:s'); 
      	 	$postId = uniqid();
      	 	$data = array(
@@ -632,14 +633,24 @@ class Pages extends CI_Controller {
 			'userId' => $this->session->userdata('userId'),
 			'postDate' =>$datetime
 			);
-
+			$this->post->save(uniqid(), '1',$postId);
 			$this->db->insert('userpost', $data);
 			$this->post();
+
 		}
 			
 	}
-
-
+	private function do_upload()
+	{
+		$type = explode('.', $_FILES["pic"]["name"]);
+		$type = strtolower($type[count($type)-1]);
+		$url = "./post_image/".uniqid(rand()).'.'.$type;
+		if(in_array($type, array("jpg", "jpeg", "gif", "png")))
+			if(is_uploaded_file($_FILES["pic"]["tmp_name"]))
+				if(move_uploaded_file($_FILES["pic"]["tmp_name"],$url))
+					return $url;
+		return "";
+	}
 	public function showComment()
 	{
 		$query=$this->_userData();
