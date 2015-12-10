@@ -711,7 +711,9 @@ class Pages extends CI_Controller {
 
 			$this->db->insert('group_md',$data);
 			$this->db->insert('group_ext',$data2);
-			$this->group();
+
+			$groupId = substr($groupId, 0,10);
+			redirect('pages/group/'.$groupId);
 		}
 	}
 

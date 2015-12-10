@@ -98,7 +98,7 @@
                     <div class="col-sm-3 border-right">
                       <div class="description-block">
                       <span><?php echo $gold;?></span>
-                        <span class="description-text text-muted">GOLD</span>
+                        <span class="description-text text-muted">&nbsp;GOLD&nbsp;</span>
                       </div><!-- /.description-block -->
                     </div><!-- /.col -->
                     <div class="col-sm-3 border-right">
