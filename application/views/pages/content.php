@@ -96,14 +96,23 @@
 
                             <h2>Login</h2>
                             <div class="form-group">
-                                <input type="text" class="form-control" name="email" id="email" placeholder="Email Address" title="Please enter your Email address">
+                                <input type="text" class="form-control" required='required' name="email" id="email" placeholder="Email Address" title="Please enter your Email address">
                             </div>
                             <div class="form-group">
-                                <input type="password" class="form-control" name="password" id="password" placeholder="Password" title="Please enter your password">
+                                <input type="password" class="form-control" required='required' name="password" id="password" placeholder="Password" title="Please enter your password">
                             </div>
-                            <?php echo validation_errors(); ?>
+                          <?php 
+                            if($error!=""){
+                          ?>
+                                 <div class="alert alert-danger alert-dismissable">
+                                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                                      
+                                   <?php echo $error; ?>
+                                 </div>
+                          <?php }?>
+
                             <button name="login" type="submit" class="btn btn-primary form-control" id="submit">Log-in</button>
-                            <br/><br/>
+                         
                       </form>
                       <?php echo form_open('pages/register'); ?>
                             <button name="create" type="submit" class="btn btn-primary form-control" id="create">Create Account</button>

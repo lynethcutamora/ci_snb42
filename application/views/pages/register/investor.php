@@ -1,7 +1,12 @@
-
-                   
-                        <?php echo validation_errors(); ?>
-
+          <?php 
+            if(validation_errors()!=""){
+          ?>
+                 <div class="alert alert-danger alert-dismissable">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                    <h4><i class="icon fa fa-ban"></i> Alert!</h4>
+                   <?php echo validation_errors(); ?>
+                 </div>
+          <?php }?>
                       <?php echo form_open('../pages/register',"class=form-horizontal"); ?>
                       <div class="form-group">
                         <label for="inputLName" class="col-sm-2 control-label">Last Name*</label>
@@ -22,7 +27,7 @@
                         
                         </div><!-- /.form-group -->
                           <label class="col-sm-2 control-label">
-                            <input type="radio" name="r3" class="flat-red" value="F" <?php echo  set_radio('r3', 'F', TRUE); ?>>
+                            <input type="radio" name="r3" class="flat-red" value="F" <?php echo  set_radio('r3', 'F'); ?>>
                             &nbsp;Female
                           </label>
                           <label class="col-sm-2 control-label">
