@@ -69,9 +69,12 @@ class Pages extends CI_Controller {
 	{
 
 		$query=$this->_userData();
-		$data['countgroup'] = $this->countGroups();
+		
 		$data['data']=$query->result_array();
 		$data['pages']='dashboard';
+		$data['countgroup'] = $this->countGroups();
+		$groupquery= $this->groupdetails();
+		$data['groupdetails'] = $groupquery->result_array();
 		$this->load->view('pages/dashboard/fixed',$data);
 		$this->load->view('pages/dashboard/content',$data);
 		$this->load->view('pages/dashboard/footer');
@@ -88,6 +91,8 @@ class Pages extends CI_Controller {
 		$data['data']=$query->result_array();
 		$data['pages']='newsfeed';
 		$data['countgroup'] = $this->countGroups();
+		$groupquery= $this->groupdetails();
+		$data['groupdetails'] = $groupquery->result_array();
 		$this->load->view('pages/dashboard/fixed',$data);
 		$this->load->view('pages/newsfeedlatest/latestcontent'); 
 		$this->load->view('pages/dashboard/controlsidebar');
@@ -104,6 +109,8 @@ class Pages extends CI_Controller {
 		$data['data']=$query->result_array();
 		$data['pages']='newsfeed';
 		$data['countgroup'] = $this->countGroups();
+		$groupquery= $this->groupdetails();
+		$data['groupdetails'] = $groupquery->result_array();
 		$this->load->view('pages/dashboard/fixed',$data);
 		$this->load->view('pages/newsfeedonfire/onfirecontent'); 
 		$this->load->view('pages/dashboard/controlsidebar');
@@ -122,6 +129,8 @@ class Pages extends CI_Controller {
 		$data['data']=$query->result_array();
 		$data['pages']='newsfeed';
 		$data['countgroup'] = $this->countGroups();
+		$groupquery= $this->groupdetails();
+		$data['groupdetails'] = $groupquery->result_array();
 		$this->load->view('pages/dashboard/fixed',$data);
 		$this->load->view('pages/newsfeedtoprated/topratedcontent'); 
 		$this->load->view('pages/dashboard/controlsidebar');
@@ -138,6 +147,8 @@ class Pages extends CI_Controller {
 		$data['data']=$query->result_array();
 		$data['pages']='timeline';
 		$data['countgroup'] = $this->countGroups();
+		$groupquery= $this->groupdetails();
+		$data['groupdetails'] = $groupquery->result_array();
 		$this->load->view('pages/dashboard/fixed',$data);
 		$this->load->view('pages/timeline/content'); 
 		$this->load->view('pages/dashboard/controlsidebar');
@@ -155,6 +166,8 @@ class Pages extends CI_Controller {
 		$data['data']=$query->result_array();
 		$data['pages']='startup';
 		$data['countgroup'] = $this->countGroups();
+		$groupquery= $this->groupdetails();
+		$data['groupdetails'] = $groupquery->result_array();
 		$this->load->view('pages/dashboard/fixed',$data);
 		$this->load->view('pages/Products/content'); 
 		$this->load->view('pages/dashboard/controlsidebar');
@@ -164,7 +177,45 @@ class Pages extends CI_Controller {
 		}
 	}
 
-	public function group()
+	public function group($groupId=null)
+	{	
+		if(($this->session->userdata('userId')!=""))
+		{
+			if(isset($groupId))
+			{
+				$query=$this->_userData();
+				$data['data']=$query->result_array();
+				$data['pages']='group';
+				$data['countgroup'] = $this->countGroups();
+				$groupquery= $this->groupdetails();
+				$data['groupdetails'] = $groupquery->result_array();
+				$groupDetails= $this->post->groupdetails($groupId,$this->session->userdata('userId'));
+				if($groupDetails->num_rows()==0) {
+					$groupDetails->result_array();
+
+					$this->load->view('pages/dashboard/fixed',$data);
+					$this->load->view('pages/group/nogroup',$data); 
+					$this->load->view('pages/dashboard/controlsidebar');
+					$this->load->view('pages/dashboard/end');
+				}else{
+				$data['groupDtl'] = $groupDetails->result_array();
+				$projectdtl= $this->post->projectdtl($groupId);
+				$data['projectdtl'] = $projectdtl->result_array();
+				$this->load->view('pages/dashboard/fixed',$data);
+				$this->load->view('pages/group/groupcontent',$data); 
+				$this->load->view('pages/dashboard/controlsidebar');
+				$this->load->view('pages/dashboard/end');
+				}
+			}
+			else $this->index();
+
+		}else{
+			$this->_landing();
+		}
+	}
+
+
+	public function newgroup()
 	{
 		if(($this->session->userdata('userId')!=""))
 		{
@@ -175,7 +226,7 @@ class Pages extends CI_Controller {
 		$groupquery= $this->groupdetails();
 		$data['groupdetails'] = $groupquery->result_array();
 		$this->load->view('pages/dashboard/fixed',$data);
-		$this->load->view('pages/group/groupcontent',$data); 
+		$this->load->view('pages/group/creategroup',$data); 
 		$this->load->view('pages/dashboard/controlsidebar');
 		$this->load->view('pages/dashboard/end');
 		}else{
@@ -190,6 +241,8 @@ class Pages extends CI_Controller {
 		$data['data']=$query->result_array();
 		$data['pages']='profile';
 		$data['countgroup'] = $this->countGroups();
+		$groupquery= $this->groupdetails();
+		$data['groupdetails'] = $groupquery->result_array();
 		$this->load->view('pages/dashboard/fixed',$data);
 		$this->load->view('pages/profile/content',$data); 
 		$this->load->view('pages/dashboard/controlsidebar');
@@ -206,6 +259,8 @@ class Pages extends CI_Controller {
 		$data['data']=$query->result_array();
 		$data['pages']='post';
 		$data['countgroup'] = $this->countGroups();
+		$groupquery= $this->groupdetails();
+		$data['groupdetails'] = $groupquery->result_array();
 		$query=$this->_alluserData();
 		$data['alldata']=$query->result_array();
 
@@ -624,7 +679,7 @@ class Pages extends CI_Controller {
 	#THIS SECTION IS FOR GROUP SECTION
 	public function countGroups(){
 		$this->db->select('groupId');
-		$this->db->from('group_md');
+		$this->db->from('group_ext');
 		$this->db->where('userId',$this->session->userdata('userId'));
 		$num_results=$this->db->count_all_results();
 
@@ -650,11 +705,12 @@ class Pages extends CI_Controller {
 
 			$data2 = array(
 				'groupId' => $groupId,
-				'membersid' => $this->session->userdata('userId'),
+				'userId' => $this->session->userdata('userId'),
+				'addedDate' => now(),
 			);
 
 			$this->db->insert('group_md',$data);
-			$this->db->insert('group_dtl',$data2);
+			$this->db->insert('group_ext',$data2);
 			$this->group();
 		}
 	}
@@ -662,7 +718,7 @@ class Pages extends CI_Controller {
 	public function groupdetails(){
 		$this->db->select('*');
 		$this->db->from('group_md a');
-		$this->db->join('group_dtl b','b.groupId=a.groupId','left');
+		$this->db->join('group_ext b','b.groupId=a.groupId','left');
 		$this->db->where('a.userId',$this->session->userdata('userId'));
 		$query=$this->db->get();
 

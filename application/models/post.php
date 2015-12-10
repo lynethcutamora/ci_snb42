@@ -23,6 +23,28 @@ class Post extends CI_Model {
         	return 'false';
 	
 	}
+        public function groupdetails($groupId,$userId)
+        {
+                $this->db->select('*');
+                $this->db->from('group_md a');
+                $this->db->join('group_ext b','b.groupId=a.groupId','left');
+                $this->db->where('a.groupId',$groupId);
+                $this->db->where('b.userId',$userId);
+                $query=$this->db->get();
+
+                return $query;
+        }
+         public function projectdtl($groupId)
+        {
+                $this->db->select('*');
+                $this->db->from('userpost a');
+                $this->db->join('investor_dtl b','b.postId=a.postId','left');
+                $this->db->where('a.postType',$groupId);
+                $query=$this->db->get();
+
+                return $query;
+        }
+
         
 
       

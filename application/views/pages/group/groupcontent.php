@@ -20,7 +20,7 @@
           <div class="col-md-12">
             <div class="col-md-9">
               <div class="box box-widget widget-user">
-                <?php foreach($groupdetails as $row):?>
+                <?php foreach($groupDtl as $row):?>
 
                 <!-- Add the bg color to the header using any of the bg-* classes -->
                 <div class="widget-user-header bg-blue" style="background: url('<?php echo base_url();?>/user/<?php echo $row['groupCoverPic']?>') center center;">
@@ -32,7 +32,7 @@
                   <div class="row">
                     <div class="col-sm-3 border-right">
                       <div class="description-block">
-                        <h5 class="description-header"><?php echo count($row['membersid']);?></h5>
+                        <h5 class="description-header"><?php echo count($row['userId']);?></h5>
                         <span class="description-text">MEMBERS</span>
                       </div><!-- /.description-block -->
                     </div><!-- /.col -->
@@ -305,10 +305,10 @@
                     </div>
                 </div><!-- /.box -->
 
-                <?php foreach($groupdetails as $row):?>
+                <?php foreach($projectdtl as $row):?>
                   <div class="box-body">
-                    <p><b>About <?php echo $row['projectname']?></b></p>
-                    <p><?php echo $row['projectdescription']?>.</p>
+                    <p><b>About <?php echo $row['postTitle']?></b></p>
+                    <p><?php echo $row['postContent']?>.</p>
                     <p><b>Investor(s):</b></p>
                     <div class='box-header'>
                         <div class='user-block'>
