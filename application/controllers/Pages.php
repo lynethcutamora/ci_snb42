@@ -59,6 +59,7 @@ class Pages extends CI_Controller {
 		$this->db->join('company_dtl c', 'c.userId=a.userId','left');
 		$this->db->join('userpost d', 'd.userId=a.userId');
 		$this->db->join('avatar_dtl e', 'e.userId=d.userId');
+		$this->db->where('d.userId',$this->session->userdata('userId'));
 		$this->db->order_by('postDate', 'DESC');
 		$query = $this->db->get();
 
@@ -237,12 +238,15 @@ class Pages extends CI_Controller {
 	public function profile()
 	{	if(($this->session->userdata('userId')!=""))
 		{
+
 		$query=$this->_userData();
 		$data['data']=$query->result_array();
 		$data['pages']='profile';
 		$data['countgroup'] = $this->countGroups();
 		$groupquery= $this->groupdetails();
 		$data['groupdetails'] = $groupquery->result_array();
+		$query=$this->_alluserData();
+		$data['alldata']=$query->result_array();
 		$this->load->view('pages/dashboard/fixed',$data);
 		$this->load->view('pages/profile/content',$data); 
 		$this->load->view('pages/dashboard/controlsidebar');
@@ -611,8 +615,7 @@ class Pages extends CI_Controller {
 	}
 
 	public function postIdea()
-	{
-
+	{	
 		 $this->form_validation->set_rules('ideatitle', 'Title', 'required|trim');
          $this->form_validation->set_rules('inputDescription', 'Description', 'required|trim');
          $this->form_validation->set_rules('relatedlinks', 'Links', 'trim');
@@ -639,7 +642,8 @@ class Pages extends CI_Controller {
 			$this->post->link($this->input->post('relatedlinks'), '2',$postId);
 			$this->post->image($url, '1',$postId);
 			$this->db->insert('userpost', $data);
-			redirect(base_url().'pages/post');
+				redirect('pages/profile');
+
 
 		}
 			
@@ -919,7 +923,7 @@ class Pages extends CI_Controller {
 			);
 
 			$this->db->insert('upvote_dtl',$data);
-			$this->post();
+			$this->profile();
 		}else
 		$this->index();
 	}

@@ -1,4 +1,24 @@
-<!-- Content Wrapper. Contains page content -->
+<script type="text/javascript">
+
+function saveScrollPositions(theForm) {
+
+if(theForm) {
+
+var scrolly = typeof window.pageYOffset != 'undefined' ? window.pageYOffset : document.documentElement.scrollTop;
+
+var scrollx = typeof window.pageXOffset != 'undefined' ? window.pageXOffset : document.documentElement.scrollLeft;
+
+theForm.scrollx.value = scrollx;
+
+theForm.scrolly.value = scrolly;
+
+}
+
+}
+
+</script>
+
+
       <?php
       //$badge = $totalRep;
                   
@@ -156,40 +176,51 @@
             </div><!-- /.col -->
             <div class="col-md-7">
               <!-- Horizontal Form -->
+                <div class="row">
+          
+            <div class="col-md-12">
+              <!-- Horizontal Form -->
                 <div class="box">
                   <div class="box-header with-border">
                     <p>Post New Idea</p>
                   </div><!-- /.box-header -->
                   <!-- form start -->
-                  <form class="form-horizontal">
+                 <?php echo form_open_multipart('../pages/postIdea',"class=form-horizontal"); ?>
                     <div class="box-body">
                       <div class="form-group">
-                        <label for="inputEmail3" class="col-sm-2 control-label">Title</label>
+                        <label for="ideatitle" class="col-sm-2 control-label">Title*</label>
                         <div class="col-sm-10">
-                          <input type="text" class="form-control" id="ideatitle" placeholder="Title"/>
+                        <?php echo form_error('ideatitle'); ?>
+                          <input type="text" class="form-control" name="ideatitle" id="ideatitle" placeholder="Title" value="<?php echo set_value('ideatitle'); ?>"/>
                         </div>
                       </div>
                       <div class="form-group">
-                        <label for="inputDescription" class="col-sm-2 control-label">Description</label>
+                        <label for="inputDescription" class="col-sm-2 control-label">Description*</label>
                         <div class="col-sm-10">
-                          <textarea class="form-control" id="inputDescription" placeholder="Description"></textarea>
+                         <?php echo form_error('inputDescription'); ?>
+                          <textarea class="form-control"name="inputDescription" id="inputDescription" placeholder="Description" value="<?php echo set_value('inputDescription'); ?>"></textarea>
                         </div>
                       </div>
                       <div class="form-group">
                         <label for="inputLinks" class="col-sm-2 control-label">Links</label>
                         <div class="col-sm-10">
-                          <input type="text" class="form-control" id="relatedlinks" placeholder="Related Links (Separated by comma)"/>
+                        <?php echo form_error('relatedlinks'); ?>
+                          <input type="text" class="form-control"name="relatedlinks" id="relatedlinks" placeholder="Related Links (Separated by comma)" value="<?php echo set_value('relatedlinks'); ?>"/>
                         </div>
                       </div>
                     </div><!-- /.box-body -->
                     <div class="box-footer">
-                      <form action="" method="post" enctype="multipart/form-data">
-                          <input class="pull-left" type="file" name="fileToUpload" id="fileToUpload">
-                          <input class="btn btn-info pull-right" type="submit" value="Post Idea" name="submit">
-                      </form>
+                     
+                         <?php echo form_upload('pic'); ?>
+                          <input class="btn btn-info pull-right" type="submit" value="Post Idea" id="submit" name="button">
+                  </form>
+                    
                     </div><!-- /.box-footer -->
-                </form>
-              </div><!-- /.box -->
+                 
+                    </div>
+               
+              </div>
+              </div>
               <div class="nav-tabs-custom">
                 <ul class="nav nav-tabs">
                   <li class="active"><a href="#activity" data-toggle="tab">Activity</a></li>
@@ -198,104 +229,95 @@
                 <div class="tab-content">
                   <div class="active tab-pane" id="activity">
                     <!-- Post -->
-                    <div class="post">
-                      <div class="box-body">
-                        <div class="box box-widget">
-                          <div class='box-header with-border'>
-                            <div class='user-block'>
-                              <img class='img-circle' src='../../images/team/index0.png' alt='user image'>
-                              <span class='username'><a href="#">Lyneth C. Cutamora</a>&nbsp;&nbsp;<i class='fa fa-star' style="color:#ffd700;"></i><b>&nbsp;&nbsp;1024</b></span>
-                              <span class='description'>7:30 PM Nov. 29, 2015</span>
-                            </div><!-- /.user-block -->
-                            <div class='box-tools'>
-                              <button class='btn btn-box-tool' data-widget='collapse'><i class='fa fa-minus'></i></button>
-                              <a href='#' class='pull-right btn-box-tool'><i class='fa fa-times'></i></a>
-                            </div><!-- /.box-tools -->
-                          </div><!-- /.box-header -->
-                          <div class='box-body'>
-                            <!-- post text -->
-                            <p>Far far away, behind the word mountains, far from the
-                              countries Vokalia and Consonantia, there live the blind
-                              texts. Separated they live in Bookmarksgrove right at</p>
-                            <p>the coast of the Semantics, a large language ocean.
-                              A small river named Duden flows by their place and supplies
-                              it with the necessary regelialia. It is a paradisematic
-                              country, in which roasted parts of sentences fly into
-                              your mouth.</p>
+                      <?php  foreach($data as $userdtl):?>
+            <?php foreach($alldata as $postdtl):?>
 
-                            <!-- Attachment -->
-                            <div class="attachment-block clearfix">
-                              <img class="attachment-img" src="../../dist/img/photo1.png" alt="attachment image">
-                              <div class="attachment-pushed">
-                                <h4 class="attachment-heading"><a href="#">Start&Boost</a></h4>
-                                <div class="attachment-text">
-                                  Related Links: <br/><a href="#">startandboost/video</a>, &nbsp;&nbsp;<a href="#">startandboost/article</a>
-                                </div><!-- /.attachment-text -->
-                              </div><!-- /.attachment-pushed -->
-                            </div><!-- /.attachment-block -->
+          <div class="row">
+          
+            <div class="col-md-12">
+            <!-- Box Comment -->
+              <div class="box box-widget">
+                <div class='box-header with-border'>
+                  <div class='user-block'>
+                    <img class='img-circle' src='<?php echo base_url();?>/user/<?php echo $postdtl['avatar_name']?>' alt='user image'>
+                    <span class='username'>
+                    <a href="#">
+                        <?php 
+                                  if($postdtl['user_Type']=='Ideator'||$postdtl['user_Type']=='Investor')
+                                  {
+                                      if($postdtl['user_midInit']==null)
+                                         echo $postdtl['user_fName']."  ".$postdtl['user_lName'];
+                                       else
+                                         echo $postdtl['user_fName']." ".$postdtl['user_midInit'].". ".$postdtl['user_lName'];
+                                  }
+                                  else
+                                  {
+                                    echo $postdtl['company_name'];
+                                  }
+                          ?>
+                      </a>
+                      </span>
+                    &nbsp;&nbsp;&nbsp;<button class='btn btn-default btn-xs'><i class='fa fa-star' style="color:Gold"></i> <span class="label label-primary">10</span> </button><button class='btn btn-default btn-xs'><i class='fa fa-star' style="color:Silver"></i><span class="label label-primary">5</span> </button><button class='btn btn-default btn-xs'><i class='fa fa-star' style="color:SandyBrown "></i><span class="label label-primary">20</span> </button>
+                    <span class='description'>    <?php echo $postdtl['postDate'];?></span>
+                  </div><!-- /.user-block -->
+                  <div class='box-tools'>
 
-                            <!-- Social sharing buttons -->
-                            <button class='btn btn-default btn-xs'><i class='fa fa-thumbs-o-up'></i> Upvote</button>
-                            <button class='btn btn-default btn-xs'><i class='fa fa-share'></i> Share</button>
-                            <span class='pull-right text-muted'>45 likes - 2 comments</span>
-                          </div><!-- /.box-body -->
-                          <div class='box-footer box-comments'>
-                            <div class='box-comment'>
-                              <!-- User image -->
-                              <img class='img-circle img-sm' src='../../images/team/index2.jpg' alt='user image'>
-                              <div class='comment-text'>
-                                <span class="username">
-                                  Alfie Dimpas
-                                  <span class='text-muted pull-right'>8:03 PM Today</span>
-                                </span><!-- /.username -->
-                                It is a long established fact that a reader will be distracted
-                                by the readable content of a page when looking at its layout.<br/>
-                                <button class='btn btn-default btn-xs'><i class='fa fa-thumbs-o-up'></i> Upvote</button>
-                                <button class='btn btn-default btn-xs'><i class='fa fa-reply'></i> Reply</button><br/>
-                                <form action="#" method="post">
-                                  <img class="img-responsive img-circle img-sm" src="../../images/team/index0.png" alt="alt text">
-                                  <!-- .img-push is used to add margin to elements next to floating images -->
-                                  <div class="img-push">
-                                    <input type="text" class="form-control input-sm" placeholder="Press enter to post comment">
-                                  </div>
-                                </form>
-                              </div><!-- /.comment-text -->
-                            </div><!-- /.box-comment -->
-                            <div class='box-comment'>
-                              <!-- User image -->
-                              <img class='img-circle img-sm' src='../../images/team/index3.jpg' alt='user image'>
-                              <div class='comment-text'>
-                                <span class="username">
-                                  Edelito Albaracin Jr.
-                                  <span class='text-muted pull-right'>8:03 PM Today</span>
-                                </span><!-- /.username -->
-                                The point of using Lorem Ipsum is that it has a more-or-less
-                                normal distribution of letters, as opposed to using
-                                'Content here, content here', making it look like readable English.<br/>
-                                <button class='btn btn-default btn-xs'><i class='fa fa-thumbs-o-up'></i> Upvote</button>
-                                <button class='btn btn-default btn-xs'><i class='fa fa-reply'></i> Reply</button><br/>
-                                <form action="#" method="post">
-                                  <img class="img-responsive img-circle img-sm" src="../../images/team/index0.png" alt="alt text">
-                                  <!-- .img-push is used to add margin to elements next to floating images -->
-                                  <div class="img-push">
-                                    <input type="text" class="form-control input-sm" placeholder="Press enter to post comment">
-                                  </div>
-                                </form>
-                              </div><!-- /.comment-text -->
-                            </div><!-- /.box-comment -->
-                          </div><!-- /.box-footer -->
-                          <div class="box-footer">
-                            <form action="#" method="post">
-                              <img class="img-responsive img-circle img-sm" src="../../images/team/index0.png" alt="alt text">
-                              <!-- .img-push is used to add margin to elements next to floating images -->
-                              <div class="img-push">
-                                <input type="text" class="form-control input-sm" placeholder="Press enter to post comment">
-                              </div>
-                            </form>
-                          </div><!-- /.box-footer -->
-                        </div><!-- /.box -->
-                      </div><!--/.body-->
-                    </div><!-- /.post -->
+                  
+                  </div><!-- /.box-tools -->
+                </div><!-- /.box-header -->
+                <div class='box-body'>
+                  <h5><b><a href="" ><?php echo $postdtl['postTitle'];?></a></b></h3>
+                  <p>
+                    <?php 
+                      $query=$this->post->showImage($postdtl['postId']);
+                      foreach ($query->result_array() as $row) {
+                        echo "<img src='".base_url().$row['extContent']."' height='200px' width='200px'>"; 
+                      }
+                    ?>
+                  </p>
+
+                  <p><h4><?php echo $postdtl['postContent'];?></h4></p>
+                  <p>
+                    <?php 
+                      $query=$this->post->showLinks($postdtl['postId']);
+
+                      foreach ($query->result_array() as $row) {
+                        echo "<p>Related Links:</p>";
+                        $myArray = explode(',', $row['extContent']);
+                           foreach ($myArray as $row) {
+                            
+                            echo "<a href='http://".$row."' target='_blank'>".$row."</a><br>"; 
+                            }
+                      }
+                    ?>
+                  </p>
+                  <table><tr><td>
+                  <button class='btn btn-default btn-xs'><i class='fa fa-share'></i> Share</button></td>
+                  <form method="POST" action="<?php echo base_url()."pages/upvote";?>" name="form"  onsubmit="return saveScrollPositions(this);"> 
+                  <input type="hidden" name="scrollx" id="scrollx" value="0" />
+
+                     <input type="hidden" name="scrolly" id="scrolly" value="0" />
+                    <input type="text" hidden="true" name="postId" value="<?php echo $postdtl['postId'];?>">
+                      <?php if($this->post->validUpvote($postdtl['postId'])=='false'){
+                echo "<td><button id='add' class='btn btn-default btn-xs'><i class='fa fa-arrow-circle-up'></i> Upvote</button> </td></form>";
+               }
+                else{
+                  echo "<td><button class='btn btn-default btn-xs disabled' disabled><i class='fa fa-arrow-circle-up'></i> Upvoted</button></td></form>";
+                }?></table>
+                </form>
+                  <span class='pull-right text-muted'><?php $this->post->upvotecount($postdtl['postId']);?> - 3 comments</span>
+                </div><!-- /.box-body -->
+               
+
+                          
+              </div><!-- /.box -->
+              
+                  </div>
+                  </div>
+
+<?php  endforeach;?>
+
+<?php  endforeach;?>
                   </div><!-- /.tab-pane -->
                  
                   <div class="tab-pane" id="settings">
@@ -449,3 +471,29 @@
             </div>
         </div>
       </div>
+    
+<?php
+
+$scrollx = 0;
+
+$scrolly = 0;
+
+if(!empty($_REQUEST['scrollx'])) {
+
+$scrollx = $_REQUEST['scrollx'];
+
+}
+
+if(!empty($_REQUEST['scrolly'])) {
+
+$scrolly = $_REQUEST['scrolly'];
+
+}
+
+?>
+
+<script type="text/javascript">
+
+  window.scrollTo(<?php echo "$scrollx" ?>, <?php echo "$scrolly" ?>);
+
+</script>

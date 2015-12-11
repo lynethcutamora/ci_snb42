@@ -120,7 +120,7 @@
                         $myArray = explode(',', $row['extContent']);
                            foreach ($myArray as $row) {
                             
-                            echo "<a href='www.".$row."'>".$row."</a><br>"; 
+                            echo "<a href='http://".$row."' target='_blank'>".$row."</a><br>"; 
                             }
                       }
                     ?>
