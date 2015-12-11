@@ -256,23 +256,35 @@ class Pages extends CI_Controller {
 		}
 	}
 
-		public function post()
+		public function post($postId=null)
 	{	if(($this->session->userdata('userId')!=""))
 		{
-		$query=$this->_userData();
-		$data['data']=$query->result_array();
-		$data['pages']='post';
-		$data['countgroup'] = $this->countGroups();
-		$groupquery= $this->groupdetails();
-		$data['groupdetails'] = $groupquery->result_array();
-		$query=$this->_alluserData();
-		$data['alldata']=$query->result_array();
+			if(isset($postId))
+			{
+				$query=$this->_userData();
+				$data['data']=$query->result_array();
+				$data['pages']='post';
+				$data['countgroup'] = $this->countGroups();
+				$postdtlquery= $this->post->postdtl($postId);
+				$data['postDetail'] = $postdtlquery->result_array();
+				if($postdtlquery->num_rows()==0) {
+				$this->load->view('pages/dashboard/fixed',$data);
+				$this->load->view('pages/post/content',$data); 
+				$this->load->view('pages/dashboard/controlsidebar');
+				$this->load->view('pages/dashboard/end');
+				}
+				else{
+						$this->load->view('pages/dashboard/fixed',$data);
+						$this->load->view('pages/post/content',$data); 
+						$this->load->view('pages/dashboard/controlsidebar');
+						$this->load->view('pages/dashboard/end');
+				}
 
-		$this->load->view('pages/dashboard/fixed',$data);
-		$this->load->view('pages/post/content',$data); 
-		$this->load->view('pages/dashboard/controlsidebar');
-		$this->load->view('pages/dashboard/end');
 
+			}else
+				$this->index();
+
+			
 		}else{
 			$this->_landing();
 		}

@@ -266,7 +266,7 @@ theForm.scrolly.value = scrolly;
                   </div><!-- /.box-tools -->
                 </div><!-- /.box-header -->
                 <div class='box-body'>
-                  <h5><b><a href="" ><?php echo $postdtl['postTitle'];?></a></b></h3>
+                  <h5><b><a href="<?php echo base_url()."pages/post/".$postdtl['postId'];?>" ><?php echo $postdtl['postTitle'];?></a></b></h3>
                   <p>
                     <?php 
                       $query=$this->post->showImage($postdtl['postId']);
