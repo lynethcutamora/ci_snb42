@@ -44,7 +44,44 @@ class Post extends CI_Model {
 
                 return $query;
         }
-        public function save($content, $type,$postId)
+          public function showImage($postId)
+        {
+                $this->db->select('*');
+                $this->db->from('userpost a');
+                $this->db->join('userpost_ext b','b.postId=a.postId','left');
+                $this->db->where('b.postId',$postId);
+                $this->db->where('b.extType','1');
+
+                $query=$this->db->get();
+
+                return $query;
+        }
+          public function showLinks($postId)
+        {
+                $this->db->select('*');
+                $this->db->from('userpost a');
+                $this->db->join('userpost_ext b','b.postId=a.postId','left');
+                $this->db->where('b.postId',$postId);
+                $this->db->where('b.extType','2');
+
+                $query=$this->db->get();
+
+                return $query;
+        }
+        public function image($content, $type,$postId)
+        {
+                if($content==null){
+
+                }else
+                {
+                        $this->db->set('extContent', $content);
+                        $this->db->set('extId', uniqid());
+                        $this->db->set('extType',$type);
+                        $this->db->set('postId',$postId);
+                        $this->db->insert('userpost_ext');
+                }
+        }
+        public function link($content, $type,$postId)
         {
                 if($content==null){
                         

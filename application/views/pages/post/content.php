@@ -100,8 +100,31 @@
                   </div><!-- /.box-tools -->
                 </div><!-- /.box-header -->
                 <div class='box-body'>
-                  <h3><b><a href="" ><?php echo $postdtl['postTitle'];?></a></b></h3>
-                  <p><?php echo $postdtl['postContent'];?></p>
+                  <h5><b><a href="" ><?php echo $postdtl['postTitle'];?></a></b></h3>
+                  <p>
+                    <?php 
+                      $query=$this->post->showImage($postdtl['postId']);
+                      foreach ($query->result_array() as $row) {
+                        echo "<img src='".base_url().$row['extContent']."' height='200px' width='200px'>"; 
+                      }
+                    ?>
+                  </p>
+
+                  <p><h4><?php echo $postdtl['postContent'];?></h4></p>
+                  <p>
+                    <?php 
+                      $query=$this->post->showLinks($postdtl['postId']);
+
+                      foreach ($query->result_array() as $row) {
+                        echo "<p>Related Links:</p>";
+                        $myArray = explode(',', $row['extContent']);
+                           foreach ($myArray as $row) {
+                            
+                            echo "<a href='www.".$row."'>".$row."</a><br>"; 
+                            }
+                      }
+                    ?>
+                  </p>
                   <table><tr><td>
                   <button class='btn btn-default btn-xs'><i class='fa fa-share'></i> Share</button></td>
                   <form method="POST" action="<?php echo base_url()."pages/upvote";?>"> 

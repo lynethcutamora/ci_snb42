@@ -623,8 +623,10 @@ class Pages extends CI_Controller {
         else
 		{	
 			$url = $this->do_upload();
+
      	 	$datetime = date('Y-m-d H:i:s'); 
      	 	$postId = uniqid();
+     	 	
      	 	$data = array(
 			'postId' => $postId,
 			'postTitle' =>	$this->input->post('ideatitle'),
@@ -633,9 +635,11 @@ class Pages extends CI_Controller {
 			'userId' => $this->session->userdata('userId'),
 			'postDate' =>$datetime
 			);
-			$this->post->save(uniqid(), '1',$postId);
+
+			$this->post->link($this->input->post('relatedlinks'), '2',$postId);
+			$this->post->image($url, '1',$postId);
 			$this->db->insert('userpost', $data);
-			$this->post();
+			redirect(base_url().'pages/post');
 
 		}
 			
