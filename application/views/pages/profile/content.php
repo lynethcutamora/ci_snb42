@@ -329,13 +329,10 @@ theForm.scrolly.value = scrolly;
                           <br/><br/>Change your avatar: <br/><br/>
                           <input type="file" name="fileToUpload" id="fileToUpload">
                         </div>
-                      </div><hr>
-                      <?php foreach ($data as $row):?>
-                        <?php if($row['user_Type']=='Ideator'){
-                            $this->load->view('pages/register/ideator');
-                          } ?>
-                      <?php endforeach;?>
+                      </div>
+                    </div>
                   </div><!-- /.tab-pane -->
+                </div>
                 </div><!-- /.tab-content -->
                 <div class="col-md-2">
               <div class="info-box">
