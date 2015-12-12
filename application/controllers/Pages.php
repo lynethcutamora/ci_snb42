@@ -204,12 +204,15 @@ class Pages extends CI_Controller {
 					$data['projectdtl'] = $projectdtl->result_array();
 					$memberinfo= $this->memberinfo($groupId);
 					$data['memberinfo'] = $memberinfo->result_array();
+					$search= $this->_searchpeople();
+					$data['searchpeople'] = $search->result_array();
 					$this->load->view('pages/dashboard/fixed',$data);
 					$this->load->view('pages/group/groupcontent',$data); 
 					$this->load->view('pages/dashboard/controlsidebar');
 					$this->load->view('pages/dashboard/end');
 				}
 			}
+			
 			else $this->index();
 
 		}else{
@@ -783,6 +786,16 @@ class Pages extends CI_Controller {
 			$this->db->where('userId',$this->session->userdata('userId'));
 			$this->group();
 		}
+	}
+
+	public function _searchpeople(){
+		$this->db->select('*');
+		$this->db->from('user_dtl');
+		$this->db->like('user_fName',$this->input->post('txtsearch'),'both');
+		$this->db->or_like('user_lName',$this->input->post('txtsearch'),'both');
+		$query=$this->db->get();
+
+		return $query;
 	}
 
 	public function memberinfo($groupid){

@@ -288,7 +288,7 @@
                     <h3 class="box-title">Team Members</h3>
                   </div><!-- /.box-header -->
                     <div class='box-header with-border'>
-                      <?php foreach($data as $row):?>
+                      <?php foreach($memberinfo as $row):?>
                       <div class='user-block'>
                         <img class='img-circle' src='<?php echo base_url();?>/user/<?php echo $row['avatar_name']?>' alt='user image'>
                           <span class='username'><a href="#"><?php echo $row['user_fName']." ".$row['user_midInit'].". ".$row['user_lName']?></a></span>
@@ -297,7 +297,7 @@
                       <?php  endforeach;?>
                     </div><!-- /.box-header -->
                     <div class="box-footer">
-                      <form method="post" action="">
+                      <form method="post" action="#">
                         <div class="input-group">
                         <input class="form-control" placeholder="Search people" name="txtsearch" required="required">
                           <div class="input-group-btn">
@@ -309,14 +309,16 @@
                   </div><!-- /.box -->
                 <?php if(isset($_POST['txtsearch'])&&isset($_POST['txtsearch'])){
                     echo '<div class="box box-solid">
-                            <div class="box box-solid">
                               <div class="box-header with-border">
-                                <h4 class="box-title">Search Results</h4>
-                              </div>
-                            </div>
-                            <div class="box-header with-border">
-                            </div>
-                            <div class="box-footer">
+                                <h4>Search Results&nbsp;&nbsp;<span class="label bg-green pull-right">'.count($searchpeople).'</span></h4>
+                              </div>';
+                      foreach ($searchpeople as $row):
+                        echo'<div class="box-body">';
+                              echo '<span class="pull-left"><i class="fa fa-user" style="color:gray;"></i></span>
+                                    <p class="text-muted">&nbsp;&nbsp;'.$row['user_fName']." ".$row['user_midInit'].". ".$row['user_lName'].'</p>';
+                        echo'</div>';
+                      endforeach;
+                    echo '<div class="box-footer">
                               <form method="post" action="">
                                 <button type="submit"class="btn btn-deafult pull-right" name="btndone">done</button>         
                               </form>
