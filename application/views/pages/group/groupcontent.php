@@ -291,8 +291,8 @@
                       <div class='user-block'>
                       <?php foreach($data as $row):?>
                         <img class='img-circle' src='<?php echo base_url();?>/user/<?php echo $row['avatar_name']?>' alt='user image'>
-                          <span class='username'><a href="#">Lyneth C. Cutamora</a></span>
-                          <span class='description'>Reputation:<span class="pull-right"><i class='fa fa-star' style="color:#ffd700;"></i><b>&nbsp;&nbsp;1024</b></span></span>
+                          <span class='username'><a href="#"><?php echo $row['user_fName']." ".$row['user_midInit'].". ".$row['user_lName']?></a></span>
+                          <span class='description'>Reputation:<span class="pull-right"><i class='fa fa-star' style="color:#ffd700;"></i><b>&nbsp;&nbsp;0</b></span></span>
                       </div><!-- /.user-block -->
                       <?php  endforeach;?>
                     </div><!-- /.box-header -->

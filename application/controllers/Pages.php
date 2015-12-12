@@ -199,13 +199,15 @@ class Pages extends CI_Controller {
 					$this->load->view('pages/dashboard/controlsidebar');
 					$this->load->view('pages/dashboard/end');
 				}else{
-				$data['groupDtl'] = $groupDetails->result_array();
-				$projectdtl= $this->post->projectdtl($groupId);
-				$data['projectdtl'] = $projectdtl->result_array();
-				$this->load->view('pages/dashboard/fixed',$data);
-				$this->load->view('pages/group/groupcontent',$data); 
-				$this->load->view('pages/dashboard/controlsidebar');
-				$this->load->view('pages/dashboard/end');
+					$data['groupDtl'] = $groupDetails->result_array();
+					$projectdtl= $this->post->projectdtl($groupId);
+					$data['projectdtl'] = $projectdtl->result_array();
+					$memberinfo= $this->memberinfo($groupId);
+					$data['memberinfo'] = $memberinfo->result_array();
+					$this->load->view('pages/dashboard/fixed',$data);
+					$this->load->view('pages/group/groupcontent',$data); 
+					$this->load->view('pages/dashboard/controlsidebar');
+					$this->load->view('pages/dashboard/end');
 				}
 			}
 			else $this->index();
@@ -783,8 +785,20 @@ class Pages extends CI_Controller {
 		}
 	}
 
+	public function memberinfo($groupid){
+		$this->db->select('*');
+		$this->db->from('user_dtl a');
+		$this->db->join('avatar_dtl b', 'a.userId=b.userId','left');
+		$this->db->join('badge_dtl c', 'a.userId=c.userId', 'left');
+		$this->db->join('group_md d', 'a.userId=d.userId', 'left');
+		$this->db->where('d.groupId',$groupid);
+		$query=$this->db->get();
+
+		return $query;
+	}
+
 	public function badge()
-	{
+	{ 
 		if(($this->session->userdata('userId')==""))
 		{
 			$this->load->view('pages/profile/index');
