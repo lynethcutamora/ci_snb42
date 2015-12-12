@@ -44,6 +44,7 @@ class Pages extends CI_Controller {
 		$this->db->join('user_dtl b', 'b.userId=a.userId','left');
 		$this->db->join('company_dtl c', 'c.userId=a.userId','left');
 		$this->db->join('avatar_dtl d', 'd.userId=a.userId','left');
+		$this->db->join('location_dtl e', 'e.userId=a.userId','left');
 		$this->db->where('a.userId', $this->session->userdata('userId'));
 
 
