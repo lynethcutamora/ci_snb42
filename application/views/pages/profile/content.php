@@ -121,24 +121,28 @@ theForm.scrolly.value = scrolly;
                     <div class="col-sm-3 border-right">
                       <div class="description-block">
                       <span><?php echo $gold;?></span>
-                        <span class="description-text text-muted">&nbsp;GOLD&nbsp;</span>
+                      </br>
+                        <span class="description-text text-muted">GOLD</span>
                       </div><!-- /.description-block -->
                     </div><!-- /.col -->
                     <div class="col-sm-3 border-right">
                       <div class="description-block">
-                      <span><?php echo $silver;?></span> 
+                      <span><?php echo $silver;?></span>
+                      </br> 
                         <span class="description-text text-muted">SILVER</span>
                       </div><!-- /.description-block -->
                     </div><!-- /.col -->
                     <div class="col-sm-3 border-right">
                       <div class="description-block">
-                      <span><?php echo $bronze;?></span> 
+                      <span><?php echo $bronze;?></span>
+                      </br> 
                         <span class="description-text text-muted">BRONZE</span>
                       </div><!-- /.description-block -->
                     </div><!-- /.col -->
                     <div class="col-sm-3 border-right">
                       <div class="description-block">
                       <span><?php echo $black;?></span>
+                      </br>
                         <span class="description-text text-muted">BLACK</span>
                       </div><!-- /.description-block -->
                     </div><!-- /.col -->
