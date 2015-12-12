@@ -288,8 +288,8 @@
                     <h3 class="box-title">Team Members</h3>
                   </div><!-- /.box-header -->
                     <div class='box-header with-border'>
-                      <div class='user-block'>
                       <?php foreach($data as $row):?>
+                      <div class='user-block'>
                         <img class='img-circle' src='<?php echo base_url();?>/user/<?php echo $row['avatar_name']?>' alt='user image'>
                           <span class='username'><a href="#"><?php echo $row['user_fName']." ".$row['user_midInit'].". ".$row['user_lName']?></a></span>
                           <span class='description'>Reputation:<span class="pull-right"><i class='fa fa-star' style="color:#ffd700;"></i><b>&nbsp;&nbsp;0</b></span></span>
@@ -297,14 +297,34 @@
                       <?php  endforeach;?>
                     </div><!-- /.box-header -->
                     <div class="box-footer">
-                      <div class="input-group">
-                        <div class="input-group-btn">
-                          <button class="btn btn-success pull-right" value="addmember"><i class="fa fa-user-plus"></i>&nbsp;&nbsp;&nbsp;Add member</button>
+                      <form method="post" action="">
+                        <div class="input-group">
+                        <input class="form-control" placeholder="Search people" name="txtsearch" required="required">
+                          <div class="input-group-btn">
+                            <button type="submit"class="btn btn-success pull-right" name="btnsearch"><i class="fa fa-search"></i></button>
+                          </div>
                         </div>
-                      </div>
+                      </form>
                     </div>
-                </div><!-- /.box -->
-
+                  </div><!-- /.box -->
+                <?php if(isset($_POST['txtsearch'])&&isset($_POST['txtsearch'])){
+                    echo '<div class="box box-solid">
+                            <div class="box box-solid">
+                              <div class="box-header with-border">
+                                <h4 class="box-title">Search Results</h4>
+                              </div>
+                            </div>
+                            <div class="box-header with-border">
+                            </div>
+                            <div class="box-footer">
+                              <form method="post" action="">
+                                <button type="submit"class="btn btn-deafult pull-right" name="btndone">done</button>         
+                              </form>
+                            </div>
+                          </div>
+                    ';
+                  }
+                ?>
                 <?php foreach($projectdtl as $row):?>
                   <div class="box-body">
                     <p><b>About <?php echo $row['postTitle']?></b></p>
