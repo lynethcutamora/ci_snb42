@@ -841,6 +841,15 @@ class Pages extends CI_Controller {
 		return $query;
 	}
 
+	public function addmember($groupid,$userid){
+		$data = array(
+				'groupId' => $groupid,
+				'userId' => $userid
+			);
+
+		$this->db->inset('group_ext',$data);
+	}
+
 	public function badge()
 	{ 
 		if(($this->session->userdata('userId')==""))

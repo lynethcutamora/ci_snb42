@@ -307,26 +307,30 @@
                       </form>
                     </div>
                   </div><!-- /.box -->
-                <?php if(isset($_POST['txtsearch'])&&isset($_POST['txtsearch'])){
+                <?php if(isset($_POST['txtsearch'])){
                     echo '<div class="box box-solid">
                               <div class="box-header with-border">
                                 <h4>Search Results&nbsp;&nbsp;<span class="label bg-green pull-right">'.count($searchpeople).'</span></h4>
                               </div>';
                       foreach ($searchpeople as $row):
                         echo'<div class="box-body">';
+                          echo '<form method="post" action="#">';
                               echo '<span class="pull-left"><i class="fa fa-user" style="color:gray;"></i></span>
-                                    <p class="text-muted">&nbsp;&nbsp;'.$row['user_fName']." ".$row['user_midInit'].". ".$row['user_lName'].'</p>';
+                                    <p class="text-muted">&nbsp;&nbsp;'.$row['user_fName']." ".$row['user_midInit'].". ".$row['user_lName'].'
+                                    <span class="pull-right"><button name="btnaddmember" class="form-control btn-primary" type="submit"><i class="fa fa-user-plus"></i></button></span></p>';
+                          echo '</form>';
                         echo'</div>';
                       endforeach;
                     echo '<div class="box-footer">
                               <form method="post" action="">
-                                <button type="submit"class="btn btn-deafult pull-right" name="btndone">done</button>         
+                                <button type="submit"class="btn btn-deafult pull-left" name="btndone">done</button>         
                               </form>
                             </div>
                           </div>
                     ';
                   }
                 ?>
+
                 <?php foreach($projectdtl as $row):?>
                   <div class="box-body">
                     <p><b>About <?php echo $row['postTitle']?></b></p>
