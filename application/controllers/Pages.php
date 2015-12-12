@@ -44,6 +44,7 @@ class Pages extends CI_Controller {
 		$this->db->join('user_dtl b', 'b.userId=a.userId','left');
 		$this->db->join('company_dtl c', 'c.userId=a.userId','left');
 		$this->db->join('avatar_dtl d', 'd.userId=a.userId','left');
+		$this->db->join('location_dtl e', 'e.userId=a.userId','left');
 		$this->db->where('a.userId', $this->session->userdata('userId'));
 
 
@@ -634,7 +635,37 @@ class Pages extends CI_Controller {
 			$this->index();
         }
 	}
-
+	public function messageProfile()
+              {
+                $this->form_validation->set_rules('inputDescription', 'Description', 'required|trim');
+                if ($this->form_validation->run() == FALSE)
+                {
+                    $this->post();
+                }
+                else
+                {
+                	$post=$this->input->post('submit');
+                	if(!isset($post))
+					{
+						$this->load->view('pages/profile/index');
+					}
+	                else
+	                {
+	                   $datetime = date('Y-m-d H:i:s'); 
+	                   $msgId = uniqid('mi');
+	                    
+	                   $data = array(
+	                  'msgId' => $msgId,
+	                  'msg_Content' =>$this->input->post('inputDescription'),
+	                  'msg_fromUserId' => '566c665d01',
+	                  'userId' => $this->session->userdata('userId'),
+	                  'msg_Date' =>$datetime
+	                  );
+	                  $this->db->insert('msg_dtl', $data);
+	                   redirect('pages/profile');
+	               	}
+                }
+              }
 	public function postIdea()
 	{	
 		 $this->form_validation->set_rules('ideatitle', 'Title', 'required|trim');

@@ -51,7 +51,7 @@ theForm.scrolly.value = scrolly;
       $query = $this->db->get();
       $black = $query->num_rows();
 
-      $rep = (($gold*20)+($silver*10)+($bronze*5))-($black*15);
+      $rep = (($gold*20)+($silver*10)+($bronze*5))-($black*15);   
       ?>
       <div class="content-wrapper">
         <!-- Content Header (Page header) -->
@@ -96,9 +96,13 @@ theForm.scrolly.value = scrolly;
                 </h3>
               <?php  endforeach;?>
                       
-                <p>Reputation:<span class="pull-right">
+                <p>Reputation:<b> &nbsp;&nbsp;<?php echo $rep;?></b><span class="pull-right">
                 <?php
-                 if ($gold>=$silver && $gold>=$bronze) 
+                 if($gold==0 && $silver==0 && $bronze==0)
+                 {
+                     ?><i class='fa fa-star' style="color:SandyBrown"></i><?php
+                 }
+                 elseif ($gold>=$silver && $gold>=$bronze) 
                  {
                      ?><i class='fa fa-star' style="color:Gold"></i><?php   
                  } 
@@ -110,32 +114,35 @@ theForm.scrolly.value = scrolly;
                  {
                      ?><i class='fa fa-star' style="color:SandyBrown"></i><?php
                  }
-                  else
-                    echo "Give this user a badge!";         
+                   
                 ?>
-                </i><b> &nbsp;&nbsp;<?php echo $rep;?></b></span></p>
+                </p>
                   <div class="row">
                     <div class="col-sm-3 border-right">
                       <div class="description-block">
                       <span><?php echo $gold;?></span>
-                        <span class="description-text text-muted">&nbsp;GOLD&nbsp;</span>
+                      </br>
+                        <span class="description-text text-muted">GOLD</span>
                       </div><!-- /.description-block -->
                     </div><!-- /.col -->
                     <div class="col-sm-3 border-right">
                       <div class="description-block">
-                      <span><?php echo $silver;?></span> 
+                      <span><?php echo $silver;?></span>
+                      </br> 
                         <span class="description-text text-muted">SILVER</span>
                       </div><!-- /.description-block -->
                     </div><!-- /.col -->
                     <div class="col-sm-3 border-right">
                       <div class="description-block">
-                      <span><?php echo $bronze;?></span> 
+                      <span><?php echo $bronze;?></span>
+                      </br> 
                         <span class="description-text text-muted">BRONZE</span>
                       </div><!-- /.description-block -->
                     </div><!-- /.col -->
                     <div class="col-sm-3 border-right">
                       <div class="description-block">
                       <span><?php echo $black;?></span>
+                      </br>
                         <span class="description-text text-muted">BLACK</span>
                       </div><!-- /.description-block -->
                     </div><!-- /.col -->
@@ -144,15 +151,17 @@ theForm.scrolly.value = scrolly;
               </div><!-- /.widget-user -->
               <!-- App Buttons -->
               <div>
-                <a class="btn btn-app" data-toogle="tooltip" title="Send Message" style="background-color:#3C8DBC;color:white;">
-                  <i class="fa fa-envelope"></i>Message
-                </a>
+                <button type="button" class="btn btn-app" data-toggle="modal" data-target="#message" title="Send Message" style="background-color:#3C8DBC;color:white;">
+                <i class="fa fa-envelope"></i>Message
+                </button>
+
                 <button type="button" class="btn btn-app" data-toggle="modal" data-target="#badge" title="Rate this User" style="background-color:#3C8DBC;color:white;">
-                <i class="fa fa-star"></i>Badge</button>
+                <i class="fa fa-star"></i>Badge
+                </button>
                 
-                <a class="btn btn-app" data-toogle="tooltip" title="Send a Group Request"style="background-color:#3C8DBC;color:white;">
-                  <i class="fa fa-group"></i>Group
-                </a>
+                <button type="button" class="btn btn-app" data-toggle="modal" data-target="#group" title="Send Group Request" style="background-color:#3C8DBC;color:white;">
+                <i class="fa fa-group"></i>Group
+                </button>
 
               </div>
 
@@ -164,13 +173,37 @@ theForm.scrolly.value = scrolly;
                 <div class="box-body">
                   <strong><i class="fa fa-book margin-r-5"></i>  Self Description</strong>
                   <p class="text-muted">
-                    B.S. in Information Technology in University of Cebu
+                    <?php foreach($data as $row):
+                
+                  if($row['user_Type']=='Ideator'||$row['user_Type']=='Investor')
+                  {
+                      echo $row['user_shortSelfDescription'];
+                  }
+                    else
+                  {
+                    echo $row['company_about'];
+                  }                  
+                  ?>
+                  <?php endforeach;?>
                   </p>
 
                   <hr>
 
                   <strong><i class="fa fa-map-marker margin-r-5"></i> Location</strong>
-                  <p class="text-muted">Mandaue City, Cebu, Philippines</p>
+                  <p class="text-muted">
+                  <?php foreach($data as $row):
+                
+                  if($row['user_Type']=='Ideator'||$row['user_Type']=='Investor')
+                  {
+                      echo $row['location_address1'].", ".$row['location_country'];
+                  }
+                    else
+                  {
+                    echo "Not Stated!";
+                  }                  
+                  ?>
+                  <?php  endforeach;?>
+                  </p>
                 </div><!-- /.box-body -->
               </div><!-- /.box -->
             </div><!-- /.col -->
@@ -257,7 +290,26 @@ theForm.scrolly.value = scrolly;
                           ?>
                       </a>
                       </span>
-                    &nbsp;&nbsp;&nbsp;<button class='btn btn-default btn-xs'><i class='fa fa-star' style="color:Gold"></i> <span class="label label-primary">10</span> </button><button class='btn btn-default btn-xs'><i class='fa fa-star' style="color:Silver"></i><span class="label label-primary">5</span> </button><button class='btn btn-default btn-xs'><i class='fa fa-star' style="color:SandyBrown "></i><span class="label label-primary">20</span> </button>
+                    &nbsp;&nbsp;&nbsp;
+                   <?php
+                 if($gold==0 && $silver==0 && $bronze==0)
+                 {
+                     ?><i class='fa fa-star' style="color:SandyBrown"></i><?php
+                 }
+                 elseif ($gold>=$silver && $gold>=$bronze) 
+                 {
+                     ?><i class='fa fa-star' style="color:Gold"></i><?php   
+                 } 
+                 elseif ($silver>$gold && $silver>=$bronze)
+                 {
+                     ?><i class='fa fa-star' style="color:Silver"></i><?php
+                 }
+                 elseif ($bronze>$gold && $bronze>$silver)
+                 {
+                     ?><i class='fa fa-star' style="color:SandyBrown"></i><?php
+                 }
+                   
+                ?>
                     <span class='description'>    <?php echo $postdtl['postDate'];?></span>
                   </div><!-- /.user-block -->
                   <div class='box-tools'>
@@ -292,7 +344,7 @@ theForm.scrolly.value = scrolly;
                     ?>
                   </p>
                   <table><tr><td>
-                  <button class='btn btn-default btn-xs' data-toggle="modal" data-target="#share"><i class='fa fa-share'></i> Share</button></td>
+                  <button class='btn btn-default btn-xs'><i class='fa fa-share'></i> Share</button></td>
                   <form method="POST" action="<?php echo base_url()."pages/upvote";?>" name="form"  onsubmit="return saveScrollPositions(this);"> 
                   <input type="hidden" name="scrollx" id="scrollx" value="0" />
 
@@ -378,22 +430,7 @@ theForm.scrolly.value = scrolly;
 
         </section><!-- /.content -->
       </div><!-- /.content-wrapper -->
-       <div id="share" class="modal fade" role="dialog">
-        <div class="modal-dialog">
-
-    <!-- Modal content-->
-          <div class="modal-content">
-            <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal">&times;</button>
-            
-            </div>
-            <div class="modal-body">
-              <div class="col-md-12">
-              
-              </div>
-            </div>
-         
-            </div>
+      
       <div id="badge" class="modal fade" role="dialog">
         <div class="modal-dialog">
 
@@ -433,7 +470,11 @@ theForm.scrolly.value = scrolly;
                       
                 <p>Reputation:<span>
                 <?php
-                 if ($gold>=$silver && $gold>=$bronze) 
+                 if($gold==0 && $silver==0 && $bronze==0)
+                 {
+                     ?><i class='fa fa-star' style="color:SandyBrown"></i><?php
+                 }
+                 elseif ($gold>=$silver && $gold>=$bronze) 
                  {
                      ?><i class='fa fa-star' style="color:Gold"></i><?php   
                  } 
@@ -445,9 +486,7 @@ theForm.scrolly.value = scrolly;
                  {
                      ?><i class='fa fa-star' style="color:SandyBrown"></i><?php
                  }
-                  else
-                    echo "Give this user a badge!";
-                  
+                   
                 ?>
                 </i><b> &nbsp;&nbsp;<?php echo $rep;?></b></span></p>
                 
@@ -475,6 +514,7 @@ theForm.scrolly.value = scrolly;
                       </div><!-- /.description-block -->
                     </div><!-- /.col -->
                   </div><!-- /.row -->
+                  </form>
                   </div>    
               </div>
             </div>
@@ -482,11 +522,135 @@ theForm.scrolly.value = scrolly;
             </div>
             </div>
         </div>
+        </div>
+        </div>
+
+        <div id="group" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+    <!-- Modal content-->
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <h4 class="modal-title">Add user to the group</h4>
+            </div>
+            <div class="modal-body">
+              <div class="col-md-12">
+
+              <?php foreach($data as $row):
+                echo '<div class="box box-widget widget-user">';
+                # Add the bg color to the header using any of the bg-* classes -->
+                echo '<div class="widget-user-header bg-black" style="background: url(\''.base_url().'/user/defaultcover_user.png\') center center; background-size:contain;">';
+                  
+                echo '</div>
+                <div class="widget-user-image">';
+                  echo'<img class="img-circle" src="'.base_url().'/user/'.$row['avatar_name'].'" alt="User Avatar">
+                </div>
+                <div class="box-footer">
+                <h3>';
+                              if($row['user_Type']=='Ideator'||$row['user_Type']=='Investor')
+                              {
+                                  if($row['user_midInit']==null)
+                                     echo $row['user_fName']."  ".$row['user_lName']; 
+                                   else
+                                     echo $row['user_fName']." ".$row['user_midInit'].". ".$row['user_lName'];
+                              }
+                              else
+                              {
+                                echo $row['company_name'];
+                              }                  
+                      ?></h3>
+                      <?php  endforeach;?>
+                      
+                <p>Reputation:<span>
+                <?php
+                 if($gold==0 && $silver==0 && $bronze==0)
+                 {
+                     ?><i class='fa fa-star' style="color:SandyBrown"></i><?php
+                 }
+                 elseif ($gold>=$silver && $gold>=$bronze) 
+                 {
+                     ?><i class='fa fa-star' style="color:Gold"></i><?php   
+                 } 
+                 elseif ($silver>$gold && $silver>=$bronze)
+                 {
+                     ?><i class='fa fa-star' style="color:Silver"></i><?php
+                 }
+                 elseif ($bronze>$gold && $bronze>$silver)
+                 {
+                     ?><i class='fa fa-star' style="color:SandyBrown"></i><?php
+                 }
+                   
+                ?>
+                </i><b> &nbsp;&nbsp;<?php echo $rep;?></b></span></p>
+                
+                
+                 
+                  </div> 
+              </div>
+            </div>
+            <div class="modal-footer">
+                <div class="btn-group">
+                      <select name="group" class="form-control">     
+                      <?php
+                        $this->db->select('*');
+                        $this->db->from('group_md');
+                        $this->db->where('userId', $this->session->userdata('userId'));
+
+                        $query = $this->db->get();
+                        ?>                
+                        <?php foreach($query->result_array() as $row): 
+                       
+                        echo "<option>".$row['groupname']."</option>";
+                 
+                        ?>
+
+                        <?php endforeach ?>
+                      </select>
+                </div>&nbsp;&nbsp;
+                <button class="btn btn-default pull-right" value="addmember"><i class="fa fa-user-plus"></i>&nbsp;&nbsp;&nbsp;Add member</button>
+            </div>
+            </div>
+        </div>
+        </div>
+        </div>
+        <div id="message" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+    <!-- Modal content-->
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <h4 class="modal-title">Message</h4>
+            </div>
+            <center>
+            <div class="modal-body">
+              <div class="form-group">
+              <?php
+              
+              ?>
+              <?php echo form_open('../pages/messageProfile');?>
+                        <div class="col-sm-12">
+                         <?php echo form_error('inputDescription');  ?>
+                          <textarea class="form-control"name="inputDescription" id="inputDescription" placeholder="Your Message Here" value="<?php echo set_value('inputDescription'); ?>"></textarea>
+                        </div>
+                        </br>
+                        </br>
+                        </br>
+                        <button type="submit" class="btn btn-default pull-right" name="submit" id="submit">Send</button>
+                              
+              </form>
+              </div>
+            </div>
+            </center>
+           
+            <div class="modal-footer">
+            </div>
+            </div>
+            </div>
+        </div>
+
       </div>
-    
-       
-        
-    
 <?php
 
 $scrollx = 0;
@@ -512,12 +676,3 @@ $scrolly = $_REQUEST['scrolly'];
   window.scrollTo(<?php echo "$scrollx" ?>, <?php echo "$scrolly" ?>);
 
 </script>
-
-<div id="fb-root"></div>
-<script>(function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) return;
-  js = d.createElement(s); js.id = id;
-  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.5";
-  fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>

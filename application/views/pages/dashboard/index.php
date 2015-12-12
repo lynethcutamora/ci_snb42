@@ -9,4 +9,5 @@
     <?php include("content.php");?>
     <?php include("footer.php");?>
     <?php include("controlsidebar.php");?>
+    <?php include("top.php");?>
     <?php include("end.php");}?>
