@@ -292,7 +292,7 @@ theForm.scrolly.value = scrolly;
                     ?>
                   </p>
                   <table><tr><td>
-                  <button class='btn btn-default btn-xs'><i class='fa fa-share'></i> Share</button></td>
+                  <button class='btn btn-default btn-xs' data-toggle="modal" data-target="#share"><i class='fa fa-share'></i> Share</button></td>
                   <form method="POST" action="<?php echo base_url()."pages/upvote";?>" name="form"  onsubmit="return saveScrollPositions(this);"> 
                   <input type="hidden" name="scrollx" id="scrollx" value="0" />
 
@@ -378,7 +378,22 @@ theForm.scrolly.value = scrolly;
 
         </section><!-- /.content -->
       </div><!-- /.content-wrapper -->
-      
+       <div id="share" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+    <!-- Modal content-->
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+            
+            </div>
+            <div class="modal-body">
+              <div class="col-md-12">
+              
+              </div>
+            </div>
+         
+            </div>
       <div id="badge" class="modal fade" role="dialog">
         <div class="modal-dialog">
 
@@ -469,6 +484,9 @@ theForm.scrolly.value = scrolly;
         </div>
       </div>
     
+       
+        
+    
 <?php
 
 $scrollx = 0;
@@ -494,3 +512,12 @@ $scrolly = $_REQUEST['scrolly'];
   window.scrollTo(<?php echo "$scrollx" ?>, <?php echo "$scrolly" ?>);
 
 </script>
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.5";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>

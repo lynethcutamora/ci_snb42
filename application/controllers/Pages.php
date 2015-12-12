@@ -265,6 +265,10 @@ class Pages extends CI_Controller {
 				$data['data']=$query->result_array();
 				$data['pages']='post';
 				$data['countgroup'] = $this->countGroups();
+				$groupquery= $this->groupdetails();
+				$data['groupdetails'] = $groupquery->result_array();
+				$query=$this->_alluserData();
+				$data['alldata']=$query->result_array();
 				$postdtlquery= $this->post->postdtl($postId);
 				$data['postDetail'] = $postdtlquery->result_array();
 				if($postdtlquery->num_rows()==0) {
