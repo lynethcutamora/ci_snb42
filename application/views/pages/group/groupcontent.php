@@ -20,7 +20,7 @@
           <div class="col-md-12">
             <div class="col-md-9">
               <div class="box box-widget widget-user">
-                <?php foreach($groupDtl as $row):?>
+                <?php foreach($groupDtl as $row): $groupid=$row['groupId'];?>
 
                 <!-- Add the bg color to the header using any of the bg-* classes -->
                 <div class="widget-user-header bg-blue" style="background: url('<?php echo base_url();?>/user/<?php echo $row['groupCoverPic']?>') center center;">
@@ -314,7 +314,9 @@
                               </div>';
                       foreach ($searchpeople as $row):
                         echo'<div class="box-body">';
-                          echo '<form method="post" action="#">';
+                          echo '<form method="post" action="'.base_url().'/pages/addmember">';
+                          echo '<input type="text" hidden="true" name="groupid" value="'.$groupid.'">';
+                          echo '<input type="text" hidden="true" name="userid" value="'.$row['userId'].'">';
                               echo '<span class="pull-left"><i class="fa fa-user" style="color:gray;"></i></span>
                                     <p class="text-muted">&nbsp;&nbsp;'.$row['user_fName']." ".$row['user_midInit'].". ".$row['user_lName'].'
                                     <span class="pull-right"><button name="btnaddmember" class="form-control btn-primary" type="submit"><i class="fa fa-user-plus"></i></button></span></p>';

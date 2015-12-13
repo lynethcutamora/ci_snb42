@@ -792,7 +792,7 @@ class Pages extends CI_Controller {
 		$this->db->select('*');
 		$this->db->from('group_md a');
 		$this->db->join('group_ext b','b.groupId=a.groupId','left');
-		$this->db->where('a.userId',$this->session->userdata('userId'));
+		$this->db->where('b.userId',$this->session->userdata('userId'));
 		$query=$this->db->get();
 
 		return $query;
@@ -841,13 +841,14 @@ class Pages extends CI_Controller {
 		return $query;
 	}
 
-	public function addmember($groupid,$userid){
+	public function addmember(){
 		$data = array(
-				'groupId' => $groupid,
+				'groupId' => $this->input->post(''),
 				'userId' => $userid
 			);
 
 		$this->db->inset('group_ext',$data);
+		$this->group();
 	}
 
 	public function badge()
