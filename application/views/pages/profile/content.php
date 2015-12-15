@@ -152,7 +152,7 @@ theForm.scrolly.value = scrolly;
               <!-- App Buttons -->
             <?php  if($userId!=$this->session->userdata('userId')){?>
               <div>
-               
+
                 <button type="button" class="btn btn-app" data-toggle="modal" data-target="#message" title="Send Message" style="background-color:#3C8DBC;color:white;">
                 <i class="fa fa-envelope"></i>Message
                 </button>
@@ -263,12 +263,14 @@ theForm.scrolly.value = scrolly;
               <div class="nav-tabs-custom">
                 <ul class="nav nav-tabs">
                   <li class="active"><a href="#activity" data-toggle="tab">Activity</a></li>
+                  <?php if($userId==$this->session->userdata('userId')){?>
                   <li><a href="#settings" data-toggle="tab">Settings</a></li>
+                  <?php }?>
                 </ul>
                 <div class="tab-content">
                   <div class="active tab-pane" id="activity">
                     <!-- Post -->
-                      <?php  foreach($profileDtl as $userdtl):?>
+                                  <?php  foreach($profileDtl as $userdtl):?>
             <?php foreach($alldata as $postdtl):?>
 
           <div class="row">
@@ -278,7 +280,7 @@ theForm.scrolly.value = scrolly;
               <div class="box box-widget">
                 <div class='box-header with-border'>
                   <div class='user-block'>
-                    <img class='img-circle' src='<?php echo base_url();?>/user/<?php echo $postdtl['avatar_name']?>' alt='user image'>
+                    <img class='img-circle' src='<?php echo base_url();?>user/<?php echo $postdtl['avatar_name']?>' alt='user image'>
                     <span class='username'>
                     <a href="#">
                         <?php 
@@ -382,7 +384,7 @@ theForm.scrolly.value = scrolly;
                     <form class="form-horizontal">
                       <div class="form-group">
                         <div class="col-sm-1"></div>
-                        <div class="col-sm-3"><img src="../user/1.png" style="size:contain;" /></div>
+                        <div class="col-sm-3"><img src="<?php echo base_url();?>user/1.png" style="size:contain;" /></div>
                         <div class="col-sm-7">
                           <br/><br/>Change your avatar: <br/><br/>
                           <input type="file" name="fileToUpload" id="fileToUpload">
@@ -550,7 +552,7 @@ theForm.scrolly.value = scrolly;
                   
                 echo '</div>
                 <div class="widget-user-image">';
-                  echo'<img class="img-circle" src="'.base_url().'/user/'.$row['avatar_name'].'" alt="User Avatar">
+                  echo'<img class="img-circle" src="'.base_url().'user/'.$row['avatar_name'].'" alt="User Avatar">
                 </div>
                 <div class="box-footer">
                 <h3>';
