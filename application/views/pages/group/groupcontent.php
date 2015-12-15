@@ -293,6 +293,7 @@
                         <img class='img-circle' src='<?php echo base_url();?>/user/<?php echo $row['avatar_name']?>' alt='user image'>
                           <span class='username'><a href="#"><?php echo $row['user_fName']." ".$row['user_midInit'].". ".$row['user_lName']?></a></span>
                           <span class='description'>Reputation:<span class="pull-right"><i class='fa fa-star' style="color:#ffd700;"></i><b>&nbsp;&nbsp;0</b></span></span>
+                          <br/>
                       </div><!-- /.user-block -->
                       <?php  endforeach;?>
                     </div><!-- /.box-header -->
@@ -314,7 +315,7 @@
                               </div>';
                       foreach ($searchpeople as $row):
                         echo'<div class="box-body">';
-                          echo '<form method="post" action="'.base_url().'/pages/addmember">';
+                          echo '<form method="post" action="'.base_url().'pages/addmember">';
                           echo '<input type="text" hidden="true" name="groupid" value="'.$groupid.'">';
                           echo '<input type="text" hidden="true" name="userid" value="'.$row['userId'].'">';
                               echo '<span class="pull-left"><i class="fa fa-user" style="color:gray;"></i></span>

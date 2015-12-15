@@ -831,11 +831,11 @@ class Pages extends CI_Controller {
 
 	public function memberinfo($groupid){
 		$this->db->select('*');
-		$this->db->from('user_dtl a');
+		$this->db->from('group_ext a');
 		$this->db->join('avatar_dtl b', 'a.userId=b.userId','left');
 		$this->db->join('badge_dtl c', 'a.userId=c.userId', 'left');
-		$this->db->join('group_md d', 'a.userId=d.userId', 'left');
-		$this->db->where('d.groupId',$groupid);
+		$this->db->join('user_dtl e', 'a.userId=e.userId', 'left');
+		$this->db->where('a.groupId',$groupid);
 		$query=$this->db->get();
 
 		return $query;
@@ -843,12 +843,12 @@ class Pages extends CI_Controller {
 
 	public function addmember(){
 		$data = array(
-				'groupId' => $this->input->post(''),
-				'userId' => $userid
+				'groupId' => $this->input->post('groupid'),
+				'userId' => $this->input->post('userid')
 			);
 
-		$this->db->inset('group_ext',$data);
-		$this->group();
+		$this->db->insert('group_ext',$data);
+		$this->group( $this->input->post('groupid'));
 	}
 
 	public function badge()
