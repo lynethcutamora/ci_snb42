@@ -52,20 +52,7 @@ class Pages extends CI_Controller {
 
 		return $query;
 	}
-	public function _alluserData()
-	{
-		$this->db->select('*');
-		$this->db->from('user_md a');
-		$this->db->join('user_dtl b', 'a.userId=b.userId','left');
-		$this->db->join('company_dtl c', 'c.userId=a.userId','left');
-		$this->db->join('userpost d', 'd.userId=a.userId');
-		$this->db->join('avatar_dtl e', 'e.userId=d.userId');
-		$this->db->where('d.userId',$this->session->userdata('userId'));
-		$this->db->order_by('postDate', 'DESC');
-		$query = $this->db->get();
-
-		return $query;
-	}
+	
 
 	public function _dashboard()
 	{
@@ -326,20 +313,29 @@ class Pages extends CI_Controller {
 				$data['countgroup'] = $this->countGroups();
 				$groupquery= $this->groupdetails();
 				$data['groupdetails'] = $groupquery->result_array();
-				$query=$this->_alluserData();
+				$query=$this->post->alluserData($userId);
 				$data['alldata']=$query->result_array();
 
 				$query=$this->post->profile($userId);
 				$data['profileDtl']=$query->result_array();
 				$data['userId']=$userId;
 
+				$groupDetails= $this->post->profile($userId);
+				if($groupDetails->num_rows()==0) {
+					$groupDetails->result_array();
 
+					$this->load->view('pages/dashboard/fixed',$data);
+					$this->load->view('pages/group/nogroup',$data); 
+					$this->load->view('pages/dashboard/controlsidebar');
+					$this->load->view('pages/dashboard/end');
+				}else{
 				$this->load->view('pages/dashboard/fixed',$data);
 				$this->load->view('pages/profile/content',$data); 
 				$this->load->view('pages/dashboard/controlsidebar');
 				$this->load->view('pages/dashboard/end');
+				}
 			}else{
-
+				$this->profile($this->session->userdata('userId'));
 			}
 		}else{
 			$this->_landing();
@@ -357,7 +353,8 @@ class Pages extends CI_Controller {
 				$data['countgroup'] = $this->countGroups();
 				$groupquery= $this->groupdetails();
 				$data['groupdetails'] = $groupquery->result_array();
-				$query=$this->_alluserData();
+				$query=$this->post->alluserData($userId)
+;
 				$data['alldata']=$query->result_array();
 				$postdtlquery= $this->post->postdtl($postId);
 				$data['postDetail'] = $postdtlquery->result_array();
@@ -802,7 +799,8 @@ class Pages extends CI_Controller {
 		$data['data']=$query->result_array();
 		$data['pages']='post';
 
-		$query=$this->_alluserData();
+		$query=$this->post->alluserData($userId)
+;
 		$data['alldata']=$query->result_array();
 		$this->load->view('pages/post/comment',$data);
 	}
@@ -1016,7 +1014,8 @@ class Pages extends CI_Controller {
 
 	public function showpost()
 	{
-		$query = $this->_alluserData();
+		$query = $this->post->alluserData($userId)
+;
 		foreach ($query->result_array() as $postdtl) {
 			echo "
 			<div class='box box-widget'>
@@ -1094,7 +1093,7 @@ class Pages extends CI_Controller {
 			);
 
 			$this->db->insert('upvote_dtl',$data);
-			$this->profile();
+			$this->profile($this->session->userdata('userId'));
 		}else
 		$this->index();
 	}
