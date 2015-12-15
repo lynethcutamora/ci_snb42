@@ -906,6 +906,12 @@ class Pages extends CI_Controller {
 		}
 	}
 
+	public function projectdtl($groupid){
+		$this->db->select('*');
+		$this->db->from('userpost');
+		$this->db->where('postType',$groupid);
+	}
+
 	public function _searchpeople(){
 		$this->db->select('*');
 		$this->db->from('user_dtl');

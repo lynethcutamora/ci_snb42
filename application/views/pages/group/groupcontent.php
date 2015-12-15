@@ -362,7 +362,7 @@
                   <h4 class="modal-title">Add group project</h4>
                 </div>
                 <div class="modal-body">
-                  <input type="text" hidden="true" name="groupid" value="<?php $groupid; ?>">;
+                  <input type="text" hidden="true" name="groupid" value="<?php echo $groupid; ?>">
                   <input type="text" class="form-control" name="inputProjectName" id="inputProjectName" placeholder="Project Title"  required="required" value=""/><br/>
                   <textarea class="form-control" name="inputDescription" id="inputDescription" placeholder="Short Project Description"  required="required" value=""></textarea>
                 </div>
