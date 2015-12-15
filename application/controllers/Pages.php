@@ -779,7 +779,7 @@ class Pages extends CI_Controller {
 			$this->post->link($this->input->post('relatedlinks'), '2',$postId);
 			$this->post->image($url, '1',$postId);
 			$this->db->insert('userpost', $data);
-				redirect('pages/profile/'.$this->session->userdata('userId').');
+			header('Location:'.base_url().'pages/profile/'.$this->session->userdata('userId'));
 
 
 		}
