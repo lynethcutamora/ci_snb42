@@ -190,8 +190,8 @@ class Pages extends CI_Controller {
 		$data['groupdetails'] = $groupquery->result_array();
 		$this->load->view('pages/dashboard/fixed',$data);
 		$this->load->view('pages/admindashboard/content'); 
-		$this->load->view('pages/dashboard/controlsidebar');
-		$this->load->view('pages/dashboard/end');
+		$this->load->view('pages/admindashboard/controlsidebar');
+		$this->load->view('pages/admindashboard/end');
 		}else{
 			$this->_landing();
 		}
@@ -208,8 +208,8 @@ class Pages extends CI_Controller {
 		$data['groupdetails'] = $groupquery->result_array();
 		$this->load->view('pages/dashboard/fixed',$data);
 		$this->load->view('pages/adminonline/content'); 
-		$this->load->view('pages/dashboard/controlsidebar');
-		$this->load->view('pages/dashboard/end');
+		$this->load->view('pages/adminonline/controlsidebar');
+		$this->load->view('pages/adminonline/end');
 		}else{
 			$this->_landing();
 		}
@@ -227,7 +227,8 @@ class Pages extends CI_Controller {
 		$this->load->view('pages/dashboard/fixed',$data);
 		$this->load->view('pages/adminoverallreports/content'); 
 		$this->load->view('pages/adminoverallreports/chartcontent'); 
-		$this->load->view('pages/dashboard/controlsidebar');
+		$this->load->view('pages/adminoverallreports/controlsidebar');
+		
 		}else{
 			$this->_landing();
 		}
@@ -245,7 +246,7 @@ class Pages extends CI_Controller {
 		$this->load->view('pages/dashboard/fixed',$data);
 		$this->load->view('pages/adminstatistics/content'); 
 		$this->load->view('pages/adminstatistics/chartcontent'); 
-		$this->load->view('pages/dashboard/controlsidebar');
+		$this->load->view('pages/adminstatistics/controlsidebar');
 		}else{
 			$this->_landing();
 		}
