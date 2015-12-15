@@ -903,7 +903,7 @@ class Pages extends CI_Controller {
 		}
 	}
 
-<<<<<<< HEAD
+
 =======
 	public function projectdtl($groupid,$projectId){
 		$this->db->select('*');
@@ -915,7 +915,6 @@ class Pages extends CI_Controller {
 		return $query;
 	}
 
->>>>>>> 00774d624a7fde5fcb28eb74f046f2bc201e3667
 	public function _searchpeople(){
 		$this->db->select('*');
 		$this->db->from('user_dtl');
