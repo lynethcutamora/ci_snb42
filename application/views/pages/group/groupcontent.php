@@ -356,12 +356,13 @@
           <div class="modal-dialog">
           <!-- Modal content-->
             <div class="modal-content">
-              <form action="addproject" method="post">
+              <?php echo '<form method="post" action="'.base_url().'pages/addproject">'; ?>
                 <div class="modal-header">
                   <button type="button" class="close" data-dismiss="modal">&times;</button>
                   <h4 class="modal-title">Add group project</h4>
                 </div>
                 <div class="modal-body">
+                  <input type="text" hidden="true" name="groupid" value="<?php $groupid; ?>">;
                   <input type="text" class="form-control" name="inputProjectName" id="inputProjectName" placeholder="Project Title"  required="required" value=""/><br/>
                   <textarea class="form-control" name="inputDescription" id="inputDescription" placeholder="Short Project Description"  required="required" value=""></textarea>
                 </div>

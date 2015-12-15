@@ -876,19 +876,21 @@ class Pages extends CI_Controller {
 		$this->form_validation->set_rules('inputDescription', 'Project Description', 'trim');
 
 		if ($this->form_validation->run()==FALSE){
-			$this->group();
+			$this->group($this->input->post('groupid'));
 		}else{
 			$projId = uniqid('pr');
 
 			$data = array(
-				'projectid' => $projId,
-				'projectname' => $this->input->post('inputProjectName'),
-				'projectdescription' => $this->input->post('inputDescription'),
+				'postId' => $projId,
+				'postTitle' => $this->input->post('inputProjectName'),
+				'postContent' => $this->input->post('inputDescription'),
+				'postType' => $this->input->post('groupid'),
+				'userId' => $this->session->userdata('userId')
 			);
 
-			$this->db->update('group_md',$data);
-			$this->db->where('userId',$this->session->userdata('userId'));
-			$this->group();
+			$this->db->insert('userpost',$data);
+			#$this->db->where('userId',$this->session->userdata('userId'));
+			$this->group($this->input->post('groupid'));
 		}
 	}
 
