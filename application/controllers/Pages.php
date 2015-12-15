@@ -904,7 +904,6 @@ class Pages extends CI_Controller {
 	}
 
 
-=======
 	public function projectdtl($groupid,$projectId){
 		$this->db->select('*');
 		$this->db->from('userpost');
