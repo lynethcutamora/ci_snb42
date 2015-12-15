@@ -904,12 +904,6 @@ class Pages extends CI_Controller {
 		}
 	}
 
-	public function projectdtl($groupid){
-		$this->db->select('*');
-		$this->db->from('userpost');
-		$this->db->where('postType',$groupid);
-	}
-
 	public function _searchpeople(){
 		$this->db->select('*');
 		$this->db->from('user_dtl');
@@ -951,65 +945,58 @@ class Pages extends CI_Controller {
 		else
 		{	
 			$post=$this->input->post('btnRate');
+			$userId=$this->input->post('userId');
 			if(!isset($post))
 			{
 				$this->load->view('pages/profile/index');
 			}
 			else if($post=='gold')
 			{
-				$userId = "5666e164e0";
-				$fromUserId = "565fcbb98d";
-
+				
 				$data = array(
 				'userId' => $userId,
-				'fromUserId' =>	$fromUserId,
+				'fromUserId' =>	$this->session->userdata('userId'),
 				'voteBadge' => '1'
 				);
 
 				$this->db->insert('badge_dtl', $data);
-				$this->load->view('pages/profile/index');
-			}
+				header('Location:'.base_url().'pages/profile/'.$userId);			}
 			else if($post=='silver')
 			{
-				$userId = "5666e164e0";
-				$fromUserId = "565fcbb98d";
+			
 				$data = array(
 				'userId' => $userId,
-				'fromUserId' =>	$fromUserId,
+				'fromUserId' =>	$this->session->userdata('userId'),
 				'voteBadge' => '2'
 				);
 
 				$this->db->insert('badge_dtl', $data);
 			
-				$this->load->view('pages/profile/index');
+				header('Location:'.base_url().'pages/profile/'.$userId);
 			}
 			else if($post=='bronze')
 			{
-				$userId = "5666e164e0";
-				$fromUserId = "565fcbb98d";
 				$data = array(
 				'userId' => $userId,
-				'fromUserId' =>	$fromUserId,
+				'fromUserId' =>	$this->session->userdata('userId'),
 				'voteBadge' => '3'
 				);
 
 				$this->db->insert('badge_dtl', $data);
 			
-				$this->load->view('pages/profile/index');
+				header('Location:'.base_url().'pages/profile/'.$userId);
 			}
 			elseif ($post=='black') 
 			{
-				$userId = "5666e164e0";
-				$fromUserId = "565fcbb98d";
 				$data = array(
 				'userId' => $userId,
-				'fromUserId' =>	$fromUserId,
+				'fromUserId' =>	$this->session->userdata('userId'),
 				'voteBadge' => '4'
 				);
 
 				$this->db->insert('badge_dtl', $data);
 			
-				$this->load->view('pages/profile/index');
+				header('Location:'.base_url().'pages/profile/'.$userId);
 			}
 		
 			else{
@@ -1082,27 +1069,28 @@ class Pages extends CI_Controller {
 
 	
 	}
-	public function upvote()
+	public function upvote($userId)
 	{
 
 		$this->form_validation->set_rules('postId', 'Post Id', 'callback_postIdCheck');
 		if ($this->form_validation->run()==FALSE){
 			$this->post();
 		}else{
-		if($this->input->post('postId')!=''){
-		$data = array(
-				'voteStat' => '1',
-				'voteType' => '1',
-				'postId' => $this->input->post('postId'),
-				'userId' => $this->session->userdata('userId'),
-				'voteId' =>uniqid()
-			);
+			if($this->input->post('postId')!=''){
+			$data = array(
+					'voteStat' => '1',
+					'voteType' => '1',
+					'postId' => $this->input->post('postId'),
+					'userId' => $this->session->userdata('userId'),
+					'voteId' =>uniqid()
+				);
 
-			$this->db->insert('upvote_dtl',$data);
-			$this->profile($this->session->userdata('userId'));
-		}else
-		$this->index();
-	}
+				$this->db->insert('upvote_dtl',$data);
+				$this->profile($userId);
+			}
+			else {$this->index();}
+			
+		}
 	}
 	public function postIdCheck($str)
 	{	
