@@ -353,7 +353,7 @@ theForm.scrolly.value = scrolly;
                   </p>
                   <table><tr><td>
                   <button class='btn btn-default btn-xs'><i class='fa fa-share'></i> Share</button></td>
-                  <form method="POST" action="<?php echo base_url()."pages/upvote";?>" name="form"  onsubmit="return saveScrollPositions(this);"> 
+                  <form method="POST" action="<?php echo base_url()."pages/upvote/".$userId;?>" name="form"  onsubmit="return saveScrollPositions(this);"> 
                   <input type="hidden" name="scrollx" id="scrollx" value="0" />
 
                      <input type="hidden" name="scrolly" id="scrolly" value="0" />
@@ -390,7 +390,9 @@ theForm.scrolly.value = scrolly;
                           <input type="file" name="fileToUpload" id="fileToUpload">
                         </div>
                       </div>
+                    </form>
                     </div>
+
                   </div><!-- /.tab-pane -->
                 </div>
                 </div><!-- /.tab-content -->
@@ -499,7 +501,7 @@ theForm.scrolly.value = scrolly;
                 </i><b> &nbsp;&nbsp;<?php echo $rep;?></b></span></p>
                 
                 <?php echo form_open('../pages/badge'); ?>
-                 
+                  <input type="text" hidden="true" name="userId" value="<?php echo $userId;?>">
                   <div class="row">
                     <div class="col-sm-3 border-right">
                       <div class="description-block"> 
