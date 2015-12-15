@@ -32,7 +32,7 @@
                   <div class="row">
                     <div class="col-sm-3 border-right">
                       <div class="description-block">
-                        <h5 class="description-header"><?php echo count($row['userId']);?></h5>
+                        <h5 class="description-header"><?php echo count($memberinfo);?></h5>
                         <span class="description-text">MEMBERS</span>
                       </div><!-- /.description-block -->
                     </div><!-- /.col -->
