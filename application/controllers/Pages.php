@@ -178,6 +178,79 @@ class Pages extends CI_Controller {
 			$this->_landing();
 		}
 	}
+	public function adminPage1()
+	{
+		if(($this->session->userdata('userId')!=""))
+		{
+		$query=$this->_userData();
+		$data['data']=$query->result_array();
+		$data['pages']='admin';
+		$data['countgroup'] = $this->countGroups();
+		$groupquery= $this->groupdetails();
+		$data['groupdetails'] = $groupquery->result_array();
+		$this->load->view('pages/dashboard/fixed',$data);
+		$this->load->view('pages/admindashboard/content'); 
+		$this->load->view('pages/admindashboard/controlsidebar');
+		$this->load->view('pages/admindashboard/end');
+		}else{
+			$this->_landing();
+		}
+	}
+		public function adminPage2()
+	{
+		if(($this->session->userdata('userId')!=""))
+		{
+		$query=$this->_userData();
+		$data['data']=$query->result_array();
+		$data['pages']='admin';
+		$data['countgroup'] = $this->countGroups();
+		$groupquery= $this->groupdetails();
+		$data['groupdetails'] = $groupquery->result_array();
+		$this->load->view('pages/dashboard/fixed',$data);
+		$this->load->view('pages/adminonline/content'); 
+		$this->load->view('pages/adminonline/controlsidebar');
+		$this->load->view('pages/adminonline/end');
+		}else{
+			$this->_landing();
+		}
+	}
+		public function adminPage3()
+	{
+		if(($this->session->userdata('userId')!=""))
+		{
+		$query=$this->_userData();
+		$data['data']=$query->result_array();
+		$data['pages']='admin';
+		$data['countgroup'] = $this->countGroups();
+		$groupquery= $this->groupdetails();
+		$data['groupdetails'] = $groupquery->result_array();
+		$this->load->view('pages/dashboard/fixed',$data);
+		$this->load->view('pages/adminoverallreports/content'); 
+		$this->load->view('pages/adminoverallreports/chartcontent'); 
+		$this->load->view('pages/adminoverallreports/controlsidebar');
+		
+		}else{
+			$this->_landing();
+		}
+	}
+		public function adminPage4()
+	{
+		if(($this->session->userdata('userId')!=""))
+		{
+		$query=$this->_userData();
+		$data['data']=$query->result_array();
+		$data['pages']='admin';
+		$data['countgroup'] = $this->countGroups();
+		$groupquery= $this->groupdetails();
+		$data['groupdetails'] = $groupquery->result_array();
+		$this->load->view('pages/dashboard/fixed',$data);
+		$this->load->view('pages/adminstatistics/content'); 
+		$this->load->view('pages/adminstatistics/chartcontent'); 
+		$this->load->view('pages/adminstatistics/controlsidebar');
+		}else{
+			$this->_landing();
+		}
+	}
 
 	public function group($groupId=null)
 	{	

@@ -4,7 +4,7 @@
     	if(!isset($_SESSION['Start&Boost'])){
     		header("location:../index.php");
     	}else{
-    			$_SESSION['pages']='dashboard';
+    			$_SESSION['pages']='admindashboard';
     	include("fixed.php");?>
     <?php include("content.php");?>
     <?php include("footer.php");?>

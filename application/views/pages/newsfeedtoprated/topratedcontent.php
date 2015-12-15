@@ -22,8 +22,10 @@
             </div><!-- /.box-header -->
             <div class="box-body">
               <div class="callout callout-info">
-                <h4>Hello Edelito! You caught us before we're ready.</h4>
+               <?php foreach($data as $row):?>
+                <h4>Hello <?php echo $row['user_fName'];?>! You caught us before we're ready.</h4>
                 <p>Development team $index[5] is working hard to put finishing touches onto Start&Boost. Things are going well and it should be heady to help you with lean startup soon.<br/><br/>Thanks! :-)</p>
+              <?php endforeach;?>
               </div>
             </div>
           </div><!-- /.box -->
@@ -38,11 +40,73 @@
                   </div><!-- /.box-header -->
                   <div class="box-body">
                   <div class="box box-widget">
+                    <?php 
+                        
+                        $query = $this->db->query("SELECT *, COUNT(c.postId) as number_of_votes from upvote_dtl c left join userpost v on c.postId = v.postId left join user_md b on v.userId = b.userId left join user_dtl d on b.userId = d.userId where voteType = '1' group by c.postId order by number_of_votes desc");
+                             $i = 0;
+                                foreach($query->result() as $row):
+                             $i++;
+                        $this->db->select('*');
+                        $this->db->from('badge_dtl');
+                        $this->db->where('voteBadge','1');
+                        $this->db->where('userId',$row->userId);
+                        $query = $this->db->get();
+                        $gold = $query->num_rows();
+
+                        $this->db->select('*');
+                        $this->db->from('badge_dtl');
+                        $this->db->where('voteBadge','2');
+                        $this->db->where('userId',$row->userId);
+                        $query = $this->db->get();
+                        $silver = $query->num_rows();
+
+                        $this->db->select('*');
+                        $this->db->from('badge_dtl');
+                        $this->db->where('voteBadge','3');
+                        $this->db->where('userId',$row->userId);
+                        $query = $this->db->get();
+                        $bronze = $query->num_rows();
+
+                        $this->db->select('*');
+                        $this->db->from('badge_dtl');
+                        $this->db->where('voteBadge','4');
+                        $this->db->where('userId',$row->userId);
+                        $query = $this->db->get();
+                        $black = $query->num_rows();
+
+                        $rep = (($gold*20)+($silver*10)+($bronze*5))-($black*15);
+
+                        $this->db->select('*');
+                        $this->db->from('upvote_dtl');
+                        $this->db->where('voteType','1');
+                        $this->db->where('postId',$row->postId);
+                        $query = $this->db->get();
+                        $like = $query->num_rows();
+
+                        $this->db->select('*');
+                        $this->db->from('upvote_dtl');
+                        $this->db->where('voteType','2');
+                        $this->db->where('postId',$row->postId);
+                        $query = $this->db->get();
+                        $share = $query->num_rows();
+
+                        $this->db->select('*');
+                        $this->db->from('upvote_dtl');
+                        $this->db->where('voteType','3');
+                        $this->db->where('postId',$row->postId);
+                        $query = $this->db->get();
+                        $comment = $query->num_rows();
+
+      
+                
+                        ?>
+                          <b><?php echo $i;?></b>
                     <div class='box-header with-border'>
                       <div class='user-block'>
-                        <img class='img-circle' src='../../images/team/index2.jpg' alt='user image'>
-                        <span class='username'><a href="#">Alfie Dimpas</a>&nbsp;&nbsp;<i class='fa fa-star' style="color:#ffd700;"></i><b>&nbsp;&nbsp;10000000</b></span>
-                        <span class='description'>7:30 PM Nov. 29, 2015</span>
+                        <img class='img-circle' src='<?php echo base_url();?>/user/<?php echo $row->avatar_name;?>' alt='user image'>
+                        <span class='username'><a href="#"><?php echo $row->user_fName;?>&nbsp;<?php echo $row->user_midInit;?>.&nbsp;<?php echo $row->user_lName;?></a>&nbsp;&nbsp;<i class='fa fa-star' style="color:#ffd700;"></i><b>&nbsp;&nbsp;<?php echo $rep;?></b></span>
+                        <button class='btn btn-default btn-xs'><i class='fa fa-star' style="color:Gold"></i> <span class="label label-primary">10</span> </button><button class='btn btn-default btn-xs'><i class='fa fa-star' style="color:Silver"></i><span class="label label-primary">5</span> </button><button class='btn btn-default btn-xs'><i class='fa fa-star' style="color:SandyBrown "></i><span class="label label-primary">20</span> </button>
+                        <span class='description'><?php echo $row->postDate;?></span>
                       </div><!-- /.user-block -->
                       <div class='box-tools'>
                         <button class='btn btn-box-tool' data-toggle='tooltip' title='Mark as read'><i class='fa fa-circle-o'></i></button>
@@ -51,14 +115,15 @@
                     </div><!-- /.box-header -->
                     <div class='box-body'>
                       <!-- post text -->
-                      <p>Gwapohang Edelito oie.., mabayot man sad ta :) </p>
-                      <p>Like mo mga friends.</p>
+                       <p><b><?php echo $row->postTitle;?></b></p>
+                      <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $row->postContent;?></p>
+
 
                       <!-- Attachment -->
                       <div class="attachment-block clearfix">
                         <img class="attachment-img" src="../../dist/img/edelito.jpg" alt="attachment image">
                         <div class="attachment-pushed">
-                          <h4 class="attachment-heading"><a href="#">Start&Boost</a></h4>
+                          <h4 class="attachment-heading"><a href="#"><?php echo $row->user_fName;?>&nbsp;<?php echo $row->user_midInit;?>.&nbsp;<?php echo $row->user_lName;?></a></h4>
                           <div class="attachment-text">
                             Related Links: <br/><a href="#">startandboost/video</a>, &nbsp;&nbsp;<a href="#">startandboost/article</a>
                           </div><!-- /.attachment-text -->
@@ -68,54 +133,11 @@
                       <!-- Social sharing buttons -->
                       <button class='btn btn-default btn-xs'><i class='fa fa-thumbs-o-up'></i> Upvote</button>
                       <button class='btn btn-default btn-xs'><i class='fa fa-share'></i> Share</button>
-                      <span class='pull-right text-muted'>100 likes - 2 comments</span>
+                      <span class='pull-right text-muted'><?php echo $like;?> likes - <?php echo $comment;?> comments</span>
                     </div><!-- /.box-body -->
-                    <div class='box-footer box-comments'>
-                      <div class='box-comment'>
-                        <!-- User image -->
-                        <img class='img-circle img-sm' src='../../images/team/index0.png' alt='user image'>
-                        <div class='comment-text'>
-                          <span class="username">
-                            Lyneth Cutamora
-                            <span class='text-muted pull-right'>8:03 PM Today</span>
-                          </span><!-- /.username -->
-                          Gwapoha dah., e like teka edelitz :)<br/>
-                          <button class='btn btn-default btn-xs'><i class='fa fa-thumbs-o-up'></i> Upvote</button>
-                          <button class='btn btn-default btn-xs'><i class='fa fa-reply'></i> Reply</button><br/>
-                          <form action="#" method="post">
-                          <img class='img-circle img-sm' src='../../images/team/index2.jpg' alt='user image'>
-                        <div class='comment-text'>
-                          <span class="username">
-                            Alfie Dimpas
-                            <span class='text-muted pull-right'>8:05 PM Today</span>
-                          </span><!-- /.username -->
-                          Hello..., Papa <3 <3<br/>
-                          <button class='btn btn-default btn-xs'><i class='fa fa-thumbs-o-up'></i> Upvote</button>
-                          <button class='btn btn-default btn-xs'><i class='fa fa-reply'></i> Reply</button><br/>
-                          <form action="#" method="post">
-
-                           
-                      
-                            <img class="img-responsive img-circle img-sm" src="../../images/team/index2.jpg" alt="alt text">
-                            <!-- .img-push is used to add margin to elements next to floating images -->
-                            <div class="img-push">
-                              <input type="text" class="form-control input-sm" placeholder="Press enter to post comment">
-                            </div>
-                          </form>
-                      
-                        </div><!-- /.comment-text -->
-                        </div><!-- /.comment-text -->
-                      </div><!-- /.box-comment -->
-                    </div><!-- /.box-footer -->
-                    <div class="box-footer">
-                      <form action="#" method="post">
-                        <img class="img-responsive img-circle img-sm" src="../../images/team/index2.jpg" alt="alt text">
-                        <!-- .img-push is used to add margin to elements next to floating images -->
-                        <div class="img-push">
-                          <input type="text" class="form-control input-sm" placeholder="Press enter to post comment">
-                        </div>
-                      </form>
-                    </div><!-- /.box-footer -->
+                    <?php  endforeach;?>
+                    
+                  
                   </div><!-- /.box -->
                 </div><!--/.body-->
                 <div class="box-footer text-center">

@@ -217,7 +217,8 @@
                     </div><!-- /.box-header -->
                     <div class='box-body'>
                       <!-- post text -->
-                      <p><?php echo $row->postContent;?></p>
+                      <p><b><?php echo $row->postTitle;?></b></p>
+                      <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $row->postContent;?></p>
 
                       <!-- Attachment -->
                       <div class="attachment-block clearfix">
