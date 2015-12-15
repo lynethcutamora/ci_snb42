@@ -209,10 +209,10 @@
                   <!-- Menu Footer-->
                   <li class="user-footer">
                     <div class="pull-left">
-                      <a href="<?php echo base_url();?>pages/profile" class="btn btn-default btn-flat">Profile</a>
+                      <a href="<?php echo base_url() ;?>pages/profile" class="btn btn-default btn-flat">Profile</a>
                     </div>
                     <div class="pull-right">
-                      <a href="<?php echo base_url();?>pages/logout" class="btn btn-default btn-flat">Sign out</a>
+                      <a href="<?php echo base_url() ;?>pages/logout" class="btn btn-default btn-flat">Sign out</a>
                     </div>
                   </li>
                 </ul>
@@ -235,11 +235,11 @@
           <!-- Sidebar user panel -->
             <div class="user-panel">
             <div class="pull-left image">
-              <img src="<?php echo base_url();?>/user/<?php echo $row['avatar_name']?>" class="img-circle" alt="User Image">
+              <img src="<?php echo base_url(); ?>/user/<?php echo $row['avatar_name']?>" class="img-circle" alt="User Image">
             </div>
             <div class="pull-left info">
               <p>
-                <a href="<?php echo base_url();?>pages/profile">
+                <a href="<?php echo base_url(); ?>pages/profile">
                 <?php 
                   foreach($data as $row):
                     if($row['user_Type']=='Ideator'||$row['user_Type']=='Investor')
@@ -275,17 +275,17 @@
             <li class="header">MAIN NAVIGATION</li>
             
             <li class="treeview <?php if($pages=='dashboard') {echo "active";}else echo "";?>">
-              <a href="<?php echo base_url();?>pages/index">
+              <a href="<?php echo base_url(); ?>index.php/pages/index">
                 <i class="fa fa-dashboard"></i> <span>Dashboard</span> <!--<i class="fa fa-angle-left pull-right">--></i>
               </a>            
             </li>
             <li class="treeview <?php if($pages=='profile') {echo "active";}else echo "";?>">
-              <a href="<?php echo base_url();?>pages/profile">
+              <a href="<?php echo base_url(); ?>index.php/pages/profile">
                 <i class="fa fa-edit"></i> <span>Post Idea</span>
               </a>
             </li>
             <li class="treeview <?php if($pages=='startup') {echo "active";}else echo "";?>">
-              <a href="<?php echo base_url();?>pages/startupproduct">
+              <a href="<?php echo base_url(); ?>index.php/pages/startupproduct">
                 <i class="fa fa-paper-plane"></i> <span>Startup Products</span>
               </a>
             </li>
@@ -296,13 +296,13 @@
                 <i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu">
-                <li><a href="<?php echo base_url();?>pages/latest"><i class="fa fa-circle-o"></i>Latest</a></li>
-                <li><a href="<?php echo base_url();?>pages/onfire"><i class="fa fa-fire"></i>On Fire</a></li>
-                <li><a href="<?php echo base_url();?>pages/toprated"><i class="fa fa-star"></i>Top Rated</a></li>
+                <li><a href="<?php echo base_url(); ?>pages/latest"><i class="fa fa-circle-o"></i>Latest</a></li>
+                <li><a href="<?php echo base_url(); ?>pages/onfire"><i class="fa fa-fire"></i>On Fire</a></li>
+                <li><a href="<?php echo base_url(); ?>pages/toprated"><i class="fa fa-star"></i>Top Rated</a></li>
               </ul>
             </li>
              <li class="treeview <?php if($pages=='timeline') {echo "active";}else echo "";?>">
-              <a href="<?php echo base_url();?>pages/timeline">
+              <a href="<?php echo base_url(); ?>pages/timeline">
                     <i class="fa fa-calendar"></i> <span>Timeline</span>
                  </a>
              
@@ -314,10 +314,10 @@
                
               </a>
               <ul class="treeview-menu">
-                <li><a href="<?php echo base_url();?>pages/newgroup"><i class="fa fa-plus"></i>Create Group</a></li>
+                <li><a href="<?php echo base_url(); ?>pages/newgroup"><i class="fa fa-plus"></i>Create Group</a></li>
                 <?php foreach ($groupdetails as $row):?>
 
-                  <li><a href="<?php echo base_url();?>pages/group/<?php echo $row['groupId']?>"><i class="fa fa-circle-o"></i><?php echo $row['groupname'];?></a></li>
+                  <li><a href="<?php echo base_url(); ?>pages/group/<?php echo $row['groupId']?>"><i class="fa fa-circle-o"></i><?php echo $row['groupname'];?></a></li>
                 <?php endforeach;?>
               
               </ul>
