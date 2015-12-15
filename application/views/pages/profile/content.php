@@ -26,28 +26,28 @@ theForm.scrolly.value = scrolly;
       $this->db->select('*');
       $this->db->from('badge_dtl');
       $this->db->where('voteBadge','1');
-      $this->db->where('userId',$this->session->userdata('userId'));
+      $this->db->where('userId',$userId);
       $query = $this->db->get();
       $gold = $query->num_rows();
 
       $this->db->select('*');
       $this->db->from('badge_dtl');
       $this->db->where('voteBadge','2');
-      $this->db->where('userId',$this->session->userdata('userId'));
+      $this->db->where('userId',$userId);
       $query = $this->db->get();
       $silver = $query->num_rows();
 
       $this->db->select('*');
       $this->db->from('badge_dtl');
       $this->db->where('voteBadge','3');
-      $this->db->where('userId',$this->session->userdata('userId'));
+      $this->db->where('userId',$userId);
       $query = $this->db->get();
       $bronze = $query->num_rows();
 
       $this->db->select('*');
       $this->db->from('badge_dtl');
       $this->db->where('voteBadge','4');
-      $this->db->where('userId',$this->session->userdata('userId'));
+      $this->db->where('userId',$userId);
       $query = $this->db->get();
       $black = $query->num_rows();
 
@@ -70,7 +70,7 @@ theForm.scrolly.value = scrolly;
 
           <div class="row">
             <div class="col-md-3">
-              <?php foreach($data as $row):
+              <?php foreach($profileDtl as $row):
                 echo '<div class="box box-widget widget-user">';
                 # Add the bg color to the header using any of the bg-* classes -->
                 echo '<div class="widget-user-header bg-black" style="background: url(\''.base_url().'/user/defaultcover_user.png\') center center; background-size:contain;">';
@@ -150,7 +150,9 @@ theForm.scrolly.value = scrolly;
                 </div>
               </div><!-- /.widget-user -->
               <!-- App Buttons -->
+            <?php  if($userId!=$this->session->userdata('userId')){?>
               <div>
+               
                 <button type="button" class="btn btn-app" data-toggle="modal" data-target="#message" title="Send Message" style="background-color:#3C8DBC;color:white;">
                 <i class="fa fa-envelope"></i>Message
                 </button>
@@ -164,6 +166,7 @@ theForm.scrolly.value = scrolly;
                 </button>
 
               </div>
+              <?php }?>
 
               <!-- About Me Box -->
               <div class="box box-primary">
@@ -213,6 +216,7 @@ theForm.scrolly.value = scrolly;
           
             <div class="col-md-12">
               <!-- Horizontal Form -->
+              <?php if($userId==$this->session->userdata('userId')){?>
                 <div class="box">
                   <div class="box-header with-border">
                     <p>Post New Idea</p>
@@ -252,7 +256,9 @@ theForm.scrolly.value = scrolly;
                  
                     </div>
                
-              </div>
+            
+              <?php }?>
+                </div>
               </div>
               <div class="nav-tabs-custom">
                 <ul class="nav nav-tabs">
@@ -262,7 +268,7 @@ theForm.scrolly.value = scrolly;
                 <div class="tab-content">
                   <div class="active tab-pane" id="activity">
                     <!-- Post -->
-                      <?php  foreach($data as $userdtl):?>
+                      <?php  foreach($profileDtl as $userdtl):?>
             <?php foreach($alldata as $postdtl):?>
 
           <div class="row">

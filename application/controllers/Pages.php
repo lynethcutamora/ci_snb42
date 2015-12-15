@@ -314,22 +314,33 @@ class Pages extends CI_Controller {
 		}
 	}
 
-	public function profile()
+	public function profile($userId=null)
 	{	if(($this->session->userdata('userId')!=""))
 		{
 
-		$query=$this->_userData();
-		$data['data']=$query->result_array();
-		$data['pages']='profile';
-		$data['countgroup'] = $this->countGroups();
-		$groupquery= $this->groupdetails();
-		$data['groupdetails'] = $groupquery->result_array();
-		$query=$this->_alluserData();
-		$data['alldata']=$query->result_array();
-		$this->load->view('pages/dashboard/fixed',$data);
-		$this->load->view('pages/profile/content',$data); 
-		$this->load->view('pages/dashboard/controlsidebar');
-		$this->load->view('pages/dashboard/end');
+			if(isset($userId))
+			{
+				$query=$this->_userData();
+				$data['data']=$query->result_array();
+				$data['pages']='profile';
+				$data['countgroup'] = $this->countGroups();
+				$groupquery= $this->groupdetails();
+				$data['groupdetails'] = $groupquery->result_array();
+				$query=$this->_alluserData();
+				$data['alldata']=$query->result_array();
+
+				$query=$this->post->profile($userId);
+				$data['profileDtl']=$query->result_array();
+				$data['userId']=$userId;
+
+
+				$this->load->view('pages/dashboard/fixed',$data);
+				$this->load->view('pages/profile/content',$data); 
+				$this->load->view('pages/dashboard/controlsidebar');
+				$this->load->view('pages/dashboard/end');
+			}else{
+
+			}
 		}else{
 			$this->_landing();
 		}
@@ -350,6 +361,7 @@ class Pages extends CI_Controller {
 				$data['alldata']=$query->result_array();
 				$postdtlquery= $this->post->postdtl($postId);
 				$data['postDetail'] = $postdtlquery->result_array();
+
 				if($postdtlquery->num_rows()==0) {
 				$this->load->view('pages/dashboard/fixed',$data);
 				$this->load->view('pages/post/content',$data); 
@@ -746,7 +758,7 @@ class Pages extends CI_Controller {
          $this->form_validation->set_rules('relatedlinks', 'Links', 'trim');
          if ($this->form_validation->run() == FALSE)
         {
-         	$this->post();
+         	$this->post($this->session->userdata('userId'));
         }
         else
 		{	
@@ -767,7 +779,7 @@ class Pages extends CI_Controller {
 			$this->post->link($this->input->post('relatedlinks'), '2',$postId);
 			$this->post->image($url, '1',$postId);
 			$this->db->insert('userpost', $data);
-				redirect('pages/profile');
+				redirect('pages/profile/'.$this->session->userdata('userId').');
 
 
 		}

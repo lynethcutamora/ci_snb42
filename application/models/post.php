@@ -111,6 +111,19 @@ class Post extends CI_Model {
             return $query;
 
         }
+        public function profile($userId)
+        {
+            $this->db->select('*');
+            $this->db->from('user_md a');
+            $this->db->join('user_dtl b', 'b.userId=a.userId','left');
+            $this->db->join('company_dtl c', 'c.userId=a.userId','left');
+            $this->db->join('avatar_dtl d', 'd.userId=a.userId','left');
+            $this->db->join('location_dtl e', 'e.userId=a.userId','left');
+            $this->db->where('a.userId', $userId);
+            $query = $this->db->get();
+            return $query;
+
+        }
       
 }
 ?>
