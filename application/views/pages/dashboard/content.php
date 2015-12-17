@@ -122,7 +122,7 @@
 
                         <tr>
                             <td><?php echo $i;?></td>
-                            <td><a href="#"><?php echo $row->postTitle;?></a></td>
+                            <td><a href="<?php echo base_url()."pages/post/".$row->postId;?>"><?php echo $row->postTitle;?></a></td>
                             <td><?php echo $row->user_fName;?>&nbsp;<?php echo $row->user_midInit;?>.&nbsp;<?php echo $row->user_lName;?></td>
                             <td><?php echo $row->user_Type;?></td>
                             <td><i class="fa fa-star" style="color:#ffd700;"></i>&nbsp;<span class="label label-default"><?php echo $rep;?></span></td>
@@ -139,7 +139,7 @@
                     </div><!-- /.table-responsive -->
                   </div><!-- /.box-body -->
                   <div class="box-footer clearfix">
-                    <a href="" class="btn btn-sm btn-default btn-flat pull-right">View Top 50</a>
+                    <a href="<?php echo base_url()."pages/toprated/"?>" class="btn btn-sm btn-default btn-flat pull-right">View More</a>
                   </div><!-- /.box-footer -->
                 </div><!-- /.box -->
 
@@ -206,9 +206,8 @@
                     <div class='box-header with-border'>
                       <div class='user-block'>
                         <img class='img-circle' src='<?php echo base_url();?>/user/<?php echo $row->avatar_name;?>' alt='user image'>
-                        <span class='username'><a href="#"><?php echo $row->user_fName;?>&nbsp;<?php echo $row->user_midInit;?>.&nbsp;<?php echo $row->user_lName;?>&nbsp;</a>&nbsp;&nbsp;<i class='fa fa-star' style="color:#ffd700;"></i><b>&nbsp;&nbsp;<?php echo $rep;?></b></span>
-                        <button class='btn btn-default btn-xs'><i class='fa fa-star' style="color:Gold"></i> <span class="label label-primary">10</span> </button><button class='btn btn-default btn-xs'><i class='fa fa-star' style="color:Silver"></i><span class="label label-primary">5</span> </button><button class='btn btn-default btn-xs'><i class='fa fa-star' style="color:SandyBrown "></i><span class="label label-primary">20</span> </button>
-                        <span class='description'><?php echo $row->postDate;?></span>
+                        <span class='username'><a href="<?php echo base_url()."pages/profile/".$row->userId;?>"><?php echo $row->user_fName;?>&nbsp;<?php echo $row->user_midInit;?>.&nbsp;<?php echo $row->user_lName;?>&nbsp;</a>&nbsp;&nbsp;<i class='fa fa-star' style="color:#ffd700;"></i><b>&nbsp;&nbsp;<?php echo $rep;?></b></span>
+                         <span class='description'><?php echo $row->postDate;?></span>
                       </div><!-- /.user-block -->
                       <div class='box-tools'>
                         <button class='btn btn-box-tool' data-toggle='tooltip' title='Mark as read'><i class='fa fa-circle-o'></i></button>
@@ -217,14 +216,14 @@
                     </div><!-- /.box-header -->
                     <div class='box-body'>
                       <!-- post text -->
-                      <p><b><?php echo $row->postTitle;?></b></p>
+                      <p><b><a href="<?php echo base_url()."pages/post/".$row->postId;?>"><?php echo $row->postTitle;?></a></b></p>
                       <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $row->postContent;?></p>
 
                       <!-- Attachment -->
                       <div class="attachment-block clearfix">
                         <img class="attachment-img" src="../../dist/img/photo1.png" alt="attachment image">
                         <div class="attachment-pushed">
-                          <h4 class="attachment-heading"><a href="#"><?php echo $row->user_fName;?>&nbsp;<?php echo $row->user_midInit;?>.&nbsp;<?php echo $row->user_lName;?></a></h4>
+                          <h4 class="attachment-heading"><a href="<?php echo base_url()."pages/profile/".$row->userId;?>"><?php echo $row->user_fName;?>&nbsp;<?php echo $row->user_midInit;?>.&nbsp;<?php echo $row->user_lName;?></a></h4>
                           <div class="attachment-text">
                             Related Links: <br/><a href="#">startandboost/video</a>, &nbsp;&nbsp;<a href="#">startandboost/article</a>
                           </div><!-- /.attachment-text -->
@@ -240,7 +239,7 @@
                   </div><!-- /.box -->
                 </div><!--/.body-->
                 <div class="box-footer text-center">
-                    <a href="javascript::;" class="uppercase">View More Posts</a>
+                    <a href="<?php echo base_url()."pages/onfire/"?>" class="uppercase">View More Posts</a>
                   </div><!-- /.box-footer -->
                 </div><!--/.box-->
               </div><!--/.col-->

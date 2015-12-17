@@ -42,7 +42,7 @@
                   <div class="box box-widget">
                     <?php 
                         
-                        $query = $this->db->query("SELECT *, COUNT(c.postId) as number_of_votes from upvote_dtl c left join userpost v on c.postId = v.postId left join user_md b on v.userId = b.userId left join user_dtl d on b.userId = d.userId where voteType = '1' group by c.postId order by number_of_votes desc");
+                        $query = $this->db->query("SELECT *, COUNT(c.postId) as number_of_votes from upvote_dtl c left join userpost v on c.postId = v.postId left join user_md b on v.userId = b.userId left join user_dtl d on b.userId = d.userId left join avatar_dtl e on d.userId = e.userId left join userpost_ext f on v.postId = f.postId where voteType = '1' group by c.postId order by number_of_votes desc");
                              $i = 0;
                                 foreach($query->result() as $row):
                              $i++;
@@ -104,8 +104,7 @@
                     <div class='box-header with-border'>
                       <div class='user-block'>
                         <img class='img-circle' src='<?php echo base_url();?>/user/<?php echo $row->avatar_name;?>' alt='user image'>
-                        <span class='username'><a href="#"><?php echo $row->user_fName;?>&nbsp;<?php echo $row->user_midInit;?>.&nbsp;<?php echo $row->user_lName;?></a>&nbsp;&nbsp;<i class='fa fa-star' style="color:#ffd700;"></i><b>&nbsp;&nbsp;<?php echo $rep;?></b></span>
-                        <button class='btn btn-default btn-xs'><i class='fa fa-star' style="color:Gold"></i> <span class="label label-primary">10</span> </button><button class='btn btn-default btn-xs'><i class='fa fa-star' style="color:Silver"></i><span class="label label-primary">5</span> </button><button class='btn btn-default btn-xs'><i class='fa fa-star' style="color:SandyBrown "></i><span class="label label-primary">20</span> </button>
+                        <span class='username'><a href="<?php echo base_url()."pages/profile/".$row->userId;?>"><?php echo $row->user_fName;?>&nbsp;<?php echo $row->user_midInit;?>.&nbsp;<?php echo $row->user_lName;?></a>&nbsp;&nbsp;<i class='fa fa-star' style="color:#ffd700;"></i><b>&nbsp;&nbsp;<?php echo $rep;?></b></span>
                         <span class='description'><?php echo $row->postDate;?></span>
                       </div><!-- /.user-block -->
                       <div class='box-tools'>
@@ -115,34 +114,30 @@
                     </div><!-- /.box-header -->
                     <div class='box-body'>
                       <!-- post text -->
-                       <p><b><?php echo $row->postTitle;?></b></p>
+                       <p><b><a href="<?php echo base_url()."pages/post/".$row->postId;?>"><?php echo $row->postTitle;?></a></b></p>
                       <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $row->postContent;?></p>
 
 
                       <!-- Attachment -->
                       <div class="attachment-block clearfix">
-                        <img class="attachment-img" src="../../dist/img/edelito.jpg" alt="attachment image">
+                       <img src='<?php echo base_url();?><?php echo $row->extContent;?>' height='200px' width='200px'>";
                         <div class="attachment-pushed">
-                          <h4 class="attachment-heading"><a href="#"><?php echo $row->user_fName;?>&nbsp;<?php echo $row->user_midInit;?>.&nbsp;<?php echo $row->user_lName;?></a></h4>
+                          <h4 class="attachment-heading"><a href="<?php echo base_url()."pages/profile/".$row->userId;?>"><?php echo $row->user_fName;?>&nbsp;<?php echo $row->user_midInit;?>.&nbsp;<?php echo $row->user_lName;?></a></h4>
                           <div class="attachment-text">
-                            Related Links: <br/><a href="#">startandboost/video</a>, &nbsp;&nbsp;<a href="#">startandboost/article</a>
+                            Related Links: <br/><a href="">startandboost/video</a>, &nbsp;&nbsp;<a href="#">startandboost/article</a>
                           </div><!-- /.attachment-text -->
                         </div><!-- /.attachment-pushed -->
                       </div><!-- /.attachment-block -->
-
                       <!-- Social sharing buttons -->
                       <button class='btn btn-default btn-xs'><i class='fa fa-thumbs-o-up'></i> Upvote</button>
                       <button class='btn btn-default btn-xs'><i class='fa fa-share'></i> Share</button>
                       <span class='pull-right text-muted'><?php echo $like;?> likes - <?php echo $comment;?> comments</span>
                     </div><!-- /.box-body -->
                     <?php  endforeach;?>
-                    
+                    </br></br></br>
                   
                   </div><!-- /.box -->
                 </div><!--/.body-->
-                <div class="box-footer text-center">
-                    <a href="javascript::;" class="uppercase">View More Posts</a>
-                  </div><!-- /.box-footer -->
                 </div><!--/.box-->
               </div><!--/.col-->
 <!-------------------------------------------------------------------------------------->
