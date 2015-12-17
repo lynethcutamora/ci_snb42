@@ -38,7 +38,7 @@
                     </div><!-- /.col -->
                     <div class="col-sm-3 border-right">
                       <div class="description-block">
-                        <h5 class="description-header"><?php echo count($projectdtl);?></h5>
+                        <h5 class="description-header"><?php echo count($allproject);?></h5>
                         <span class="description-text">PROJECTS</span>
                       </div><!-- /.description-block -->
                     </div><!-- /.col -->
@@ -67,11 +67,11 @@
                   <li><a href="#tab_2-2" data-toggle="tab">Important Files</a></li>
                   <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                      Project(s) <span class="caret"></span>
+                      Projects (<?php echo count($allproject); ?>) <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
-                      <?php foreach($projectdtl as $row):?>
-                      <li role="presentation"><a role="menuitem" tabindex="-1" href="<?php echo base_url(); ?>pages/group/<?php echo $groupid;?>/<?php echo $row['postId'];?>"><?php echo $row['postId'];?><?php echo $row['postTitle'];?></a></li>
+                      <?php foreach($allproject as $row):?>
+                      <li role="presentation"><a role="menuitem" tabindex="-1" href="<?php echo base_url(); ?>pages/group/<?php echo $groupid;?>/<?php echo $row['postId'];?>"><?php echo $row['postTitle'];?></a></li>
                       <?php endforeach;?>
                     </ul>
                   </li>
@@ -88,7 +88,9 @@
                         <div class="box box-success">
                           <div class="box-header">
                             <i class="fa fa-comments-o"></i>
-                            <h3 class="box-title">Start&Boost Project</h3>
+                            <?php foreach($projectdtl as $row):?>
+                            <h3 class="box-title"><?php echo $row['postTitle'];?></h3>
+                            <?php endforeach;?>
                             <div class="box-tools pull-right" data-toggle="tooltip" title="Status">
                               <div class="btn-group" data-toggle="btn-toggle" >
                                 <button type="button" class="btn btn-default btn-sm active"><i class="fa fa-square text-green"></i></button>

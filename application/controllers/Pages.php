@@ -256,12 +256,13 @@ class Pages extends CI_Controller {
 					$groupDetails->result_array();
 				}else{
 					if(isset($projectId)){
-						$projectdtl= $this->projectdtl($groupid,$projectId);
+						$projectdtl= $this->projectdtl($groupId,$projectId);
 						$data['projectdtl'] = $projectdtl->result_array();
 					}
+
+					$allproject= $this->allproject($groupId);
+					$data['allproject'] = $allproject->result_array();
 					$data['groupDtl'] = $groupDetails->result_array();
-					$projectdtl= $this->post->projectdtl($groupId);
-					$data['projectdtl'] = $projectdtl->result_array();
 					$memberinfo= $this->memberinfo($groupId);
 					$data['memberinfo'] = $memberinfo->result_array();
 					$search= $this->_searchpeople();
@@ -919,6 +920,15 @@ class Pages extends CI_Controller {
 		$this->db->from('userpost');
 		$this->db->where('postType',$groupid);
 		$this->db->where('postId',$projectId);
+		$query=$this->db->get();
+
+		return $query;
+	}
+
+	public function allproject($groupid){
+		$this->db->select('*');
+		$this->db->from('userpost');
+		$this->db->where('postType',$groupid);
 		$query=$this->db->get();
 
 		return $query;
