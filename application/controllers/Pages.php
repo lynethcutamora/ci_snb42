@@ -835,7 +835,7 @@ class Pages extends CI_Controller {
 			);
 
 			$this->db->insert('comment_dtl', $data);
-			$this->post($postId);
+			header('Location:'.base_url().'pages/post/'.$postId);		
 		}
 	}
 
@@ -980,7 +980,8 @@ class Pages extends CI_Controller {
 				);
 
 				$this->db->insert('badge_dtl', $data);
-				header('Location:'.base_url().'pages/profile/'.$userId);			}
+				header('Location:'.base_url().'pages/profile/'.$userId);		
+			}
 			else if($post=='silver')
 			{
 			

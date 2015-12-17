@@ -1,3 +1,22 @@
+ <script type="text/javascript">
+
+function saveScrollPositions(theForm) {
+
+if(theForm) {
+
+var scrolly = typeof window.pageYOffset != 'undefined' ? window.pageYOffset : document.documentElement.scrollTop;
+
+var scrollx = typeof window.pageXOffset != 'undefined' ? window.pageXOffset : document.documentElement.scrollLeft;
+
+theForm.scrollx.value = scrollx;
+
+theForm.scrolly.value = scrolly;
+
+}
+
+}
+
+</script>
  <div class="content-wrapper">
  <div class="row">
   <br>
@@ -99,7 +118,7 @@
                                     echo $comment['company_name'];
                                   }
                           ?>
-                        <span class="text-muted pull-right">8:03 PM Today</span>
+                        <span class="text-muted pull-right"> <?php echo $comment['commentDate'];?></span>
                       </span><!-- /.username -->
                      <?php echo $comment['commentContent'];?>
                     </div><!-- /.comment-text -->
@@ -110,11 +129,14 @@
                 <?php foreach ($data as $data):?>
                   
                 <div class="box-footer">
-                  <form action="<?php echo  base_url()."pages/comment/".$postId;?>" method="post">
+                  <form action="<?php echo  base_url()."pages/comment/".$postId;?>" method="post" name='theForm'>
+
                    <img class='img-responsive img-circle img-sm' src='<?php echo base_url();?>user/<?php echo $data['avatar_name']?>' alt='user image'>
                      
                     <!-- .img-push is used to add margin to elements next to floating images -->
                     <div class="img-push">
+                      <input type="hidden" name="scrollx" id="scrollx" value="0" />
+                     <input type="hidden" name="scrolly" id="scrolly" value="0" />
                       <input class="form-control input-sm" placeholder="Press enter to post comment" type="text" name="commentContent">
                     </div>
                   </form>
@@ -126,3 +148,28 @@
             </div>
         </div>
       </div>
+      <?php
+
+$scrollx = 0;
+
+$scrolly = 0;
+
+if(!empty($_REQUEST['scrollx'])) {
+
+$scrollx = $_REQUEST['scrollx'];
+
+}
+
+if(!empty($_REQUEST['scrolly'])) {
+
+$scrolly = $_REQUEST['scrolly'];
+
+}
+
+?>
+
+<script type="text/javascript">
+
+  window.scrollTo(<?php echo "$scrollx" ?>, <?php echo "$scrolly" ?>);
+
+</script>

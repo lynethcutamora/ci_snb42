@@ -146,7 +146,7 @@ class Post extends CI_Model {
         $this->db->join('avatar_dtl e', 'e.userId=d.userId','left');
         $this->db->where('postId',$postId);
         $this->db->where('commentType',$type);
-        $this->db->order_by('commentDate', 'DESC');
+        $this->db->order_by('commentDate', 'ASC');
         $query = $this->db->get();
          return $query;
     }
