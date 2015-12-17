@@ -290,7 +290,7 @@
                         </ul>
                       </div><!-- /.box-body -->
                       <div class="box-footer text-center">
-                        <a href="javascript::;" class="uppercase">View Products</a>
+                        <a href="<?php echo base_url(); ?>index.php/pages/startupproduct">View Products</a>
                       </div><!-- /.box-footer -->
                     </div><!-- /.box -->
 
@@ -320,10 +320,10 @@
                         <ul class="products-list product-list-in-box">
                           <li class="item">
                             <div class="product-img">
-                              <img src="../../images/blue.png" alt="Product Image">   
+                              <img src='<?php echo base_url();?><?php echo $row->extContent;?>' height='200px' width='200px'>   
                             </div>
                             <div class="product-info">
-                              <a href="javascript::;" class="product-title"><?php echo $row->postTitle;?></a></br>
+                              <a href="<?php echo base_url()."pages/post/".$row->postId;?>"><?php echo $row->postTitle;?></a></br>
                                 by: <?php echo $row->user_lName?>, <?php echo $row->user_fName?>
                               </span>
                             </div>
@@ -332,7 +332,7 @@
                         </ul>
                       </div><!-- /.box-body -->
                       <div class="box-footer text-center">
-                        <a href="javascript::;" class="uppercase">View Ideas</a>
+                        <a href="<?php echo base_url()."pages/latest/"?>" class="uppercase">View Latest Ideas</a>
                       </div><!-- /.box-footer -->
                     </div><!-- /.box -->
                   </div><!--/.box body-->

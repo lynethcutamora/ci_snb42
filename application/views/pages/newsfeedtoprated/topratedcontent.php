@@ -1,4 +1,22 @@
+<script type="text/javascript">
 
+function saveScrollPositions(theForm) {
+
+if(theForm) {
+
+var scrolly = typeof window.pageYOffset != 'undefined' ? window.pageYOffset : document.documentElement.scrollTop;
+
+var scrollx = typeof window.pageXOffset != 'undefined' ? window.pageXOffset : document.documentElement.scrollLeft;
+
+theForm.scrollx.value = scrollx;
+
+theForm.scrolly.value = scrolly;
+
+}
+
+}
+
+</script>
       <!-- Content Wrapper. Contains page content -->
       <div class="content-wrapper">
         <!-- Content Header (Page header) -->
@@ -42,7 +60,7 @@
                   <div class="box box-widget">
                     <?php 
                         
-                        $query = $this->db->query("SELECT *, COUNT(c.postId) as number_of_votes from upvote_dtl c left join userpost v on c.postId = v.postId left join user_md b on v.userId = b.userId left join user_dtl d on b.userId = d.userId left join avatar_dtl e on d.userId = e.userId left join userpost_ext f on v.postId = f.postId where voteType = '1' group by c.postId order by number_of_votes desc");
+                        $query = $this->db->query("SELECT *, COUNT(c.postId) as number_of_votes from upvote_dtl c left join userpost v on c.postId = v.postId  left join user_md b on v.userId = b.userId left join user_dtl d on b.userId = d.userId where voteType = '1' group by c.postId order by number_of_votes desc limit 5");
                              $i = 0;
                                 foreach($query->result() as $row):
                              $i++;
@@ -97,8 +115,6 @@
                         $query = $this->db->get();
                         $comment = $query->num_rows();
 
-      
-                
                         ?>
                           <b><?php echo $i;?></b>
                     <div class='box-header with-border'>
@@ -120,7 +136,7 @@
 
                       <!-- Attachment -->
                       <div class="attachment-block clearfix">
-                       <img src='<?php echo base_url();?><?php echo $row->extContent;?>' height='200px' width='200px'>";
+                       <img src='<?php echo base_url();?><?php echo $ext;?>' height='200px' width='200px'>
                         <div class="attachment-pushed">
                           <h4 class="attachment-heading"><a href="<?php echo base_url()."pages/profile/".$row->userId;?>"><?php echo $row->user_fName;?>&nbsp;<?php echo $row->user_midInit;?>.&nbsp;<?php echo $row->user_lName;?></a></h4>
                           <div class="attachment-text">
