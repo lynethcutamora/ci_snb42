@@ -37,9 +37,8 @@ class Post extends CI_Model {
          public function projectdtl($groupId)
         {
                 $this->db->select('*');
-                $this->db->from('userpost a');
-                $this->db->join('investor_dtl b','b.postId=a.postId','left');
-                $this->db->where('a.postType',$groupId);
+                $this->db->from('userpost');
+                $this->db->where('postType',$groupId);
                 $query=$this->db->get();
 
                 return $query;
@@ -146,7 +145,7 @@ class Post extends CI_Model {
         $this->db->join('avatar_dtl e', 'e.userId=d.userId','left');
         $this->db->where('postId',$postId);
         $this->db->where('commentType',$type);
-        $this->db->order_by('commentDate', 'DESC');
+        $this->db->order_by('commentDate', 'ASC');
         $query = $this->db->get();
          return $query;
     }

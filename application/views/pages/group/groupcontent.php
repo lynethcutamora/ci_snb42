@@ -71,7 +71,7 @@
                     </a>
                     <ul class="dropdown-menu">
                       <?php foreach($projectdtl as $row):?>
-                      <li role="presentation"><a role="menuitem" tabindex="-1" href="<?php echo base_url(); ?>pages/group/<?php echo $groupid;?>/<?php echo $row['postId'];?>"><?php echo $row['postTitle'];?></a></li>
+                      <li role="presentation"><a role="menuitem" tabindex="-1" href="<?php echo base_url(); ?>pages/group/<?php echo $groupid;?>/<?php echo $row['postId'];?>"><?php echo $row['postId'];?><?php echo $row['postTitle'];?></a></li>
                       <?php endforeach;?>
                     </ul>
                   </li>

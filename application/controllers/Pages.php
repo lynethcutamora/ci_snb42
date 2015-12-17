@@ -808,14 +808,14 @@ class Pages extends CI_Controller {
 		$data['data']=$query->result_array();
 		$data['pages']='post';
 
-		$query=$this->post->alluserData($userId)
-;
+		$query=$this->post->alluserData($userId);
 		$data['alldata']=$query->result_array();
 		$this->load->view('pages/post/comment',$data);
 	}
-	public function comment()
+	
+	public function comment($postId)
 	{
-		 $this->form_validation->set_rules('comment', 'Comment', 'required|trim');
+		 $this->form_validation->set_rules('commentContent', 'Comment', 'required|trim');
  
          if ($this->form_validation->run() == FALSE)
         {
@@ -826,16 +826,16 @@ class Pages extends CI_Controller {
      	 	$datetime = date('Y-m-d H:i:s'); 
      	 	$commentId = uniqid();
      	 	$data = array(
-			'commentId' => $this->input->post('commentid'),
-			'commentContent' =>$this->input->post('comment'),
-			'commentType' =>$this->input->post('btnComment'),
-			'postId' =>$this->input->post('postId'),
+			'commentId' => $commentId,
+			'commentContent' =>$this->input->post('commentContent'),
+			'commentType' =>'1',
+			'postId' =>$postId,
 			'userId' => $this->session->userdata('userId'),
 			'commentDate' =>$datetime
 			);
 
 			$this->db->insert('comment_dtl', $data);
-			$this->post();
+			header('Location:'.base_url().'pages/post/'.$postId);		
 		}
 	}
 
@@ -980,7 +980,8 @@ class Pages extends CI_Controller {
 				);
 
 				$this->db->insert('badge_dtl', $data);
-				header('Location:'.base_url().'pages/profile/'.$userId);			}
+				header('Location:'.base_url().'pages/profile/'.$userId);		
+			}
 			else if($post=='silver')
 			{
 			
