@@ -335,6 +335,7 @@
                   }
                 ?>
 
+
                 <?php foreach($projectdtl as $row):?>
                   <div class="box-body">
                     <p><b>About <?php echo $row['postTitle']?></b></p>
