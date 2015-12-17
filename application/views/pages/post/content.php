@@ -110,12 +110,12 @@
                 <?php foreach ($data as $data):?>
                   
                 <div class="box-footer">
-                  <form action="#" method="post">
+                  <form action="<?php echo  base_url()."pages/comment/".$postId;?>" method="post">
                    <img class='img-responsive img-circle img-sm' src='<?php echo base_url();?>user/<?php echo $data['avatar_name']?>' alt='user image'>
                      
                     <!-- .img-push is used to add margin to elements next to floating images -->
                     <div class="img-push">
-                      <input class="form-control input-sm" placeholder="Press enter to post comment" type="text">
+                      <input class="form-control input-sm" placeholder="Press enter to post comment" type="text" name="commentContent">
                     </div>
                   </form>
                 </div><!-- /.box-footer -->

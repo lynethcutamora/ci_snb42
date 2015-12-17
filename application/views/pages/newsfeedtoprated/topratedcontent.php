@@ -131,7 +131,7 @@
                       <!-- Social sharing buttons -->
                       <button class='btn btn-default btn-xs'><i class='fa fa-thumbs-o-up'></i> Upvote</button>
                       <button class='btn btn-default btn-xs'><i class='fa fa-share'></i> Share</button>
-                      <span class='pull-right text-muted'><?php echo $like;?> likes - <?php echo $comment;?> comments</span>
+                      <span class='pull-right text-muted'><?php echo $likeske;?> likes - <?php echo $comment;?> comments</span>
                     </div><!-- /.box-body -->
                     <?php  endforeach;?>
                     </br></br></br>
