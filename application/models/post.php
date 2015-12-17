@@ -37,9 +37,8 @@ class Post extends CI_Model {
          public function projectdtl($groupId)
         {
                 $this->db->select('*');
-                $this->db->from('userpost a');
-                $this->db->join('investor_dtl b','b.postId=a.postId','left');
-                $this->db->where('a.postType',$groupId);
+                $this->db->from('userpost');
+                $this->db->where('postType',$groupId);
                 $query=$this->db->get();
 
                 return $query;
