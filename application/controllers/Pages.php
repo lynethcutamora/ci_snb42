@@ -251,14 +251,14 @@ class Pages extends CI_Controller {
 			$data['groupdetails'] = $groupquery->result_array();
 			$groupDetails= $this->post->groupdetails($groupId,$this->session->userdata('userId'));
 				
-			if(isset($projectId)){
-				$projectdtl= $this->projectdtl($groupid,$projectId);
-				$data['projectdtl'] = $projectdtl->result_array();
-			}
-			else if(isset($groupId)){
+			if(isset($groupId)){
 				if($groupDetails->num_rows()==0) {
 					$groupDetails->result_array();
 				}else{
+					if(isset($projectId)){
+						$projectdtl= $this->projectdtl($groupid,$projectId);
+						$data['projectdtl'] = $projectdtl->result_array();
+					}
 					$data['groupDtl'] = $groupDetails->result_array();
 					$projectdtl= $this->post->projectdtl($groupId);
 					$data['projectdtl'] = $projectdtl->result_array();

@@ -316,10 +316,8 @@
               <ul class="treeview-menu">
                 <li><a href="<?php echo base_url(); ?>pages/newgroup"><i class="fa fa-plus"></i>Create Group</a></li>
                 <?php foreach ($groupdetails as $row):?>
-
                   <li><a href="<?php echo base_url(); ?>pages/group/<?php echo $row['groupId']?>"><i class="fa fa-circle-o"></i><?php echo $row['groupname'];?></a></li>
                 <?php endforeach;?>
-              
               </ul>
             </li>
           </ul>
