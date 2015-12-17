@@ -11,18 +11,18 @@ class Post extends CI_Model {
 
         }
         
-	public function validUpvote($postId)
-	{
-		$this->db->where('postId', $postId);
-		$this->db->where('userId', $this->session->userdata('userId'));
-        $query = $this->db->get('upvote_dtl');
-        if($query->num_rows()>0){
-        	return 'true';
-        }
-        else
-        	return 'false';
-	
-	}
+    	public function validUpvote($postId)
+    	{
+    		$this->db->where('postId', $postId);
+    		$this->db->where('userId', $this->session->userdata('userId'));
+            $query = $this->db->get('upvote_dtl');
+            if($query->num_rows()>0){
+            	return 'true';
+            }
+            else
+            	return 'false';
+    	
+    	}
         public function groupdetails($groupId,$userId)
         {
                 $this->db->select('*');
@@ -47,11 +47,9 @@ class Post extends CI_Model {
           public function showImage($postId)
         {
                 $this->db->select('*');
-                $this->db->from('userpost a');
-                $this->db->join('userpost_ext b','b.postId=a.postId','left');
-                $this->db->where('b.postId',$postId);
-                $this->db->where('b.extType','1');
-
+                $this->db->from('userpost_ext');
+                $this->db->where('postId',$postId);
+                $this->db->where('extType','1');
                 $query=$this->db->get();
 
                 return $query;
@@ -101,11 +99,10 @@ class Post extends CI_Model {
             $this->db->from('user_md a');
             $this->db->join('user_dtl b', 'a.userId=b.userId','left');
             $this->db->join('company_dtl c', 'c.userId=a.userId','left');
-            $this->db->join('userpost d', 'd.userId=a.userId');
-            $this->db->join('avatar_dtl e', 'e.userId=d.userId');
-            $this->db->join('comment_dtl f', 'f.userId=d.userId');
+            $this->db->join('userpost d', 'd.userId=a.userId','left');
+            $this->db->join('avatar_dtl e', 'e.userId=a.userId','left');
             $this->db->where('d.postId',$postId);
-            $this->db->order_by('postDate', 'DESC');
+           
             $query = $this->db->get();
 
             return $query;
@@ -137,6 +134,21 @@ class Post extends CI_Model {
         $query = $this->db->get();
 
         return $query;
+    }
+    public function showComments($postId,$type)
+    {
+        $this->db->select('*');
+        $this->db->from('user_md a');
+        $this->db->join('user_dtl b', 'b.userId=a.userId','left');
+        $this->db->join('company_dtl c', 'c.userId=a.userId','left');
+        $this->db->join('comment_dtl d', 'd.userId=a.userId','left');
+
+        $this->db->join('avatar_dtl e', 'e.userId=d.userId','left');
+        $this->db->where('postId',$postId);
+        $this->db->where('commentType',$type);
+        $this->db->order_by('commentDate', 'DESC');
+        $query = $this->db->get();
+         return $query;
     }
       
 }

@@ -352,11 +352,14 @@ class Pages extends CI_Controller {
 				$data['countgroup'] = $this->countGroups();
 				$groupquery= $this->groupdetails();
 				$data['groupdetails'] = $groupquery->result_array();
-				$query=$this->post->alluserData($userId)
-;
 				$data['alldata']=$query->result_array();
 				$postdtlquery= $this->post->postdtl($postId);
 				$data['postDetail'] = $postdtlquery->result_array();
+				$comments= $this->post->showComments($postId,'1');
+				$data['comments'] = $comments->result_array();
+
+
+				
 
 				if($postdtlquery->num_rows()==0) {
 				$this->load->view('pages/dashboard/fixed',$data);
@@ -365,6 +368,7 @@ class Pages extends CI_Controller {
 				$this->load->view('pages/dashboard/end');
 				}
 				else{
+
 						$this->load->view('pages/dashboard/fixed',$data);
 						$this->load->view('pages/post/content',$data); 
 						$this->load->view('pages/dashboard/controlsidebar');
@@ -754,7 +758,7 @@ class Pages extends CI_Controller {
          $this->form_validation->set_rules('relatedlinks', 'Links', 'trim');
          if ($this->form_validation->run() == FALSE)
         {
-         	$this->post($this->session->userdata('userId'));
+         	$this->profile($this->session->userdata('userId'));
         }
         else
 		{	
@@ -773,10 +777,16 @@ class Pages extends CI_Controller {
 			);
 
 			$this->post->link($this->input->post('relatedlinks'), '2',$postId);
+			if($url==null){
+				
+				header('Location:'.base_url().'pages/profile/'.$this->session->userdata('userId'));
+
+			}else{
 			$this->post->image($url, '1',$postId);
+			
 			$this->db->insert('userpost', $data);
 			header('Location:'.base_url().'pages/profile/'.$this->session->userdata('userId'));
-
+			}
 
 		}
 			
@@ -1084,7 +1094,7 @@ class Pages extends CI_Controller {
 
 		$this->form_validation->set_rules('postId', 'Post Id', 'callback_postIdCheck');
 		if ($this->form_validation->run()==FALSE){
-			$this->post();
+			$this->profile($userId);
 		}else{
 			if($this->input->post('postId')!=''){
 			$data = array(
@@ -1123,5 +1133,6 @@ class Pages extends CI_Controller {
 			return TRUE;
 		}
 	}
+	
 
 }

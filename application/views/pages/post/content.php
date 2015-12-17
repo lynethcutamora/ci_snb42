@@ -1,20 +1,18 @@
-       <!-- Post -->
-        <div class="content-wrapper">
-          
-                      <?php  foreach($data as $userdtl):?>
-            <?php foreach($postDetail as $postdtl):?>
+ <div class="content-wrapper">
+ <div class="row">
+  <br>
+  <div class="col-md-1">  </div>
 
-          <div class="row">
-          
-            <div class="col-md-12">
-            <!-- Box Comment -->
+<div class="col-md-10">
+              <!-- Box Comment -->
+              <?php foreach($postDetail as $postdtl):?>
               <div class="box box-widget">
-                <div class='box-header with-border'>
-                  <div class='user-block'>
-                    <img class='img-circle' src='<?php echo base_url();?>/user/<?php echo $postdtl['avatar_name']?>' alt='user image'>
-                    <span class='username'>
+                <div class="box-header with-border">
+                  <div class="user-block">
+                     <img class='img-circle' src='<?php echo base_url();?>user/<?php echo $postdtl['avatar_name']?>' alt='user image'>
+                     <span class="username">
                     <a href="#">
-                        <?php 
+                         <?php 
                                   if($postdtl['user_Type']=='Ideator'||$postdtl['user_Type']=='Investor')
                                   {
                                       if($postdtl['user_midInit']==null)
@@ -27,21 +25,21 @@
                                     echo $postdtl['company_name'];
                                   }
                           ?>
-                      </a>
-                      </span>
-                    &nbsp;&nbsp;&nbsp;<button class='btn btn-default btn-xs'><i class='fa fa-star' style="color:Gold"></i> <span class="label label-primary">10</span> </button><button class='btn btn-default btn-xs'><i class='fa fa-star' style="color:Silver"></i><span class="label label-primary">5</span> </button><button class='btn btn-default btn-xs'><i class='fa fa-star' style="color:SandyBrown "></i><span class="label label-primary">20</span> </button>
-                    <span class='description'>    <?php echo $postdtl['postDate'];?></span>
+                    </a></span>
+                    <span class="description"> <?php echo $postdtl['postDate'];?></span>
                   </div><!-- /.user-block -->
-                  <div class='box-tools'>
-
-                  
+                  <div class="box-tools">
+                    <button class="btn btn-box-tool" data-toggle="tooltip" title="Mark as read"><i class="fa fa-circle-o"></i></button>
+                    <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                    <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
                   </div><!-- /.box-tools -->
                 </div><!-- /.box-header -->
-                <div class='box-body'>
-                  <h5><b><a href="" ><?php echo $postdtl['postTitle'];?></a></b></h3>
+                <div class="box-body">
+                  <h5><b><a href="<?php echo base_url()."pages/post/".$postdtl['postId'];?>" ><?php echo $postdtl['postTitle'];?></a></b></h3>
                   <p>
                     <?php 
-                      $query=$this->post->showImage($postdtl['postId']);
+                      $query= $this->post->showImage($postdtl['postId']);
+
                       foreach ($query->result_array() as $row) {
                         echo "<img src='".base_url().$row['extContent']."' height='200px' width='200px'>"; 
                       }
@@ -51,6 +49,7 @@
                   <p><h4><?php echo $postdtl['postContent'];?></h4></p>
                   <p>
                     <?php 
+                      $postId = $postdtl['postId'];
                       $query=$this->post->showLinks($postdtl['postId']);
 
                       foreach ($query->result_array() as $row) {
@@ -63,9 +62,9 @@
                       }
                     ?>
                   </p>
-                  <table><tr><td>
+                      <table><tr><td>
                   <button class='btn btn-default btn-xs'><i class='fa fa-share'></i> Share</button></td>
-                  <form method="POST" action="<?php echo base_url()."pages/upvote";?>" name="form"  onsubmit="return saveScrollPositions(this);"> 
+                  <form method="POST" action="<?php echo base_url()."pages/post/".$postId;?>" name="form"  onsubmit="return saveScrollPositions(this);"> 
                   <input type="hidden" name="scrollx" id="scrollx" value="0" />
 
                      <input type="hidden" name="scrolly" id="scrolly" value="0" />
@@ -78,16 +77,52 @@
                 }?></table>
                 </form>
                   <span class='pull-right text-muted'><?php $this->post->upvotecount($postdtl['postId']);?> - 3 comments</span>
+                
                 </div><!-- /.box-body -->
-               
-
-                          
+                <div class="box-footer box-comments">
+                  <?php foreach ($comments as $comment):?>
+                  <div class="box-comment">
+                    <!-- User image -->
+                    <img class='img-circle' src='<?php echo base_url();?>user/<?php echo $comment['avatar_name']?>' alt='user image'>
+                     <div class="comment-text">
+                      <span class="username">
+                         <?php 
+                                  if($comment['user_Type']=='Ideator'||$comment['user_Type']=='Investor')
+                                  {
+                                      if($comment['user_midInit']==null)
+                                         echo $comment['user_fName']."  ".$comment['user_lName'];
+                                       else
+                                         echo $comment['user_fName']." ".$comment['user_midInit'].". ".$comment['user_lName'];
+                                  }
+                                  else
+                                  {
+                                    echo $comment['company_name'];
+                                  }
+                          ?>
+                        <span class="text-muted pull-right">8:03 PM Today</span>
+                      </span><!-- /.username -->
+                     <?php echo $comment['commentContent'];?>
+                    </div><!-- /.comment-text -->
+                  </div><!-- /.box-comment -->
+                      <?php  endforeach;?>
+             
+                </div><!-- /.box-footer -->
+                <?php foreach ($data as $data):?>
+                  
+                <div class="box-footer">
+                  <form action="#" method="post">
+                   <img class='img-responsive img-circle img-sm' src='<?php echo base_url();?>user/<?php echo $data['avatar_name']?>' alt='user image'>
+                     
+                    <!-- .img-push is used to add margin to elements next to floating images -->
+                    <div class="img-push">
+                      <input class="form-control input-sm" placeholder="Press enter to post comment" type="text">
+                    </div>
+                  </form>
+                </div><!-- /.box-footer -->
+                 <?php  endforeach;?>
               </div><!-- /.box -->
-              
-                  </div>
-                  </div>
+              <?php  endforeach;?>
 
-<?php  endforeach;?>
-
-<?php  endforeach;?>
-</div>
+            </div>
+        </div>
+      </div>
