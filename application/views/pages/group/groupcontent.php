@@ -88,6 +88,7 @@
                         <div class="box box-success">
                           <div class="box-header">
                             <i class="fa fa-comments-o"></i>
+            
                             <?php foreach($projectdtl as $row):?>
                             <h3 class="box-title"><?php echo $row['postTitle'];?></h3>
                             <?php endforeach;?>
@@ -321,9 +322,15 @@
                           echo '<form method="post" action="'.base_url().'pages/addmember">';
                           echo '<input type="text" hidden="true" name="groupid" value="'.$groupid.'">';
                           echo '<input type="text" hidden="true" name="userid" value="'.$row['userId'].'">';
-                              echo '<span class="pull-left"><i class="fa fa-user" style="color:gray;"></i></span>
-                                    <p class="text-muted">&nbsp;&nbsp;'.$row['user_fName']." ".$row['user_midInit'].". ".$row['user_lName'].'
-                                    <span class="pull-right"><button name="btnaddmember" class="form-control btn-primary" type="submit"><i class="fa fa-user-plus"></i></button></span></p>';
+                          if($this->post->existsMember($groupid,$row['userId'])==false){
+                            echo '<span class="pull-left"><i class="fa fa-user" style="color:gray;"></i></span>
+                                  <p class="text-muted">&nbsp;&nbsp;'.$row['user_fName']." ".$row['user_midInit'].". ".$row['user_lName'].'
+                                  <span class="pull-right"><button name="btnaddmember" class="form-control btn-primary" type="submit"><i class="fa fa-user-plus"></i></button></span></p>';
+                          }else{
+                            echo '<span class="pull-left"><i class="fa fa-user" style="color:gray;"></i></span>
+                                  <p class="text-muted">&nbsp;&nbsp;'.$row['user_fName']." ".$row['user_midInit'].". ".$row['user_lName'].'
+                                  <span class="pull-right"><button name="btnaddmember" class="form-control btn disabled" disabled><i class="fa fa-user-plus"></i></button></span></p>';                      
+                         }
                           echo '</form>';
                         echo'</div>';
                       endforeach;

@@ -944,6 +944,8 @@ class Pages extends CI_Controller {
 		return $query;
 	}
 
+	
+
 	public function memberinfo($groupid){
 		$this->db->select('*');
 		$this->db->from('group_ext a');

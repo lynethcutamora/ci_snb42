@@ -149,6 +149,19 @@ class Post extends CI_Model {
         $query = $this->db->get();
          return $query;
     }
+    public function existsMember($groupId , $userId)
+    {
+        $this->db->select('*');
+        $this->db->from('group_ext');
+        $this->db->where('userId',$userId);
+        $this->db->where('groupId',$groupId);
+        $query=$this->db->get();
+        $numrows = $query->num_rows();
+        if($numrows>0)
+            return true;
+        else
+            return false;
+    }
       
 }
 ?>
