@@ -177,7 +177,7 @@ class Pages extends CI_Controller {
 		$data['groupdetails'] = $groupquery->result_array();
 		$this->load->view('pages/dashboard/fixed',$data);
 		$this->load->view('pages/admindashboard/content'); 
-		$this->load->view('pages/admindashboard/controlsidebar');
+		$this->load->view('pages/dashboard/controlsidebar');
 		$this->load->view('pages/admindashboard/end');
 		}else{
 			$this->_landing();
@@ -197,6 +197,7 @@ class Pages extends CI_Controller {
 		$this->load->view('pages/adminonline/content'); 
 		$this->load->view('pages/adminonline/controlsidebar');
 		$this->load->view('pages/adminonline/end');
+		$this->load->view('pages/adminonline/table');
 		}else{
 			$this->_landing();
 		}
@@ -779,7 +780,7 @@ class Pages extends CI_Controller {
 
 			$this->post->link($this->input->post('relatedlinks'), '2',$postId);
 			if($url==null){
-				
+					$this->db->insert('userpost', $data);
 				header('Location:'.base_url().'pages/profile/'.$this->session->userdata('userId'));
 
 			}else{
@@ -813,7 +814,7 @@ class Pages extends CI_Controller {
 		$data['alldata']=$query->result_array();
 		$this->load->view('pages/post/comment',$data);
 	}
-	
+
 	public function comment($postId)
 	{
 		 $this->form_validation->set_rules('commentContent', 'Comment', 'required|trim');
@@ -839,6 +840,7 @@ class Pages extends CI_Controller {
 			header('Location:'.base_url().'pages/post/'.$postId);		
 		}
 	}
+
 
 	#THIS SECTION IS FOR GROUP SECTION
 	public function countGroups(){
@@ -1144,6 +1146,41 @@ class Pages extends CI_Controller {
 		else
 		{
 			return TRUE;
+		}
+	}
+	public function search()
+	{	
+		if(($this->session->userdata('userId')!=""))
+		{
+		$query=$this->_userData();
+		$data['data']=$query->result_array();
+		$data['pages']='search';
+		$data['countgroup'] = $this->countGroups();
+		$groupquery= $this->groupdetails();
+		$data['groupdetails'] = $groupquery->result_array();
+
+		if($this->input->post('key')==null){
+			$idea= $this->post->searchIdea('asdsdwq1qweskdqw213ew9eqwek12ewe91ewkqe212945rfre544e331e23d32d!#$2');
+			$data['idea'] = $idea->result_array();
+			$group= $this->post->searchGroup('asdsdwq1qweskdqw213ew9eqwek12ewe91ewkqe212945rfre544e331e23d32d!#$2');
+			$data['group'] = $group->result_array();
+		}else{
+		$idea= $this->post->searchIdea($this->input->post('key'));
+		$data['idea'] = $idea->result_array();
+		$group= $this->post->searchGroup($this->input->post('key'));
+		$data['group'] = $group->result_array();
+		}
+
+
+		
+		$this->load->view('pages/dashboard/fixed',$data);
+		$this->load->view('pages/search/content',$data); 
+		$this->load->view('pages/dashboard/controlsidebar');
+		$this->load->view('pages/dashboard/end');
+		}
+		else
+		{
+			$this->_landing();
 		}
 	}
 	
