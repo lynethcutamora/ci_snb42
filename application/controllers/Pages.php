@@ -732,6 +732,7 @@ class Pages extends CI_Controller {
                 else
                 {
                 	$post=$this->input->post('submit');
+                	$userId=$this->input->post('userId');
                 	if(!isset($post))
 					{
 						$this->load->view('pages/profile/index');
@@ -744,12 +745,12 @@ class Pages extends CI_Controller {
 	                   $data = array(
 	                  'msgId' => $msgId,
 	                  'msg_Content' =>$this->input->post('inputDescription'),
-	                  'msg_fromUserId' => '566c665d01',
-	                  'userId' => $this->session->userdata('userId'),
+	                  'msg_fromUserId' => $this->session->userdata('userId'),
+	                  'userId' => $userId,
 	                  'msg_Date' =>$datetime
 	                  );
 	                  $this->db->insert('msg_dtl', $data);
-	                   redirect('pages/profile');
+	                   redirect('pages/profile/'.$userId);
 	               	}
                 }
               }
