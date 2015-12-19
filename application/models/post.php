@@ -149,6 +149,39 @@ class Post extends CI_Model {
         $query = $this->db->get();
          return $query;
     }
+
+    public function searchIdea($key)
+    {
+
+        $this->db->select('*');
+        $this->db->from('userpost a');
+        $this->db->join('user_dtl b', 'b.userId=a.userId','left');
+        $this->db->join('company_dtl c', 'c.userId=a.userId','left');
+        $this->db->join('avatar_dtl d', 'd.userId=a.userId','left');
+        $this->db->like('a.postTitle', $match = $key, $side = 'both');
+        $this->db->or_like('a.postContent', $match = $key, $side = 'both');
+        $query = $this->db->get();
+         return $query;
+    }
+    public function commentCount($postId)
+    {
+        $this->db->where('postId', $postId);
+        $query = $this->db->get('comment_dtl');
+        echo $query->num_rows()." comments";
+    }
+    public function searchGroup($key)
+    {
+
+        $this->db->select('*');
+        $this->db->from('group_md a');
+        $this->db->join('user_dtl b', 'b.userId=a.userId','left');
+        $this->db->join('company_dtl c', 'c.userId=a.userId','left');
+        $this->db->join('avatar_dtl d', 'd.userId=a.userId','left');
+        $this->db->like('a.groupname', $match = $key, $side = 'both');
+        $this->db->or_like('a.groupdescription', $match = $key, $side = 'both');
+        $query = $this->db->get();
+         return $query;
+    }
       
 }
 ?>
