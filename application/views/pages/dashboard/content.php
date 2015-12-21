@@ -202,6 +202,10 @@
                         $this->db->where('postId',$row->postId);
                         $query = $this->db->get();
                         $comment = $query->num_rows();
+
+                        
+
+
                   ?>
                     <div class='box-header with-border'>
                       <div class='user-block'>
@@ -220,19 +224,24 @@
                       <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $row->postContent;?></p>
 
                       <!-- Attachment -->
+                    
                       <div class="attachment-block clearfix">
-                        <img class="attachment-img" src="../../dist/img/photo1.png" alt="attachment image">
-                        <div class="attachment-pushed">
-                          <h4 class="attachment-heading"><a href="<?php echo base_url()."pages/profile/".$row->userId;?>"><?php echo $row->user_fName;?>&nbsp;<?php echo $row->user_midInit;?>.&nbsp;<?php echo $row->user_lName;?></a></h4>
-                          <div class="attachment-text">
-                            Related Links: <br/><a href="#">startandboost/video</a>, &nbsp;&nbsp;<a href="#">startandboost/article</a>
-                          </div><!-- /.attachment-text -->
-                        </div><!-- /.attachment-pushed -->
+                        <?php 
+                      $query= $this->post->showImage($row->postId);
+
+                      foreach ($query->result_array() as $row) :
+                        echo "<img src='".base_url().$row['extContent']."' height='200px' width='200px'>"; 
+                     
+                     ?>
+                      <?php  endforeach;?>
+
+                        
+                            <br/>Related Links: <a href="#">startandboost/video</a>, &nbsp;&nbsp;<a href="#">startandboost/article</a>
+                         
                       </div><!-- /.attachment-block -->
 
                       <!-- Social sharing buttons -->
-                      <button class='btn btn-default btn-xs'><i class='fa fa-thumbs-o-up'></i> Upvote</button>
-                      <button class='btn btn-default btn-xs'><i class='fa fa-share'></i> Share</button>
+                      
                       <span class='pull-right text-muted'><?php echo $like;?> likes - <?php echo $comment;?> comments</span>
                     </div><!-- /.box-body -->
                       <?php  endforeach;?>
@@ -257,36 +266,30 @@
                         <p>Startup Products</p>
                          <?php 
 
-                        $this->db->select('*');
-                        $this->db->from('user_md a');
- 
-                        $this->db->join('user_dtl b', 'b.userId=a.userId','left');
-                        $this->db->join('userpost c', 'c.userId=b.userId','left');
-                        $this->db->join('userpost_ext d', 'd.postId=c.postId','left');
-                        $this->db->where('postType', '2');
-                        $this->db->order_by('postDate', 'DESC');
-                        $this->db->limit('5');  
-                        $top = $this->db->get();
-                                foreach($top->result() as $row):
+                        $query = $this->db->query("SELECT * from userpost v left join user_md b on v.userId = b.userId left join user_dtl d on b.userId = d.userId left join avatar_dtl e on d.userId = e.userId where postType = '2' group by postDate order by postDate desc limit 5");
+                         foreach($query->result() as $row):
                         ?>
-                        <div class="box-tools pull-right">
-                          <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-                        </div>
-                      </div><!-- /.box-header -->
-                      <div class="box-body">
+                       <div class="box-body">
                         <ul class="products-list product-list-in-box">
                           <li class="item">
-                            <div class="product-img">
-                              <img src="../../images/blue.png" alt="Product Image">
-                            </div>
+                           </div>
                             <div class="product-info">
-                              <a href="javascript::;" class="product-title"><?php echo $row->postTitle;?></a>
-                              <span class="product-description">
+                              <a href="<?php echo base_url()."pages/post/".$row->postId;?>"><?php echo $row->postTitle;?></a></br>
                                 by: <?php echo $row->user_lName?>, <?php echo $row->user_fName?>
                               </span>
                             </div>
-                          </li>
-                           <?php  endforeach;?>
+                          </li><!-- /.item -->
+                            <div class="product-img">
+                              <?php 
+                      $query= $this->post->showImage($row->postId);
+
+                      foreach ($query->result_array() as $row) :
+                        echo "<img src='".base_url().$row['extContent']."' height='100px' width='100px'>"; 
+                     
+                     ?>
+                      <?php  endforeach;?>  
+                           
+                          <?php  endforeach;?>
                         </ul>
                       </div><!-- /.box-body -->
                       <div class="box-footer text-center">
@@ -302,32 +305,31 @@
                         <p>Startup Ideas</p>
                         <?php 
 
-                        $this->db->select('*');
-                        $this->db->from('user_md a');
- 
-                        $this->db->join('user_dtl b', 'b.userId=a.userId','left');
-                        $this->db->join('userpost c', 'c.userId=b.userId','left');
-                        $this->db->join('userpost_ext d', 'd.postId=c.postId','left');
-                        $this->db->where('postType', '1');
-                        $this->db->order_by('postDate', 'DESC');
-                        $this->db->limit('5');  
-                        $top = $this->db->get();
-                                foreach($top->result() as $row):
+                            $query = $this->db->query("SELECT * from userpost v left join user_md b on v.userId = b.userId left join user_dtl d on b.userId = d.userId left join avatar_dtl e on d.userId = e.userId where postType = '1' group by postDate order by postDate desc limit 5");
+                         foreach($query->result() as $row):
                         ?>
                         
                       </div><!-- /.box-header -->
                       <div class="box-body">
                         <ul class="products-list product-list-in-box">
                           <li class="item">
-                            <div class="product-img">
-                              <img src='<?php echo base_url();?><?php echo $row->extContent;?>' height='200px' width='200px'>   
-                            </div>
+                           </div>
                             <div class="product-info">
                               <a href="<?php echo base_url()."pages/post/".$row->postId;?>"><?php echo $row->postTitle;?></a></br>
                                 by: <?php echo $row->user_lName?>, <?php echo $row->user_fName?>
                               </span>
                             </div>
                           </li><!-- /.item -->
+                            <div class="product-img">
+                              <?php 
+                      $query= $this->post->showImage($row->postId);
+
+                      foreach ($query->result_array() as $row) :
+                        echo "<img src='".base_url().$row['extContent']."' height='100px' width='100px'>"; 
+                     
+                     ?>
+                      <?php  endforeach;?>  
+                           
                           <?php  endforeach;?>
                         </ul>
                       </div><!-- /.box-body -->

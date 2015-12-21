@@ -384,7 +384,7 @@ class Pages extends CI_Controller {
 			$this->_landing();
 		}
 	}
-	
+
 
 	#MAO NI ANG SIGN UP NGA FUNCTION PARA MAKA PILI SIYA SA TYPE
 	public function signUp()
