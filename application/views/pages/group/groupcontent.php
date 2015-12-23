@@ -71,7 +71,7 @@
                     </a>
                     <ul class="dropdown-menu">
                       <?php foreach($allproject as $row):?>
-                      <li role="presentation"><a role="menuitem" tabindex="-1" href="<?php echo base_url(); ?>pages/group/<?php echo $groupid;?>/<?php echo $row['postId'];?>"><?php echo $row['postTitle'];?></a></li>
+                      <li role="presentation"><a role="menuitem" tabindex="-1" name="projectname" href="<?php echo base_url(); ?>pages/group/<?php echo $groupid;?>/<?php echo $row['postId'];?>"><?php echo $row['postTitle'];?></a></li>
                       <?php endforeach;?>
                     </ul>
                   </li>
@@ -321,9 +321,15 @@
                           echo '<form method="post" action="'.base_url().'pages/addmember">';
                           echo '<input type="text" hidden="true" name="groupid" value="'.$groupid.'">';
                           echo '<input type="text" hidden="true" name="userid" value="'.$row['userId'].'">';
-                              echo '<span class="pull-left"><i class="fa fa-user" style="color:gray;"></i></span>
-                                    <p class="text-muted">&nbsp;&nbsp;'.$row['user_fName']." ".$row['user_midInit'].". ".$row['user_lName'].'
-                                    <span class="pull-right"><button name="btnaddmember" class="form-control btn-primary" type="submit"><i class="fa fa-user-plus"></i></button></span></p>';
+                          if($this->post->existsMember($groupid,$row['userId'])==false){
+                            echo '<span class="pull-left"><i class="fa fa-user" style="color:gray;"></i></span>
+                                  <p class="text-muted">&nbsp;&nbsp;'.$row['user_fName']." ".$row['user_midInit'].". ".$row['user_lName'].'
+                                  <span class="pull-right"><button name="btnaddmember" class="form-control btn-primary" type="submit"><i class="fa fa-user-plus"></i></button></span></p>';
+                          }else{
+                            echo '<span class="pull-left"><i class="fa fa-user" style="color:gray;"></i></span>
+                                  <p class="text-muted">&nbsp;&nbsp;'.$row['user_fName']." ".$row['user_midInit'].". ".$row['user_lName'].'
+                                  <span class="pull-right"><button name="btnaddmember" class="form-control btn disabled" disabled><i class="fa fa-user-plus"></i></button></span></p>';                      
+                         }
                           echo '</form>';
                         echo'</div>';
                       endforeach;
