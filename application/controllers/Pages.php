@@ -329,10 +329,10 @@ class Pages extends CI_Controller {
 					$this->load->view('pages/dashboard/controlsidebar');
 					$this->load->view('pages/dashboard/end');
 				}else{
-				$this->load->view('pages/dashboard/fixed',$data);
-				$this->load->view('pages/profile/content',$data); 
-				$this->load->view('pages/dashboard/controlsidebar');
-				$this->load->view('pages/dashboard/end');
+					$this->load->view('pages/dashboard/fixed',$data);
+					$this->load->view('pages/profile/content',$data); 
+					$this->load->view('pages/dashboard/controlsidebar');
+					$this->load->view('pages/dashboard/end');
 				}
 			}else{
 				$this->profile($this->session->userdata('userId'));
@@ -357,10 +357,7 @@ class Pages extends CI_Controller {
 				$postdtlquery= $this->post->postdtl($postId);
 				$data['postDetail'] = $postdtlquery->result_array();
 				$comments= $this->post->showComments($postId,'1');
-				$data['comments'] = $comments->result_array();
-
-
-				
+				$data['comments'] = $comments->result_array();				
 
 				if($postdtlquery->num_rows()==0) {
 				$this->load->view('pages/dashboard/fixed',$data);
@@ -1183,6 +1180,50 @@ class Pages extends CI_Controller {
 			$this->_landing();
 		}
 	}
-	
+		
+	public function postGroup($projectid)
+	{	
+         $this->form_validation->set_rules('inputDescription', 'Description', 'required|trim');
+         if ($this->form_validation->run() == FALSE)
+        {
+         	$this->profile($this->session->userdata('userId'));
+        }
+        else
+		{	
+			$url = $this->file_upload();
+
+     	 	$datetime = date('Y-m-d H:i:s'); 
+     	 	$postId = uniqid('gp');
+     	 	
+     	 	$data = array(
+			'postId' => $postId,
+			'postContent' =>$this->input->post('inputDescription'),
+			'postType' => $projectid,
+			'userId' => $this->session->userdata('userId'),
+			'postDate' =>$datetime
+			);
+
+			if($url==null){
+				$this->db->insert('userpost', $data);
+				header('Location:'.base_url().'pages/group/'.$projectid);
+			}else{
+				$this->post->file($url, '1',$postId);
+				
+				$this->db->insert('userpost', $data);
+				header('Location:'.base_url().'pages/group/'.$projectid);
+			}
+		}	
+	}
+	private function file_upload()
+	{
+		$type = explode('.', $_FILES["file"]["name"]);
+		$type = strtolower($type[count($type)-1]);
+		$url = "./post_files/".uniqid(rand()).'.'.$type;
+		if(in_array($type, array("txt", "docx")))
+			if(is_uploaded_file($_FILES["file"]["tmp_name"]))
+				if(move_uploaded_file($_FILES["file"]["tmp_name"],$url))
+					return $url;
+		return "";
+	}
 
 }

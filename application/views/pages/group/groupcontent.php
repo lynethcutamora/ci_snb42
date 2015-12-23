@@ -164,18 +164,20 @@
                         <p>Update Status</p>
                       </div><!-- /.box-header -->
                       <!-- form start -->
-                      <form class="form-horizontal">
+                      <?php foreach($allproject as $row):?>
+                      <?php echo form_open_multipart('../pages/postGroup/'.$row['postId'].'',"class=form-horizontal"); ?>
+                      <?php endforeach;?>
                         <div class="box-body">
                           <div class="form-group">
                             <label for="inputDescription" class="col-sm-2 control-label">Information</label>
                             <div class="col-sm-10">
-                              <textarea class="form-control" id="inputDescription" placeholder="Post Information"></textarea>
+                              <textarea class="form-control" id="inputDescription" name="inputDescription" placeholder="Post Information"></textarea>
                             </div>
                           </div>
+
                         </div><!-- /.box-body -->
                         <div class="box-footer">
-                          <form action="" method="post" enctype="multipart/form-data">
-                            <input class="pull-left" type="file" name="fileToUpload" id="fileToUpload">
+                          <?php echo form_upload('file'); ?>
                             <input class="btn btn-info pull-right" type="submit" value="Post" name="submit">
                           </form>
                         </div><!-- /.box-footer -->
