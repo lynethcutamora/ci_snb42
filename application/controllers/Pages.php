@@ -259,6 +259,12 @@ class Pages extends CI_Controller {
 					if(isset($projectId)){
 						$projectdtl= $this->projectdtl($groupId,$projectId);
 						$data['projectdtl'] = $projectdtl->result_array();
+					}else{
+						$allproject= $this->allproject($groupId);
+
+						$projectdtl= $this->projectdtl($groupId,$this->post->firstProject($groupId));
+						$data['projectdtl'] = $projectdtl->result_array();
+
 					}
 					$allproject= $this->allproject($groupId);
 					$data['allproject'] = $allproject->result_array();
@@ -1161,11 +1167,17 @@ class Pages extends CI_Controller {
 			$data['idea'] = $idea->result_array();
 			$group= $this->post->searchGroup('asdsdwq1qweskdqw213ew9eqwek12ewe91ewkqe212945rfre544e331e23d32d!#$2');
 			$data['group'] = $group->result_array();
+			$people= $this->post->searchPeople('asdsdwq1qweskdqw213ew9eqwek12ewe91ewkqe212945rfre544e331e23d32d!#$2');
+			$data['people'] = $people->result_array();
+
 		}else{
 		$idea= $this->post->searchIdea($this->input->post('key'));
 		$data['idea'] = $idea->result_array();
 		$group= $this->post->searchGroup($this->input->post('key'));
 		$data['group'] = $group->result_array();
+		$people= $this->post->searchPeople($this->input->post('key'));
+		$data['people'] = $people->result_array();
+
 		}
 
 
