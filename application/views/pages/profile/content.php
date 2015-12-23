@@ -642,19 +642,19 @@ theForm.scrolly.value = scrolly;
               <?php echo form_open('../pages/messageProfile');?>
                         <div class="col-sm-12">
                          <?php echo form_error('inputDescription');  ?>
-                          <textarea class="form-control"name="inputDescription" id="inputDescription" placeholder="Your Message Here" value="<?php echo set_value('inputDescription'); ?>"></textarea>
+                          <textarea class="form-control" name="inputDescription" id="inputDescription" placeholder="Your Message Here" value="<?php echo set_value('inputDescription'); ?>"></textarea>
                         </div>
                         </br>
                         </br>
                         </br>
-                        <button type="submit" class="btn btn-default pull-right" name="submit" id="submit">Send</button>
-                              
+                      
               </form>
               </div>
             </div>
             </center>
            
             <div class="modal-footer">
+              <button type="submit" class="btn btn-default pull-right" name="submit" id="submit">Send</button>
             </div>
             </div>
             </div>
