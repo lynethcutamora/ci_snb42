@@ -1193,7 +1193,7 @@ class Pages extends CI_Controller {
 		}
 	}
 		
-	public function postGroup($projectid)
+	public function postGroup($groupid,$projectid)
 	{	
          $this->form_validation->set_rules('inputDescription', 'Description', 'required|trim');
          if ($this->form_validation->run() == FALSE)
@@ -1210,19 +1210,19 @@ class Pages extends CI_Controller {
      	 	$data = array(
 			'postId' => $postId,
 			'postContent' =>$this->input->post('inputDescription'),
-			'postType' => $projectid,
+			'postType' => '3',
 			'userId' => $this->session->userdata('userId'),
 			'postDate' =>$datetime
 			);
 
 			if($url==null){
 				$this->db->insert('userpost', $data);
-				header('Location:'.base_url().'pages/group/'.$projectid);
+				header('Location:'.base_url().'pages/group/'.$groupid.'/'.$projectid);
 			}else{
-				$this->post->file($url, '1',$postId);
+				$this->post->file($url,'3',$postId);
 				
 				$this->db->insert('userpost', $data);
-				header('Location:'.base_url().'pages/group/'.$projectid);
+				header('Location:'.base_url().'pages/group/'.$groupid.'/'.$projectid);
 			}
 		}	
 	}

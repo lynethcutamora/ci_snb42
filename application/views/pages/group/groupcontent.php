@@ -165,7 +165,7 @@
                       </div><!-- /.box-header -->
                       <!-- form start -->
                       <?php foreach($allproject as $row):?>
-                      <?php echo form_open_multipart('../pages/postGroup/'.$row['postId'].'',"class=form-horizontal"); ?>
+                      <?php echo form_open_multipart('../pages/postGroup/'.$groupid.'/'.$row['postId'].'',"class=form-horizontal"); ?>
                       <?php endforeach;?>
                         <div class="box-body">
                           <div class="form-group">
