@@ -260,7 +260,6 @@ class Pages extends CI_Controller {
 						$projectdtl= $this->projectdtl($groupId,$projectId);
 						$data['projectdtl'] = $projectdtl->result_array();
 					}
-
 					$allproject= $this->allproject($groupId);
 					$data['allproject'] = $allproject->result_array();
 					$data['groupDtl'] = $groupDetails->result_array();

@@ -71,7 +71,7 @@
                     </a>
                     <ul class="dropdown-menu">
                       <?php foreach($allproject as $row):?>
-                      <li role="presentation"><a role="menuitem" tabindex="-1" href="<?php echo base_url(); ?>pages/group/<?php echo $groupid;?>/<?php echo $row['postId'];?>"><?php echo $row['postTitle'];?></a></li>
+                      <li role="presentation"><a role="menuitem" tabindex="-1" name="projectname" href="<?php echo base_url(); ?>pages/group/<?php echo $groupid;?>/<?php echo $row['postId'];?>"><?php echo $row['postTitle'];?></a></li>
                       <?php endforeach;?>
                     </ul>
                   </li>
@@ -88,7 +88,6 @@
                         <div class="box box-success">
                           <div class="box-header">
                             <i class="fa fa-comments-o"></i>
-            
                             <?php foreach($projectdtl as $row):?>
                             <h3 class="box-title"><?php echo $row['postTitle'];?></h3>
                             <?php endforeach;?>
