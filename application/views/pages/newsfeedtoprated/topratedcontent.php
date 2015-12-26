@@ -60,7 +60,7 @@ theForm.scrolly.value = scrolly;
                   <div class="box box-widget">
                     <?php 
                         
-                        $query = $this->db->query("SELECT *, COUNT(c.postId) as number_of_votes from upvote_dtl c left join userpost v on c.postId = v.postId  left join user_md b on v.userId = b.userId left join user_dtl d on b.userId = d.userId left join avatar_dtl e on d.userId = e.userId where voteType = '1' group by c.postId order by number_of_votes desc limit 20");
+                        $query = $this->db->query("SELECT *, COUNT(c.postId) as number_of_votes from upvote_dtl c left join userpost v on c.postId = v.postId left join user_md b on v.userId = b.userId left join user_dtl d on b.userId = d.userId where voteType = '1' group by c.postId order by number_of_votes desc limit 20");
                              $i = 0;
                                 foreach($query->result() as $row):
                              $i++;
@@ -109,17 +109,20 @@ theForm.scrolly.value = scrolly;
                         $share = $query->num_rows();
 
                         $this->db->select('*');
-                        $this->db->from('upvote_dtl');
-                        $this->db->where('voteType','3');
+                        $this->db->from('comment_dtl');
+                        $this->db->where('commentType','1');
                         $this->db->where('postId',$row->postId);
                         $query = $this->db->get();
                         $comment = $query->num_rows();
+
 
                         ?>
                           
                     <div class='box-header with-border'>
                       <div class='user-block'>
-                        <img class='img-circle' src='<?php echo base_url();?>/user/<?php echo $row->avatar_name;?>' alt='user image'>
+                      <?php foreach($alldata as $postdtl):?>
+                        <img class='img-circle' src='<?php echo base_url();?>user/<?php echo $postdtl['avatar_name']?>' alt='user image'>
+                        <?php  endforeach;?>
                         <span class='username'><a href="<?php echo base_url()."pages/profile/".$row->userId;?>"><?php echo $row->user_fName;?>&nbsp;<?php echo $row->user_midInit;?>.&nbsp;<?php echo $row->user_lName;?></a>&nbsp;&nbsp;<i class='fa fa-star' style="color:#ffd700;"></i><b>&nbsp;&nbsp;<?php echo $rep;?></b></span>
                         <span class='description'><?php echo $row->postDate;?></span>
                       </div><!-- /.user-block -->
@@ -145,8 +148,7 @@ theForm.scrolly.value = scrolly;
                      ?>
                       <?php  endforeach;?>  
                     
-                            </br>Related Links: <a href="">startandboost/video</a>, &nbsp;&nbsp;<a href="#">startandboost/article</a>
-                         
+                            
                       </div><!-- /.attachment-block -->
                       <!-- Social sharing buttons -->
                       

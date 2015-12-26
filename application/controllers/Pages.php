@@ -57,19 +57,20 @@ class Pages extends CI_Controller {
 	public function _dashboard()
 	{
 
-		$query=$this->_userData();
 		
+		$query=$this->_userData();
 		$data['data']=$query->result_array();
 		$data['pages']='dashboard';
 		$data['countgroup'] = $this->countGroups();
 		$groupquery= $this->groupdetails();
+		$data['alldata']=$query->result_array();
 		$data['groupdetails'] = $groupquery->result_array();
 		$this->load->view('pages/dashboard/fixed',$data);
 		$this->load->view('pages/dashboard/content',$data);
 		$this->load->view('pages/dashboard/footer');
 		$this->load->view('pages/dashboard/controlsidebar');
-		$this->load->view('pages/dashboard/end');
-
+		$this->load->view('pages/dashboard/end');		
+		
 	}
 	#MAO NI ANG PROFILE DISPLAY 
 		public function latest()
@@ -82,6 +83,7 @@ class Pages extends CI_Controller {
 		$data['countgroup'] = $this->countGroups();
 		$groupquery= $this->groupdetails();
 		$data['groupdetails'] = $groupquery->result_array();
+		$data['alldata']=$query->result_array();
 		$this->load->view('pages/dashboard/fixed',$data);
 		$this->load->view('pages/newsfeedlatest/latestcontent'); 
 		$this->load->view('pages/dashboard/controlsidebar');
@@ -100,6 +102,7 @@ class Pages extends CI_Controller {
 		$data['countgroup'] = $this->countGroups();
 		$groupquery= $this->groupdetails();
 		$data['groupdetails'] = $groupquery->result_array();
+		$data['alldata']=$query->result_array();
 		$this->load->view('pages/dashboard/fixed',$data);
 		$this->load->view('pages/newsfeedonfire/onfirecontent'); 
 		$this->load->view('pages/dashboard/controlsidebar');
@@ -119,7 +122,9 @@ class Pages extends CI_Controller {
 		$data['pages']='newsfeed';
 		$data['countgroup'] = $this->countGroups();
 		$groupquery= $this->groupdetails();
+		$data['alldata']=$query->result_array();
 		$data['groupdetails'] = $groupquery->result_array();
+		$data['alldata']=$query->result_array();
 		$this->load->view('pages/dashboard/fixed',$data);
 		$this->load->view('pages/newsfeedtoprated/topratedcontent'); 
 		$this->load->view('pages/dashboard/controlsidebar');
@@ -157,6 +162,7 @@ class Pages extends CI_Controller {
 		$data['countgroup'] = $this->countGroups();
 		$groupquery= $this->groupdetails();
 		$data['groupdetails'] = $groupquery->result_array();
+		$data['alldata']=$query->result_array();
 		$this->load->view('pages/dashboard/fixed',$data);
 		$this->load->view('pages/Products/content'); 
 		$this->load->view('pages/dashboard/controlsidebar');
@@ -266,6 +272,10 @@ class Pages extends CI_Controller {
 						$data['projectdtl'] = $projectdtl->result_array();
 
 					}
+					$query=$this->post->alluserData($this->session->userdata('userId'));
+					$data['alldata']=$query->result_array();
+					$query=$this->projectfiles($projectId);
+					$data['projfile']=$query->result_array();
 					$allproject= $this->allproject($groupId);
 					$data['allproject'] = $allproject->result_array();
 					$data['groupDtl'] = $groupDetails->result_array();
@@ -1210,7 +1220,7 @@ class Pages extends CI_Controller {
      	 	$data = array(
 			'postId' => $postId,
 			'postContent' =>$this->input->post('inputDescription'),
-			'postType' => '3',
+			'postType' => $projectid,
 			'userId' => $this->session->userdata('userId'),
 			'postDate' =>$datetime
 			);
@@ -1236,6 +1246,58 @@ class Pages extends CI_Controller {
 				if(move_uploaded_file($_FILES["file"]["tmp_name"],$url))
 					return $url;
 		return "";
+	}
+
+
+	public function projectfiles($projectid){
+		$this->db->select('*');
+		$this->db->from('userpost a');
+		$this->db->join('userpost_ext b','a.postId=b.postId','left');
+		$this->db->join('user_md c','c.userId=a.userId','left');
+		$this->db->join('user_dtl d','d.userId=c.userId','left');
+		$this->db->join('avatar_dtl e','e.userId=d.userId','left');
+		$this->db->join('badge_dtl f','f.userId=e.userId','left');
+		$this->db->join('company_dtl g','g.userId=f.userId','left');
+		$this->db->where('postType',$projectid);
+		$this->db->order_by('postDate', 'DESC');
+        $query = $this->db->get();
+
+        return $query;
+	}
+
+
+	public function message($msgId=null)
+	{
+		if(($this->session->userdata('userId')!=""))
+		{
+			if(isset($msgId))
+			{
+				$query=$this->_userData();
+				$data['data']=$query->result_array();
+				$data['pages']='message';
+				$data['countgroup'] = $this->countGroups();
+				$groupquery= $this->groupdetails();
+				$data['groupdetails'] = $groupquery->result_array();
+				$this->load->view('pages/dashboard/fixed',$data);
+				$this->load->view('pages/message/content'); 
+				$this->load->view('pages/dashboard/controlsidebar');
+				$this->load->view('pages/dashboard/end');
+			}else{
+				$query=$this->_userData();
+				$data['data']=$query->result_array();
+				$data['pages']='message';
+				$data['countgroup'] = $this->countGroups();
+				$groupquery= $this->groupdetails();
+				$data['groupdetails'] = $groupquery->result_array();
+				$this->load->view('pages/dashboard/fixed',$data);
+				$this->load->view('pages/message/newcontent'); 
+				$this->load->view('pages/dashboard/controlsidebar');
+				$this->load->view('pages/dashboard/end');
+			}
+		}else
+		{
+			$this->_landing();
+		}
 	}
 
 }
