@@ -57,19 +57,20 @@ class Pages extends CI_Controller {
 	public function _dashboard()
 	{
 
-		$query=$this->_userData();
 		
+		$query=$this->_userData();
 		$data['data']=$query->result_array();
 		$data['pages']='dashboard';
 		$data['countgroup'] = $this->countGroups();
 		$groupquery= $this->groupdetails();
+		$data['alldata']=$query->result_array();
 		$data['groupdetails'] = $groupquery->result_array();
 		$this->load->view('pages/dashboard/fixed',$data);
 		$this->load->view('pages/dashboard/content',$data);
 		$this->load->view('pages/dashboard/footer');
 		$this->load->view('pages/dashboard/controlsidebar');
-		$this->load->view('pages/dashboard/end');
-
+		$this->load->view('pages/dashboard/end');		
+		
 	}
 	#MAO NI ANG PROFILE DISPLAY 
 		public function latest()
@@ -82,6 +83,7 @@ class Pages extends CI_Controller {
 		$data['countgroup'] = $this->countGroups();
 		$groupquery= $this->groupdetails();
 		$data['groupdetails'] = $groupquery->result_array();
+		$data['alldata']=$query->result_array();
 		$this->load->view('pages/dashboard/fixed',$data);
 		$this->load->view('pages/newsfeedlatest/latestcontent'); 
 		$this->load->view('pages/dashboard/controlsidebar');
@@ -100,6 +102,7 @@ class Pages extends CI_Controller {
 		$data['countgroup'] = $this->countGroups();
 		$groupquery= $this->groupdetails();
 		$data['groupdetails'] = $groupquery->result_array();
+		$data['alldata']=$query->result_array();
 		$this->load->view('pages/dashboard/fixed',$data);
 		$this->load->view('pages/newsfeedonfire/onfirecontent'); 
 		$this->load->view('pages/dashboard/controlsidebar');
@@ -119,7 +122,9 @@ class Pages extends CI_Controller {
 		$data['pages']='newsfeed';
 		$data['countgroup'] = $this->countGroups();
 		$groupquery= $this->groupdetails();
+		$data['alldata']=$query->result_array();
 		$data['groupdetails'] = $groupquery->result_array();
+		$data['alldata']=$query->result_array();
 		$this->load->view('pages/dashboard/fixed',$data);
 		$this->load->view('pages/newsfeedtoprated/topratedcontent'); 
 		$this->load->view('pages/dashboard/controlsidebar');
@@ -157,6 +162,7 @@ class Pages extends CI_Controller {
 		$data['countgroup'] = $this->countGroups();
 		$groupquery= $this->groupdetails();
 		$data['groupdetails'] = $groupquery->result_array();
+		$data['alldata']=$query->result_array();
 		$this->load->view('pages/dashboard/fixed',$data);
 		$this->load->view('pages/Products/content'); 
 		$this->load->view('pages/dashboard/controlsidebar');
