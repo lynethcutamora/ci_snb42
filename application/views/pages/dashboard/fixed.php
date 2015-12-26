@@ -219,7 +219,7 @@
               </li>
               <!-- Control Sidebar Toggle Button -->
               <li>
-                <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
+                <a href="#" data-toggle="control-sidebar"><i class="fa fa-users"></i></a>
               </li>
             </ul>
           </div>

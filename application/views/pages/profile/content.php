@@ -815,19 +815,25 @@ theForm.scrolly.value = scrolly;
               <input type="text" hidden="true" name="userId" value="<?php echo $userId;?>">
                         <div class="col-sm-12">
                          <?php echo form_error('inputDescription');  ?>
-                          <textarea class="form-control"name="inputDescription" id="inputDescription" placeholder="Your Message Here" value="<?php echo set_value('inputDescription'); ?>"></textarea>
+                          <textarea class="form-control" name="inputDescription" id="inputDescription" placeholder="Your Message Here" value="<?php echo set_value('inputDescription'); ?>"></textarea>
                         </div>
                         </br>
                         </br>
                         </br>
+<<<<<<< HEAD
+                      
+              </form>
+=======
                         <button type="submit" class="btn btn-default pull-right" name="submit" id="submit">Send</button>
                      </br>         
               
+>>>>>>> 8c78434ac457d8b4c095a5d65a0e09d55cb7071f
               </div>
             </div>
             </center>
            
             <div class="modal-footer">
+              <button type="submit" class="btn btn-default pull-right" name="submit" id="submit">Send</button>
             </div>
             </div>
             </div>

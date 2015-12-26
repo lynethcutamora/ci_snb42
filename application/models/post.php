@@ -89,6 +89,19 @@ class Post extends CI_Model {
                         $this->db->insert('userpost_ext');
                 }
         }
+        public function file($content, $type,$postId)
+        {
+                if($content==null){
+
+                }else
+                {
+                        $this->db->set('extContent', $content);
+                        $this->db->set('extId', uniqid());
+                        $this->db->set('extType',$type);
+                        $this->db->set('postId',$postId);
+                        $this->db->insert('userpost_ext');
+                }
+        }
         public function link($content, $type,$postId)
         {
                 if($content==null){
@@ -208,6 +221,71 @@ class Post extends CI_Model {
         $query = $this->db->get();
          return $query;
     }
-      
+    public function searchPeople($key)
+    {
+
+        $this->db->select('*');
+        $this->db->from('user_md a');
+        $this->db->join('user_dtl b', 'b.userId=a.userId','left');
+        $this->db->join('company_dtl c', 'c.userId=a.userId','left');
+        $this->db->join('avatar_dtl d', 'd.userId=a.userId','left');
+        $this->db->like('a.user_emailAdd', $match = $key, $side = 'both');
+        $this->db->or_like('b.user_lName', $match = $key, $side = 'both');
+        $this->db->or_like('b.user_fName', $match = $key, $side = 'both');
+        $this->db->or_like('c.company_name', $match = $key, $side = 'both');
+        $query = $this->db->get();
+         return $query;
+    }
+    public function gold($userId)
+    {
+        $this->db->select('*');
+      $this->db->from('badge_dtl');
+      $this->db->where('voteBadge','1');
+      $this->db->where('userId',$userId);
+      $query = $this->db->get();
+      $gold = $query->num_rows();
+      return $gold;
+    }
+    public function silver($userId)
+    {
+        $this->db->select('*');
+      $this->db->from('badge_dtl');
+      $this->db->where('voteBadge','2');
+      $this->db->where('userId',$userId);
+      $query = $this->db->get();
+      $silver = $query->num_rows();
+      return $silver;
+    }
+    public function bronze($userId)
+    {
+        $this->db->select('*');
+      $this->db->from('badge_dtl');
+      $this->db->where('voteBadge','3');
+      $this->db->where('userId',$userId);
+      $query = $this->db->get();
+      $bronze = $query->num_rows();
+      return $bronze;
+    }
+    public function black($userId)
+    {
+        $this->db->select('*');
+      $this->db->from('badge_dtl');
+      $this->db->where('voteBadge','4');
+      $this->db->where('userId',$userId);
+      $query = $this->db->get();
+      $black = $query->num_rows();
+      return $black;
+    }
+    public function firstProject($groupId)
+    {
+     $this->db->select('*');
+      $this->db->from('userpost');
+      $this->db->where('postType',$groupId);
+      $query = $this->db->get();
+      $row = $query->row_array();
+
+      return $row['postId'];
+    }
+
 }
 ?>
