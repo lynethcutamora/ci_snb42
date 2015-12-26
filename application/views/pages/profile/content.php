@@ -176,8 +176,9 @@ theForm.scrolly.value = scrolly;
                 <div class="box-body">
                   <strong><i class="fa fa-book margin-r-5"></i>  Self Description</strong>
                   <p class="text-muted">
-                    <?php foreach($data as $row):
                 
+                    
+                    <?php foreach($profileDtl as $row):
                   if($row['user_Type']=='Ideator'||$row['user_Type']=='Investor')
                   {
                       echo $row['user_shortSelfDescription'];
@@ -188,13 +189,14 @@ theForm.scrolly.value = scrolly;
                   }                  
                   ?>
                   <?php endforeach;?>
+                  
                   </p>
 
                   <hr>
 
                   <strong><i class="fa fa-map-marker margin-r-5"></i> Location</strong>
                   <p class="text-muted">
-                  <?php foreach($data as $row):
+                  <?php foreach($profileDtl as $row):
                 
                   if($row['user_Type']=='Ideator'||$row['user_Type']=='Investor')
                   {
@@ -453,7 +455,7 @@ theForm.scrolly.value = scrolly;
             <div class="modal-body">
               <div class="col-md-12">
 
-              <?php foreach($data as $row):
+              <?php foreach($profileDtl as $row):
                 echo '<div class="box box-widget widget-user">';
                 # Add the bg color to the header using any of the bg-* classes -->
                 echo '<div class="widget-user-header bg-black" style="background: url(\''.base_url().'/user/defaultcover_user.png\') center center; background-size:contain;">';
@@ -500,31 +502,63 @@ theForm.scrolly.value = scrolly;
                 ?>
                 </i><b> &nbsp;&nbsp;<?php echo $rep;?></b></span></p>
                 
-                <?php echo form_open('../pages/badge'); ?>
-                  <input type="text" hidden="true" name="userId" value="<?php echo $userId;?>">
-                  <div class="row">
+             
+              
+                
+                <?php foreach($data as $userdtl):?>
+                <?php if($this->post->validBadge($userdtl['userId'])=='false'){?>;
+                <input type="text" hidden="true" name="userId" value="<?php echo $userId;?>">
+                <?php echo form_open('../pages/badge'); 
+                  echo '<div class="row">
                     <div class="col-sm-3 border-right">
                       <div class="description-block"> 
-                        <span class="description-text"><button type="submit" class='btn btn-default btn-lg' name="btnRate" id="gold" value="gold"><i class='fa fa-star' style="color:Gold;"></i> </button></span>
+                        <span class="description-text"><button type="submit" class="btn btn-default btn-lg" name="btnRate" id="gold" value="gold"><i class="fa fa-star" style="color:Gold;"></i> </button></span>
                       </div><!-- /.description-block -->
                     </div><!-- /.col -->
                     <div class="col-sm-3 border-right">
                       <div class="description-block"> 
-                        <span class="description-text"><button type="submit" class='btn btn-default btn-lg' name="btnRate" id="silver" value="silver"><i class='fa fa-star' style="color:Silver;"></i> </button></span>
+                        <span class="description-text"><button type="submit" class="btn btn-default btn-lg" name="btnRate" id="silver" value="silver"><i class="fa fa-star" style="color:Silver;"></i> </button></span>
                       </div><!-- /.description-block -->
                     </div><!-- /.col -->
                     <div class="col-sm-3 border-right">
                       <div class="description-block">
-                        <span class="description-text"><button type="submit" class='btn btn-default btn-lg' name="btnRate" id="bronze" value="bronze"><i class='fa fa-star' style="color:SandyBrown;"></i> </button></span>
+                        <span class="description-text"><button type="submit" class="btn btn-default btn-lg" name="btnRate" id="bronze" value="bronze"><i class="fa fa-star" style="color:SandyBrown;"></i> </button></span>
                       </div><!-- /.description-block -->
                     </div><!-- /.col -->
                     <div class="col-sm-3">
                       <div class="description-block">
-                        <span class="description-text"><button type="submit" class='btn btn-default btn-lg' name="btnRate" id="black" value="black"><i class='fa fa-star' style="color:Black;"></i> </button></span>
+                        <span class="description-text"><button type="submit" class="btn btn-default btn-lg" name="btnRate" id="black" value="black"><i class="fa fa-star" style="color:Black;"></i> </button></span>
                       </div><!-- /.description-block -->
                     </div><!-- /.col -->
-                  </div><!-- /.row -->
-                  </form>
+                  </div><!-- /.row -->';
+                  echo "</form>";
+                  }
+                  else
+                    {
+                      '<div class="row">
+                    <div class="col-sm-3 border-right">
+                      <div class="description-block"> 
+                        <span class="description-text"><button type="submit" class="btn btn-default btn-lg disabled" disabled name="btnRate" id="gold" value="gold"><i class="fa fa-star" style="color:Gold;"></i></button></span>
+                      </div><!-- /.description-block -->
+                    </div><!-- /.col -->
+                    <div class="col-sm-3 border-right">
+                      <div class="description-block"> 
+                        <span class="description-text"><button type="submit" class="btn btn-default btn-lg disabled" disabled name="btnRate" id="silver" value="silver"><i class="fa fa-star" style="color:Silver;"></i> </button></span>
+                      </div><!-- /.description-block -->
+                    </div><!-- /.col -->
+                    <div class="col-sm-3 border-right">
+                      <div class="description-block">
+                        <span class="description-text"><button type="submit" class="btn btn-default btn-lg disabled" disabled name="btnRate" id="bronze" value="bronze"><i class="fa fa-star" style="color:SandyBrown;"></i> </button></span>
+                      </div><!-- /.description-block -->
+                    </div><!-- /.col -->
+                    <div class="col-sm-3">
+                      <div class="description-block">
+                        <span class="description-text"><button type="submit" class="btn btn-default btn-lg disabled" disabled name="btnRate" id="black" value="black"><i class="fa fa-star" style="color:Black;"></i> </button></span>
+                      </div><!-- /.description-block -->
+                    </div><!-- /.col -->
+                  </div><!-- /.row -->';
+                    }?>                            
+                  <?php endforeach;?>
                   </div>    
               </div>
             </div>
@@ -547,7 +581,7 @@ theForm.scrolly.value = scrolly;
             <div class="modal-body">
               <div class="col-md-12">
 
-              <?php foreach($data as $row):
+              <?php foreach($profileDtl as $row):
                 echo '<div class="box box-widget widget-user">';
                 # Add the bg color to the header using any of the bg-* classes -->
                 echo '<div class="widget-user-header bg-black" style="background: url(\''.base_url().'/user/defaultcover_user.png\') center center; background-size:contain;">';
@@ -636,25 +670,30 @@ theForm.scrolly.value = scrolly;
             <center>
             <div class="modal-body">
               <div class="form-group">
-              <?php
               
-              ?>
               <?php echo form_open('../pages/messageProfile');?>
+              <input type="text" hidden="true" name="userId" value="<?php echo $userId;?>">
                         <div class="col-sm-12">
                          <?php echo form_error('inputDescription');  ?>
-                          <textarea class="form-control"name="inputDescription" id="inputDescription" placeholder="Your Message Here" value="<?php echo set_value('inputDescription'); ?>"></textarea>
+                          <textarea class="form-control" name="inputDescription" id="inputDescription" placeholder="Your Message Here" value="<?php echo set_value('inputDescription'); ?>"></textarea>
                         </div>
                         </br>
                         </br>
                         </br>
-                        <button type="submit" class="btn btn-default pull-right" name="submit" id="submit">Send</button>
-                              
+<<<<<<< HEAD
+                      
               </form>
+=======
+                        <button type="submit" class="btn btn-default pull-right" name="submit" id="submit">Send</button>
+                     </br>         
+              
+>>>>>>> 8c78434ac457d8b4c095a5d65a0e09d55cb7071f
               </div>
             </div>
             </center>
            
             <div class="modal-footer">
+              <button type="submit" class="btn btn-default pull-right" name="submit" id="submit">Send</button>
             </div>
             </div>
             </div>

@@ -177,7 +177,7 @@ class Pages extends CI_Controller {
 		$data['groupdetails'] = $groupquery->result_array();
 		$this->load->view('pages/dashboard/fixed',$data);
 		$this->load->view('pages/admindashboard/content'); 
-		$this->load->view('pages/admindashboard/controlsidebar');
+		$this->load->view('pages/dashboard/controlsidebar');
 		$this->load->view('pages/admindashboard/end');
 		}else{
 			$this->_landing();
@@ -197,6 +197,7 @@ class Pages extends CI_Controller {
 		$this->load->view('pages/adminonline/content'); 
 		$this->load->view('pages/adminonline/controlsidebar');
 		$this->load->view('pages/adminonline/end');
+		$this->load->view('pages/adminonline/table');
 		}else{
 			$this->_landing();
 		}
@@ -251,17 +252,23 @@ class Pages extends CI_Controller {
 			$data['groupdetails'] = $groupquery->result_array();
 			$groupDetails= $this->post->groupdetails($groupId,$this->session->userdata('userId'));
 				
-			if(isset($projectId)){
-				$projectdtl= $this->projectdtl($groupid,$projectId);
-				$data['projectdtl'] = $projectdtl->result_array();
-			}
-			else if(isset($groupId)){
+			if(isset($groupId)){
 				if($groupDetails->num_rows()==0) {
 					$groupDetails->result_array();
 				}else{
+					if(isset($projectId)){
+						$projectdtl= $this->projectdtl($groupId,$projectId);
+						$data['projectdtl'] = $projectdtl->result_array();
+					}else{
+						$allproject= $this->allproject($groupId);
+
+						$projectdtl= $this->projectdtl($groupId,$this->post->firstProject($groupId));
+						$data['projectdtl'] = $projectdtl->result_array();
+
+					}
+					$allproject= $this->allproject($groupId);
+					$data['allproject'] = $allproject->result_array();
 					$data['groupDtl'] = $groupDetails->result_array();
-					$projectdtl= $this->post->projectdtl($groupId);
-					$data['projectdtl'] = $projectdtl->result_array();
 					$memberinfo= $this->memberinfo($groupId);
 					$data['memberinfo'] = $memberinfo->result_array();
 					$search= $this->_searchpeople();
@@ -328,10 +335,10 @@ class Pages extends CI_Controller {
 					$this->load->view('pages/dashboard/controlsidebar');
 					$this->load->view('pages/dashboard/end');
 				}else{
-				$this->load->view('pages/dashboard/fixed',$data);
-				$this->load->view('pages/profile/content',$data); 
-				$this->load->view('pages/dashboard/controlsidebar');
-				$this->load->view('pages/dashboard/end');
+					$this->load->view('pages/dashboard/fixed',$data);
+					$this->load->view('pages/profile/content',$data); 
+					$this->load->view('pages/dashboard/controlsidebar');
+					$this->load->view('pages/dashboard/end');
 				}
 			}else{
 				$this->profile($this->session->userdata('userId'));
@@ -356,10 +363,7 @@ class Pages extends CI_Controller {
 				$postdtlquery= $this->post->postdtl($postId);
 				$data['postDetail'] = $postdtlquery->result_array();
 				$comments= $this->post->showComments($postId,'1');
-				$data['comments'] = $comments->result_array();
-
-
-				
+				$data['comments'] = $comments->result_array();				
 
 				if($postdtlquery->num_rows()==0) {
 				$this->load->view('pages/dashboard/fixed',$data);
@@ -730,6 +734,7 @@ class Pages extends CI_Controller {
                 else
                 {
                 	$post=$this->input->post('submit');
+                	$userId=$this->input->post('userId');
                 	if(!isset($post))
 					{
 						$this->load->view('pages/profile/index');
@@ -742,12 +747,12 @@ class Pages extends CI_Controller {
 	                   $data = array(
 	                  'msgId' => $msgId,
 	                  'msg_Content' =>$this->input->post('inputDescription'),
-	                  'msg_fromUserId' => '566c665d01',
-	                  'userId' => $this->session->userdata('userId'),
+	                  'msg_fromUserId' => $this->session->userdata('userId'),
+	                  'userId' => $userId,
 	                  'msg_Date' =>$datetime
 	                  );
 	                  $this->db->insert('msg_dtl', $data);
-	                   redirect('pages/profile');
+	                   redirect('pages/profile/'.$userId);
 	               	}
                 }
               }
@@ -778,7 +783,7 @@ class Pages extends CI_Controller {
 
 			$this->post->link($this->input->post('relatedlinks'), '2',$postId);
 			if($url==null){
-				
+					$this->db->insert('userpost', $data);
 				header('Location:'.base_url().'pages/profile/'.$this->session->userdata('userId'));
 
 			}else{
@@ -812,7 +817,7 @@ class Pages extends CI_Controller {
 		$data['alldata']=$query->result_array();
 		$this->load->view('pages/post/comment',$data);
 	}
-	
+
 	public function comment($postId)
 	{
 		 $this->form_validation->set_rules('commentContent', 'Comment', 'required|trim');
@@ -838,6 +843,7 @@ class Pages extends CI_Controller {
 			header('Location:'.base_url().'pages/post/'.$postId);		
 		}
 	}
+
 
 	#THIS SECTION IS FOR GROUP SECTION
 	public function countGroups(){
@@ -924,6 +930,15 @@ class Pages extends CI_Controller {
 		return $query;
 	}
 
+	public function allproject($groupid){
+		$this->db->select('*');
+		$this->db->from('userpost');
+		$this->db->where('postType',$groupid);
+		$query=$this->db->get();
+
+		return $query;
+	}
+
 	public function _searchpeople(){
 		$this->db->select('*');
 		$this->db->from('user_dtl');
@@ -933,6 +948,8 @@ class Pages extends CI_Controller {
 
 		return $query;
 	}
+
+	
 
 	public function memberinfo($groupid){
 		$this->db->select('*');
@@ -1134,6 +1151,91 @@ class Pages extends CI_Controller {
 			return TRUE;
 		}
 	}
-	
+	public function search()
+	{	
+		if(($this->session->userdata('userId')!=""))
+		{
+		$query=$this->_userData();
+		$data['data']=$query->result_array();
+		$data['pages']='search';
+		$data['countgroup'] = $this->countGroups();
+		$groupquery= $this->groupdetails();
+		$data['groupdetails'] = $groupquery->result_array();
+
+		if($this->input->post('key')==null){
+			$idea= $this->post->searchIdea('asdsdwq1qweskdqw213ew9eqwek12ewe91ewkqe212945rfre544e331e23d32d!#$2');
+			$data['idea'] = $idea->result_array();
+			$group= $this->post->searchGroup('asdsdwq1qweskdqw213ew9eqwek12ewe91ewkqe212945rfre544e331e23d32d!#$2');
+			$data['group'] = $group->result_array();
+			$people= $this->post->searchPeople('asdsdwq1qweskdqw213ew9eqwek12ewe91ewkqe212945rfre544e331e23d32d!#$2');
+			$data['people'] = $people->result_array();
+
+		}else{
+		$idea= $this->post->searchIdea($this->input->post('key'));
+		$data['idea'] = $idea->result_array();
+		$group= $this->post->searchGroup($this->input->post('key'));
+		$data['group'] = $group->result_array();
+		$people= $this->post->searchPeople($this->input->post('key'));
+		$data['people'] = $people->result_array();
+
+		}
+
+
+		
+		$this->load->view('pages/dashboard/fixed',$data);
+		$this->load->view('pages/search/content',$data); 
+		$this->load->view('pages/dashboard/controlsidebar');
+		$this->load->view('pages/dashboard/end');
+		}
+		else
+		{
+			$this->_landing();
+		}
+	}
+		
+	public function postGroup($groupid,$projectid)
+	{	
+         $this->form_validation->set_rules('inputDescription', 'Description', 'required|trim');
+         if ($this->form_validation->run() == FALSE)
+        {
+         	$this->profile($this->session->userdata('userId'));
+        }
+        else
+		{	
+			$url = $this->file_upload();
+
+     	 	$datetime = date('Y-m-d H:i:s'); 
+     	 	$postId = uniqid('gp');
+     	 	
+     	 	$data = array(
+			'postId' => $postId,
+			'postContent' =>$this->input->post('inputDescription'),
+			'postType' => '3',
+			'userId' => $this->session->userdata('userId'),
+			'postDate' =>$datetime
+			);
+
+			if($url==null){
+				$this->db->insert('userpost', $data);
+				header('Location:'.base_url().'pages/group/'.$groupid.'/'.$projectid);
+			}else{
+				$this->post->file($url,'3',$postId);
+				
+				$this->db->insert('userpost', $data);
+				header('Location:'.base_url().'pages/group/'.$groupid.'/'.$projectid);
+			}
+		}	
+	}
+	private function file_upload()
+	{
+		$type = explode('.', $_FILES["file"]["name"]);
+		$type = strtolower($type[count($type)-1]);
+		$url = "./post_files/".uniqid(rand()).'.'.$type;
+		if(in_array($type, array("txt", "docx")))
+			if(is_uploaded_file($_FILES["file"]["tmp_name"]))
+				if(move_uploaded_file($_FILES["file"]["tmp_name"],$url))
+					return $url;
+		return "";
+	}
 
 }

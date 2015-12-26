@@ -1,3 +1,32 @@
+<?php 
+include '../dbcon.php';
+if(isset($_SESSION['Start&Boost'])){
+    $userId= $_SESSION['Start&Boost'];
+    $query = "SELECT * FROM User_dtl WHERE userId='$userId'";
+    $query = mysql_query($query);
+    while($row = mysql_fetch_array($query))
+     {
+        $_SESSION['lname'] = $row['lName'];
+        $_SESSION['fname'] = $row['fName'];
+        $_SESSION['midInit'] = $row['midInit'];
+     }
+    $query = "SELECT * FROM user_md WHERE userId='$userId'";
+    $query = mysql_query($query);
+    while($row = mysql_fetch_array($query))
+     {
+        $pictureId = $row['profilePicId'];
+        $userType = $row['userType'];
+     }
+    $query = "SELECT * FROM picture_dtl WHERE pictureId='$pictureId'";
+    $query = mysql_query($query);
+    while($row = mysql_fetch_array($query))
+     {
+       
+        $_SESSION['profilePic'] = $row['picturename'];
+     }
+
+}
+?>
 
 <!DOCTYPE html>
 <html>
@@ -7,21 +36,17 @@
     <title>Start&Boost</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <!-- Select2 -->
-    <link rel="stylesheet" href="<?php echo base_url(); ?>plugins/select2/select2.min.css">
     <!-- Bootstrap 3.3.5 -->
-    <link rel="stylesheet" href="<?php echo base_url(); ?>bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../bootstrap/css/bootstrap.min.css">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
     <!-- Ionicons -->
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-    <!-- iCheck for checkboxes and radio inputs -->
-    <link rel="stylesheet" href="<?php echo base_url(); ?>plugins/iCheck/all.css">
     <!-- Theme style -->
-    <link rel="stylesheet" href="<?php echo base_url(); ?>dist/css/AdminLTE.min.css">
+    <link rel="stylesheet" href="../../dist/css/AdminLTE.min.css">
     <!-- AdminLTE Skins. Choose a skin from the css/skins
          folder instead of downloading all of them to reduce the load. -->
-    <link rel="stylesheet" href="<?php echo base_url(); ?>dist/css/skins/_all-skins.min.css">
+    <link rel="stylesheet" href="../../dist/css/skins/_all-skins.min.css">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -30,23 +55,18 @@
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
   </head>
-  <!-- ADD THE CLASS fixed TO GET A FIXED HEADER AND SIDEBAR LAYOUT -->
-  <!-- the fixed layout is not compatible with sidebar-mini -->
-  <?php if($pages=='profile'){
-    echo '  <body class="hold-transition skin-blue sidebar-collapse sidebar-mini">';
-  }else{
-   echo '<body class="hold-transition skin-blue fixed sidebar-mini">'; 
-}?>
+  <!-- ADD THE CLASS sidedar-collapse TO HIDE THE SIDEBAR PRIOR TO LOADING THE SITE -->
+  <body class="hold-transition skin-blue sidebar-collapse sidebar-mini">
     <!-- Site wrapper -->
     <div class="wrapper">
 
       <header class="main-header">
         <!-- Logo -->
-        <a href="<?php echo base_url(); ?>index2.html" class="logo">
+        <a href="../../index2.html" class="logo">
           <!-- mini logo for sidebar mini 50x50 pixels -->
           <span class="logo-mini"><b>S</b>NB</span>
           <!-- logo for regular state and mobile devices -->
-          <span class="logo-lg"><img src="<?php echo base_url(); ?>images/SNBlogo.png" style="width:80%;"></span>
+          <span class="logo-lg"><img src="../../images/SNBlogo.png" style="width:80%;"></span>
         
         </a>
         <!-- Header Navbar: style can be found in header.less -->
@@ -74,7 +94,7 @@
                       <li><!-- start message -->
                         <a href="#">
                           <div class="pull-left">
-                            <img src="<?php echo base_url(); ?>dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                            <img src="../../dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
                           </div>
                           <h4>
                             Support Team
@@ -140,58 +160,19 @@
                   </li>
                 </ul>
               </li>
-                    <?php 
-                            foreach($data as $row):?>
               <!-- User Account: style can be found in dropdown.less -->
               <li class="dropdown user user-menu">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                   <img src="<?php echo base_url();?>/user/<?php echo $row['avatar_name'];?>" class="user-image" alt="User Image">
-                  <span class="hidden-xs">  
-              <?php
-                              if($row['user_Type']=='Ideator'||$row['user_Type']=='Investor')
-                              {
-                                  if($row['user_midInit']==null)
-                                     echo $row['user_fName']."  ".$row['user_lName'];
-                                   else
-                                     echo $row['user_fName']." ".$row['user_midInit'].". ".$row['user_lName'];
-                              }
-                              else
-                              {
-                                echo $row['company_name'];
-                              }
-
-                          
-                       
-                      ?>
-                      <?php  endforeach;?>
-                    </span>
-               </a>
-
+                    <img src="../<?php echo "user/".$_SESSION['profilePic'];?>" class="user-image" alt="User Image">
+                  <span class="hidden-xs"><?php echo $_SESSION['fname']." ".$_SESSION['midInit'].". ".$_SESSION['lname']?></span>
+                </a>
                 <ul class="dropdown-menu">
                   <!-- User image -->
                   <li class="user-header">
-                    <img src="<?php echo base_url();?>/user/<?php echo $row['avatar_name']?>" class="img-circle" alt="User Image" class="img-circle" alt="User Image">
-
+                    <img src="../../images/team/index0.png" class="img-circle" alt="User Image">
                     <p>
-                    <?php 
-                            foreach($data as $row):
-                              if($row['user_Type']=='Ideator'||$row['user_Type']=='Investor')
-                              {
-                                  if($row['user_midInit']==null)
-                                     echo $row['user_fName']." ".$row['user_lName'];
-                                   else
-                                     echo $row['user_fName']." ".$row['user_midInit'].". ".$row['user_lName'];
-                              }
-                              else
-                              {
-                                echo $row['company_name'];
-                              }
-
-                          
-                       
-                      ?>
-                      <small><?php echo $row['user_Type'];?></small>
-                      <?php  endforeach;?>
+                      Lyneth C. Cutamora - Web Developer
+                      <small>Member since Nov. 2015</small>
                     </p>
                   </li>
                   <!-- Menu Body -->
@@ -209,17 +190,17 @@
                   <!-- Menu Footer-->
                   <li class="user-footer">
                     <div class="pull-left">
-                      <a href="<?php echo base_url() ;?>pages/profile" class="btn btn-default btn-flat">Profile</a>
+                      <a href="../profile/index.php" class="btn btn-default btn-flat">Profile</a>
                     </div>
                     <div class="pull-right">
-                      <a href="<?php echo base_url() ;?>pages/logout" class="btn btn-default btn-flat">Sign out</a>
+                      <a href="#" class="btn btn-default btn-flat">Sign out</a>
                     </div>
                   </li>
                 </ul>
               </li>
               <!-- Control Sidebar Toggle Button -->
               <li>
-                <a href="#" data-toggle="control-sidebar"><i class="fa fa-users"></i></a>
+                <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
               </li>
             </ul>
           </div>
@@ -233,37 +214,19 @@
         <!-- sidebar: style can be found in sidebar.less -->
         <section class="sidebar">
           <!-- Sidebar user panel -->
-            <div class="user-panel">
+          <div class="user-panel">
             <div class="pull-left image">
-              <img src="<?php echo base_url(); ?>/user/<?php echo $row['avatar_name']?>" class="img-circle" alt="User Image">
+              <img src="../../images/team/index0.png" class="img-circle" alt="User Image">
             </div>
             <div class="pull-left info">
-              <p>
-                <a href="<?php echo base_url(); ?>pages/profile">
-                <?php 
-                  foreach($data as $row):
-                    if($row['user_Type']=='Ideator'||$row['user_Type']=='Investor')
-                     {
-                        if($row['user_midInit']==null)
-                         echo $row['user_fName']." ".$row['user_lName'];
-                        else
-                         echo $row['user_fName']." ".$row['user_midInit'].". ".$row['user_lName'];
-                        }
-                        else
-                        {
-                          echo $row['company_name'];
-                        }    
-                  ?>
-                  <?php  endforeach;?>
-                </a>
-              </p>
+              <p>Lyneth C. Cutamora</p>
               <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
             </div>
           </div>
           <!-- search form -->
-          <form action="<?php echo  base_url()."pages/search";?>" method="post" class="sidebar-form">
+          <form action="#" method="get" class="sidebar-form">
             <div class="input-group">
-              <input type="text" name="key" class="form-control" required="required"placeholder="Search...">
+              <input type="text" name="q" class="form-control" placeholder="Search...">
               <span class="input-group-btn">
                 <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i></button>
               </span>
@@ -273,52 +236,32 @@
           <!-- sidebar menu: : style can be found in sidebar.less -->
           <ul class="sidebar-menu">
             <li class="header">MAIN NAVIGATION</li>
-            
-            <li class="treeview <?php if($pages=='dashboard') {echo "active";}else echo "";?>">
-              <a href="<?php echo base_url(); ?>index.php/pages/index">
+            <li class="treeview">
+              <a href="../dashboard/index.php">
                 <i class="fa fa-dashboard"></i> <span>Dashboard</span> <!--<i class="fa fa-angle-left pull-right">--></i>
-              </a>            
-            </li>
-            <li class="treeview <?php if($pages=='profile') {echo "active";}else echo "";?>">
-              <a href="<?php echo base_url(); ?>index.php/pages/profile">
-                <i class="fa fa-edit"></i> <span>Post Idea</span>
               </a>
             </li>
-            <li class="treeview <?php if($pages=='startup') {echo "active";}else echo "";?>">
-              <a href="<?php echo base_url(); ?>index.php/pages/startupproduct">
-                <i class="fa fa-paper-plane"></i> <span>Startup Products</span>
-              </a>
-            </li>
-            <li class="treeview <?php if($pages=='newsfeed') {echo "active";}else echo "";?>">
+            <li class="treeview">
               <a href="#">
                 <i class="fa fa-feed"></i>
                 <span>News Feed</span>
                 <i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu">
-                <li><a href="<?php echo base_url(); ?>pages/latest"><i class="fa fa-circle-o"></i>Latest</a></li>
-                <li><a href="<?php echo base_url(); ?>pages/onfire"><i class="fa fa-fire"></i>On Fire</a></li>
-                <li><a href="<?php echo base_url(); ?>pages/toprated"><i class="fa fa-star"></i>Top Rated</a></li>
+                <li><a href="#"><i class="fa fa-circle-o"></i>Latest</a></li>
+                <li><a href="#"><i class="fa fa-fire"></i>On Fire</a></li>
+                <li><a href="#"><i class="fa fa-star"></i>Top Rated</a></li>
               </ul>
             </li>
-             <li class="treeview <?php if($pages=='timeline') {echo "active";}else echo "";?>">
-              <a href="<?php echo base_url(); ?>pages/timeline">
-                    <i class="fa fa-calendar"></i> <span>Timeline</span>
-                 </a>
-             
-            </li>
-            <li class="treeview <?php if($pages=='group') {echo "active";}else echo "";?>">
+             <li class="treeview">
               <a href="#">
-               <i class="fa fa-group"></i>
-                <span>My Group</span><span class="label bg-green pull-right"><?php echo $countgroup;?></span>
-               
+                <i class="fa fa-calendar"></i> <span>Timeline</span>
               </a>
-              <ul class="treeview-menu">
-                <li><a href="<?php echo base_url(); ?>pages/newgroup"><i class="fa fa-plus"></i>Create Group</a></li>
-                <?php foreach ($groupdetails as $row):?>
-                  <li><a href="<?php echo base_url(); ?>pages/group/<?php echo $row['groupId']?>"><i class="fa fa-circle-o"></i><?php echo $row['groupname'];?></a></li>
-                <?php endforeach;?>
-              </ul>
+            </li>
+            <li class="treeview">
+              <a href="../Products/index.php">
+                <i class="fa fa-paper-plane"></i> <span>Startup Products</span><small class="label pull-right bg-green">new</small>
+              </a>
             </li>
           </ul>
         </section>

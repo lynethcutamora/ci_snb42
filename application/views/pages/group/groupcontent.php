@@ -38,7 +38,7 @@
                     </div><!-- /.col -->
                     <div class="col-sm-3 border-right">
                       <div class="description-block">
-                        <h5 class="description-header">0</h5>
+                        <h5 class="description-header"><?php echo count($allproject);?></h5>
                         <span class="description-text">PROJECTS</span>
                       </div><!-- /.description-block -->
                     </div><!-- /.col -->
@@ -67,11 +67,11 @@
                   <li><a href="#tab_2-2" data-toggle="tab">Important Files</a></li>
                   <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                      Project(s) <span class="caret"></span>
+                      Projects (<?php echo count($allproject); ?>) <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
-                      <?php foreach($projectdtl as $row):?>
-                      <li role="presentation"><a role="menuitem" tabindex="-1" href="<?php echo base_url(); ?>pages/group/<?php echo $groupid;?>/<?php echo $row['postId'];?>"><?php echo $row['postId'];?><?php echo $row['postTitle'];?></a></li>
+                      <?php foreach($allproject as $row):?>
+                      <li role="presentation"><a role="menuitem" tabindex="-1" name="projectname" href="<?php echo base_url(); ?>pages/group/<?php echo $groupid;?>/<?php echo $row['postId'];?>"><?php echo $row['postTitle'];?></a></li>
                       <?php endforeach;?>
                     </ul>
                   </li>
@@ -88,7 +88,9 @@
                         <div class="box box-success">
                           <div class="box-header">
                             <i class="fa fa-comments-o"></i>
-                            <h3 class="box-title">Start&Boost Project</h3>
+                            <?php foreach($projectdtl as $row):?>
+                            <h3 class="box-title"><?php echo $row['postTitle'];?></h3>
+                            <?php endforeach;?>
                             <div class="box-tools pull-right" data-toggle="tooltip" title="Status">
                               <div class="btn-group" data-toggle="btn-toggle" >
                                 <button type="button" class="btn btn-default btn-sm active"><i class="fa fa-square text-green"></i></button>
@@ -162,18 +164,20 @@
                         <p>Update Status</p>
                       </div><!-- /.box-header -->
                       <!-- form start -->
-                      <form class="form-horizontal">
+                      <?php foreach($allproject as $row):?>
+                      <?php echo form_open_multipart('../pages/postGroup/'.$groupid.'/'.$row['postId'].'',"class=form-horizontal"); ?>
+                      <?php endforeach;?>
                         <div class="box-body">
                           <div class="form-group">
                             <label for="inputDescription" class="col-sm-2 control-label">Information</label>
                             <div class="col-sm-10">
-                              <textarea class="form-control" id="inputDescription" placeholder="Post Information"></textarea>
+                              <textarea class="form-control" id="inputDescription" name="inputDescription" placeholder="Post Information"></textarea>
                             </div>
                           </div>
+
                         </div><!-- /.box-body -->
                         <div class="box-footer">
-                          <form action="" method="post" enctype="multipart/form-data">
-                            <input class="pull-left" type="file" name="fileToUpload" id="fileToUpload">
+                          <?php echo form_upload('file'); ?>
                             <input class="btn btn-info pull-right" type="submit" value="Post" name="submit">
                           </form>
                         </div><!-- /.box-footer -->
@@ -319,9 +323,15 @@
                           echo '<form method="post" action="'.base_url().'pages/addmember">';
                           echo '<input type="text" hidden="true" name="groupid" value="'.$groupid.'">';
                           echo '<input type="text" hidden="true" name="userid" value="'.$row['userId'].'">';
-                              echo '<span class="pull-left"><i class="fa fa-user" style="color:gray;"></i></span>
-                                    <p class="text-muted">&nbsp;&nbsp;'.$row['user_fName']." ".$row['user_midInit'].". ".$row['user_lName'].'
-                                    <span class="pull-right"><button name="btnaddmember" class="form-control btn-primary" type="submit"><i class="fa fa-user-plus"></i></button></span></p>';
+                          if($this->post->existsMember($groupid,$row['userId'])==false){
+                            echo '<span class="pull-left"><i class="fa fa-user" style="color:gray;"></i></span>
+                                  <p class="text-muted">&nbsp;&nbsp;'.$row['user_fName']." ".$row['user_midInit'].". ".$row['user_lName'].'
+                                  <span class="pull-right"><button name="btnaddmember" class="form-control btn-primary" type="submit"><i class="fa fa-user-plus"></i></button></span></p>';
+                          }else{
+                            echo '<span class="pull-left"><i class="fa fa-user" style="color:gray;"></i></span>
+                                  <p class="text-muted">&nbsp;&nbsp;'.$row['user_fName']." ".$row['user_midInit'].". ".$row['user_lName'].'
+                                  <span class="pull-right"><button name="btnaddmember" class="form-control btn disabled" disabled><i class="fa fa-user-plus"></i></button></span></p>';                      
+                         }
                           echo '</form>';
                         echo'</div>';
                       endforeach;
