@@ -60,7 +60,7 @@ theForm.scrolly.value = scrolly;
                   <div class="box box-widget">
                     <?php 
                         
-                        $query = $this->db->query("SELECT *, COUNT(c.postId) as number_of_votes from upvote_dtl c left join userpost v on c.postId = v.postId  left join user_md b on v.userId = b.userId left join user_dtl d on b.userId = d.userId where voteType = '1' group by c.postId order by number_of_votes desc limit 5");
+                        $query = $this->db->query("SELECT *, COUNT(c.postId) as number_of_votes from upvote_dtl c left join userpost v on c.postId = v.postId  left join user_md b on v.userId = b.userId left join user_dtl d on b.userId = d.userId left join avatar_dtl e on d.userId = e.userId where voteType = '1' group by c.postId order by number_of_votes desc limit 20");
                              $i = 0;
                                 foreach($query->result() as $row):
                              $i++;
@@ -116,7 +116,7 @@ theForm.scrolly.value = scrolly;
                         $comment = $query->num_rows();
 
                         ?>
-                          <b><?php echo $i;?></b>
+                          
                     <div class='box-header with-border'>
                       <div class='user-block'>
                         <img class='img-circle' src='<?php echo base_url();?>/user/<?php echo $row->avatar_name;?>' alt='user image'>
@@ -130,23 +130,26 @@ theForm.scrolly.value = scrolly;
                     </div><!-- /.box-header -->
                     <div class='box-body'>
                       <!-- post text -->
-                       <p><b><a href="<?php echo base_url()."pages/post/".$row->postId;?>"><?php echo $row->postTitle;?></a></b></p>
+                       <p><b><?php echo $i;?>.</b>&nbsp;&nbsp;<b><a href="<?php echo base_url()."pages/post/".$row->postId;?>"><?php echo $row->postTitle;?></a></b></p>
                       <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $row->postContent;?></p>
 
 
                       <!-- Attachment -->
                       <div class="attachment-block clearfix">
-                       <img src='<?php echo base_url();?><?php echo $ext;?>' height='200px' width='200px'>
-                        <div class="attachment-pushed">
-                          <h4 class="attachment-heading"><a href="<?php echo base_url()."pages/profile/".$row->userId;?>"><?php echo $row->user_fName;?>&nbsp;<?php echo $row->user_midInit;?>.&nbsp;<?php echo $row->user_lName;?></a></h4>
-                          <div class="attachment-text">
-                            Related Links: <br/><a href="">startandboost/video</a>, &nbsp;&nbsp;<a href="#">startandboost/article</a>
-                          </div><!-- /.attachment-text -->
-                        </div><!-- /.attachment-pushed -->
+                      <?php 
+                      $query= $this->post->showImage($row->postId);
+
+                      foreach ($query->result_array() as $row) :
+                        echo "<img src='".base_url().$row['extContent']."' height='200px' width='200px'>"; 
+                     
+                     ?>
+                      <?php  endforeach;?>  
+                    
+                            </br>Related Links: <a href="">startandboost/video</a>, &nbsp;&nbsp;<a href="#">startandboost/article</a>
+                         
                       </div><!-- /.attachment-block -->
                       <!-- Social sharing buttons -->
-                      <button class='btn btn-default btn-xs'><i class='fa fa-thumbs-o-up'></i> Upvote</button>
-                      <button class='btn btn-default btn-xs'><i class='fa fa-share'></i> Share</button>
+                      
                       <span class='pull-right text-muted'><?php echo $like;?> likes - <?php echo $comment;?> comments</span>
                     </div><!-- /.box-body -->
                     <?php  endforeach;?>

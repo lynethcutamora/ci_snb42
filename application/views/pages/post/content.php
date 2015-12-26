@@ -63,9 +63,9 @@ theForm.scrolly.value = scrolly;
                         echo "<img src='".base_url().$row['extContent']."' height='200px' width='200px'>"; 
                       }
                     ?>
-                  </p>
-
-                  <p><h4><?php echo $postdtl['postContent'];?></h4></p>
+                  </p>  
+                  <h4>Short Description:</h4>
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $postdtl['postContent'];?>
                   <p>
                     <?php 
                       $postId = $postdtl['postId'];
