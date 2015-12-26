@@ -272,7 +272,7 @@ theForm.scrolly.value = scrolly;
                 <div class="tab-content">
                   <div class="active tab-pane" id="activity">
                     <!-- Post -->
-                                  <?php  foreach($profileDtl as $userdtl):?>
+            <?php  foreach($profileDtl as $userdtl):?>
             <?php foreach($alldata as $postdtl):?>
 
           <div class="row">
@@ -285,7 +285,7 @@ theForm.scrolly.value = scrolly;
                     <img class='img-circle' src='<?php echo base_url();?>user/<?php echo $postdtl['avatar_name']?>' alt='user image'>
                     <span class='username'>
                     <a href="#">
-                        <?php 
+                        <?php
                                   if($postdtl['user_Type']=='Ideator'||$postdtl['user_Type']=='Investor')
                                   {
                                       if($postdtl['user_midInit']==null)
@@ -386,12 +386,144 @@ theForm.scrolly.value = scrolly;
                   <div class="tab-pane" id="settings">
                     <form class="form-horizontal">
                       <div class="form-group">
+                      <div class="row">
                         <div class="col-sm-1"></div>
                         <div class="col-sm-3"><img src="<?php echo base_url();?>user/1.png" style="size:contain;" /></div>
-                        <div class="col-sm-7">
+                        <div class="col-sm-8">
                           <br/><br/>Change your avatar: <br/><br/>
                           <input type="file" name="fileToUpload" id="fileToUpload">
+
                         </div>
+                      </div>
+                      </br>
+                      </br>
+                      <div class="col-sm-12">
+                      <div class="nav-tabs-custom">
+                      <ul class="nav nav-tabs">
+                        <li class="active"><a href="#account" data-toggle="tab">My Account</a></li>
+                      
+                        <li><a href="#password" data-toggle="tab">Password</a></li>
+                
+                      </ul>
+                        <div class="tab-content">
+                        <div class="active tab-pane" id="account">
+
+                          <?php foreach($alldata as $profiledtl):?>
+                              <?php
+                                  if($profiledtl['user_Type']=='Ideator'||$profiledtl['user_Type']=='Investor')
+                                  {?>
+                                      <div class="form-group">
+                                        <label for="inputLName" class="col-sm-2 control-label">Last Name*</label>
+                                          <div class="col-sm-9"> 
+                                          <input type="text" class="form-control" name="inputLName" id="inputLName" placeholder="Last Name" value="<?php echo set_value('inputLName'); ?>">
+                                          </div>
+                                      </div>
+                                      <div class="form-group">
+                                        <label for="inputFName" class="col-sm-2 control-label">First Name*</label>
+                                        <div class="col-sm-9">
+                                          <input type="text" class="form-control" name="inputFName" id="inputFName" placeholder="First Name" value="<?php echo set_value('inputFName'); ?>">
+                                        </div>
+                                      </div>
+                    
+                                      <div class="form-group">
+                                        <label for="inputAge" class="col-sm-2 control-label">Age*</label>
+                                        <div class="col-sm-2">
+                                          <input type="text" class="form-control" name="inputAge" id="inputAge" placeholder="Age" value="<?php echo set_value('inputAge'); ?>">
+                                        </div>
+                                      </div>
+        
+                                      <div class="form-group">
+                                        <label for="inputAddress1" class="col-sm-2 control-label">Address Line 1</label>
+                                        <div class="col-sm-9">
+                                          <input type="text" class="form-control" name="inputAdress1" id="inputAdress1" placeholder="Street address, Barangay, District / Company Name"  value="<?php echo set_value('inputAdress1'); ?>">
+                                        </div>
+                                      </div>
+                                      <div class="form-group">
+                                        <label for="inputCity" class="col-sm-2 control-label">City</label>
+                                        <div class="col-sm-9">
+                                          <input type="text" class="form-control" name="inputCity" id="inputCity" placeholder="City"  value="<?php echo set_value('inputCity'); ?>">
+                                        </div>
+                                      </div>
+                    
+                                      <div class="form-group">
+                                        <label for="inputCounty" class="col-sm-2 control-label">Country</label>
+                                        <div class="col-sm-9">
+                                          <input type="text" class="form-control" name="inputCounty" id="inputCounty" placeholder="Country"  value="<?php echo set_value('inputCounty'); ?>">
+                                        </div>
+                                      </div>
+                                      <div class="form-group">
+                                        <label for="inputDescription" class="col-sm-2 control-label">About Me</label>
+                                        <div class="col-sm-9">
+                                          <textarea class="form-control" name="inputDescription" id="inputDescription" placeholder="Short Self-Description"  value="<?php echo set_value('inputDescription'); ?>"></textarea>
+                                        </div>
+                                      </div>
+                    
+                                      <div class="form-group">
+                                        <div class="col-sm-offset-2 col-sm-10">
+                                          <button type="submit" class="btn btn-primary" name="btnSave" value="Ideator">Save</button>
+                                        </div>
+                                      </div>
+                                       
+                        <!-- /.form-box -->
+                    <?php
+                                  }
+                                  else
+                                  {
+                                    echo $profiledtl['company_name'];
+                                  }
+                              ?>
+                          <?php endforeach;?>
+
+                        </div>
+                        </div>
+                        <div class="tab-content">
+                        <div class="tab-pane" id="password">
+                          <?php foreach($alldata as $profiledtl):?>
+                              <?php
+                                  if($profiledtl['user_Type']=='Ideator'||$profiledtl['user_Type']=='Investor')
+                                  {?>
+                                    <div class="form-group">
+                                      <label for="inputOldPassword" class="col-sm-2 control-label">Old Password*</label>
+                                      <div class="col-sm-9">
+                                        <input type="password" class="form-control" name="inputOldPassword" id="inputOldPassword" placeholder="Old Password" value="<?php echo set_value('inputOldPassword'); ?>">
+                                      </div>
+                                    </div>
+                                    <div class="form-group">
+                                      <label for="inputNewPassword" class="col-sm-2 control-label">New Password*</label>
+                                      <div class="col-sm-9">
+                                        <input type="password" class="form-control" name="inputNewPassword" id="inputNewPassword" placeholder="New Password" value="<?php echo set_value('inputNewPassword'); ?>">
+                                      </div>
+                                    </div>
+                                    <div class="form-group">
+                                      <label for="inputNewRepassword" class="col-sm-2 control-label">New Password Confirmation*</label>
+                                      <div class="col-sm-9">
+                                        <input type="password" class="form-control" name="inputNewRepassword" id="inputNewRepassword" placeholder="New Password Confirmation" value="<?php echo set_value('inputNewRepassword'); ?>">
+                                      </div>
+                                    </div>
+                                      
+                    
+                    
+                                      <div class="form-group">
+                                        <div class="col-sm-offset-2 col-sm-10">
+                                          <button type="submit" class="btn btn-primary" name="btnSave" value="Ideator">Save</button>
+                                        </div>
+                                      </div>
+                                  </form>     
+                        <!-- /.form-box -->
+                    <?php
+                                  }
+                                  else
+                                  {
+                                    echo $profiledtl['company_name'];
+                                  }
+                              ?>
+                          <?php endforeach;?>
+                        </div>
+                        </div>
+
+                      </div>
+
+                      </div>
                       </div>
                     </form>
                     </div>
@@ -451,7 +583,14 @@ theForm.scrolly.value = scrolly;
           <div class="modal-content">
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <?php foreach($data as $userdtl):?>
+                <?php if($this->post->validBadge($userId)=='false'){?>
               <h4 class="modal-title">Rate this user</h4>
+              <?php }
+              else {?>
+                <h4 class="modal-title">Already Rated This User</h4>
+                <?php }?>
+            <?php endforeach;?>
             </div>
             <div class="modal-body">
               <div class="col-md-12">
@@ -507,9 +646,10 @@ theForm.scrolly.value = scrolly;
               
                 
                 <?php foreach($data as $userdtl):?>
-                <?php if($this->post->validBadge($userdtl['userId'])=='false'){?>;
-                <input type="text" hidden="true" name="userId" value="<?php echo $userId;?>">
+                <?php if($this->post->validBadge($userId)=='false'){?>;
+                
                 <?php echo form_open('../pages/badge'); 
+                echo '<input type="text" hidden="true" name="userId" value="'.$userId.'">';
                   echo '<div class="row">
                     <div class="col-sm-3 border-right">
                       <div class="description-block"> 
@@ -536,7 +676,7 @@ theForm.scrolly.value = scrolly;
                   }
                   else
                     {
-                      '<div class="row">
+                      echo '<div class="row">
                     <div class="col-sm-3 border-right">
                       <div class="description-block"> 
                         <span class="description-text"><button type="submit" class="btn btn-default btn-lg disabled" disabled name="btnRate" id="gold" value="gold"><i class="fa fa-star" style="color:Gold;"></i></button></span>
