@@ -64,7 +64,6 @@ theForm.scrolly.value = scrolly;
                       }
                     ?>
                   </p>  
-                  <h4>Short Description:</h4>
                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $postdtl['postContent'];?>
                   <p>
                     <?php 
@@ -95,7 +94,7 @@ theForm.scrolly.value = scrolly;
                   echo "<td><button class='btn btn-default btn-xs disabled' disabled><i class='fa fa-arrow-circle-up'></i> Upvoted</button></td></form>";
                 }?></table>
                 </form>
-                  <span class='pull-right text-muted'><?php $this->post->upvotecount($postdtl['postId']);?> - 3 comments</span>
+                  <span class='pull-right text-muted'><?php $this->post->upvotecount($postdtl['postId']);?> - <?php $this->post->commentCount($postdtl['postId']);?></span>
                 
                 </div><!-- /.box-body -->
                 <div class="box-footer box-comments">

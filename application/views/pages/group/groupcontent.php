@@ -186,12 +186,29 @@
                     <!-- Post -->
                     <div class="post">
                       <div class="box-body">
+                      <?php foreach($projfile as $post):?>
                         <div class="box box-widget">
                           <div class='box-header with-border'>
                             <div class='user-block'>
-                              <img class='img-circle' src='../../images/team/index0.png' alt='user image'>
-                              <span class='username'><a href="#">Lyneth C. Cutamora</a>&nbsp;&nbsp;<i class='fa fa-star' style="color:#ffd700;"></i><b>&nbsp;&nbsp;1024</b></span>
-                              <span class='description'>7:30 PM Nov. 29, 2015</span>
+                              <img class='img-circle' src='<?php echo base_url();?>user/<?php echo $post['avatar_name']?>' alt='user image'>
+                              <span class='username'>
+                              <a href="#">
+                                  <?php
+                                    $userId=$post['userId'];
+                                    if($post['user_Type']=='Ideator'||$post['user_Type']=='Investor')
+                                    {
+                                      if($post['user_midInit']==null)
+                                        echo $post['user_fName']."  ".$post['user_lName'];
+                                      else
+                                        echo $post['user_fName']." ".$post['user_midInit'].". ".$post['user_lName'];
+                                    }else{
+                                       echo $post['company_name'];
+                                    }
+                                  ?>
+                              </a>
+                              </span>
+                              &nbsp;&nbsp;&nbsp;
+                              <span class='description'><?php echo $post['postDate'];?></span>
                             </div><!-- /.user-block -->
                             <div class='box-tools'>
                               <button class='btn btn-box-tool' data-widget='collapse'><i class='fa fa-minus'></i></button>
@@ -200,86 +217,49 @@
                           </div><!-- /.box-header -->
                           <div class='box-body'>
                             <!-- post text -->
-                            <p>Far far away, behind the word mountains, far from the
-                              countries Vokalia and Consonantia, there live the blind
-                              texts. Separated they live in Bookmarksgrove right at</p>
-                            <p>the coast of the Semantics, a large language ocean.
-                              A small river named Duden flows by their place and supplies
-                              it with the necessary regelialia. It is a paradisematic
-                              country, in which roasted parts of sentences fly into
-                              your mouth.</p>
+                            <p><?php echo $post['postContent'];?></p>
 
                             <!-- Attachment -->
                             <div class="attachment-block clearfix">
-                              <img class="attachment-img" src="../../dist/img/photo1.png" alt="attachment image">
+                              <!--<img class="attachment-img" src="../../dist/img/photo1.png" alt="attachment image">-->
+                              <span class="pull-left"><button class="btn btn-app"><i class="fa fa-file"></i></button></span>
                               <div class="attachment-pushed">
-                                <h4 class="attachment-heading"><a href="#">Chapter I & II</a></h4>
+                                <h4 class="attachment-heading"><a href="<?php echo base_url()."pages/post/".$post['postId'];?>"><?php echo $post['postTitle'];?></a></h4>
                                 <div class="attachment-text">
                                   .docx file
                                 </div><!-- /.attachment-text -->
                               </div><!-- /.attachment-pushed -->
                             </div><!-- /.attachment-block -->
-
-                            <!-- Social sharing buttons -->
-                            <button class='btn btn-default btn-xs'><i class='fa fa-thumbs-o-up'></i> Upvote</button>
-                            <button class='btn btn-default btn-xs'><i class='fa fa-share'></i> Share</button>
-                            <span class='pull-right text-muted'>45 likes - 2 comments</span>
                           </div><!-- /.box-body -->
-                          <div class='box-footer box-comments'>
-                            <div class='box-comment'>
+                          <!--<div class='box-footer box-comments'>
+                            <div class='box-comment'>-->
                               <!-- User image -->
-                              <img class='img-circle img-sm' src='../../images/team/index2.jpg' alt='user image'>
+                              <!--<img class='img-circle img-sm' src='../../images/team/index2.jpg' alt='user image'>
                               <div class='comment-text'>
                                 <span class="username">
                                   Alfie Dimpas
                                   <span class='text-muted pull-right'>8:03 PM Today</span>
-                                </span><!-- /.username -->
-                                It is a long established fact that a reader will be distracted
+                                </span>--><!-- /.username -->
+                                <!--It is a long established fact that a reader will be distracted
                                 by the readable content of a page when looking at its layout.<br/>
                                 <button class='btn btn-default btn-xs'><i class='fa fa-thumbs-o-up'></i> Upvote</button>
                                 <button class='btn btn-default btn-xs'><i class='fa fa-reply'></i> Reply</button><br/>
                                 <form action="#" method="post">
-                                  <img class="img-responsive img-circle img-sm" src="../../images/team/index0.png" alt="alt text">
+                                  <img class="img-responsive img-circle img-sm" src="../../images/team/index0.png" alt="alt text">-->
                                   <!-- .img-push is used to add margin to elements next to floating images -->
-                                  <div class="img-push">
+                                  <!--<div class="img-push">
                                     <input type="text" class="form-control input-sm" placeholder="Press enter to post comment">
                                   </div>
                                 </form>
-                              </div><!-- /.comment-text -->
-                            </div><!-- /.box-comment -->
-                            <div class='box-comment'>
-                              <!-- User image -->
-                              <img class='img-circle img-sm' src='../../images/team/index3.jpg' alt='user image'>
-                              <div class='comment-text'>
-                                <span class="username">
-                                  Edelito Albaracin Jr.
-                                  <span class='text-muted pull-right'>8:03 PM Today</span>
-                                </span><!-- /.username -->
-                                The point of using Lorem Ipsum is that it has a more-or-less
-                                normal distribution of letters, as opposed to using
-                                'Content here, content here', making it look like readable English.<br/>
-                                <button class='btn btn-default btn-xs'><i class='fa fa-thumbs-o-up'></i> Upvote</button>
-                                <button class='btn btn-default btn-xs'><i class='fa fa-reply'></i> Reply</button><br/>
-                                <form action="#" method="post">
-                                  <img class="img-responsive img-circle img-sm" src="../../images/team/index0.png" alt="alt text">
-                                  <!-- .img-push is used to add margin to elements next to floating images -->
-                                  <div class="img-push">
-                                    <input type="text" class="form-control input-sm" placeholder="Press enter to post comment">
-                                  </div>
-                                </form>
-                              </div><!-- /.comment-text -->
-                            </div><!-- /.box-comment -->
-                          </div><!-- /.box-footer -->
+                              </div>--><!-- /.comment-text -->
+                            <!-- </div>/.box-comment -->
+                          <!--</div> /.box-footer -->
                           <div class="box-footer">
                             <form action="#" method="post">
-                              <img class="img-responsive img-circle img-sm" src="../../images/team/index0.png" alt="alt text">
-                              <!-- .img-push is used to add margin to elements next to floating images -->
-                              <div class="img-push">
-                                <input type="text" class="form-control input-sm" placeholder="Press enter to post comment">
-                              </div>
-                            </form>
                           </div><!-- /.box-footer -->
                         </div><!-- /.box -->
+
+                        <?php  endforeach;?>
                       </div><!--/.body-->
                     </div><!-- /.post -->
                   </div><!-- /.tab-pane -->
