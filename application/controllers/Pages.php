@@ -52,7 +52,6 @@ class Pages extends CI_Controller {
 
 		return $query;
 	}
-	
 
 	public function _dashboard()
 	{
