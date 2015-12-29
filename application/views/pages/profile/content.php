@@ -881,14 +881,10 @@ theForm.scrolly.value = scrolly;
                         </br>
                         </br>
                         </br>
-<<<<<<< HEAD
+
                       
-              </form>
-=======
-                        <button type="submit" class="btn btn-default pull-right" name="submit" id="submit">Send</button>
-                     </br>         
-              
->>>>>>> 8c78434ac457d8b4c095a5d65a0e09d55cb7071f
+          
+
               </div>
             </div>
             </center>
