@@ -266,7 +266,9 @@ theForm.scrolly.value = scrolly;
                 <ul class="nav nav-tabs">
                   <li class="active"><a href="#activity" data-toggle="tab">Activity</a></li>
                   <?php if($userId==$this->session->userdata('userId')){?>
-                  <li><a href="#settings" data-toggle="tab">Settings</a></li>
+                  <li><a href="#profilePic" data-toggle="tab">Change Profile</a></li>
+                  <li><a href="#account" data-toggle="tab">Change Account Information</a></li>
+                  <li><a href="#password" data-toggle="tab">Change Password</a></li>
                   <?php }?>
                 </ul>
                 <div class="tab-content">
@@ -383,7 +385,7 @@ theForm.scrolly.value = scrolly;
 <?php  endforeach;?>
                   </div><!-- /.tab-pane -->
                  
-                  <div class="tab-pane" id="settings">
+                  <div class="tab-pane" id="profilePic">
                     <form class="form-horizontal">
                       <div class="form-group">
                       <div class="row">
@@ -397,36 +399,93 @@ theForm.scrolly.value = scrolly;
                       </div>
                       </br>
                       </br>
-                      <div class="col-sm-12">
-                      <div class="nav-tabs-custom">
-                      <ul class="nav nav-tabs">
-                        <li class="active"><a href="#account" data-toggle="tab">My Account</a></li>
                       
-                        <li><a href="#password" data-toggle="tab">Password</a></li>
-                
-                      </ul>
-                        <div class="tab-content">
-                        <div class="active tab-pane" id="account">
+                      </div>
+                    </form>
+                    </div>
 
-                          <?php foreach($alldata as $profiledtl):?>
+                    <div class="tab-pane" id="account">
+                    <form class="form-horizontal">
+                    <div class="form-group">
+                      <div class="row">
+                      <div class="col-sm-12">
+                      <?php foreach($profileDtl as $row):?>
+                        <?php foreach($data as $userdtl):?> 
+                              <?php echo form_open('..pages/updateAccount','class=form-horizontal');?>
                               <?php
-                                  if($profiledtl['user_Type']=='Ideator'||$profiledtl['user_Type']=='Investor')
+                                  if($row['user_Type']=='Ideator')
                                   {?>
+                            
                                       <div class="form-group">
-                                        <label for="inputLName" class="col-sm-2 control-label">Last Name*</label>
+                                        <label for="inputLName" class="col-sm-2 control-label">Last Name</label>
                                           <div class="col-sm-9"> 
-                                          <input type="text" class="form-control" name="inputLName" id="inputLName" placeholder="Last Name" value="<?php echo set_value('inputLName'); ?>">
+                                          <input type="text" class="form-control" name="inputLName" id="inputLName" placeholder="New Last Name" value="<?php echo $userdtl['user_lName']; ?>">
                                           </div>
                                       </div>
                                       <div class="form-group">
-                                        <label for="inputFName" class="col-sm-2 control-label">First Name*</label>
+                                        <label for="inputFName" class="col-sm-2 control-label">First Name</label>
                                         <div class="col-sm-9">
-                                          <input type="text" class="form-control" name="inputFName" id="inputFName" placeholder="First Name" value="<?php echo set_value('inputFName'); ?>">
+                                          <input type="text" class="form-control" name="inputFName" id="inputFName" placeholder="New First Name" value="<?php echo $userdtl['user_fName']; ?>">
                                         </div>
                                       </div>
                     
                                       <div class="form-group">
-                                        <label for="inputAge" class="col-sm-2 control-label">Age*</label>
+                                        <label for="inputAge" class="col-sm-2 control-label">Age</label>
+                                        <div class="col-sm-2">
+                                          <input type="text" class="form-control" name="inputAge" id="inputAge" placeholder="Age" value="<?php echo $userdtl['user_age']; ?>">
+                                        </div>
+                                      </div>
+        
+                                      <div class="form-group">
+                                        <label for="inputAddress1" class="col-sm-2 control-label">Address Line 1</label>
+                                        <div class="col-sm-9">
+                                          <input type="text" class="form-control" name="inputAdress1" id="inputAdress1" placeholder="Street address, Barangay, District / Company Name"  value="<?php echo $userdtl['location_address1']; ?>">
+                                        </div>
+                                      </div>
+                                      <div class="form-group">
+                                        <label for="inputCity" class="col-sm-2 control-label">City</label>
+                                        <div class="col-sm-9">
+                                          <input type="text" class="form-control" name="inputCity" id="inputCity" placeholder="City"  value="<?php echo $userdtl['location_city']; ?>">
+                                        </div>
+                                      </div>
+                    
+                                      <div class="form-group">
+                                        <label for="inputCounty" class="col-sm-2 control-label">Country</label>
+                                        <div class="col-sm-9">
+                                          <input type="text" class="form-control" name="inputCounty" id="inputCounty" placeholder="Country"  value="<?php echo $userdtl['location_country']; ?>">
+                                        </div>
+                                      </div>
+                                      <div class="form-group">
+                                        <label for="inputDescription" class="col-sm-2 control-label">About Me</label>
+                                        <div class="col-sm-9">
+                                          <textarea class="form-control" name="inputDescription" id="inputDescription" placeholder="Short Self-Description"  value="<?php echo $userdtl['user_shortSelfDescription']; ?>"></textarea>
+                                        </div>
+                                      </div>
+                    
+                                      <div class="form-group">
+                                        <div class="col-sm-offset-2 col-sm-10">
+                                          <button type="submit" class="btn btn-primary" name="btnSave" value="Ideator">Save</button>
+                                        </div>
+                                      </div>
+                        
+                        <?php
+                                  }
+                                  elseif ($row['user_Type']=='Investor') {?>
+                                      <div class="form-group">
+                                        <label for="inputLName" class="col-sm-2 control-label">Last Name</label>
+                                          <div class="col-sm-9"> 
+                                          <input type="text" class="form-control" name="inputLName" id="inputLName" placeholder="New Last Name" value="<?php echo set_value('inputLName'); ?>">
+                                          </div>
+                                      </div>
+                                      <div class="form-group">
+                                        <label for="inputFName" class="col-sm-2 control-label">First Name</label>
+                                        <div class="col-sm-9">
+                                          <input type="text" class="form-control" name="inputFName" id="inputFName" placeholder="New First Name" value="<?php echo set_value('inputFName'); ?>">
+                                        </div>
+                                      </div>
+                    
+                                      <div class="form-group">
+                                        <label for="inputAge" class="col-sm-2 control-label">Age</label>
                                         <div class="col-sm-2">
                                           <input type="text" class="form-control" name="inputAge" id="inputAge" placeholder="Age" value="<?php echo set_value('inputAge'); ?>">
                                         </div>
@@ -460,42 +519,46 @@ theForm.scrolly.value = scrolly;
                     
                                       <div class="form-group">
                                         <div class="col-sm-offset-2 col-sm-10">
-                                          <button type="submit" class="btn btn-primary" name="btnSave" value="Ideator">Save</button>
+                                          <button type="submit" class="btn btn-primary" name="btnSave" value="Investor">Save</button>
                                         </div>
                                       </div>
-                                       
-                        <!-- /.form-box -->
-                    <?php
-                                  }
-                                  else
-                                  {
-                                    echo $profiledtl['company_name'];
+                                  <?php }
+                                  else{
+                                    echo $row['company_name'];
                                   }
                               ?>
+                              </form>
                           <?php endforeach;?>
+                        <?php endforeach;?>
+                        </div>
+                      </div>
+                    </div>
+                    </form>  
+                    </div>
 
-                        </div>
-                        </div>
-                        <div class="tab-content">
-                        <div class="tab-pane" id="password">
-                          <?php foreach($alldata as $profiledtl):?>
+                    <div class="tab-pane" id="password">
+                      <form class="form-horizontal">
+                        <div class="form-group">
+                        <div class="row">
+                        <div class="col-sm-12">
+                          <?php foreach($profileDtl as $row):?>
                               <?php
-                                  if($profiledtl['user_Type']=='Ideator'||$profiledtl['user_Type']=='Investor')
+                                  if($row['user_Type']=='Ideator'||$row['user_Type']=='Investor')
                                   {?>
                                     <div class="form-group">
-                                      <label for="inputOldPassword" class="col-sm-2 control-label">Old Password*</label>
+                                      <label for="inputOldPassword" class="col-sm-2 control-label">Old Password</label>
                                       <div class="col-sm-9">
                                         <input type="password" class="form-control" name="inputOldPassword" id="inputOldPassword" placeholder="Old Password" value="<?php echo set_value('inputOldPassword'); ?>">
                                       </div>
                                     </div>
                                     <div class="form-group">
-                                      <label for="inputNewPassword" class="col-sm-2 control-label">New Password*</label>
+                                      <label for="inputNewPassword" class="col-sm-2 control-label">New Password</label>
                                       <div class="col-sm-9">
                                         <input type="password" class="form-control" name="inputNewPassword" id="inputNewPassword" placeholder="New Password" value="<?php echo set_value('inputNewPassword'); ?>">
                                       </div>
                                     </div>
                                     <div class="form-group">
-                                      <label for="inputNewRepassword" class="col-sm-2 control-label">New Password Confirmation*</label>
+                                      <label for="inputNewRepassword" class="col-sm-2 control-label">New Password Confirmation</label>
                                       <div class="col-sm-9">
                                         <input type="password" class="form-control" name="inputNewRepassword" id="inputNewRepassword" placeholder="New Password Confirmation" value="<?php echo set_value('inputNewRepassword'); ?>">
                                       </div>
@@ -514,22 +577,19 @@ theForm.scrolly.value = scrolly;
                                   }
                                   else
                                   {
-                                    echo $profiledtl['company_name'];
+                                    echo $row['company_name'];
                                   }
                               ?>
                           <?php endforeach;?>
+                          </div>
                         </div>
                         </div>
-
-                      </div>
-
-                      </div>
-                      </div>
-                    </form>
+                      </form>
                     </div>
 
                   </div><!-- /.tab-pane -->
-                </div>
+                </div>         
+
                 </div><!-- /.tab-content -->
                 <div class="col-md-2">
               <div class="info-box">

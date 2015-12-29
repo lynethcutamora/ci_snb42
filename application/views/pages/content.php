@@ -128,95 +128,40 @@
             <br/>
             <div class="heading text-center">
                 <!-- Heading -->
-                <h2>TOP 5 IDEAS</h2>            
+                <h2>TOP 5 IDEAS</h2>   
+
             </div>
-             <div class="col-lg-1 col-xs-4"></div>
+            <?php 
+                        
+                        $query = $this->db->query("SELECT *, COUNT(c.postId) as number_of_votes from upvote_dtl c left join userpost v on c.postId = v.postId left join user_md b on v.userId = b.userId left join user_dtl d on b.userId = d.userId where voteType = '1' group by c.postId order by number_of_votes desc limit 5");
+                             $i = 0;
+                                foreach($query->result() as $row):
+                             $i++;
+            ?>
+             
               <div class="col-lg-2 col-xs-5">
               <!-- small box -->
-              <div class="small-box bg-aqua">
-                <div class="inner">
-                       </br>
-                  <h3>1st</h3>
-           
-              </br>
-                </div>
-                <div class="icon">
-                  <i class="fa fa-rocket"></i>
-                </div>
-                <a href="#" class="small-box-footer" data-toggle="modal" data-target="#topidea">
-                    View Ideas <i class="fa fa-arrow-circle-right"></i>
-                </a>
-              </div>
-            </div><!-- ./col -->
-               <div class="col-lg-2 col-xs-5">
-              <!-- small box -->
-              <div class="small-box bg-aqua">
-                <div class="inner">
-                       </br>
-                  <h3>2nd</h3>
-           
-              </br>
-                </div>
-                <div class="icon">
-                  <i class="fa fa-rocket"></i>
-                </div>
-               <a href="#" class="small-box-footer" data-toggle="modal" data-target="#topidea">
-                  View Ideas <i class="fa fa-arrow-circle-right"></i>
-                </a>
-              </div>
-            </div><!-- ./col -->
-               <div class="col-lg-2 col-xs-5">
-              <!-- small box -->
-              <div class="small-box bg-aqua">
-                <div class="inner">
-                       </br>
-                  <h3>3rd</h3>
-           
-              </br>
-                </div>
-                <div class="icon">
-                  <i class="fa fa-rocket"></i>
-                </div>
-               <a href="#" class="small-box-footer" data-toggle="modal" data-target="#topidea">
-                   View Ideas <i class="fa fa-arrow-circle-right"></i>
-                </a>
-              </div>
-            </div><!-- ./col -->
-               <div class="col-lg-2 col-xs-5">
-              <!-- small box -->
-              <div class="small-box bg-aqua">
-                <div class="inner">
-                       </br>
-                  <h3>4th</h3>
-           
-              </br>
-                </div>
-                <div class="icon">
-                  <i class="fa fa-rocket"></i>
-                </div>
-                <a href="#" class="small-box-footer" data-toggle="modal" data-target="#topidea">
-                  View Ideas <i class="fa fa-arrow-circle-right"></i>
-                </a>
-              </div>
-            </div><!-- ./col -->
-               <div class="col-lg-2 col-xs-5">
-              <!-- small box -->
-              <div class="small-box bg-aqua">
-                <div class="inner">
-                       </br>
-                  <h3>5th</h3>
-           
-              </br>
-                </div>
-                <div class="icon">
-                  <i class="fa fa-rocket"></i>
-                </div>
-                <a href="#" class="small-box-footer" data-toggle="modal" data-target="#topidea">
-                  View Ideas <i class="fa fa-arrow-circle-right"></i>
-                </a>
-              </div>
-            </div><!-- ./col -->
 
+              <div class="small-box bg-aqua">
+                <div class="inner">
+                       </br>
+                  <h3><?php echo $i;?>.</h3>
+                  <?php echo $row->postTitle;?> 
+              </br>
+                </div>
+                <div class="icon">
+                  <i class="fa fa-rocket"></i>
+                </div>
+                <form action="<?php echo base_url();?>" method="post">
+                <a href="" onclick="parentNode.submit();" class="small-box-footer" data-toggle="modal" data-target="#topidea">
+                    View Idea <i class="fa fa-arrow-circle-right"></i>
+                </a>
+                <input type="hidden" name="topidea" value='<?php echo $row->postId; ?>'/>
+                </form>
+              </div>
+            </div><!-- ./col -->
+            <?php  endforeach;?>
+               
            
          </div>
     </section>
@@ -345,3 +290,92 @@
         </div>
         <!--/.container-->
     </section>
+    <?php if(isset($_POST['topidea'])){?>
+<div id="topidea" class="modal show" role="dialog">
+        <div class="modal-dialog">
+
+    <!-- Modal content-->
+          <div class="modal-content">
+            <div class="modal-header">
+            <form method="post" action="#">
+              <button type="button" class="close" >&times;</button>
+            </form> 
+              <?php 
+                   $query = $this->db->query("SELECT *, COUNT(c.postId) as number_of_votes from upvote_dtl c left join userpost v on c.postId = v.postId left join user_md b on v.userId = b.userId left join user_dtl d on b.userId = d.userId left join avatar_dtl e on d.userId = e.userId where voteType = '1' group by c.postId order by number_of_votes desc limit 5");
+                                foreach($query->result() as $row):
+                        $this->db->select('*');
+                        $this->db->from('badge_dtl');
+                        $this->db->where('voteBadge','1');
+                        $this->db->where('userId',$row->userId);
+                        $query = $this->db->get();
+                        $gold = $query->num_rows();
+
+                        $this->db->select('*');
+                        $this->db->from('badge_dtl');
+                        $this->db->where('voteBadge','2');
+                        $this->db->where('userId',$row->userId);
+                        $query = $this->db->get();
+                        $silver = $query->num_rows();
+
+                        $this->db->select('*');
+                        $this->db->from('badge_dtl');
+                        $this->db->where('voteBadge','3');
+                        $this->db->where('userId',$row->userId);
+                        $query = $this->db->get();
+                        $bronze = $query->num_rows();
+
+                        $this->db->select('*');
+                        $this->db->from('badge_dtl');
+                        $this->db->where('voteBadge','4');
+                        $this->db->where('userId',$row->userId);
+                        $query = $this->db->get();
+                        $black = $query->num_rows();
+
+                        $rep = (($gold*20)+($silver*10)+($bronze*5))-($black*15);
+
+                        $this->db->select('*');
+                        $this->db->from('upvote_dtl');
+                        $this->db->where('voteType','1');
+                        $this->db->where('postId',$row->postId);
+                        $query = $this->db->get();
+                        $like = $query->num_rows();
+
+
+                        $this->db->select('*');
+                        $this->db->from('comment_dtl');
+                        $this->db->where('commentType','1');
+                        $this->db->where('postId',$row->postId);
+                        $query = $this->db->get();
+                        $comment = $query->num_rows();
+
+                        
+
+
+                  ?>
+                  <div class='user-block'>
+                    <img class='img-circle' src='<?php echo base_url();?>/user/<?php echo $row->avatar_name;?>' alt='user image'>
+                          <span class='username'><a href="<?php echo base_url()."pages/profile/".$row->userId;?>"><?php echo $row->user_fName;?>&nbsp;<?php echo $row->user_midInit;?>.&nbsp;<?php echo $row->user_lName;?>&nbsp;</a>&nbsp;&nbsp;<i class='fa fa-star' style="color:#ffd700;"></i><b>&nbsp;&nbsp;<?php echo $rep;?></b></span>
+                          <span class='description'><?php echo $row->postDate;?></span>
+                  </div><!-- /.user-block -->
+              <h4 class="modal-title"><?php echo $row->postTitle;?></h4>
+              <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $row->postContent;?></p>
+              <?php 
+                      $query= $this->post->showImage($row->postId);
+
+                      foreach ($query->result_array() as $row) :
+                        echo "<img src='".base_url().$row['extContent']."' height='200px' width='200px'>"; 
+                     
+                     ?>
+                      <?php  endforeach;?>
+            </div>
+            <div class="modal-body">
+              <div class="col-md-12">
+                    
+              
+            </div>
+            </div>
+        </div>
+        </div>
+        </div>
+        <?php  endforeach;?>
+        <?php }?>

@@ -286,6 +286,52 @@ class Post extends CI_Model {
 
       return $row['postId'];
     }
+    public function messageUser()
+    {
+        $query = $this->db->query("SELECT DISTINCT groupId,a.userId, a.msgId,b.user_fName , b.user_lName ,b.user_midInit, c.company_fName,c.company_lName,c.company_midInit ,d.user_Type from conference_dtl a left join user_dtl b ON a.groupId = b.userId left join company_dtl c ON a.groupId = b.userId left join user_md d on d.userId = a.groupId  where a.userId='".$this->session->userdata("userId")."'");
+        return $query;
+    }
+
+    public function userName($userId)
+    {
+        $query = $this->messageUser($userId);
+        $row = $query->row_array();
+         if($row['user_Type']=='Ideator'||$row['user_Type']=='Investor')
+                              {
+                                  if($row['user_midInit']==null)
+                                     $str = $row['user_fName']."  ".$row['user_lName'];
+                                   else
+                                     $str =  $row['user_fName']." ".$row['user_midInit'].". ".$row['user_lName'];
+                              }
+                              else
+                              {
+                                $str =  $row['company_name'];
+                              }
+        return $str;
+    }
+     public function firstMsg($userId)
+    {
+       $query = $this->messageUser();
+      $row = $query->row_array();
+      return $row['groupId'];
+    }
+    public function checkEmptyMsg()
+    {
+        $this->db->select('*');
+        $this->db->from('conference_dtl');
+        $query =$this->db->where('userId',$this->session->userdata('userId'));
+         $query = $this->db->get();
+        $numrow = $query->num_rows();
+
+        return $numrow;
+    }
+
+    public function checkIfUserMsg($userId)
+    {
+      $query = $this->messageUser($userId);
+        $row = $query->row_array();
+        return $row['groupId'];
+    }
 
 }
 ?>
