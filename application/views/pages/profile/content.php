@@ -405,13 +405,12 @@ theForm.scrolly.value = scrolly;
                     </div>
 
                     <div class="tab-pane" id="account">
-                    <form class="form-horizontal">
-                    <div class="form-group">
+                      <div class="form-group">
                       <div class="row">
                       <div class="col-sm-12">
                       <?php foreach($profileDtl as $row):?>
                         <?php foreach($data as $userdtl):?> 
-                              <?php echo form_open('..pages/updateAccount','class=form-horizontal');?>
+                              <?php echo form_open('../pages/updateAccount','class=form-horizontal');?>
                               <?php
                                   if($row['user_Type']=='Ideator')
                                   {?>
@@ -419,46 +418,53 @@ theForm.scrolly.value = scrolly;
                                       <div class="form-group">
                                         <label for="inputLName" class="col-sm-2 control-label">Last Name</label>
                                           <div class="col-sm-9"> 
-                                          <input type="text" class="form-control" name="inputLName" id="inputLName" placeholder="New Last Name" value="<?php echo $userdtl['user_lName']; ?>">
+                                          <input type="text" class="form-control" name="inputLName" id="inputLName" required="required" placeholder="New Last Name" value="<?php echo $userdtl['user_lName']; ?>">
                                           </div>
                                       </div>
                                       <div class="form-group">
                                         <label for="inputFName" class="col-sm-2 control-label">First Name</label>
                                         <div class="col-sm-9">
-                                          <input type="text" class="form-control" name="inputFName" id="inputFName" placeholder="New First Name" value="<?php echo $userdtl['user_fName']; ?>">
+                                          <input type="text" class="form-control" name="inputFName" id="inputFName" required="required" placeholder="New First Name" value="<?php echo $userdtl['user_fName']; ?>">
+                                        </div>
+                                      </div>
+
+                                      <div class="form-group">
+                                        <label for="inputFName" class="col-sm-2 control-label">Middle Initial</label>
+                                        <div class="col-sm-9">
+                                          <input type="text" class="form-control" name="inputMI" maxlength="2" id="inputMI" required="required" placeholder="Middle Initial" value="<?php echo $userdtl['user_midInit']; ?>">
                                         </div>
                                       </div>
                     
                                       <div class="form-group">
                                         <label for="inputAge" class="col-sm-2 control-label">Age</label>
                                         <div class="col-sm-2">
-                                          <input type="text" class="form-control" name="inputAge" id="inputAge" placeholder="Age" value="<?php echo $userdtl['user_age']; ?>">
+                                          <input type="text" class="form-control" name="inputAge" id="inputAge" required="required" placeholder="Age" value="<?php echo $userdtl['user_age']; ?>">
                                         </div>
                                       </div>
         
                                       <div class="form-group">
                                         <label for="inputAddress1" class="col-sm-2 control-label">Address Line 1</label>
                                         <div class="col-sm-9">
-                                          <input type="text" class="form-control" name="inputAdress1" id="inputAdress1" placeholder="Street address, Barangay, District / Company Name"  value="<?php echo $userdtl['location_address1']; ?>">
+                                          <input type="text" class="form-control" name="inputAddress1" id="inputAddress1" required="required" placeholder="Street address, Barangay, District / Company Name"  value="<?php echo $userdtl['location_address1']; ?>">
                                         </div>
                                       </div>
                                       <div class="form-group">
                                         <label for="inputCity" class="col-sm-2 control-label">City</label>
                                         <div class="col-sm-9">
-                                          <input type="text" class="form-control" name="inputCity" id="inputCity" placeholder="City"  value="<?php echo $userdtl['location_city']; ?>">
+                                          <input type="text" class="form-control" name="inputCity" id="inputCity" required="required" placeholder="City"  value="<?php echo $userdtl['location_city']; ?>">
                                         </div>
                                       </div>
                     
                                       <div class="form-group">
                                         <label for="inputCounty" class="col-sm-2 control-label">Country</label>
                                         <div class="col-sm-9">
-                                          <input type="text" class="form-control" name="inputCounty" id="inputCounty" placeholder="Country"  value="<?php echo $userdtl['location_country']; ?>">
+                                          <input type="text" class="form-control" name="inputCountry" id="inputCountry" required="required" placeholder="Country"  value="<?php echo $userdtl['location_country']; ?>">
                                         </div>
                                       </div>
                                       <div class="form-group">
                                         <label for="inputDescription" class="col-sm-2 control-label">About Me</label>
                                         <div class="col-sm-9">
-                                          <textarea class="form-control" name="inputDescription" id="inputDescription" placeholder="Short Self-Description"  value="<?php echo $userdtl['user_shortSelfDescription']; ?>"></textarea>
+                                          <textarea class="form-control" name="inputDescription" id="inputDescription" required="required" placeholder="Short Self-Description"  value="<?php echo $userdtl['user_shortSelfDescription']; ?>"></textarea>
                                         </div>
                                       </div>
                     
@@ -467,7 +473,7 @@ theForm.scrolly.value = scrolly;
                                           <button type="submit" class="btn btn-primary" name="btnSave" value="Ideator">Save</button>
                                         </div>
                                       </div>
-                        
+                               
                         <?php
                                   }
                                   elseif ($row['user_Type']=='Investor') {?>
@@ -527,7 +533,7 @@ theForm.scrolly.value = scrolly;
                                     echo $row['company_name'];
                                   }
                               ?>
-                              </form>
+                             
                           <?php endforeach;?>
                         <?php endforeach;?>
                         </div>
@@ -882,13 +888,12 @@ theForm.scrolly.value = scrolly;
                         </br>
                         </br>
 <<<<<<< HEAD
+
                       
-              </form>
+          
+
 =======
-                        <button type="submit" class="btn btn-default pull-right" name="submit" id="submit">Send</button>
-                     </br>         
-              
->>>>>>> 8c78434ac457d8b4c095a5d65a0e09d55cb7071f
+>>>>>>> b9c095dd2542239395e9973fc52ca9044e6e5e29
               </div>
             </div>
             </center>

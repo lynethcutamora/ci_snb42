@@ -1,17 +1,7 @@
 <!-- Content Wrapper. Contains page content -->
       <div class="content-wrapper">
               <!-- Content Header (Page header) -->
-        <section class="content-header">
-          <h1>
-            Mailbox
-            <small>13 new messages</small>
-          </h1>
-          <ol class="breadcrumb">
-            <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-            <li class="active">Mailbox</li>
-          </ol>
-        </section>
-
+      
         <!-- Main content -->
         <section class="content">
           <div class="row">
@@ -72,31 +62,40 @@
                     <div class="box-body">
                       <!-- Conversations are loaded here -->
                       <div class="direct-chat-messages">
-                      <?php if($this->post->checkIfUserMsg($msgId)==$this->session->userdata('userId')){echo 'yes';}else{echo "no";}?>
-                        <!-- Message. Default to the left -->
+                    <?php foreach ($this->post->showMsg($msgId)->result_array() as $msg):?>                  
+                        
+                 
+
+                      <?php if($this->post->checkUser($msg['userId'])!='true'){?>
+                      <!-- Message. Default to the left -->
                         <div class="direct-chat-msg">
                           <div class="direct-chat-info clearfix">
-                            <span class="direct-chat-name pull-left">Alexander Pierce</span>
-                            <span class="direct-chat-timestamp pull-right">23 Jan 2:00 pm</span>
+                            <span class="direct-chat-name pull-left"><?php echo $this->post->userProfile($msg['userId']);?></span>
+                            <span class="direct-chat-timestamp pull-right"><?php echo $msg['dateSent'];?></span>
                           </div><!-- /.direct-chat-info -->
-                          <img class="direct-chat-img" src="dist/img/user1-128x128.jpg" alt="message user image"><!-- /.direct-chat-img -->
+                          <img class="direct-chat-img" src="<?php echo base_url();?>user/<?php echo $this->post->getAvatar($msg['userId'])?>" alt="message user image"><!-- /.direct-chat-img -->
                           <div class="direct-chat-text">
-                            Is this template really for free? That's unbelievable!
+                            <?php echo $msg['msgContent'];?>
                           </div><!-- /.direct-chat-text -->
                         </div><!-- /.direct-chat-msg -->
+                        <?php }else{ ?>
 
-                        <!-- Message to the right -->
-                        <div class="direct-chat-msg right">
+                          <div class="direct-chat-msg right">
                           <div class="direct-chat-info clearfix">
-                            <span class="direct-chat-name pull-right">Sarah Bullock</span>
-                            <span class="direct-chat-timestamp pull-left">23 Jan 2:05 pm</span>
+                            <span class="direct-chat-name pull-right"><?php echo $this->post->userProfile($msg['userId']);?></span>
+                            <span class="direct-chat-timestamp pull-left"><?php echo $msg['dateSent'];?></span>
                           </div><!-- /.direct-chat-info -->
-                          <img class="direct-chat-img" src="dist/img/user3-128x128.jpg" alt="message user image"><!-- /.direct-chat-img -->
+                          <img class="direct-chat-img" src="<?php echo base_url();?>user/<?php echo $this->post->getAvatar($msg['userId'])?>" alt="message user image"><!-- /.direct-chat-img -->
                           <div class="direct-chat-text">
-                            You better believe it!
+                            <?php echo $msg['msgContent'];?>
                           </div><!-- /.direct-chat-text -->
                         </div><!-- /.direct-chat-msg -->
 
+
+                        <?php }?>
+                    <?php endforeach; ?>
+                        <!-- Message to the right -->
+                      
                       </div><!--/.direct-chat-messages-->
 
                      
