@@ -55,6 +55,8 @@ class Pages extends CI_Controller {
 
 	public function _dashboard()
 	{
+
+		
 		$query=$this->_userData();
 		$data['data']=$query->result_array();
 		$data['pages']='dashboard';
@@ -67,6 +69,7 @@ class Pages extends CI_Controller {
 		$this->load->view('pages/dashboard/footer');
 		$this->load->view('pages/dashboard/controlsidebar');
 		$this->load->view('pages/dashboard/end');		
+		
 	}
 	#MAO NI ANG PROFILE DISPLAY 
 		public function latest()
@@ -88,8 +91,7 @@ class Pages extends CI_Controller {
 			$this->_landing();
 		}
 	}
-
-	public function onfire()
+		public function onfire()
 	{
 		if(($this->session->userdata('userId')!=""))
 		{
@@ -110,8 +112,7 @@ class Pages extends CI_Controller {
 			$this->_landing();
 		}
 	}
-
-	public function toprated()
+		public function toprated()
 	{
 		if(($this->session->userdata('userId')!=""))
 		{
@@ -127,134 +128,119 @@ class Pages extends CI_Controller {
 		$this->load->view('pages/newsfeedtoprated/topratedcontent'); 
 		$this->load->view('pages/dashboard/controlsidebar');
 		$this->load->view('pages/dashboard/end');
-		}
-		else
-		{
+		}else{
 			$this->_landing();
 		}
 	}
-
-	public function timeline()
+			public function timeline()
 	{
 		if(($this->session->userdata('userId')!=""))
 		{
-			$query=$this->_userData();
-			$data['data']=$query->result_array();
-			$data['pages']='timeline';
-			$data['countgroup'] = $this->countGroups();
-			$groupquery= $this->groupdetails();
-			$data['groupdetails'] = $groupquery->result_array();
-			$this->load->view('pages/dashboard/fixed',$data);
-			$this->load->view('pages/timeline/content'); 
-			$this->load->view('pages/dashboard/controlsidebar');
-			$this->load->view('pages/dashboard/end');
-		}
-		else
+		$query=$this->_userData();
+		$data['data']=$query->result_array();
+		$data['pages']='timeline';
+		$data['countgroup'] = $this->countGroups();
+		$groupquery= $this->groupdetails();
+		$data['groupdetails'] = $groupquery->result_array();
+		$this->load->view('pages/dashboard/fixed',$data);
+		$this->load->view('pages/timeline/content'); 
+		$this->load->view('pages/dashboard/controlsidebar');
+		$this->load->view('pages/dashboard/end');
+		}else
 		{
 			$this->_landing();
 		}
 	}
-	public function startupproduct()
+			public function startupproduct()
 	{
 		if(($this->session->userdata('userId')!=""))
 		{
-			$query=$this->_userData();
-			$data['data']=$query->result_array();
-			$data['pages']='startup';
-			$data['countgroup'] = $this->countGroups();
-			$groupquery= $this->groupdetails();
-			$data['groupdetails'] = $groupquery->result_array();
-			$data['alldata']=$query->result_array();
-			$this->load->view('pages/dashboard/fixed',$data);
-			$this->load->view('pages/Products/content'); 
-			$this->load->view('pages/dashboard/controlsidebar');
-			$this->load->view('pages/dashboard/end');
-		}
-		else
-		{
+		$query=$this->_userData();
+		$data['data']=$query->result_array();
+		$data['pages']='startup';
+		$data['countgroup'] = $this->countGroups();
+		$groupquery= $this->groupdetails();
+		$data['groupdetails'] = $groupquery->result_array();
+		$data['alldata']=$query->result_array();
+		$this->load->view('pages/dashboard/fixed',$data);
+		$this->load->view('pages/Products/content'); 
+		$this->load->view('pages/dashboard/controlsidebar');
+		$this->load->view('pages/dashboard/end');
+		}else{
 			$this->_landing();
 		}
 	}
-
 	public function adminPage1()
 	{
 		if(($this->session->userdata('userId')!=""))
 		{
-			$query=$this->_userData();
-			$data['data']=$query->result_array();
-			$data['pages']='admin';
-			$data['countgroup'] = $this->countGroups();
-			$groupquery= $this->groupdetails();
-			$data['groupdetails'] = $groupquery->result_array();
-			$this->load->view('pages/dashboard/fixed',$data);
-			$this->load->view('pages/admindashboard/content'); 
-			$this->load->view('pages/dashboard/controlsidebar');
-			$this->load->view('pages/admindashboard/end');
-		}
-		else
-		{
+		$query=$this->_userData();
+		$data['data']=$query->result_array();
+		$data['pages']='admin';
+		$data['countgroup'] = $this->countGroups();
+		$groupquery= $this->groupdetails();
+		$data['groupdetails'] = $groupquery->result_array();
+		$this->load->view('pages/dashboard/fixed',$data);
+		$this->load->view('pages/admindashboard/content'); 
+		$this->load->view('pages/dashboard/controlsidebar');
+		$this->load->view('pages/admindashboard/end');
+		}else{
 			$this->_landing();
 		}
 	}
-	public function adminPage2()
+		public function adminPage2()
 	{
 		if(($this->session->userdata('userId')!=""))
 		{
-			$query=$this->_userData();
-			$data['data']=$query->result_array();
-			$data['pages']='admin';
-			$data['countgroup'] = $this->countGroups();
-			$groupquery= $this->groupdetails();
-			$data['groupdetails'] = $groupquery->result_array();
-			$this->load->view('pages/dashboard/fixed',$data);
-			$this->load->view('pages/adminonline/content'); 
-			$this->load->view('pages/adminonline/controlsidebar');
-			$this->load->view('pages/adminonline/end');
-			$this->load->view('pages/adminonline/table');
-		}
-		else
-		{
+		$query=$this->_userData();
+		$data['data']=$query->result_array();
+		$data['pages']='admin';
+		$data['countgroup'] = $this->countGroups();
+		$groupquery= $this->groupdetails();
+		$data['groupdetails'] = $groupquery->result_array();
+		$this->load->view('pages/dashboard/fixed',$data);
+		$this->load->view('pages/adminonline/content'); 
+		$this->load->view('pages/adminonline/controlsidebar');
+		$this->load->view('pages/adminonline/end');
+		$this->load->view('pages/adminonline/table');
+		}else{
 			$this->_landing();
 		}
 	}
-
-	public function adminPage3()
+		public function adminPage3()
 	{
 		if(($this->session->userdata('userId')!=""))
 		{
-			$query=$this->_userData();
-			$data['data']=$query->result_array();
-			$data['pages']='admin';
-			$data['countgroup'] = $this->countGroups();
-			$groupquery= $this->groupdetails();
-			$data['groupdetails'] = $groupquery->result_array();
-			$this->load->view('pages/dashboard/fixed',$data);
-			$this->load->view('pages/adminoverallreports/content'); 
-			$this->load->view('pages/adminoverallreports/chartcontent'); 
-			$this->load->view('pages/adminoverallreports/controlsidebar');
-		}
-		else
-		{
+		$query=$this->_userData();
+		$data['data']=$query->result_array();
+		$data['pages']='admin';
+		$data['countgroup'] = $this->countGroups();
+		$groupquery= $this->groupdetails();
+		$data['groupdetails'] = $groupquery->result_array();
+		$this->load->view('pages/dashboard/fixed',$data);
+		$this->load->view('pages/adminoverallreports/content'); 
+		$this->load->view('pages/adminoverallreports/chartcontent'); 
+		$this->load->view('pages/adminoverallreports/controlsidebar');
+		
+		}else{
 			$this->_landing();
 		}
 	}
-	public function adminPage4()
+		public function adminPage4()
 	{
 		if(($this->session->userdata('userId')!=""))
 		{
-			$query=$this->_userData();
-			$data['data']=$query->result_array();
-			$data['pages']='admin';
-			$data['countgroup'] = $this->countGroups();
-			$groupquery= $this->groupdetails();
-			$data['groupdetails'] = $groupquery->result_array();
-			$this->load->view('pages/dashboard/fixed',$data);
-			$this->load->view('pages/adminstatistics/content'); 
-			$this->load->view('pages/adminstatistics/chartcontent'); 
-			$this->load->view('pages/adminstatistics/controlsidebar');
-		}
-		else
-		{
+		$query=$this->_userData();
+		$data['data']=$query->result_array();
+		$data['pages']='admin';
+		$data['countgroup'] = $this->countGroups();
+		$groupquery= $this->groupdetails();
+		$data['groupdetails'] = $groupquery->result_array();
+		$this->load->view('pages/dashboard/fixed',$data);
+		$this->load->view('pages/adminstatistics/content'); 
+		$this->load->view('pages/adminstatistics/chartcontent'); 
+		$this->load->view('pages/adminstatistics/controlsidebar');
+		}else{
 			$this->_landing();
 		}
 	}
@@ -272,19 +258,13 @@ class Pages extends CI_Controller {
 			$groupDetails= $this->post->groupdetails($groupId,$this->session->userdata('userId'));
 				
 			if(isset($groupId)){
-				if($groupDetails->num_rows()==0) 
-				{
+				if($groupDetails->num_rows()==0) {
 					$groupDetails->result_array();
-				}
-				else
-				{
-					if(isset($projectId))
-					{
+				}else{
+					if(isset($projectId)){
 						$projectdtl= $this->projectdtl($groupId,$projectId);
 						$data['projectdtl'] = $projectdtl->result_array();
-					}
-					else
-					{
+					}else{
 						$allproject= $this->allproject($groupId);
 
 						$projectdtl= $this->projectdtl($groupId,$this->post->firstProject($groupId));
@@ -311,37 +291,33 @@ class Pages extends CI_Controller {
 			$this->load->view('pages/dashboard/controlsidebar');
 			$this->load->view('pages/dashboard/end');
 
-		}
-		else
-		{
+		}else{
 			$this->_landing();
 		}
 	}
+
 
 	public function newgroup()
 	{
 		if(($this->session->userdata('userId')!=""))
 		{
-			$query=$this->_userData();
-			$data['data']=$query->result_array();
-			$data['pages']='group';
-			$data['countgroup'] = $this->countGroups();
-			$groupquery= $this->groupdetails();
-			$data['groupdetails'] = $groupquery->result_array();
-			$this->load->view('pages/dashboard/fixed',$data);
-			$this->load->view('pages/group/creategroup',$data); 
-			$this->load->view('pages/dashboard/controlsidebar');
-			$this->load->view('pages/dashboard/end');
-		}
-		else
-		{
+		$query=$this->_userData();
+		$data['data']=$query->result_array();
+		$data['pages']='group';
+		$data['countgroup'] = $this->countGroups();
+		$groupquery= $this->groupdetails();
+		$data['groupdetails'] = $groupquery->result_array();
+		$this->load->view('pages/dashboard/fixed',$data);
+		$this->load->view('pages/group/creategroup',$data); 
+		$this->load->view('pages/dashboard/controlsidebar');
+		$this->load->view('pages/dashboard/end');
+		}else{
 			$this->_landing();
 		}
 	}
 
 	public function profile($userId=null)
-	{	
-		if(($this->session->userdata('userId')!=""))
+	{	if(($this->session->userdata('userId')!=""))
 		{
 
 			if(isset($userId))
@@ -360,35 +336,29 @@ class Pages extends CI_Controller {
 				$data['userId']=$userId;
 
 				$groupDetails= $this->post->profile($userId);
-				if($groupDetails->num_rows()==0) 
-				{
+				if($groupDetails->num_rows()==0) {
 					$groupDetails->result_array();
+
 					$this->load->view('pages/dashboard/fixed',$data);
 					$this->load->view('pages/group/nogroup',$data); 
 					$this->load->view('pages/dashboard/controlsidebar');
 					$this->load->view('pages/dashboard/end');
-				}
-				else
-				{
+				}else{
 					$this->load->view('pages/dashboard/fixed',$data);
 					$this->load->view('pages/profile/content',$data); 
 					$this->load->view('pages/dashboard/controlsidebar');
 					$this->load->view('pages/dashboard/end');
 				}
-			}
-			else
-			{
+			}else{
 				$this->profile($this->session->userdata('userId'));
 			}
-		}
-		else{
+		}else{
 			$this->_landing();
 		}
 	}
 
-	public function post($postId=null)
-	{	
-		if(($this->session->userdata('userId')!=""))
+		public function post($postId=null)
+	{	if(($this->session->userdata('userId')!=""))
 		{
 			if(isset($postId))
 			{
@@ -405,28 +375,25 @@ class Pages extends CI_Controller {
 				$data['comments'] = $comments->result_array();				
 
 				if($postdtlquery->num_rows()==0) {
-					$this->load->view('pages/dashboard/fixed',$data);
-					$this->load->view('pages/post/content',$data); 
-					$this->load->view('pages/dashboard/controlsidebar');
-					$this->load->view('pages/dashboard/end');
+				$this->load->view('pages/dashboard/fixed',$data);
+				$this->load->view('pages/post/content',$data); 
+				$this->load->view('pages/dashboard/controlsidebar');
+				$this->load->view('pages/dashboard/end');
 				}
-				else
-				{
+				else{
 
-					$this->load->view('pages/dashboard/fixed',$data);
-					$this->load->view('pages/post/content',$data); 
-					$this->load->view('pages/dashboard/controlsidebar');
-					$this->load->view('pages/dashboard/end');
+						$this->load->view('pages/dashboard/fixed',$data);
+						$this->load->view('pages/post/content',$data); 
+						$this->load->view('pages/dashboard/controlsidebar');
+						$this->load->view('pages/dashboard/end');
 				}
 
 
-			}
-			else $this->index();
+			}else
+				$this->index();
 
 			
-		}
-		else
-		{
+		}else{
 			$this->_landing();
 		}
 	}
@@ -501,59 +468,6 @@ class Pages extends CI_Controller {
 
 		}
 		
-	}
-	public function updateAccount()
-	{	
-		if(($this->session->userdata('userId')==""))
-		{
-			$this->index();
-		}
-		else
-		{
-			
-			$post=$this->input->post('btnSave');
-			if(!isset($post))
-			{
-				$this->load->view('pages/profile/index');
-			}
-			else if($post=='Ideator')
-			{
-				$this->_changeIdeator();
-			}
-			else if($post=='Investor')
-			{
-				$this->_validationInvestor();
-			}
-			else if($post=='Company')
-			{
-				$this->_validationCompany();
-			}
-
-		}
-		
-	}
-	public function _changeIdeator()
-	{
-		$userId = $this->session->userdata('userId');
-
-		$data = array(
-			'user_lName' => ucfirst(strtolower($this->input->post('inputLName'))),
-			'user_fName' => ucfirst(strtolower($this->input->post('inputFName'))),
-			'user_midInit' => strtoupper($this->input->post('inputMI')),
-			'user_age' => $this->input->post('inputAge'),
-			'user_shortSelfDescription' => $this->input->post('inputDescription'),
-		);
-
-		$data1 = array(
-			'location_address1' => $this->input->post('inputAddress1'),
-			'location_city' => $this->input->post('inputCity'),
-			'location_country' => $this->input->post('inputCountry'),
-		);
-		
-		$this->db->where('userId', $userId);
-		$this->db->update('user_dtl',$data);
-		$this->db->update('location_dtl',$data1);
-		$this->load->view('pages/profile/index');
 	}
 	public function logout()
 	{
@@ -1359,6 +1273,11 @@ class Pages extends CI_Controller {
 			if(isset($msgId))
 			{	
 				$data['msgId'] = $msgId;
+
+			}else
+			{
+				$data['msgId'] = $this->post->firstMsg($msgId);
+			}
 				$query=$this->_userData();
 				$data['data']=$query->result_array();
 				$data['pages']='message';
@@ -1370,28 +1289,11 @@ class Pages extends CI_Controller {
 				$this->load->view('pages/message/newcontent'); 
 				$this->load->view('pages/dashboard/controlsidebar');
 				$this->load->view('pages/dashboard/end');
-
-			}else
-			{
-				$data['msgId'] = $this->post->firstMsg($msgId);
-				$query=$this->_userData();
-				$data['data']=$query->result_array();
-				$data['pages']='message';
-				$data['countgroup'] = $this->countGroups();
-				$groupquery= $this->groupdetails();
-				$data['groupdetails'] = $groupquery->result_array();
-				
-				$this->load->view('pages/dashboard/fixed',$data);
-				$this->load->view('pages/message/content'); 
-				$this->load->view('pages/dashboard/controlsidebar');
-				$this->load->view('pages/dashboard/end');
-			}
-				
 		}else
 		{
 			$this->_landing();
 		}
-
+	}
 
 
 	public function post1($postId=null)
@@ -1421,8 +1323,5 @@ class Pages extends CI_Controller {
 			
 	}
 
-
-
-	}
 
 }
