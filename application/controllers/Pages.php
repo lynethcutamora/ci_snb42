@@ -501,7 +501,8 @@ class Pages extends CI_Controller {
 	}
 	public function _changeIdeator()
 	{
-		
+		$userId = $this->session->userdata('userId');
+
 		$data = array(
 			'user_lName' => ucfirst(strtolower($this->input->post('inputLName'))),
 			'user_fName' => ucfirst(strtolower($this->input->post('inputFName'))),
@@ -515,10 +516,10 @@ class Pages extends CI_Controller {
 			'location_city' => $this->input->post('inputCity'),
 			'location_country' => $this->input->post('inputCountry'),
 		);
-
-		$this->db->where('userId', $this->session->userdata('userId'));
-		$this->db->replace('user_dtl',$data);
-		$this->db->replace('location_dtl',$data1);
+		
+		$this->db->where('userId', $userId);
+		$this->db->update('user_dtl',$data);
+		$this->db->update('location_dtl',$data1);
 		$this->load->view('pages/profile/index');
 	}
 	public function logout()
