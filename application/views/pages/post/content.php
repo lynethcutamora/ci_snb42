@@ -64,7 +64,6 @@ theForm.scrolly.value = scrolly;
                       }
                     ?>
                   </p>  
-                  <h4>Short Description:</h4>
                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $postdtl['postContent'];?>
                   <p>
                     <?php 

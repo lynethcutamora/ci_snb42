@@ -16,7 +16,8 @@
         <section class="content">
           <div class="row">
             <div class="col-md-3">
-               <div class="box box-primary direct-chat direct-chat-primary">
+              <a href="compose.html" class="btn btn-primary btn-block margin-bottom">Compose</a>
+              <div class="box box-primary direct-chat direct-chat-primary">
                     <div class="box-header with-border">
                       <h3 class="box-title">Message</h3>
                       <div class="box-tools pull-right">
@@ -31,7 +32,7 @@
                   <?php foreach ($this->post->messageUser()->result_array() as $msgUser): 
                     # code...
                   ?>
-                    <li class=""><a href="<?php echo base_url();?>pages/message/<?php echo $msgUser['msgId'];?>"> <img class='img-circle img-sm' src='<?php echo base_url();?>images/team/index3.jpg' alt='user image' width="100" height="100">
+                    <li class=""><a href="<?php echo base_url();?>pages/message/<?php echo $msgUser['msg_fromUserId'];?>"> <img class='img-circle img-sm' src='<?php echo base_url();?>images/team/index3.jpg' alt='user image' width="100" height="100">
                                  <?php
                               if($msgUser['user_Type']=='Ideator'||$msgUser['user_Type']=='Investor')
                               {
@@ -54,16 +55,13 @@
                       
                       </div><!-- /.direct-chat-pane -->
                     </div><!-- /.box-body -->
-                     <div class="box-footer">
-                     </div>
                     
                   </div>
             </div><!-- /.col -->
-            <?php if($this->post->checkEmptyMsg()==0){}else{ ?>
             <div class="col-md-9">
               <div class="box box-primary direct-chat direct-chat-primary">
                     <div class="box-header with-border">
-                      <h3 class="box-title"><?php echo $this->post->userName($msgId);?></h3>
+                      <h3 class="box-title"><input type="text" name="user"></h3>
                       <div class="box-tools pull-right">
                         <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
                         <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
@@ -72,7 +70,6 @@
                     <div class="box-body">
                       <!-- Conversations are loaded here -->
                       <div class="direct-chat-messages">
-                      <?php if($this->post->checkIfUserMsg($msgId)==$this->session->userdata('userId')){echo 'yes';}else{echo "no";}?>
                         <!-- Message. Default to the left -->
                         <div class="direct-chat-msg">
                           <div class="direct-chat-info clearfix">
@@ -97,6 +94,30 @@
                           </div><!-- /.direct-chat-text -->
                         </div><!-- /.direct-chat-msg -->
 
+                        <!-- Message. Default to the left -->
+                        <div class="direct-chat-msg">
+                          <div class="direct-chat-info clearfix">
+                            <span class="direct-chat-name pull-left">Alexander Pierce</span>
+                            <span class="direct-chat-timestamp pull-right">23 Jan 5:37 pm</span>
+                          </div><!-- /.direct-chat-info -->
+                          <img class="direct-chat-img" src="dist/img/user1-128x128.jpg" alt="message user image"><!-- /.direct-chat-img -->
+                          <div class="direct-chat-text">
+                            Working with AdminLTE on a great new app! Wanna join?
+                          </div><!-- /.direct-chat-text -->
+                        </div><!-- /.direct-chat-msg -->
+
+                        <!-- Message to the right -->
+                        <div class="direct-chat-msg right">
+                          <div class="direct-chat-info clearfix">
+                            <span class="direct-chat-name pull-right">Sarah Bullock</span>
+                            <span class="direct-chat-timestamp pull-left">23 Jan 6:10 pm</span>
+                          </div><!-- /.direct-chat-info -->
+                          <img class="direct-chat-img" src="dist/img/user3-128x128.jpg" alt="message user image"><!-- /.direct-chat-img -->
+                          <div class="direct-chat-text">
+                            I would love to.
+                          </div><!-- /.direct-chat-text -->
+                        </div><!-- /.direct-chat-msg -->
+
                       </div><!--/.direct-chat-messages-->
 
                      
@@ -113,7 +134,6 @@
                     </div><!-- /.box-footer-->
                   </div>
             </div><!-- /.col -->
-            <?php }?>
           </div><!-- /.row -->
         </section><!-- /.content -->
       

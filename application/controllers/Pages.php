@@ -52,7 +52,6 @@ class Pages extends CI_Controller {
 
 		return $query;
 	}
-	
 
 	public function _dashboard()
 	{
@@ -1295,8 +1294,9 @@ class Pages extends CI_Controller {
 		$url = "./post_files/".uniqid(rand()).'.'.$type;
 		if(in_array($type, array("txt", "docx")))
 			if(is_uploaded_file($_FILES["file"]["tmp_name"]))
-				if(move_uploaded_file($_FILES["file"]["tmp_name"],$url))
+				if(move_uploaded_file($_FILES["file"]["tmp_name"],$url)){
 					return $url;
+				}
 		return "";
 	}
 
@@ -1321,31 +1321,26 @@ class Pages extends CI_Controller {
 	public function message($msgId=null)
 	{
 		if(($this->session->userdata('userId')!=""))
-		{
+		{	
 			if(isset($msgId))
+			{	
+				$data['msgId'] = $msgId;
+
+			}else
 			{
+				$data['msgId'] = $this->post->firstMsg($msgId);
+			}
 				$query=$this->_userData();
 				$data['data']=$query->result_array();
 				$data['pages']='message';
 				$data['countgroup'] = $this->countGroups();
 				$groupquery= $this->groupdetails();
 				$data['groupdetails'] = $groupquery->result_array();
-				$this->load->view('pages/dashboard/fixed',$data);
-				$this->load->view('pages/message/content'); 
-				$this->load->view('pages/dashboard/controlsidebar');
-				$this->load->view('pages/dashboard/end');
-			}else{
-				$query=$this->_userData();
-				$data['data']=$query->result_array();
-				$data['pages']='message';
-				$data['countgroup'] = $this->countGroups();
-				$groupquery= $this->groupdetails();
-				$data['groupdetails'] = $groupquery->result_array();
+				
 				$this->load->view('pages/dashboard/fixed',$data);
 				$this->load->view('pages/message/newcontent'); 
 				$this->load->view('pages/dashboard/controlsidebar');
 				$this->load->view('pages/dashboard/end');
-			}
 		}else
 		{
 			$this->_landing();
