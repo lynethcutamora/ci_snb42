@@ -1265,6 +1265,10 @@ class Pages extends CI_Controller {
         return $query;
 	}
 
+	public function countgroupfiles(){
+		
+	}
+
 
 	public function message($msgId=null)
 	{
