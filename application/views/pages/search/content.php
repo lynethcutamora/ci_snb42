@@ -36,20 +36,20 @@
                       <td width="150"><a href="<?php echo base_url()."pages/profile/".$idea['userId'];?>">
 
                         <?php 
-                  foreach($data as $row):
-                    if($row['user_Type']=='Ideator'||$row['user_Type']=='Investor')
+                  
+                    if($idea['user_Type']=='Ideator'||$idea['user_Type']=='Investor')
                      {
-                        if($row['user_midInit']==null)
-                         echo $row['user_fName']." ".$row['user_lName'];
+                        if($idea['user_midInit']==null)
+                         echo $idea['user_fName']." ".$idea['user_lName'];
                         else
-                         echo $row['user_fName']." ".$row['user_midInit'].". ".$row['user_lName'];
+                         echo $idea['user_fName']." ".$idea['user_midInit'].". ".$idea['user_lName'];
                         }
                         else
                         {
-                          echo $row['company_name'];
+                          echo $idea['company_name'];
                         }    
                   ?></a>
-                  <?php  endforeach;?></td>
+                 </td>
                       <td width="100"><?php echo $this->post->upvotecount($idea['postId']);?></td>
                       <td width="100"><?php echo $this->post->commentCount($idea['postId']);?></td>
                     </tr>
@@ -89,20 +89,20 @@
                       <td><?php echo $group['groupname'];?></td>
                       <td><?php echo $group['groupdescription'];?></td>
                       <td> <a href="<?php echo base_url()."pages/profile/".$group['userId'];?>">      <?php 
-                  foreach($data as $row):
-                    if($row['user_Type']=='Ideator'||$row['user_Type']=='Investor')
+                 
+                    if($group['user_Type']=='Ideator'||$group['user_Type']=='Investor')
                      {
-                        if($row['user_midInit']==null)
-                         echo $row['user_fName']." ".$row['user_lName'];
+                        if($group['user_midInit']==null)
+                         echo $group['user_fName']." ".$group['user_lName'];
                         else
-                         echo $row['user_fName']." ".$row['user_midInit'].". ".$row['user_lName'];
+                         echo $group['user_fName']." ".$group['user_midInit'].". ".$group['user_lName'];
                         }
                         else
                         {
-                          echo $row['company_name'];
+                          echo $group['company_name'];
                         }    
                   ?>
-                  <?php  endforeach;?></a></td>
+                 </a></td>
                      </tr>
                        <?php  endforeach;}?>
                   </table>
@@ -136,20 +136,20 @@
                      <?php foreach ($people as $people):?>
                     <tr>
                       <td> <a href="<?php echo base_url()."pages/profile/".$people['userId'];?>">      <?php 
-                  foreach($data as $row):
-                    if($row['user_Type']=='Ideator'||$row['user_Type']=='Investor')
+                
+                    if($people['user_Type']=='Ideator'||$people['user_Type']=='Investor')
                      {
-                        if($row['user_midInit']==null)
-                         echo $row['user_fName']." ".$row['user_lName'];
+                        if($people['user_midInit']==null)
+                         echo $people['user_fName']." ".$people['user_lName'];
                         else
-                         echo $row['user_fName']." ".$row['user_midInit'].". ".$row['user_lName'];
+                         echo $people['user_fName']." ".$people['user_midInit'].". ".$people['user_lName'];
                         }
                         else
                         {
-                          echo $row['company_name'];
+                          echo $people['company_name'];
                         }    
                   ?>
-                  <?php  endforeach;?></a></td>
+          </a></td>
                       <td> <button class='btn btn-default btn-xs'><i class='fa fa-star' style="color:#ffd700;"></i><span class="label bg-blue"><?php echo $this->post->gold($people['userId']);?></span></button>&nbsp;<button class='btn btn-default btn-xs'><i class='fa fa-star' style="color:Silver"></i><span class="label bg-blue"><?php echo $this->post->silver($people['userId']);?></span></button>&nbsp;<button class='btn btn-default btn-xs'><i class='fa fa-star' style="color:SandyBrown "></i><span class="label bg-blue"><?php echo $this->post->bronze($people['userId']);?></span></button>
                    </td>
                       <td><?php echo $people['user_emailAdd'];?></td>
