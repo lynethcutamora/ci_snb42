@@ -276,6 +276,8 @@ class Pages extends CI_Controller {
 					$query=$this->projectfiles($projectId);
 					$data['projfile']=$query->result_array();
 					$allproject= $this->allproject($groupId);
+					$countfiles=$this->countgroupfiles($groupId);
+					$data['countfiles']=$countfiles->result_array();
 					$data['allproject'] = $allproject->result_array();
 					$data['groupDtl'] = $groupDetails->result_array();
 					$memberinfo= $this->memberinfo($groupId);
@@ -1265,10 +1267,18 @@ class Pages extends CI_Controller {
         return $query;
 	}
 
-	public function countgroupfiles(){
-		
-	}
 
+	public function countgroupfiles($groupid){
+		$this->db->distinct('c.extId');
+		$this->db->from('userpost a');
+		$this->db->join('userpost b','a.postId=b.postType','inner');
+		$this->db->join('userpost_ext c','b.postId=c.postId','left');
+		$this->db->where('a.postType',$groupid);
+		$this->db->where('c.extType','3');
+		$query = $this->db->get();
+
+        return $query;
+	}
 
 	public function message($msgId=null)
 	{

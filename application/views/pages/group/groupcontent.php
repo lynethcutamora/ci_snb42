@@ -50,7 +50,7 @@
                     </div><!-- /.col -->
                     <div class="col-sm-3">
                       <div class="description-block">
-                        <h5 class="description-header">0</h5>
+                        <h5 class="description-header"><?php echo count($countfiles);?></h5>
                         <span class="description-text">FILES</span>
                       </div><!-- /.description-block -->
                     </div><!-- /.col -->
@@ -287,7 +287,7 @@
                     <div class="box-footer">
                       <form method="post" action="#">
                         <div class="input-group">
-                        <input class="form-control" placeholder="Search people" name="txtsearch" required="required">
+                        <input class="form-control" placeholder="Search Ideator" name="txtsearch" required="required">
                           <div class="input-group-btn">
                             <button type="submit"class="btn btn-success pull-right" name="btnsearch"><i class="fa fa-search"></i></button>
                           </div>
@@ -295,6 +295,29 @@
                       </form>
                     </div>
                   </div><!-- /.box -->
+                  <?php foreach($projectdtl as $row):?>
+                  <div class="box box-solid">
+                    <div class="box-header with-border">
+                      <h5><i class="fa fa-edit"></i> About <?php echo $row['postTitle']?>:</h5>
+                    </div><!-- /.box-header -->
+                    <div class='box-header with-border'>
+                      <p class="description text-muted"><?php echo $row['postContent']?></p>
+                    </div><!-- /.box-header -->
+                    <div class="box-header with-border">
+                      <h5><i class="fa fa-money"></i> Investor(s):</h5>
+                    </div><!-- /.box-header -->
+                    <div class="box-footer">
+                      <form method="post" action="#">
+                        <div class="input-group">
+                        <input class="form-control" placeholder="Search investors" name="txtsearch" required="required">
+                          <div class="input-group-btn">
+                            <button type="submit"class="btn btn-success pull-right" name="btnsearch"><i class="fa fa-search"></i></button>
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+                  </div><!-- /.box -->
+                  <?php  endforeach;?>
                 <?php if(isset($_POST['txtsearch'])){
                     echo '<div class="box box-solid">
                               <div class="box-header with-border">
@@ -326,22 +349,6 @@
                     ';
                   }
                 ?>
-
-
-                <?php foreach($projectdtl as $row):?>
-                  <div class="box-body">
-                    <p><b>About <?php echo $row['postTitle']?></b></p>
-                    <p><?php echo $row['postContent']?>.</p>
-                    <p><b>Investor(s):</b></p>
-                    <div class='box-header'>
-                        <div class='user-block'>
-                          <img class='img-circle' src='../../images/team/index0.png' alt='user image'>
-                            <span class='username'><a href="#">Ms. Universe</a></span>
-                            <span class='description'>Reputation:<span class="pull-right"><i class='fa fa-star' style="color:#ffd700;"></i><b>&nbsp;&nbsp;1024</b></span></span>
-                        </div><!-- /.user-block -->
-                      </div><!-- /.box-header -->
-                  </div>
-                <?php endforeach;?>
               </div><!-- /.col -->
           </div><!--/.col-12-->
         </div><!--/.row-->
