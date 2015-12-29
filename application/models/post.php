@@ -1,8 +1,7 @@
 <?php 
 
-class Post extends CI_Model {
-
-
+    class Post extends CI_Model 
+    {
         public function upvotecount($postId)
         {
                 $this->db->where('postId', $postId);
@@ -106,13 +105,14 @@ class Post extends CI_Model {
         {
                 if($content==null){
                         
-                }else
+                }
+                else
                 {
-                        $this->db->set('extContent', $content);
-                        $this->db->set('extId', uniqid());
-                        $this->db->set('extType',$type);
-                        $this->db->set('postId',$postId);
-                        $this->db->insert('userpost_ext');
+                    $this->db->set('extContent', $content);
+                    $this->db->set('extId', uniqid());
+                    $this->db->set('extType',$type);
+                    $this->db->set('postId',$postId);
+                    $this->db->insert('userpost_ext');
                 }
         }
             
@@ -125,7 +125,6 @@ class Post extends CI_Model {
             $this->db->join('userpost d', 'd.userId=a.userId','left');
             $this->db->join('avatar_dtl e', 'e.userId=a.userId','left');
             $this->db->where('d.postId',$postId);
-           
             $query = $this->db->get();
 
             return $query;
@@ -142,196 +141,226 @@ class Post extends CI_Model {
             $this->db->where('a.userId', $userId);
             $query = $this->db->get();
             return $query;
-
         }
         public function alluserData($userId)
-    {
-        $this->db->select('*');
-        $this->db->from('user_md a');
-        $this->db->join('user_dtl b', 'a.userId=b.userId','left');
-        $this->db->join('company_dtl c', 'c.userId=a.userId','left');
-        $this->db->join('userpost d', 'd.userId=a.userId');
-        $this->db->join('avatar_dtl e', 'e.userId=d.userId');
-        $this->db->join('badge_dtl f', 'f.userId=a.userId','left');
-        $this->db->where('d.userId',$userId);
-        $this->db->order_by('postDate', 'DESC');
-        $query = $this->db->get();
+        {
+            $this->db->select('*');
+            $this->db->from('user_md a');
+            $this->db->join('user_dtl b', 'a.userId=b.userId','left');
+            $this->db->join('company_dtl c', 'c.userId=a.userId','left');
+            $this->db->join('userpost d', 'd.userId=a.userId');
+            $this->db->join('avatar_dtl e', 'e.userId=d.userId');
+            $this->db->join('badge_dtl f', 'f.userId=a.userId','left');
+            $this->db->where('d.userId',$userId);
+            $this->db->order_by('postDate', 'DESC');
+            $query = $this->db->get();
+            return $query;
+        }
+        public function showComments($postId,$type)
+        {
+            $this->db->select('*');
+            $this->db->from('user_md a');
+            $this->db->join('user_dtl b', 'b.userId=a.userId','left');
+            $this->db->join('company_dtl c', 'c.userId=a.userId','left');
+            $this->db->join('comment_dtl d', 'd.userId=a.userId','left');
+            $this->db->join('avatar_dtl e', 'e.userId=d.userId','left');
+            $this->db->where('postId',$postId);
+            $this->db->where('commentType',$type);
+            $this->db->order_by('commentDate', 'ASC');
+            $query = $this->db->get();
+             return $query;
+        }
 
-        return $query;
-    }
-    public function showComments($postId,$type)
-    {
-        $this->db->select('*');
-        $this->db->from('user_md a');
-        $this->db->join('user_dtl b', 'b.userId=a.userId','left');
-        $this->db->join('company_dtl c', 'c.userId=a.userId','left');
-        $this->db->join('comment_dtl d', 'd.userId=a.userId','left');
+        public function existsMember($groupId , $userId)
+        {
+            $this->db->select('*');
+            $this->db->from('group_ext');
+            $this->db->where('userId',$userId);
+            $this->db->where('groupId',$groupId);
+            $query=$this->db->get();
+            $numrows = $query->num_rows();
+            if($numrows>0)  return true;
+            else return false;
+        }
 
-        $this->db->join('avatar_dtl e', 'e.userId=d.userId','left');
-        $this->db->where('postId',$postId);
-        $this->db->where('commentType',$type);
-        $this->db->order_by('commentDate', 'ASC');
-        $query = $this->db->get();
-         return $query;
-    }
+        public function searchIdea($key)
+        {
+            $this->db->select('*');
+            $this->db->from('userpost a');
+            $this->db->join('user_dtl b', 'b.userId=a.userId','left');
+            $this->db->join('company_dtl c', 'c.userId=a.userId','left');
+            $this->db->join('avatar_dtl d', 'd.userId=a.userId','left');
+            $this->db->join('user_md e', 'e.userId=a.userId','left');
+            $this->db->like('a.postTitle', $match = $key, $side = 'both');
+            $this->db->or_like('a.postContent', $match = $key, $side = 'both');
+            $query = $this->db->get();
+             return $query;
+        }
+        public function commentCount($postId)
+        {
+            $this->db->where('postId', $postId);
+            $query = $this->db->get('comment_dtl');
+            echo $query->num_rows()." comments";
+        }
+        public function searchGroup($key)
+        {
+            $this->db->select('*');
+            $this->db->from('group_md a');
+            $this->db->join('user_dtl b', 'b.userId=a.userId','left');
+            $this->db->join('company_dtl c', 'c.userId=a.userId','left');
+            $this->db->join('avatar_dtl d', 'd.userId=a.userId','left');
+            $this->db->join('user_md e', 'e.userId=a.userId','left');
+            $this->db->like('a.groupname', $match = $key, $side = 'both');
+            $this->db->or_like('a.groupdescription', $match = $key, $side = 'both');
+            $query = $this->db->get();
+            return $query;
+        }
+        public function searchPeople($key)
+        {
+            $this->db->select('*');
+            $this->db->from('user_md a');
+            $this->db->join('user_dtl b', 'b.userId=a.userId','left');
+            $this->db->join('company_dtl c', 'c.userId=a.userId','left');
+            $this->db->join('avatar_dtl d', 'd.userId=a.userId','left');
+            $this->db->like('a.user_emailAdd', $match = $key, $side = 'both');
+            $this->db->or_like('b.user_lName', $match = $key, $side = 'both');
+            $this->db->or_like('b.user_fName', $match = $key, $side = 'both');
+            $this->db->or_like('c.company_name', $match = $key, $side = 'both');
+            $query = $this->db->get();
+            return $query;
+        }
+        public function gold($userId)
+        {
+            $this->db->select('*');
+            $this->db->from('badge_dtl');
+            $this->db->where('voteBadge','1');
+            $this->db->where('userId',$userId);
+            $query = $this->db->get();
+            $gold = $query->num_rows();
+            return $gold;
+        }
+        public function silver($userId)
+        {
+            $this->db->select('*');
+            $this->db->from('badge_dtl');
+            $this->db->where('voteBadge','2');
+            $this->db->where('userId',$userId);
+            $query = $this->db->get();
+            $silver = $query->num_rows();
+            return $silver;
+        }
+        public function bronze($userId)
+        {
+            $this->db->select('*');
+            $this->db->from('badge_dtl');
+            $this->db->where('voteBadge','3');
+            $this->db->where('userId',$userId);
+            $query = $this->db->get();
+            $bronze = $query->num_rows();
+            return $bronze;
+        }
+        public function black($userId)
+        {
+            $this->db->select('*');
+            $this->db->from('badge_dtl');
+            $this->db->where('voteBadge','4');
+            $this->db->where('userId',$userId);
+            $query = $this->db->get();
+            $black = $query->num_rows();
+            return $black;
+        }
+        public function firstProject($groupId)
+        {
+            $this->db->select('*');
+            $this->db->from('userpost');
+            $this->db->where('postType',$groupId);
+            $query = $this->db->get();
+            $row = $query->row_array();
+            return $row['postId'];
+        }
+        public function messageUser()
+        {
+            $query = $this->db->query("SELECT DISTINCT groupId,a.userId, a.msgId,b.user_fName , b.user_lName ,b.user_midInit, c.company_fName,c.company_lName,c.company_midInit ,d.user_Type from conference_dtl a left join user_dtl b ON a.groupId = b.userId left join company_dtl c ON a.groupId = b.userId left join user_md d on d.userId = a.groupId  where a.userId='".$this->session->userdata("userId")."'");
+            return $query;
+        }
 
-    public function existsMember($groupId , $userId)
-    {
-        $this->db->select('*');
-        $this->db->from('group_ext');
-        $this->db->where('userId',$userId);
-        $this->db->where('groupId',$groupId);
-        $query=$this->db->get();
-        $numrows = $query->num_rows();
-        if($numrows>0)
-            return true;
-        else
-            return false;
-    }
+        public function userName($userId)
+        {
+            $query = $this->messageUser($userId);
+            $row = $query->row_array();
+            if($row['user_Type']=='Ideator'||$row['user_Type']=='Investor')
+            {
+                if($row['user_midInit']==null)
+                    $str = $row['user_fName']."  ".$row['user_lName'];
+                else
+                    $str =  $row['user_fName']." ".$row['user_midInit'].". ".$row['user_lName'];
+            }
+            else
+            {
+                $str =  $row['company_name'];
+            }
+            return $str;
+        }
+        public function userProfile($userId)
+        {
+            $query = $this->profile($userId);
+            $row = $query->row_array();
+            if($row['user_Type']=='Ideator'||$row['user_Type']=='Investor')
+            {
+                if($row['user_midInit']==null)
+                    $str = $row['user_fName']."  ".$row['user_lName'];
+                else
+                    $str =  $row['user_fName']." ".$row['user_midInit'].". ".$row['user_lName'];
+            }
+            else
+            {
+                $str =  $row['company_name'];
+            }
+            return $str;
+        }
+        
 
-    public function searchIdea($key)
-    {
+        
 
-        $this->db->select('*');
-        $this->db->from('userpost a');
-        $this->db->join('user_dtl b', 'b.userId=a.userId','left');
-        $this->db->join('company_dtl c', 'c.userId=a.userId','left');
-        $this->db->join('avatar_dtl d', 'd.userId=a.userId','left');
-        $this->db->like('a.postTitle', $match = $key, $side = 'both');
-        $this->db->or_like('a.postContent', $match = $key, $side = 'both');
-        $query = $this->db->get();
-         return $query;
-    }
-    public function commentCount($postId)
-    {
-        $this->db->where('postId', $postId);
-        $query = $this->db->get('comment_dtl');
-        echo $query->num_rows()." comments";
-    }
-    public function searchGroup($key)
-    {
+        public function firstMsg($userId)
+        {
+           $query = $this->messageUser();
+           $row = $query->row_array();
+           return $row['groupId'];
+        }
+        
+        public function checkEmptyMsg()
+        {
+            $this->db->select('*');
+            $this->db->from('conference_dtl');
+            $query =$this->db->where('userId',$this->session->userdata('userId'));
+            $query = $this->db->get();
+            $numrow = $query->num_rows();
+            return $numrow;
+        }
+        public function showMsg($imgId)
+        {
+            $this->db->select('*');
+            $this->db->from('conference_dtl');
+            $query =$this->db->where('msgId',$imgId);
+            $query = $this->db->get();
+            return $query;
+        }
 
-        $this->db->select('*');
-        $this->db->from('group_md a');
-        $this->db->join('user_dtl b', 'b.userId=a.userId','left');
-        $this->db->join('company_dtl c', 'c.userId=a.userId','left');
-        $this->db->join('avatar_dtl d', 'd.userId=a.userId','left');
-        $this->db->like('a.groupname', $match = $key, $side = 'both');
-        $this->db->or_like('a.groupdescription', $match = $key, $side = 'both');
-        $query = $this->db->get();
-         return $query;
-    }
-    public function searchPeople($key)
-    {
 
-        $this->db->select('*');
-        $this->db->from('user_md a');
-        $this->db->join('user_dtl b', 'b.userId=a.userId','left');
-        $this->db->join('company_dtl c', 'c.userId=a.userId','left');
-        $this->db->join('avatar_dtl d', 'd.userId=a.userId','left');
-        $this->db->like('a.user_emailAdd', $match = $key, $side = 'both');
-        $this->db->or_like('b.user_lName', $match = $key, $side = 'both');
-        $this->db->or_like('b.user_fName', $match = $key, $side = 'both');
-        $this->db->or_like('c.company_name', $match = $key, $side = 'both');
-        $query = $this->db->get();
-         return $query;
-    }
-    public function gold($userId)
-    {
-        $this->db->select('*');
-      $this->db->from('badge_dtl');
-      $this->db->where('voteBadge','1');
-      $this->db->where('userId',$userId);
-      $query = $this->db->get();
-      $gold = $query->num_rows();
-      return $gold;
-    }
-    public function silver($userId)
-    {
-        $this->db->select('*');
-      $this->db->from('badge_dtl');
-      $this->db->where('voteBadge','2');
-      $this->db->where('userId',$userId);
-      $query = $this->db->get();
-      $silver = $query->num_rows();
-      return $silver;
-    }
-    public function bronze($userId)
-    {
-        $this->db->select('*');
-      $this->db->from('badge_dtl');
-      $this->db->where('voteBadge','3');
-      $this->db->where('userId',$userId);
-      $query = $this->db->get();
-      $bronze = $query->num_rows();
-      return $bronze;
-    }
-    public function black($userId)
-    {
-        $this->db->select('*');
-      $this->db->from('badge_dtl');
-      $this->db->where('voteBadge','4');
-      $this->db->where('userId',$userId);
-      $query = $this->db->get();
-      $black = $query->num_rows();
-      return $black;
-    }
-    public function firstProject($groupId)
-    {
-     $this->db->select('*');
-      $this->db->from('userpost');
-      $this->db->where('postType',$groupId);
-      $query = $this->db->get();
-      $row = $query->row_array();
+        public function getAvatar($userId)
+        {
+           $query= $this->profile($userId);
+           $row = $query->row_array();
+           return $row['avatar_name'];
+        }
+        public function checkUser($userId)
+        {
+            if($userId==$this->session->userdata('userId')){
+                return 'true';
+            }else
+            return 'false';
+        }
 
-      return $row['postId'];
     }
-    public function messageUser()
-    {
-        $query = $this->db->query("SELECT DISTINCT groupId,a.userId, a.msgId,b.user_fName , b.user_lName ,b.user_midInit, c.company_fName,c.company_lName,c.company_midInit ,d.user_Type from conference_dtl a left join user_dtl b ON a.groupId = b.userId left join company_dtl c ON a.groupId = b.userId left join user_md d on d.userId = a.groupId  where a.userId='".$this->session->userdata("userId")."'");
-        return $query;
-    }
-
-    public function userName($userId)
-    {
-        $query = $this->messageUser($userId);
-        $row = $query->row_array();
-         if($row['user_Type']=='Ideator'||$row['user_Type']=='Investor')
-                              {
-                                  if($row['user_midInit']==null)
-                                     $str = $row['user_fName']."  ".$row['user_lName'];
-                                   else
-                                     $str =  $row['user_fName']." ".$row['user_midInit'].". ".$row['user_lName'];
-                              }
-                              else
-                              {
-                                $str =  $row['company_name'];
-                              }
-        return $str;
-    }
-     public function firstMsg($userId)
-    {
-       $query = $this->messageUser();
-      $row = $query->row_array();
-      return $row['groupId'];
-    }
-    public function checkEmptyMsg()
-    {
-        $this->db->select('*');
-        $this->db->from('conference_dtl');
-        $query =$this->db->where('userId',$this->session->userdata('userId'));
-         $query = $this->db->get();
-        $numrow = $query->num_rows();
-
-        return $numrow;
-    }
-
-    public function checkIfUserMsg($userId)
-    {
-      $query = $this->messageUser($userId);
-        $row = $query->row_array();
-        return $row['groupId'];
-    }
-
-}
 ?>
