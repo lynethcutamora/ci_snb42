@@ -22,23 +22,23 @@
                   <?php foreach ($this->post->messageUser()->result_array() as $msgUser): 
                     # code...
                   ?>
-                    <li class=""><a href="<?php echo base_url();?>pages/message/<?php echo $msgUser['msgId'];?>"> <img class='img-circle img-sm' src='<?php echo base_url();?>images/team/index3.jpg' alt='user image' width="100" height="100">
-                                 <?php
-                              if($msgUser['user_Type']=='Ideator'||$msgUser['user_Type']=='Investor')
-                              {
-                                  if($msgUser['user_midInit']==null)
-                                     echo $msgUser['user_fName']."  ".$msgUser['user_lName'];
-                                   else
-                                     echo $msgUser['user_fName']." ".$msgUser['user_midInit'].". ".$msgUser['user_lName'];
-                              }
-                              else
-                              {
-                                echo $msgUser['company_name'];
-                              }
-
-                          
-                       
-                      ?> <span class="label label-primary pull-right">12</span></a></li>
+                    <li class="">
+                      <a href="<?php echo base_url();?>pages/message/<?php echo $msgUser['msgId'];?>"> <img class='img-circle img-sm' src='<?php echo base_url();?>images/team/index3.jpg' alt='user image' width="100" height="100">
+                        <?php
+                          if($msgUser['user_Type']=='Ideator'||$msgUser['user_Type']=='Investor')
+                          {
+                            if($msgUser['user_midInit']==null)
+                              echo $msgUser['user_fName']."  ".$msgUser['user_lName'];
+                            else
+                              echo $msgUser['user_fName']." ".$msgUser['user_midInit'].". ".$msgUser['user_lName'];
+                          }
+                          else
+                          {
+                            echo $msgUser['company_name'];
+                          }
+                        ?>
+                      </a>
+                    </li>
                     <?php endforeach;?>
                   </ul>
                 </div><!-- /.box-body -->

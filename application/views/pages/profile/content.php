@@ -413,8 +413,8 @@ theForm.scrolly.value = scrolly;
                               <?php echo form_open('../pages/updateAccount','class=form-horizontal');?>
                               <?php
                                   if($row['user_Type']=='Ideator')
-                                  {?>
-                            
+                                  {
+                              ?>
                                       <div class="form-group">
                                         <label for="inputLName" class="col-sm-2 control-label">Last Name</label>
                                           <div class="col-sm-9"> 
@@ -607,9 +607,7 @@ theForm.scrolly.value = scrolly;
                         <div class="form-group">
                         <div class="row">
                         <div class="col-sm-12">
-                        <?php foreach($profileDtl as $rows):?>
-                          <?php
-                            if ($rows['user_Type'] == 'Ideator') {?>
+                      
                               
                               <div class='form-group'>
                                       <label for='inputOldPassword' class='col-sm-2 control-label'>Old Password</label>
@@ -617,29 +615,30 @@ theForm.scrolly.value = scrolly;
                                         <input type='password' class='form-control' name='inputOldPassword' id='inputOldPassword' required='required' placeholder='Old Password' value='<?php echo set_value('inputOldPassword'); ?>'>
                                       </div>
                                     </div>
+                                    <br>
+                                    <br>
                                     <div class='form-group'>
                                       <label for='inputNewPassword' class='col-sm-2 control-label'>New Password</label>
                                       <div class='col-sm-9'>
                                         <input type='password' class='form-control' name='inputNewPassword' id='inputNewPassword' required='required' placeholder='New Password' value='<?php echo set_value('inputNewPassword'); ?>'>
                                       </div>
                                     </div>
+                                          <br>
+                                          <br>
                                     <div class='form-group'>
                                       <label for='inputNewRepassword' class='col-sm-2 control-label'>New Password Confirmation</label>
                                       <div class='col-sm-9'>
                                         <input type='password' class='form-control' name='inputNewRepassword' id='inputNewRepassword' required='required' placeholder='New Password Confirmation' value='<?php echo set_value('inputNewRepassword'); ?>'>
                                       </div>
                                     </div>
-                                      
+                                            <br>
+                                            <br>
                                       <div class='form-group'>
                                         <div class='col-sm-offset-2 col-sm-10'>
                                           <button type='submit' class='btn btn-primary' name='btnSave' value='Ideator'>Save</button>
                                         </div>
                                     </div>
-                              }
-                          ?>    
-                          
-                          
-                        <?php endforeach;?>
+                     
                         </div>
                         </div>
                         </div>
