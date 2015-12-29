@@ -1295,4 +1295,33 @@ class Pages extends CI_Controller {
 		}
 	}
 
+
+	public function post1($postId=null)
+	{	
+			
+				$query=$this->_userData();
+				$data['data']=$query->result_array();
+				$data['pages']='post1';
+				$data['countgroup'] = $this->countGroups();
+				$groupquery= $this->groupdetails();
+				$data['groupdetails'] = $groupquery->result_array();
+				$data['alldata']=$query->result_array();
+				$postdtlquery= $this->post->postdtl($postId);
+				$data['postDetail'] = $postdtlquery->result_array();
+				$comments= $this->post->showComments($postId,'1');
+				$data['comments'] = $comments->result_array();				
+
+			
+				$this->load->view('pages/post1/collapsed',$data);
+				$this->load->view('pages/post1/content',$data);
+			 
+				
+				
+
+
+
+			
+	}
+
+
 }
