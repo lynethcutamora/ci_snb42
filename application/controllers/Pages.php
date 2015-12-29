@@ -1243,8 +1243,9 @@ class Pages extends CI_Controller {
 		$url = "./post_files/".uniqid(rand()).'.'.$type;
 		if(in_array($type, array("txt", "docx")))
 			if(is_uploaded_file($_FILES["file"]["tmp_name"]))
-				if(move_uploaded_file($_FILES["file"]["tmp_name"],$url))
+				if(move_uploaded_file($_FILES["file"]["tmp_name"],$url)){
 					return $url;
+				}
 		return "";
 	}
 
