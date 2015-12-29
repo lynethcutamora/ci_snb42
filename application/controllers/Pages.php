@@ -489,11 +489,11 @@ class Pages extends CI_Controller {
 			}
 			else if($post=='Investor')
 			{
-				$this->_validationInvestor();
+				$this->_changeInvestor();
 			}
 			else if($post=='Company')
 			{
-				$this->_validationCompany();
+				$this->_changeCompany();
 			}
 
 		}
@@ -520,7 +520,48 @@ class Pages extends CI_Controller {
 		$this->db->where('userId', $userId);
 		$this->db->update('user_dtl',$data);
 		$this->db->update('location_dtl',$data1);
-		$this->load->view('pages/profile/index');
+		redirect('pages/profile');
+	}
+	public function _changeInvestor()
+	{
+		$userId = $this->session->userdata('userId');
+
+		$data = array(
+			'user_lName' => ucfirst(strtolower($this->input->post('inputLName'))),
+			'user_fName' => ucfirst(strtolower($this->input->post('inputFName'))),
+			'user_midInit' => strtoupper($this->input->post('inputMI')),
+			'user_age' => $this->input->post('inputAge'),
+			'user_shortSelfDescription' => $this->input->post('inputDescription'),
+		);
+
+		$data1 = array(
+			'location_address1' => $this->input->post('inputAddress1'),
+			'location_city' => $this->input->post('inputCity'),
+			'location_country' => $this->input->post('inputCountry'),
+		);
+		
+		$this->db->where('userId', $userId);
+		$this->db->update('user_dtl',$data);
+		$this->db->update('location_dtl',$data1);
+		redirect('pages/profile');
+	}
+	public function _changeCompany()
+	{
+		$userId = $this->session->userdata('userId');
+
+		$data = array(
+			'company_lName' => ucfirst(strtolower($this->input->post('inputLName'))),
+			'company_fName' => ucfirst(strtolower($this->input->post('inputFName'))),
+			'company_midInit' => strtoupper($this->input->post('inputMI')),
+			'company_name' => $this->input->post('inputCName'),
+			'company_businessType' => $this->input->post('inputBusinessType'),
+			'company_yearFounded' => $this->input->post('inputYear'),
+			'company_about' => $this->input->post('inputDescription'),
+		);
+
+		$this->db->where('userId', $userId);
+		$this->db->update('company_dtl',$data);
+		redirect('pages/profile');
 	}
 	public function logout()
 	{
@@ -788,10 +829,11 @@ class Pages extends CI_Controller {
 	}
 	public function messageProfile()
               {
+              	$userId=$this->input->post('userId');
                 $this->form_validation->set_rules('inputDescription', 'Description', 'required|trim');
                 if ($this->form_validation->run() == FALSE)
                 {
-                    $this->post();
+                    redirect('pages/profile/'.$userId);
                 }
                 else
                 {
@@ -799,7 +841,7 @@ class Pages extends CI_Controller {
                 	$userId=$this->input->post('userId');
                 	if(!isset($post))
 					{
-						$this->load->view('pages/profile/index');
+						redirect('pages/profile/'.$userId);
 					}
 	                else
 	                {

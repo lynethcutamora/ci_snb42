@@ -464,7 +464,7 @@ theForm.scrolly.value = scrolly;
                                       <div class="form-group">
                                         <label for="inputDescription" class="col-sm-2 control-label">About Me</label>
                                         <div class="col-sm-9">
-                                          <textarea class="form-control" name="inputDescription" id="inputDescription" required="required" placeholder="Short Self-Description"  value="<?php echo $userdtl['user_shortSelfDescription']; ?>"></textarea>
+                                          <input type="text" class="form-control" name="inputDescription" id="inputDescription" required="required" placeholder="Short Self-Description"  value="<?php echo $userdtl['user_shortSelfDescription']; ?>">
                                         </div>
                                       </div>
                     
@@ -480,46 +480,53 @@ theForm.scrolly.value = scrolly;
                                       <div class="form-group">
                                         <label for="inputLName" class="col-sm-2 control-label">Last Name</label>
                                           <div class="col-sm-9"> 
-                                          <input type="text" class="form-control" name="inputLName" id="inputLName" placeholder="New Last Name" value="<?php echo set_value('inputLName'); ?>">
+                                          <input type="text" class="form-control" name="inputLName" id="inputLName" required="required" placeholder="New Last Name" value="<?php echo $userdtl['user_lName']; ?>">
                                           </div>
                                       </div>
                                       <div class="form-group">
                                         <label for="inputFName" class="col-sm-2 control-label">First Name</label>
                                         <div class="col-sm-9">
-                                          <input type="text" class="form-control" name="inputFName" id="inputFName" placeholder="New First Name" value="<?php echo set_value('inputFName'); ?>">
+                                          <input type="text" class="form-control" name="inputFName" id="inputFName" required="required" placeholder="New First Name" value="<?php echo $userdtl['user_fName']; ?>">
+                                        </div>
+                                      </div>
+
+                                      <div class="form-group">
+                                        <label for="inputFName" class="col-sm-2 control-label">Middle Initial</label>
+                                        <div class="col-sm-9">
+                                          <input type="text" class="form-control" name="inputMI" maxlength="2" id="inputMI" required="required" required="required" placeholder="Middle Initial" value="<?php echo $userdtl['user_midInit']; ?>">
                                         </div>
                                       </div>
                     
                                       <div class="form-group">
                                         <label for="inputAge" class="col-sm-2 control-label">Age</label>
                                         <div class="col-sm-2">
-                                          <input type="text" class="form-control" name="inputAge" id="inputAge" placeholder="Age" value="<?php echo set_value('inputAge'); ?>">
+                                          <input type="text" class="form-control" name="inputAge" id="inputAge" required="required" placeholder="Age" value="<?php echo $userdtl['user_age']; ?>">
                                         </div>
                                       </div>
         
                                       <div class="form-group">
                                         <label for="inputAddress1" class="col-sm-2 control-label">Address Line 1</label>
                                         <div class="col-sm-9">
-                                          <input type="text" class="form-control" name="inputAdress1" id="inputAdress1" placeholder="Street address, Barangay, District / Company Name"  value="<?php echo set_value('inputAdress1'); ?>">
+                                          <input type="text" class="form-control" name="inputAdress1" id="inputAdress1" required="required" placeholder="Street address, Barangay, District / Company Name"  value="<?php echo $userdtl['location_address1']; ?>">
                                         </div>
                                       </div>
                                       <div class="form-group">
                                         <label for="inputCity" class="col-sm-2 control-label">City</label>
                                         <div class="col-sm-9">
-                                          <input type="text" class="form-control" name="inputCity" id="inputCity" placeholder="City"  value="<?php echo set_value('inputCity'); ?>">
+                                          <input type="text" class="form-control" name="inputCity" id="inputCity" required="required" placeholder="City"  value="<?php echo $userdtl['location_city']; ?>">
                                         </div>
                                       </div>
                     
                                       <div class="form-group">
                                         <label for="inputCounty" class="col-sm-2 control-label">Country</label>
                                         <div class="col-sm-9">
-                                          <input type="text" class="form-control" name="inputCounty" id="inputCounty" placeholder="Country"  value="<?php echo set_value('inputCounty'); ?>">
+                                          <input type="text" class="form-control" name="inputCounty" id="inputCounty" required="required" placeholder="Country"  value="<?php echo $userdtl['location_country']; ?>">
                                         </div>
                                       </div>
                                       <div class="form-group">
                                         <label for="inputDescription" class="col-sm-2 control-label">About Me</label>
                                         <div class="col-sm-9">
-                                          <textarea class="form-control" name="inputDescription" id="inputDescription" placeholder="Short Self-Description"  value="<?php echo set_value('inputDescription'); ?>"></textarea>
+                                          <input type="text" class="form-control" name="inputDescription" id="inputDescription" required="required" placeholder="Short Self-Description"  value="<?php echo $userdtl['user_shortSelfDescription']; ?>">
                                         </div>
                                       </div>
                     
@@ -529,9 +536,63 @@ theForm.scrolly.value = scrolly;
                                         </div>
                                       </div>
                                   <?php }
-                                  else{
-                                    echo $row['company_name'];
-                                  }
+                                  elseif ($row['user_Type'] == 'Company'){?>
+
+                                      <div class="form-group">
+                                        <label for="inputLName" class="col-sm-2 control-label">Last Name</label>
+                                        <div class="col-sm-9"> 
+                                          <input type="text" class="form-control" name="inputLName" id="inputLName" required="required" placeholder="Business Owner's Last Name" value="<?php echo $userdtl['company_lName']; ?>">
+                                        </div>
+                                      </div>
+
+                                      <div class="form-group">
+                                        <label for="inputFName" class="col-sm-2 control-label">First Name</label>
+                                        <div class="col-sm-9">
+                                          <input type="text" class="form-control" name="inputFName" id="inputFName" required="required" placeholder="Business Owner's First Name" value="<?php echo $userdtl['company_fName']; ?>">
+                                        </div>
+                                      </div>
+
+                                      <div class="form-group">
+                                        <label for="inputMI" class="col-sm-2 control-label">Middle Initial</label>
+                                        <div class="col-md-2">                          
+                                           <input type="text" class="form-control" name="inputMI" id="inputMI" required="required" size="2" placeholder="Middle Initial" value="<?php echo $userdtl['company_midInit']; ?>">
+                                        </div>
+                                      </div>
+
+                                      <div class="form-group">
+                                        <label for="inputCName" class="col-sm-2 control-label">Company Name</label>
+                                        <div class="col-sm-9"> 
+                                          <input type="text" class="form-control" name="inputCName" id="inputCName" required="required" placeholder="Company Name" value="<?php echo $userdtl['company_name']; ?>">
+                                        </div>
+                                      </div>
+                                      
+                                      <div class="form-group">
+                                        <label for="inputBType" class="col-sm-2 control-label">Business Type</label>
+                                        <div class="col-sm-9">
+                                          <input type="text" class="form-control" name="inputBusinessType" id="inputBusinessType" required="required" placeholder="Type of your Business" value="<?php echo $userdtl['company_businessType']; ?>">
+                                        </div>
+                                      </div>
+
+                                      <div class="form-group">
+                                        <label for="inputYear" class="col-sm-2 control-label">Year Founded</label>
+                                        <div class="col-sm-2">
+                                          <input type="text" class="form-control" name="inputYear" id="inputYear" required="required" placeholder="Year Founded" value="<?php echo $userdtl['company_yearFounded']; ?>">
+                                        </div>
+                                      </div>
+
+                                       <div class="form-group">
+                                        <label for="inputDescription" class="col-sm-2 control-label">About</label>
+                                        <div class="col-sm-9">
+                                          <input type="text" class="form-control" name="inputDescription" id="inputDescription" required="required" placeholder="Short Business Description" value="<?php echo $userdtl['company_about']; ?>">
+                                        </div>
+                                      </div>
+
+                                      <div class="form-group">
+                                        <div class="col-sm-offset-2 col-sm-10">
+                                          <button type="submit" class="btn btn-primary" name="btnSave" value="Company">Save</button>
+                                        </div>
+                                      </div>
+                                  <?php }
                               ?>
                              
                           <?php endforeach;?>
@@ -543,54 +604,17 @@ theForm.scrolly.value = scrolly;
                     </div>
 
                     <div class="tab-pane" id="password">
-                      <form class="form-horizontal">
                         <div class="form-group">
                         <div class="row">
                         <div class="col-sm-12">
-                          <?php foreach($profileDtl as $row):?>
-                              <?php
-                                  if($row['user_Type']=='Ideator'||$row['user_Type']=='Investor')
-                                  {?>
-                                    <div class="form-group">
-                                      <label for="inputOldPassword" class="col-sm-2 control-label">Old Password</label>
-                                      <div class="col-sm-9">
-                                        <input type="password" class="form-control" name="inputOldPassword" id="inputOldPassword" placeholder="Old Password" value="<?php echo set_value('inputOldPassword'); ?>">
-                                      </div>
-                                    </div>
-                                    <div class="form-group">
-                                      <label for="inputNewPassword" class="col-sm-2 control-label">New Password</label>
-                                      <div class="col-sm-9">
-                                        <input type="password" class="form-control" name="inputNewPassword" id="inputNewPassword" placeholder="New Password" value="<?php echo set_value('inputNewPassword'); ?>">
-                                      </div>
-                                    </div>
-                                    <div class="form-group">
-                                      <label for="inputNewRepassword" class="col-sm-2 control-label">New Password Confirmation</label>
-                                      <div class="col-sm-9">
-                                        <input type="password" class="form-control" name="inputNewRepassword" id="inputNewRepassword" placeholder="New Password Confirmation" value="<?php echo set_value('inputNewRepassword'); ?>">
-                                      </div>
-                                    </div>
-                                      
-                    
-                    
-                                      <div class="form-group">
-                                        <div class="col-sm-offset-2 col-sm-10">
-                                          <button type="submit" class="btn btn-primary" name="btnSave" value="Ideator">Save</button>
-                                        </div>
-                                      </div>
-                                  </form>     
-                        <!-- /.form-box -->
-                    <?php
-                                  }
-                                  else
-                                  {
-                                    echo $row['company_name'];
-                                  }
-                              ?>
-                          <?php endforeach;?>
-                          </div>
+                        <?php foreach($profileDtl as $row):?>
+                          
+                          
+                          
+                        <?php endforeach;?>
                         </div>
                         </div>
-                      </form>
+                        </div>
                     </div>
 
                   </div><!-- /.tab-pane -->
