@@ -156,7 +156,7 @@
                   <div class="box-body">
                   <div class="box box-widget">
                   <?php 
-                   $query = $this->db->query("SELECT *, COUNT(c.postId) as number_of_comments from comment_dtl c left join userpost v on c.postId = v.postId left join user_md b on v.userId = b.userId left join user_dtl d on b.userId = d.userId left join avatar_dtl e on d.userId = e.userId where commentType = '1' group by c.postId order by number_of_comments desc limit 1");   
+                   $query = $this->db->query("SELECT *, COUNT(c.postId) as number_of_comments from comment_dtl c left join userpost v on c.postId = v.postId left join user_md b on v.userId = b.userId left join user_dtl d on b.userId = d.userId left join avatar_dtl e on d.userId = e.userId where postType = '1' group by c.postId order by number_of_comments desc limit 1");   
                       foreach($query->result() as $row):
                         $this->db->select('*');
                         $this->db->from('badge_dtl');
