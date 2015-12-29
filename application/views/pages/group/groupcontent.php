@@ -220,16 +220,18 @@
                             <p><?php echo $post['postContent'];?></p>
 
                             <!-- Attachment -->
-                            <div class="attachment-block clearfix">
+                            <?php if ($post['extId']!= null){
+                             echo '<div class="attachment-block clearfix">
                               <!--<img class="attachment-img" src="../../dist/img/photo1.png" alt="attachment image">-->
                               <span class="pull-left"><button class="btn btn-app"><i class="fa fa-file"></i></button></span>
                               <div class="attachment-pushed">
-                                <h4 class="attachment-heading"><a href="<?php echo base_url()."pages/post/".$post['postId'];?>"><?php echo $post['postTitle'];?></a></h4>
+                                <h5 class="attachment-heading"><a href=" base_url()."pages/post/".$post[\'postId\'];"><br/>View Post</a></h5>
                                 <div class="attachment-text">
                                   .docx file
                                 </div><!-- /.attachment-text -->
                               </div><!-- /.attachment-pushed -->
-                            </div><!-- /.attachment-block -->
+                            </div><!-- /.attachment-block -->';
+                          } ?>
                           </div><!-- /.box-body -->
                           <!--<div class='box-footer box-comments'>
                             <div class='box-comment'>-->
@@ -255,7 +257,7 @@
                             <!-- </div>/.box-comment -->
                           <!--</div> /.box-footer -->
                           <div class="box-footer">
-                            <form action="#" method="post">
+                            <h5><a href="<?php echo base_url()."pages/post/".$post['postId'];?>"><br/>Comment</a></h5>
                           </div><!-- /.box-footer -->
                         </div><!-- /.box -->
 

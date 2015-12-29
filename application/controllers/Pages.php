@@ -502,6 +502,59 @@ class Pages extends CI_Controller {
 		}
 		
 	}
+	public function updateAccount()
+	{	
+		if(($this->session->userdata('userId')==""))
+		{
+			$this->index();
+		}
+		else
+		{
+			
+			$post=$this->input->post('btnSave');
+			if(!isset($post))
+			{
+				$this->load->view('pages/profile/index');
+			}
+			else if($post=='Ideator')
+			{
+				$this->_changeIdeator();
+			}
+			else if($post=='Investor')
+			{
+				$this->_validationInvestor();
+			}
+			else if($post=='Company')
+			{
+				$this->_validationCompany();
+			}
+
+		}
+		
+	}
+	public function _changeIdeator()
+	{
+		$userId = $this->session->userdata('userId');
+
+		$data = array(
+			'user_lName' => ucfirst(strtolower($this->input->post('inputLName'))),
+			'user_fName' => ucfirst(strtolower($this->input->post('inputFName'))),
+			'user_midInit' => strtoupper($this->input->post('inputMI')),
+			'user_age' => $this->input->post('inputAge'),
+			'user_shortSelfDescription' => $this->input->post('inputDescription'),
+		);
+
+		$data1 = array(
+			'location_address1' => $this->input->post('inputAddress1'),
+			'location_city' => $this->input->post('inputCity'),
+			'location_country' => $this->input->post('inputCountry'),
+		);
+		
+		$this->db->where('userId', $userId);
+		$this->db->update('user_dtl',$data);
+		$this->db->update('location_dtl',$data1);
+		$this->load->view('pages/profile/index');
+	}
 	public function logout()
 	{
 		$this->session->sess_destroy();
@@ -1275,8 +1328,9 @@ class Pages extends CI_Controller {
 		$url = "./post_files/".uniqid(rand()).'.'.$type;
 		if(in_array($type, array("txt", "docx")))
 			if(is_uploaded_file($_FILES["file"]["tmp_name"]))
-				if(move_uploaded_file($_FILES["file"]["tmp_name"],$url))
+				if(move_uploaded_file($_FILES["file"]["tmp_name"],$url)){
 					return $url;
+				}
 		return "";
 	}
 
