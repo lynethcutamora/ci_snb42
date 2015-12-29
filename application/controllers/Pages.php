@@ -1038,14 +1038,16 @@ class Pages extends CI_Controller {
 
 	public function _searchpeople(){
 		$this->db->select('*');
-		$this->db->from('user_dtl');
+		$this->db->from('user_md a');
+		$this->db->join('user_dtl b','a.userId=b.userId','left');
+		$this->db->join('company_dtl c','a.userId=c.userId','left');
 		$this->db->like('user_fName',$this->input->post('txtsearch'),'both');
 		$this->db->or_like('user_lName',$this->input->post('txtsearch'),'both');
+		$this->db->like('company_name',$this->input->post('txtsearch'),'both');
 		$query=$this->db->get();
 
 		return $query;
 	}
-
 	
 
 	public function memberinfo($groupid){
@@ -1067,6 +1069,16 @@ class Pages extends CI_Controller {
 			);
 
 		$this->db->insert('group_ext',$data);
+		$this->group( $this->input->post('groupid'));
+	}
+
+	public function addinvestor(){
+		$data = array(
+				'postId' => $this->input->post('projectid'),
+				'userId' => $this->input->post('userid')
+			);
+		
+		$this->db->insert('investor_dtl',$data);
 		$this->group( $this->input->post('groupid'));
 	}
 

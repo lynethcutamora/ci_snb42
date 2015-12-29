@@ -70,7 +70,7 @@
                       Projects (<?php echo count($allproject); ?>) <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
-                      <?php foreach($allproject as $row):?>
+                      <?php foreach($allproject as $row): $projectid=$row['postId'];?>
                       <li role="presentation"><a role="menuitem" tabindex="-1" name="projectname" href="<?php echo base_url(); ?>pages/group/<?php echo $groupid;?>/<?php echo $row['postId'];?>"><?php echo $row['postTitle'];?></a></li>
                       <?php endforeach;?>
                     </ul>
@@ -89,7 +89,7 @@
                           <div class="box-header">
                             <i class="fa fa-comments-o"></i>
                             <?php foreach($projectdtl as $row):?>
-                            <h3 class="box-title"><?php echo $row['postTitle'];?></h3>
+                            <h3 class="box-title"><?php echo $row['postTitle']; ?></h3>
                             <?php endforeach;?>
                             <div class="box-tools pull-right" data-toggle="tooltip" title="Status">
                               <div class="btn-group" data-toggle="btn-toggle" >
@@ -309,7 +309,7 @@
                     <div class="box-footer">
                       <form method="post" action="#">
                         <div class="input-group">
-                        <input class="form-control" placeholder="Search investors" name="txtsearch" required="required">
+                        <input class="form-control" placeholder="Search investors" name="txtsearchinvestor" required="required">
                           <div class="input-group-btn">
                             <button type="submit"class="btn btn-success pull-right" name="btnsearch"><i class="fa fa-search"></i></button>
                           </div>
@@ -318,25 +318,76 @@
                     </div>
                   </div><!-- /.box -->
                   <?php  endforeach;?>
-                <?php if(isset($_POST['txtsearch'])){
+                <?php 
+                  $searchres=0;
+                  foreach ($searchpeople as $row){
+                    if(isset($_POST['txtsearch'])){
+                      if(trim($row['user_Type'])!='Investor'){
+                        $searchres++;
+                      }
+                    }else if(isset($_POST['txtsearchinvestor'])){
+                      if(trim($row['user_Type'])=='Investor'){
+                        $searchres++;
+                      }
+                    }
+                  }
+
+                  if(isset($_POST['txtsearch'])){
+
                     echo '<div class="box box-solid">
                               <div class="box-header with-border">
-                                <h4>Search Results&nbsp;&nbsp;<span class="label bg-green pull-right">'.count($searchpeople).'</span></h4>
+                                <h4>Search Results&nbsp;&nbsp;<span class="label bg-green pull-right">'.$searchres.'</span></h4>
                               </div>';
                       foreach ($searchpeople as $row):
                         echo'<div class="box-body">';
                           echo '<form method="post" action="'.base_url().'pages/addmember">';
                           echo '<input type="text" hidden="true" name="groupid" value="'.$groupid.'">';
                           echo '<input type="text" hidden="true" name="userid" value="'.$row['userId'].'">';
-                          if($this->post->existsMember($groupid,$row['userId'])==false){
-                            echo '<span class="pull-left"><i class="fa fa-user" style="color:gray;"></i></span>
-                                  <p class="text-muted">&nbsp;&nbsp;'.$row['user_fName']." ".$row['user_midInit'].". ".$row['user_lName'].'
-                                  <span class="pull-right"><button name="btnaddmember" class="form-control btn-primary" type="submit"><i class="fa fa-user-plus"></i></button></span></p>';
-                          }else{
-                            echo '<span class="pull-left"><i class="fa fa-user" style="color:gray;"></i></span>
-                                  <p class="text-muted">&nbsp;&nbsp;'.$row['user_fName']." ".$row['user_midInit'].". ".$row['user_lName'].'
-                                  <span class="pull-right"><button name="btnaddmember" class="form-control btn disabled" disabled><i class="fa fa-user-plus"></i></button></span></p>';                      
-                         }
+                          if(trim($row['user_Type'])!='Investor'){
+                            if($this->post->existsMember($groupid,$row['userId'])==false){
+                              echo '<span class="pull-left"><i class="fa fa-user" style="color:gray;"></i></span>
+                                    <p class="text-muted">&nbsp;&nbsp;'.$row['user_fName']." ".$row['user_midInit'].". ".$row['user_lName'].'
+                                    <span class="pull-right"><button name="btnaddmember" class="form-control btn-primary" type="submit"><i class="fa fa-user-plus"></i></button></span></p>';
+                            }else{
+                              echo '<span class="pull-left"><i class="fa fa-user" style="color:gray;"></i></span>
+                                    <p class="text-muted">&nbsp;&nbsp;'.$row['user_fName']." ".$row['user_midInit'].". ".$row['user_lName'].'
+                                    <span class="pull-right"><button name="btnaddmember" class="form-control btn disabled" disabled><i class="fa fa-user-plus"></i></button></span></p>';                      
+                           }
+                          }
+                          echo '</form>';
+                        echo'</div>';
+                      endforeach;
+                    echo '<div class="box-footer">
+                              <form method="post" action="">
+                                <button type="submit"class="btn btn-deafult pull-left" name="btndone">done</button>         
+                              </form>
+                            </div>
+                          </div>
+                    ';
+                  }
+
+                  if(isset($_POST['txtsearchinvestor'])){
+
+                    echo '<div class="box box-solid">
+                              <div class="box-header with-border">
+                                <h4>Search Results&nbsp;&nbsp;<span class="label bg-green pull-right">'.$searchres.'</span></h4>
+                              </div>';
+                      foreach ($searchpeople as $row):
+                        echo'<div class="box-body">';
+                          echo '<form method="post" action="'.base_url().'pages/addinvestor">';
+                          echo '<input type="text" hidden="true" name="projectid" value="'.$projectid.'">';
+                          echo '<input type="text" hidden="true" name="userid" value="'.$row['userId'].'">';
+                          if(trim($row['user_Type'])=='Investor'){
+                            if($this->post->existsMember($groupid,$row['userId'])==false){
+                              echo '<span class="pull-left"><i class="fa fa-user" style="color:gray;"></i></span>
+                                    <p class="text-muted">&nbsp;&nbsp;'.$row['userId'].$row['user_fName']." ".$row['user_midInit'].". ".$row['user_lName'].'
+                                    <span class="pull-right"><button name="btnaddmember" class="form-control btn-primary" type="submit"><i class="fa fa-user-plus"></i></button></span></p>';
+                            }else{
+                              echo '<span class="pull-left"><i class="fa fa-user" style="color:gray;"></i></span>
+                                    <p class="text-muted">&nbsp;&nbsp;'.$row['user_fName']." ".$row['user_midInit'].". ".$row['user_lName'].'
+                                    <span class="pull-right"><button name="btnaddmember" class="form-control btn disabled" disabled><i class="fa fa-user-plus"></i></button></span></p>';                      
+                           }
+                          }
                           echo '</form>';
                         echo'</div>';
                       endforeach;
