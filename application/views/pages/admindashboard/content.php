@@ -37,27 +37,50 @@
                           </tr>
                         </thead>
                         <tbody>
+                        <?php 
+                        $this->db->select('*');
+                        $this->db->from('user_md');
+                        $this->db->where('user_Type','Ideator');
+                        $query = $this->db->get();
+                        $ideator = $query->num_rows();
+
+                        $this->db->select('*');
+                        $this->db->from('user_md');
+                        $this->db->where('user_Type','Investor');
+                        $query = $this->db->get();
+                        $investor = $query->num_rows();
+
+                        $this->db->select('*');
+                        $this->db->from('company_dtl');
+                        $query = $this->db->get();
+                        $company = $query->num_rows();
+
+                        $total = ($ideator)+($investor)+($company);
+                        ?>
+
+
                           <tr>
                             <td>Ideators</td>
-                            <td><a href="#"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;250</td>
+                            <td><a href="#"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $ideator;?></td>
                             
                           </tr>
                           <tr>
                             <td>Investors</td>
-                            <td><a href="#"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;300</td>
+                            <td><a href="#"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $investor;?></td>
                           </tr>
                           <tr>
                             <td>Company</td>
-                            <td><a href="#"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;400</td>
+                            <td><a href="#"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $company;?></td>
                           </tr>
                           <tr>
                             <th>Total:</th>
-                            <td><a href="#"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>950</b></td>
+                            <td><a href="#"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b><?php echo $total;?></b></td>
                           </tr>
                         </tbody>
                       </table>
                     </div><!-- /.table-responsive -->
                   </div><!-- /.box-body -->
+                </div>
 <!------------------------------------------------end-->
             <div class="box box-info">
                   <div class="box-header with-border">
@@ -78,41 +101,22 @@
                           </tr>
                         </thead>
                         <tbody>
+                          <?php 
+                        
+                        $query = $this->db->query("SELECT * from user_md a left join user_dtl b on a.userId = b.userId where user_dateRegistered between date_sub(now(),INTERVAL 1 WEEK) AND now() group by user_dateRegistered order by user_dateRegistered desc");
+                                foreach($query->result() as $row):
+                          ?>
                           <tr>
-                            <td>12575880</td>
-                            <td><a href="#"></a>Edelito D. Albaracin Jr.</td>
-                            <td>Investor</td>
-                            <td>12/02/15</td>
+                            <td><?php echo $row->userId?></td>
+                            <td><a href="#"></a><?php echo $row->user_fName;?>&nbsp;<?php echo $row->user_midInit;?>.&nbsp;<?php echo $row->user_lName;?></td>
+                            <td><?php echo $row->user_Type?></td>
+                            <td><?php echo $row->user_dateRegistered?></td>
                           </tr>
-                          <tr>
-                            <td>12575881</td>
-                            <td><a href="#"></a>Lyneth Cutamora</td>
-                            <td>Ideator</td>
-                            <td>12/03/15</td>
-                          </tr>
-                          <tr>
-                            <td>12575882</td>
-                            <td><a href="#"></a>Jason Pitogo</td>
-                            <td>Company</td>
-                            <td>12/04/15</td>
-                          </tr>
-                          <tr>
-                            <td>12575883</td>
-                            <td><a href="#"></a>Alfie Dimpas</td>
-                            <td>Ideator</td>
-                            <td>12/05/15</td>
-                          </tr>
-                          <tr>
-                            <td>12575884</td>
-                            <td><a href="#"></a>Enting Isidro Estose</td>
-                            <td>Ideator</td>
-                            <td>12/06/15</td>
-                          </tr>
+                           <?php endforeach ?>
                         </tbody>
                       </table>
                     </div><!-- /.table-responsive -->
                   </div><!-- /.box-body -->
-
                   <div class="box-footer clearfix">
                     <a class="btn btn-app btn-flat pull-right" button onclick="print()">
                     <i class="fa fa-save"></i> Print 
@@ -120,12 +124,7 @@
                   </div><!-- /.box-footer -->
                 </div><!-- /.box -->
 
-              <!-- ======================================================= -->
-              
-                  <div>
-                    <p>Visit our Facebook Page by clicking the clink below:<br/><a href="#">facebook/startandboost</a><br/><br/>Start and Boost by $index[5].<br/></p>
-                  </div>
-                
+                              
               </div><!-- /.col -->
             </div><!--/.row-->
         </section><!-- /.content -->

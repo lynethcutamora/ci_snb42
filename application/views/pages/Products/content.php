@@ -7,8 +7,6 @@
           </h1>
            <div class="row">
 <!------------------------------------------------------>
-
-          <div class="box box-primary">
                   <div class="box-header with-border">  
                   </div><!-- /.box-header -->
                   <div class="box-body">
@@ -79,7 +77,6 @@
                         <span class='description'><?php echo $row->postDate;?></span>
                       </div><!-- /.user-block -->
                       <div class='box-tools'>
-                        <button class='btn btn-box-tool' data-toggle='tooltip' title='Mark as read'><i class='fa fa-circle-o'></i></button>
                         <button class='btn btn-box-tool' data-widget='collapse'><i class='fa fa-minus'></i></button>
                       </div><!-- /.box-tools -->
                     </div><!-- /.box-header -->
@@ -107,16 +104,10 @@
                       <span class='pull-right text-muted'><?php echo $like;?> likes - <?php echo $comment;?> comments</span>
                     </div><!-- /.box-body -->
                     <?php  endforeach;?>
-              </div><!-- /.box -->
             </div><!-- /.col -->
          
-        <section class="content-footer"><center>
-          <ol class="breadcrumb">
-            <li><a href="../Products/index.php">See More Previous Post</a></li>
-          </ol>
-          </center>
-        </section>
-        </section><!-- /.content -->
+       
+       
          <div class="info-box bg-aqua">
                     <span class="info-box-icon"><i class="fa fa-thumbs-o-up"></i></span>
                     <div class="info-box-content">
@@ -134,5 +125,5 @@
                   <div>
                     <p>Visit our Facebook Page by clicking the clink below:<br/><a href="#">facebook/startandboost</a><br/><br/>Start and Boost by $index[5].<br/></p>
                   </div>
-
+          </section><!-- /.content -->
       </div><!-- /.content-wrapper -->
