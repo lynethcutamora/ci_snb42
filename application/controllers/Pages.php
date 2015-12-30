@@ -471,6 +471,69 @@ class Pages extends CI_Controller {
 		}
 		
 	}
+	public function updateAccount()
+	{	
+		if(($this->session->userdata('userId')!=""))
+		{
+		
+			
+			$post=$this->input->post('btnSave');
+			if(!isset($post))
+			{
+				$this->load->view('pages/register/index');
+			}
+			else if($post=='Ideator' || $post=='Investor')
+			{
+				$this->_changeIdeator();
+			}
+			else if($post=='Company')
+			{
+				$this->_changeCompany();
+			}
+
+		}
+		
+	}
+	public function _changeIdeator()
+	{
+		$userId = $this->session->userdata('userId');
+
+		$data = array(
+			'user_lName' => ucfirst(strtolower($this->input->post('inputLName'))),
+			'user_fName' => ucfirst(strtolower($this->input->post('inputFName'))),
+			'user_midInit' => strtoupper($this->input->post('inputMI')),
+			'user_age' => $this->input->post('inputAge'),
+			'user_shortSelfDescription' => $this->input->post('inputDescription'),
+			);
+		$data1 = array(
+			'location_address1' => $this->input->post('inputAddress1'),
+			'location_city' => $this->input->post('inputCity'),
+			'location_country' => $this->input->post('inputCountry'),
+			);
+
+		$this->db->where('userId', $userId);
+		$this->db->update('user_dtl', $data);
+		$this->db->update('location_dtl', $data1);
+		redirect('pages/profile');
+	}
+	public function _changeCompany()
+	{
+		$userId = $this->session->userdata('userId');
+
+		$data = array(
+			'company_lName' => ucfirst(strtolower($this->input->post('inputLName'))),
+			'company_fName' => ucfirst(strtolower($this->input->post('inputFName'))),
+			'company_midInit' => strtoupper($this->input->post('inputMI')),
+			'company_name' => $this->input->post('inputCName'),
+			'company_businessType' => $this->input->post('inputBusinessType'),
+			'company_yearFounded' => $this->input->post('inputYear'),
+			'company_about' => $this->input->post('inputDescription'),
+			);
+
+		$this->db->where('userId', $userId);
+		$this->db->update('company_dtl', $data);
+		redirect('pages/profile');
+	}
 	public function logout()
 	{
 		$this->session->sess_destroy();
