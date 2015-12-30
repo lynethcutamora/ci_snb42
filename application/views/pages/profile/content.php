@@ -607,8 +607,8 @@ theForm.scrolly.value = scrolly;
                         <div class="form-group">
                         <div class="row">
                         <div class="col-sm-12">
-                      
-                              
+                        
+                              <?php form_open('../pages/');?>      
                               <div class='form-group'>
                                       <label for='inputOldPassword' class='col-sm-2 control-label'>Old Password</label>
                                       <div class='col-sm-9'>
@@ -938,17 +938,6 @@ theForm.scrolly.value = scrolly;
                         </br>
                         </br>
                         </br>
-<<<<<<< HEAD
-
-=======
-<<<<<<< HEAD
-
-                      
-          
-
-=======
->>>>>>> b9c095dd2542239395e9973fc52ca9044e6e5e29
->>>>>>> 56004864e400fc2591f1196fcf120c010c776c87
               </div>
             </div>
             </center>
