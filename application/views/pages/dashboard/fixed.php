@@ -67,7 +67,7 @@
                   <span class="label label-success">4</span>
                 </a>
                 <ul class="dropdown-menu">
-                  <li class="header">You have 4 messages</li>
+                  <li class="header"></li>
                   <li>
                     <!-- inner menu: contains the actual data -->
                     <ul class="menu">
@@ -293,13 +293,13 @@
                   <!-- Menu Body -->
                   <li class="user-body">
                     <div class="col-xs-4 text-center">
-                      <a href="#">Followers</a>
+                      <a href="#">Gold</a>
                     </div>
                     <div class="col-xs-4 text-center">
-                      <a href="#">Sales</a>
+                      <a href="#">Silver</a>
                     </div>
                     <div class="col-xs-4 text-center">
-                      <a href="#">Friends</a>
+                      <a href="#">Bronze</a>
                     </div>
                   </li>
                   <!-- Menu Footer-->
@@ -315,7 +315,7 @@
               </li>
               <!-- Control Sidebar Toggle Button -->
               <li>
-                <a href="#" data-toggle="control-sidebar"><i class="fa fa-users"></i></a>
+                <a href="#" data-toggle="control-sidebar"></a>
               </li>
             </ul>
           </div>
@@ -357,11 +357,11 @@
             </div>
           </div>
           <!-- search form -->
-          <form action="<?php echo  base_url()."pages/search";?>" method="post" class="sidebar-form">
+          <form action="<?php echo  base_url()."pages/search_proxy";?>" method="post" class="sidebar-form">
             <div class="input-group">
               <input type="text" name="key" class="form-control" required="required"placeholder="Search...">
               <span class="input-group-btn">
-                <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i></button>
+                <button type="submit" name="search" id="search" class="btn btn-flat"><i class="fa fa-search"></i></button>
               </span>
             </div>
           </form>

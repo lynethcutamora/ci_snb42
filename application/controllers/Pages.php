@@ -282,8 +282,12 @@ class Pages extends CI_Controller {
 					$data['groupDtl'] = $groupDetails->result_array();
 					$memberinfo= $this->memberinfo($groupId);
 					$data['memberinfo'] = $memberinfo->result_array();
+					$investorinfo= $this->investorinfo($projectId);
+					$data['investorinfo'] = $investorinfo->result_array();
 					$search= $this->_searchpeople();
 					$data['searchpeople'] = $search->result_array();
+					$searchinvestor= $this->_searchinvestor();
+					$data['searchinvestor'] = $searchinvestor->result_array();
 				}
 			}			
 			else $this->index();
@@ -471,6 +475,69 @@ class Pages extends CI_Controller {
 		}
 		
 	}
+	public function updateAccount()
+	{	
+		if(($this->session->userdata('userId')!=""))
+		{
+		
+			
+			$post=$this->input->post('btnSave');
+			if(!isset($post))
+			{
+				$this->load->view('pages/register/index');
+			}
+			else if($post=='Ideator' || $post=='Investor')
+			{
+				$this->_changeIdeator();
+			}
+			else if($post=='Company')
+			{
+				$this->_changeCompany();
+			}
+
+		}
+		
+	}
+	public function _changeIdeator()
+	{
+		$userId = $this->session->userdata('userId');
+
+		$data = array(
+			'user_lName' => ucfirst(strtolower($this->input->post('inputLName'))),
+			'user_fName' => ucfirst(strtolower($this->input->post('inputFName'))),
+			'user_midInit' => strtoupper($this->input->post('inputMI')),
+			'user_age' => $this->input->post('inputAge'),
+			'user_shortSelfDescription' => $this->input->post('inputDescription'),
+			);
+		$data1 = array(
+			'location_address1' => $this->input->post('inputAddress1'),
+			'location_city' => $this->input->post('inputCity'),
+			'location_country' => $this->input->post('inputCountry'),
+			);
+
+		$this->db->where('userId', $userId);
+		$this->db->update('user_dtl', $data);
+		$this->db->update('location_dtl', $data1);
+		redirect('pages/profile');
+	}
+	public function _changeCompany()
+	{
+		$userId = $this->session->userdata('userId');
+
+		$data = array(
+			'company_lName' => ucfirst(strtolower($this->input->post('inputLName'))),
+			'company_fName' => ucfirst(strtolower($this->input->post('inputFName'))),
+			'company_midInit' => strtoupper($this->input->post('inputMI')),
+			'company_name' => $this->input->post('inputCName'),
+			'company_businessType' => $this->input->post('inputBusinessType'),
+			'company_yearFounded' => $this->input->post('inputYear'),
+			'company_about' => $this->input->post('inputDescription'),
+			);
+
+		$this->db->where('userId', $userId);
+		$this->db->update('company_dtl', $data);
+		redirect('pages/profile');
+	}
 	public function logout()
 	{
 		$this->session->sess_destroy();
@@ -502,7 +569,8 @@ class Pages extends CI_Controller {
 				
 			);
 			$this->session->set_userdata($data);
-			$this->index();
+			header('Location:'.base_url());
+
 		}
 		else // incorrect username or password
 		{
@@ -953,17 +1021,26 @@ class Pages extends CI_Controller {
 	public function _searchpeople(){
 		$this->db->select('*');
 		$this->db->from('user_md a');
-		$this->db->join('user_dtl b','a.userId=b.userId','left');
 		$this->db->join('company_dtl c','a.userId=c.userId','left');
+		$this->db->join('user_dtl b','a.userId=b.userId','left');
 		$this->db->like('user_fName',$this->input->post('txtsearch'),'both');
 		$this->db->or_like('user_lName',$this->input->post('txtsearch'),'both');
-		$this->db->like('company_name',$this->input->post('txtsearch'),'both');
+		$this->db->or_like('company_name',$this->input->post('txtsearch'),'both');
 		$query=$this->db->get();
 
 		return $query;
 	}
 	
+	public function _searchinvestor(){
+		$this->db->select('*');
+		$this->db->from('user_md a');
+		$this->db->join('user_dtl b','a.userId=b.userId','left');
+		$this->db->like('user_fName',$this->input->post('txtsearchinvestor'),'both');
+		$this->db->or_like('user_lName',$this->input->post('txtsearchinvestor'),'both');
+		$query=$this->db->get();
 
+		return $query;
+	}
 	public function memberinfo($groupid){
 		$this->db->select('*');
 		$this->db->from('group_ext a');
@@ -976,6 +1053,18 @@ class Pages extends CI_Controller {
 		return $query;
 	}
 
+	public function investorinfo($projectid){
+		$this->db->select('*');
+		$this->db->from('investor_dtl a');
+		$this->db->join('avatar_dtl b', 'a.userId=b.userId','left');
+		$this->db->join('badge_dtl c', 'a.userId=c.userId', 'left');
+		$this->db->join('user_dtl e', 'a.userId=e.userId', 'left');
+		$this->db->where('a.postId',$projectid);
+		$query=$this->db->get();
+
+		return $query;
+	}
+
 	public function addmember(){
 		$data = array(
 				'groupId' => $this->input->post('groupid'),
@@ -983,7 +1072,7 @@ class Pages extends CI_Controller {
 			);
 
 		$this->db->insert('group_ext',$data);
-		$this->group( $this->input->post('groupid'));
+		header('Location:'.base_url().'pages/group/'.$this->input->post('groupid'));
 	}
 
 	public function addinvestor(){
@@ -993,7 +1082,7 @@ class Pages extends CI_Controller {
 			);
 		
 		$this->db->insert('investor_dtl',$data);
-		$this->group( $this->input->post('groupid'));
+		header('Location:'.base_url().'pages/group/'.$this->input->post('groupid').'/'.$this->input->post('projectid'));
 	}
 
 	public function badge()
@@ -1174,7 +1263,7 @@ class Pages extends CI_Controller {
 			return TRUE;
 		}
 	}
-	public function search()
+	public function search($key)
 	{	
 		if(($this->session->userdata('userId')!=""))
 		{
@@ -1185,7 +1274,7 @@ class Pages extends CI_Controller {
 		$groupquery= $this->groupdetails();
 		$data['groupdetails'] = $groupquery->result_array();
 
-		if($this->input->post('key')==null){
+		if($key==null){
 			$idea= $this->post->searchIdea('asdsdwq1qweskdqw213ew9eqwek12ewe91ewkqe212945rfre544e331e23d32d!#$2');
 			$data['idea'] = $idea->result_array();
 			$group= $this->post->searchGroup('asdsdwq1qweskdqw213ew9eqwek12ewe91ewkqe212945rfre544e331e23d32d!#$2');
@@ -1194,11 +1283,11 @@ class Pages extends CI_Controller {
 			$data['people'] = $people->result_array();
 
 		}else{
-		$idea= $this->post->searchIdea($this->input->post('key'));
+		$idea= $this->post->searchIdea($key);
 		$data['idea'] = $idea->result_array();
-		$group= $this->post->searchGroup($this->input->post('key'));
+		$group= $this->post->searchGroup($key);
 		$data['group'] = $group->result_array();
-		$people= $this->post->searchPeople($this->input->post('key'));
+		$people= $this->post->searchPeople($key);
 		$data['people'] = $people->result_array();
 
 		}
@@ -1216,6 +1305,12 @@ class Pages extends CI_Controller {
 		}
 	}
 		
+	public function search_proxy() {
+   	 $search_query = $this->input->post('key');
+    // if needed urlencode or other search query manipulation
+    	redirect('pages/search/'.$search_query);
+	}
+
 	public function postGroup($groupid,$projectid)
 	{	
          $this->form_validation->set_rules('inputDescription', 'Description', 'required|trim');
@@ -1340,14 +1435,25 @@ class Pages extends CI_Controller {
 			
 				$this->load->view('pages/post1/collapsed',$data);
 				$this->load->view('pages/post1/content',$data);
-			 
-				
-				
 
-
-
-			
 	}
 
+public function send()
+{
+			$datetime = date('Y-m-d H:i:s'); 
+			$userId = uniqid(); 
+			$picId = uniqid('pi'); 
+			$password=$this->input->post('inputPassword');
+			$locationId = uniqid('li');
+
+			$data = array(
+			'msgId' => $this->input->post('msgId'),
+			'dataSent' =>$datetime,
+			'userId' =>	$this->input->post('userId'),
+			'msgContent' => $this->input->post('Message')
+			);
+
+			$this->db->insert('conference_dtl', $data);
+	}
 
 }
