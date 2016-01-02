@@ -22,7 +22,6 @@
             <!-- TABLE: TOP 5 IDEAS -->
                 <div class="box box-info">
                   <div class="box-header with-border">
-                    <img src="" class="user-image" alt="User Image">
                     <h3 class="box-title">Users Info</h3>
                     <div class="box-tools pull-right">
                       <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
@@ -45,96 +44,46 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <td>12575880</td>
-                        <td><a href="#">Edelito D. Albaracin Jr.</a></td>
-                        <td> 100</td>
-                        <td><span class="fa fa-circle text-success">Online</td>
+                        <?php 
+                        $query = $this->db->query("SELECT * from user_md a left join user_dtl b on a.userId = b.userId where user_status = '1'");
+                            foreach($query->result() as $row):
+                        $this->db->select('*');
+                        $this->db->from('badge_dtl');
+                        $this->db->where('voteBadge','1');
+                        $this->db->where('userId',$row->userId);
+                        $query = $this->db->get();
+                        $gold = $query->num_rows();
+
+                        $this->db->select('*');
+                        $this->db->from('badge_dtl');
+                        $this->db->where('voteBadge','2');
+                        $this->db->where('userId',$row->userId);
+                        $query = $this->db->get();
+                        $silver = $query->num_rows();
+
+                        $this->db->select('*');
+                        $this->db->from('badge_dtl');
+                        $this->db->where('voteBadge','3');
+                        $this->db->where('userId',$row->userId);
+                        $query = $this->db->get();
+                        $bronze = $query->num_rows();
+
+                        $this->db->select('*');
+                        $this->db->from('badge_dtl');
+                        $this->db->where('voteBadge','4');
+                        $this->db->where('userId',$row->userId);
+                        $query = $this->db->get();
+                        $black = $query->num_rows();
+
+                        $rep = (($gold*20)+($silver*10)+($bronze*5))-($black*15);
+                        ?>
+                      <tr> 
+                        <td><?php echo $row->userId;?></td>
+                        <td><a href="#"><?php echo $row->user_fName;?>&nbsp;<?php echo $row->user_midInit;?>.&nbsp;<?php echo $row->user_lName;?> </a></td>
+                        <td><i class="fa fa-star" style="color:#ffd700;"></i>&nbsp;<span class="label label-default"><?php echo $rep;?></span></td>
+                        <td><span class="fa fa-circle text-success"><?php if($row->user_status=='1')echo 'Online';?></td>
                       </tr>
-                      <tr>
-                        <td>12575881</td>
-                        <td><a href="#">Jason D. Pitogo</a></td>
-                        <td> 20</td>
-                        <td><span class="fa fa-circle text-success">Online</td>
-                      </tr>
-                      <tr>
-                        <td>12575882</td>
-                        <td><a href="#">Jhuana Dimpas</a></td>
-                        <td> 40</td>
-                        <td><span class="fa fa-circle text-success">Online</td>
-                      </tr>
-                      <tr>
-                        <td>12575883</td>
-                        <td><a href="#">Thelma Albaracin</a></td>
-                        <td> 50</td>
-                        <td><span class="fa fa-circle text-success">Online</td>
-                      </tr>
-                      <tr>
-                        <td>12575884</td>
-                        <td><a href="#">Lyneth Cutamora</a></td>
-                        <td> 70</td>
-                        <td><span class="fa fa-circle text-success">Online</td>
-                      </tr>
-                      <tr>
-                        <td>12575885</td>
-                        <td><a href="#">Alfie Dimpas</a></td>
-                        <td> 90</td>
-                        <td><span class="fa fa-circle text-success">Online</td>
-                      </tr>
-                      <tr>
-                        <td>12575886</td>
-                        <td><a href="#">Enting Isidro Estose</a></td>
-                        <td> 10</td>
-                        <td><span class="fa fa-circle text-success">Online</td>
-                      </tr>
-                      <tr>
-                        <td>12575887</td>
-                        <td><a href="#">Jireh Albaracin</a></td>
-                        <td> 60</td>
-                        <td><span class="fa fa-circle text-success">Online</td>
-                      </tr>
-                      <tr>
-                        <td>12575888</td>
-                        <td><a href="#">Jamaica Fuentes</a></td>
-                        <td> 50</td>
-                        <td><span class="fa fa-circle text-success">Online</td>
-                      </tr>
-                      <tr>
-                        <td>12575889</td>
-                        <td><a href="#">Ethel Jeanne Reyes</a></td>
-                        <td> 20</td>
-                        <td><span class="fa fa-circle text-success">Online</td>
-                      </tr>
-                      <tr>
-                        <td>12575810</td>
-                        <td><a href="#">Angelu Berame</a></td>
-                        <td> 30</td>
-                        <td><span class="fa fa-circle text-success">Online</td>
-                      </tr>
-                      <tr>
-                        <td>12575811</td>
-                        <td><a href="#">Roy Dangcalan</a></td>
-                        <td> 70</td>
-                        <td><span class="fa fa-circle text-success">Online</td>
-                      </tr>
-                      <tr>
-                        <td>12575812</td>
-                        <td><a href="#">Bill Gates</a></td>
-                        <td> 60</td>
-                        <td><span class="fa fa-circle text-success">Online</td>
-                      </tr>
-                      <tr>
-                        <td>12575813</td>
-                        <td><a href="#">Steve Jobs</a></td>
-                        <td> 10</td>
-                        <td><span class="fa fa-circle text-success">Online</td>
-                      </tr>
-                      <tr>
-                        <td>12575814</td>
-                        <td><a href="#">Coline Garcia</a></td>
-                        <td> 60</td>
-                        <td><span class="fa fa-circle text-success">Online</td>
-                      </tr>
+                         <?php  endforeach;?>
                         </tbody>
                       </table>
                     </div><!-- /.table-responsive -->

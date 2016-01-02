@@ -22,7 +22,6 @@
             <!-- Donut chart -->
               <div class="box box-primary">
                 <div class="box-header with-border">
-                  <img src="" class="user-image" alt="User Image">
                   <h3 class="box-title">Percentage of User's Registered</h3>
                   <div class="box-tools pull-right">
                     <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
@@ -30,12 +29,11 @@
                   </div>
                 </div>
                 <div class="box-body">
-                  <div id="donut-chart" style="height: 300px;"></div>
+                  <div id="donut-chart" style="height: 300px;"></div></div></div>
 
 <!-------------------end-->
             <div class="box box-primary">
                 <div class="box-header with-border">
-                  <img src="" class="user-image" alt="User Image">
                   <h3 class="box-title">Percentage of User's Activity</h3>
                   <div class="box-tools pull-right">
                     <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
