@@ -101,7 +101,8 @@
                      
                     </div><!-- /.box-body -->
                     <div class="box-footer">
-                      <form action="#" method="post">
+
+                      <form method="post"  onsubmit="SubmitFormData();">
                         <div class="input-group">
                           <input type="text" name="message" placeholder="Type Message ..." class="form-control">
                           <span class="input-group-btn">

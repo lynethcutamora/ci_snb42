@@ -48,7 +48,6 @@ theForm.scrolly.value = scrolly;
                     <span class="description"> <?php echo $postdtl['postDate'];?></span>
                   </div><!-- /.user-block -->
                   <div class="box-tools">
-                    <button class="btn btn-box-tool" data-toggle="tooltip" title="Mark as read"><i class="fa fa-circle-o"></i></button>
                     <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
                     <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
                   </div><!-- /.box-tools -->

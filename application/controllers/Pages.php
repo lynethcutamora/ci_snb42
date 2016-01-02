@@ -569,7 +569,8 @@ class Pages extends CI_Controller {
 				
 			);
 			$this->session->set_userdata($data);
-			$this->index();
+			header('Location:'.base_url());
+
 		}
 		else // incorrect username or password
 		{
@@ -1262,7 +1263,7 @@ class Pages extends CI_Controller {
 			return TRUE;
 		}
 	}
-	public function search()
+	public function search($key)
 	{	
 		if(($this->session->userdata('userId')!=""))
 		{
@@ -1273,7 +1274,7 @@ class Pages extends CI_Controller {
 		$groupquery= $this->groupdetails();
 		$data['groupdetails'] = $groupquery->result_array();
 
-		if($this->input->post('key')==null){
+		if($key==null){
 			$idea= $this->post->searchIdea('asdsdwq1qweskdqw213ew9eqwek12ewe91ewkqe212945rfre544e331e23d32d!#$2');
 			$data['idea'] = $idea->result_array();
 			$group= $this->post->searchGroup('asdsdwq1qweskdqw213ew9eqwek12ewe91ewkqe212945rfre544e331e23d32d!#$2');
@@ -1282,11 +1283,11 @@ class Pages extends CI_Controller {
 			$data['people'] = $people->result_array();
 
 		}else{
-		$idea= $this->post->searchIdea($this->input->post('key'));
+		$idea= $this->post->searchIdea($key);
 		$data['idea'] = $idea->result_array();
-		$group= $this->post->searchGroup($this->input->post('key'));
+		$group= $this->post->searchGroup($key);
 		$data['group'] = $group->result_array();
-		$people= $this->post->searchPeople($this->input->post('key'));
+		$people= $this->post->searchPeople($key);
 		$data['people'] = $people->result_array();
 
 		}
@@ -1304,6 +1305,12 @@ class Pages extends CI_Controller {
 		}
 	}
 		
+	public function search_proxy() {
+   	 $search_query = $this->input->post('key');
+    // if needed urlencode or other search query manipulation
+    	redirect('pages/search/'.$search_query);
+	}
+
 	public function postGroup($groupid,$projectid)
 	{	
          $this->form_validation->set_rules('inputDescription', 'Description', 'required|trim');
@@ -1428,14 +1435,25 @@ class Pages extends CI_Controller {
 			
 				$this->load->view('pages/post1/collapsed',$data);
 				$this->load->view('pages/post1/content',$data);
-			 
-				
-				
 
-
-
-			
 	}
 
+public function send()
+{
+			$datetime = date('Y-m-d H:i:s'); 
+			$userId = uniqid(); 
+			$picId = uniqid('pi'); 
+			$password=$this->input->post('inputPassword');
+			$locationId = uniqid('li');
+
+			$data = array(
+			'msgId' => $this->input->post('msgId'),
+			'dataSent' =>$datetime,
+			'userId' =>	$this->input->post('userId'),
+			'msgContent' => $this->input->post('Message')
+			);
+
+			$this->db->insert('conference_dtl', $data);
+	}
 
 }

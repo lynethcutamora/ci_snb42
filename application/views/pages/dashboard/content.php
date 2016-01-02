@@ -302,7 +302,7 @@
                         <p>Startup Ideas</p>
                         <?php 
 
-                            $query = $this->db->query("SELECT * from userpost v left join user_md b on v.userId = b.userId left join user_dtl d on b.userId = d.userId left join avatar_dtl e on d.userId = e.userId where postType = '1' group by postDate order by postDate desc limit 5");
+                            $query = $this->db->query("SELECT postId , postTitle ,userId ,postContent from userpost  where postType = '1' group by postDate order by postDate desc limit 5");
                          foreach($query->result() as $row):
                         ?>
                         
@@ -313,8 +313,7 @@
                            </div>
                             <div class="product-info">
                               <a href="<?php echo base_url()."pages/post/".$row->postId;?>"><?php echo $row->postTitle;?></a></br>
-                                by: <?php echo $row->user_lName?>, <?php echo $row->user_fName?>
-                              </span>
+                                by: <?php echo $this->post->userProfile($row->userId)?></span>
                             </div>
                           </li><!-- /.item -->
                             <div class="product-img">
@@ -325,8 +324,9 @@
                         echo "<img src='".base_url().$row['extContent']."' height='100px' width='100px'>"; 
                      
                      ?>
+
                       <?php  endforeach;?>  
-                           
+                             <hr>
                           <?php  endforeach;?>
                         </ul>
                       </div><!-- /.box-body -->
