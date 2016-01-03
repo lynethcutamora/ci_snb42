@@ -384,26 +384,32 @@ theForm.scrolly.value = scrolly;
 
 <?php  endforeach;?>
                   </div><!-- /.tab-pane -->
-                 
-                  <div class="tab-pane" id="profilePic">
-                    <form class="form-horizontal">
+<?php foreach($alldata as $postdtl):?>
+                  <div class="tab-pane" id="profilePic">              
                       <div class="form-group">
+                      <?php echo form_open_multipart('../pages/updateProfile');?>
                       <div class="row">
                         <div class="col-sm-1"></div>
-                        <div class="col-sm-3"><img src="<?php echo base_url();?>user/1.png" style="size:contain;" /></div>
-                        <div class="col-sm-8">
+                        <div class="col-sm-3">
+                          
+                        <img class='img-circle' src='<?php echo base_url();?>user/<?php echo $postdtl['avatar_name']?>' alt='user image'></div>
+                        
+                        <div class="col-sm-7">
                           <br/><br/>Change your avatar: <br/><br/>
-                          <input type="file" name="fileToUpload" id="fileToUpload">
+                          <?php echo form_upload('pic'); ?>                     
+                        <br/>
+                        <br/>
+                        <input class="pull-right" type="submit" value="Upload" id="btnUpload" name="btnUpload">                   
+                         </div>
 
-                        </div>
                       </div>
+                      </form>
                       </br>
                       </br>
                       
                       </div>
-                    </form>
                     </div>
-
+<?php endforeach;?>
                     <div class="tab-pane" id="account">
                       <div class="form-group">
                       <div class="row">

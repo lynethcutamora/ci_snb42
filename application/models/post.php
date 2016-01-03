@@ -63,6 +63,7 @@
 
                 return $query;
         }
+        
           public function showLinks($postId)
         {
                 $this->db->select('*');
@@ -86,6 +87,17 @@
                         $this->db->set('extType',$type);
                         $this->db->set('postId',$postId);
                         $this->db->insert('userpost_ext');
+                }
+        }
+        public function profilePic($content,$userId)
+        {
+                if($content==null){
+
+                }
+                else{
+                        $this->db->where('userId', $userId);
+                        $this->db->set('avatar_name', $content);
+                        $this->db->update('avatar_dtl');
                 }
         }
         public function file($content, $type,$postId)
