@@ -1,23 +1,3 @@
-<script type="text/javascript">
-
-function saveScrollPositions(theForm) {
-
-if(theForm) {
-
-var scrolly = typeof window.pageYOffset != 'undefined' ? window.pageYOffset : document.documentElement.scrollTop;
-
-var scrollx = typeof window.pageXOffset != 'undefined' ? window.pageXOffset : document.documentElement.scrollLeft;
-
-theForm.scrollx.value = scrollx;
-
-theForm.scrolly.value = scrolly;
-
-}
-
-}
-
-</script>
-
 
       <?php
       //$badge = $totalRep;
@@ -266,7 +246,7 @@ theForm.scrolly.value = scrolly;
                 <ul class="nav nav-tabs">
                   <li class="active"><a href="#activity" data-toggle="tab">Activity</a></li>
                   <?php if($userId==$this->session->userdata('userId')){?>
-                  <li><a href="#profilePic" data-toggle="tab">Change Profile</a></li>
+                  <li><a href="#profilePic" data-toggle="tab">Change Avatar</a></li>
                   <li><a href="#account" data-toggle="tab">Change Account Information</a></li>
                   <li><a href="#password" data-toggle="tab">Change Password</a></li>
                   <?php }?>
@@ -357,13 +337,11 @@ theForm.scrolly.value = scrolly;
                   </p>
                   <table><tr><td>
                   <button class='btn btn-default btn-xs'><i class='fa fa-share'></i> Share</button></td>
-                  <form method="POST" action="<?php echo  base_url()."pages/upvote/".$userId;?>" name="form"  onsubmit="return saveScrollPositions(this);"> 
-                  <input type="hidden" name="scrollx" id="scrollx" value="0" />
-
-                     <input type="hidden" name="scrolly" id="scrolly" value="0" />
+                  <form id="form" name="form"> 
+                    <input type="text" hidden="true" name="userId" value="<?php echo $userId;?>">
                     <input type="text" hidden="true" name="postId" value="<?php echo $postdtl['postId'];?>">
                       <?php if($this->post->validUpvote($postdtl['postId'])=='false'){
-                echo "<td><button id='add' class='btn btn-default btn-xs'><i class='fa fa-arrow-circle-up'></i> Upvote</button> </td></form>";
+                echo "<td><button id='upvote' name='upvote' class='btn btn-default btn-xs'><i class='fa fa-arrow-circle-up'></i> Upvote</button> </td></form>";
                }
                 else{
                   echo "<td><button class='btn btn-default btn-xs disabled' disabled><i class='fa fa-arrow-circle-up'></i> Upvoted</button></td></form>";
@@ -892,6 +870,7 @@ theForm.scrolly.value = scrolly;
               </div>
             </div>
             <div class="modal-footer">
+            <form method="post" action="<?php echo base_url()."pages/addmember";?>">
                 <div class="btn-group">
                       <select name="group" class="form-control">     
                       <?php
@@ -904,13 +883,21 @@ theForm.scrolly.value = scrolly;
                         <?php foreach($query->result_array() as $row): 
                        
                         echo "<option>".$row['groupname']."</option>";
-                 
+                        
                         ?>
 
-                        <?php endforeach ?>
+                   
                       </select>
+                      <?php 
+                        echo $userId;
+                        echo $row['groupId'];
+                      ?>
+                      <input type="text"  hidden="true" value="<?php echo $userId;?>" name="userid">
+                      <input type="text"  hidden="true" value="<?php echo $row['groupId'];?>" name="groupid">
                 </div>&nbsp;&nbsp;
                 <button class="btn btn-default pull-right" value="addmember"><i class="fa fa-user-plus"></i>&nbsp;&nbsp;&nbsp;Add member</button>
+                <?php endforeach ?>
+                </form>
             </div>
             </div>
         </div>
@@ -950,28 +937,23 @@ theForm.scrolly.value = scrolly;
         </div>
 
       </div>
-<?php
 
-$scrollx = 0;
-
-$scrolly = 0;
-
-if(!empty($_REQUEST['scrollx'])) {
-
-$scrollx = $_REQUEST['scrollx'];
-
-}
-
-if(!empty($_REQUEST['scrolly'])) {
-
-$scrolly = $_REQUEST['scrolly'];
-
-}
-
-?>
-
-<script type="text/javascript">
-
-  window.scrollTo(<?php echo "$scrollx" ?>, <?php echo "$scrolly" ?>);
+<script>
+    $(document).ready(function() {
+    $("#upvote").click(function() {
+    var userId = $("#userId").val();
+    var postId = $("#postId").val();
+    
+    // Returns successful data submission message when the entered information is stored in database.
+    $.post(<?php echo base_url()."pages/upvote/";?>.userId, {
+    userId: userid,
+    postId: postId,
+    }, function(data) {
+    alert(data);
+    $('#form')[0].reset(); // To reset form fields
+    });
+    
+    });
+    });
 
 </script>

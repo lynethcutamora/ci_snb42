@@ -1236,7 +1236,7 @@ class Pages extends CI_Controller {
 				);
 
 				$this->db->insert('upvote_dtl',$data);
-				$this->profile($userId);
+				header('Location:'.base_url().'pages/profile/'.$userId);
 			}
 			else {$this->index();}
 			
@@ -1454,6 +1454,31 @@ public function send()
 			);
 
 			$this->db->insert('conference_dtl', $data);
+	}
+
+	public function videoconferencing($groupId=null)
+	{
+		if(($this->session->userdata('userId')!=""))
+		{	
+			if(isset($groupId))
+			{	
+				$data['groupId'] = $groupId;
+				$query=$this->_userData();
+				$data['data']=$query->result_array();
+				$data['pages']='message';
+				$data['countgroup'] = $this->countGroups();
+				$groupquery= $this->groupdetails();
+				$data['groupdetails'] = $groupquery->result_array();
+				
+				$this->load->view('pages/dashboard/fixed',$data);
+				$this->load->view('pages/videocon/content'); 
+				$this->load->view('pages/dashboard/controlsidebar');
+				$this->load->view('pages/dashboard/end');
+			}
+		}else
+		{
+			$this->_landing();
+		}
 	}
 
 }

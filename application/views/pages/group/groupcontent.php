@@ -80,9 +80,30 @@
                 <div class="tab-content">
                   <div class="tab-pane active" id="tab_1-1">
                     <div>
-                      <a class="btn btn-app" data-toogle="tooltip" title="Send Message">
-                        <i class="fa fa-video-camera"></i>Call a conference
-                      </a>
+                     <button type="button"  id="openNewSessionButton" class="btn btn-app" data-toggle="modal" data-target="#message" title="Send Message" style="background-color:#3C8DBC;color:white;">
+                        <i class="fa fa-video-camera"></i>Call a conference               
+                      </button>
+                  
+                                      <section id="local-media-stream">
+                                      <style>
+                                        video {
+                                        width: 40%;
+                                        }
+                                        </style>
+                                      </section>
+                                      <script>
+                                      
+                                      var connection = new RTCMultiConnection().connect('<?php echo $groupid;?>');
+                                      document.querySelector('#openNewSessionButton').onclick = function() {
+                                          connection.open('<?php echo $groupid;?>');
+                                          
+                                      };
+                                        connection.onstream = function(e) {
+                                                var mediaElement = e.mediaElement;
+                                                if (e.type === 'remote') document.getElementById('local-media-stream').appendChild(mediaElement);
+                                                if (e.type === 'local') document.getElementById('local-media-stream').appendChild(mediaElement);
+                                            };
+                                      </script>
                     </div>
                     <!-- Chat box -->
                         <div class="box box-success">
@@ -452,3 +473,5 @@
           </div><!--/.modal dialog-->
         </div><!--add project-->
       </div><!--/.content wrapper-->
+
+     
