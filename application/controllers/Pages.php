@@ -484,7 +484,7 @@ class Pages extends CI_Controller {
 			$post=$this->input->post('btnSave');
 			if(!isset($post))
 			{
-				$this->load->view('pages/register/index');
+				$this->load->view('pages/profile/index');
 			}
 			else if($post=='Ideator' || $post=='Investor')
 			{
@@ -537,6 +537,44 @@ class Pages extends CI_Controller {
 		$this->db->where('userId', $userId);
 		$this->db->update('company_dtl', $data);
 		redirect('pages/profile');
+	}
+	public function updateProfile()
+	{
+		$userId = $this->session->userdata('userId');
+		$post = $this->input->post('btnUpload');
+		
+		
+		if(!isset($post))
+		{
+			$this->load->view('pages/profile/index');
+		}
+		else
+		{	
+			$url = $this->profile_upload();
+
+			if($url==null){
+				
+				redirect('pages/profile/scz'.$userId);
+
+			}
+			else
+			{
+				$this->post->profilePic($url,$userId);
+				
+				redirect('pages/profile/'.$userId);
+			}
+		}
+	}
+	private function profile_upload()
+	{
+		$type = explode('.', $_FILES["pic"]["name"]);
+		$type = strtolower($type[count($type)-1]);
+		$url = "./user/".uniqid(rand()).'.'.$type;
+		if(in_array($type, array("jpg", "jpeg", "gif", "png")))
+			if(is_uploaded_file($_FILES["pic"]["tmp_name"]))
+				if(move_uploaded_file($_FILES["pic"]["tmp_name"],$url))
+					return $url;
+		return "";
 	}
 	public function logout()
 	{

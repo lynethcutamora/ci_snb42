@@ -20,6 +20,25 @@
           <!-- ====================================================================== -->
             <div class="col-md-12">
              <!-- AREA CHART for Ideators-->
+             <?php 
+                        $this->db->select('*');
+                        $this->db->from('user_md');
+                        $this->db->where('user_Type','Ideator');
+                        $query = $this->db->get();
+                        $ideator = $query->num_rows();
+
+                        $this->db->select('*');
+                        $this->db->from('user_md');
+                        $this->db->where('user_Type','Investor');
+                        $query = $this->db->get();
+                        $investor = $query->num_rows();
+
+                        $this->db->select('*');
+                        $this->db->from('company_dtl');
+                        $query = $this->db->get();
+                        $company = $query->num_rows();
+                        
+            ?>
               <div class="box box-primary">
                 <div class="box-header with-border">
                   <h3 class="box-title">Statistical Chart of Ideators</h3>
@@ -29,7 +48,7 @@
                   </div>
                 </div>
                 <div class="box-body">
-                    As of Today there are <b>250</b> Ideators registered.
+                    As of Today there are <b><?php echo $ideator;?></b> Ideators registered.
                   <div class="chart">
                     <canvas id="areaChart" style="height:250px"></canvas>
                   </div>
@@ -48,7 +67,7 @@
                   </div>
                 </div>
                 <div class="box-body">
-                    As of Today there are <b>300</b> Investors registered.
+                    As of Today there are <b><?php echo $investor;?></b> Investors registered.
                   <div class="chart">
                     <canvas id="areaChart1" style="height:250px"></canvas>
                   </div>
@@ -67,7 +86,7 @@
                   </div>
                 </div>
                 <div class="box-body">
-                    As of Today there are <b>400</b> Company registered.
+                    As of Today there are <b><?php echo $company;?></b> Company registered.
                   <div class="chart">
                     <canvas id="areaChart2" style="height:250px"></canvas>
                     <a class="btn btn-app btn-flat pull-right" button onclick="print()">

@@ -5,7 +5,7 @@
     		header("location:../index.php");
     	}else{
     			$_SESSION['pages']='admindashboard';
-    	include("fixed.php");?>
+    	include("../admindashboard/fixed.php");?>
     <?php include("content.php");?>
     <?php include("footer.php");?>
     <?php include("controlsidebar.php");?>
