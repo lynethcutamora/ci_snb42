@@ -1505,19 +1505,16 @@ class Pages extends CI_Controller {
 public function send()
 {
 			$datetime = date('Y-m-d H:i:s'); 
-			$userId = uniqid(); 
-			$picId = uniqid('pi'); 
-			$password=$this->input->post('inputPassword');
-			$locationId = uniqid('li');
 
 			$data = array(
 			'msgId' => $this->input->post('msgId'),
-			'dataSent' =>$datetime,
-			'userId' =>	$this->input->post('userId'),
-			'msgContent' => $this->input->post('Message')
+			'dateSent' =>$datetime,
+			'userId' =>	$this->session->userdata('userId'),
+			'msgContent' => $this->input->post('message')
 			);
 
 			$this->db->insert('conference_dtl', $data);
+
 	}
 
 	public function videoconferencing($groupId=null)
@@ -1545,4 +1542,33 @@ public function send()
 		}
 	}
 
+	public function groupchatshow($groupid)
+	{
+			echo '';
+
+                    foreach($this->post->showMsg($groupid)->result_array() as $row):
+                  
+
+                   echo ' <div class="direct-chat-msg">';
+                    echo '  <div class="direct-chat-info clearfix">';
+                      echo '  <span class="direct-chat-name pull-left">';
+                      echo $this->post->userProfile($row['userId']);
+                      echo '</span>
+                        <span class="direct-chat-timestamp pull-right">';
+
+                        echo $row['dateSent'];
+
+                        echo '</span>
+                      </div><!-- /.direct-chat-info -->
+                       <img class="direct-chat-img" src="';echo base_url();echo'user/';echo $this->post->getAvatar($row['userId']); echo '"><!-- /.direct-chat-img -->';
+                        echo '<div class="direct-chat-text">';
+                           echo $row['msgContent'];
+                      echo '</div><!-- /.direct-chat-text -->
+                    </div><!-- /.direct-chat-msg -->';
+                  endforeach;
+                   
+          
+
+               
+}
 }

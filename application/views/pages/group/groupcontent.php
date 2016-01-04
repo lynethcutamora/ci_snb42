@@ -102,20 +102,60 @@
                   <div class="box-tools pull-right">                  </div>
                 </div><!-- /.box-header -->
                 <div class="box-body">
+                  <div class="direct-chat-messages" name="direct-chat-messages" id="direct-chat-messages">
                   <!-- Conversations are loaded here -->
-                  <div class="direct-chat-messages">
-                    <!-- Message. Default to the left -->
+                 <div class="chat" name="chat" id="chat"></div>
                
-                  </div><!--/.direct-chat-messages-->
-
-               
+                </div>
                 </div><!-- /.box-body -->
                 <div class="box-footer">
-                  <form action="#" method="post">
+
+        <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    <script>
+    
+                 function loadNowPlaying(){
+                  $(window).on("scroll",function(){
+                   
+               $('#direct-chat-messages').scrollTop(1000000);
+                  });
+
+                $("#chat").load("<?php echo base_url().'pages/groupchatshow/'.$groupid; ?>");
+                }
+                setInterval(function(){loadNowPlaying()}, 500);
+            
+      $(function () {
+     
+        $('#form').on('submit', function (e) {
+      var message = $("#message").val();
+      var msgId = $("#msgId").val();
+       var dataString = 'message='+ message + '&msgId=' + msgId;
+          e.preventDefault();
+
+          $.ajax({
+            type: 'post',
+            url: '<?php echo base_url()."pages/send"; ?>',
+            data:dataString,
+            success: function () {
+          
+            var delay = 500;
+              setTimeout(function() {
+               $('#direct-chat-messages').scrollTop(1000000);
+              }, delay);
+               
+                $('#message').val('');
+            }
+          });
+
+        });
+
+      });
+    </script>
+                   <form method="post" name="form" id="form">
                     <div class="input-group">
-                      <input name="message" placeholder="Type Message ..." class="form-control" type="text">
+                      <input name='msgId' id="msgId" value="<?php echo $groupid;?>" type="text" hidden="true">
+                      <input  type="text" name="message" value="" id="message" class="form-control">
                       <span class="input-group-btn">
-                        <button type="button" class="btn btn-primary btn-flat">Send</button>
+                        <input type="submit" class="btn btn-primary btn-flat" value="send" id="submit" name="submit">
                       </span>
                     </div>
                   </form>
@@ -443,4 +483,3 @@
         </div><!--add project-->
       </div><!--/.content wrapper-->
 
-     
