@@ -54,7 +54,7 @@
                         $this->db->from('user_md');
                         $this->db->where('user_Type','Company');
                         $query = $this->db->get();
-                        $company = $query->num_rows();
+                        $company = $query->num_rows();  
 
                         $total = ($ideator)+($investor)+($company);
                         ?>
@@ -104,14 +104,16 @@
                         <tbody>
                           <?php 
                         
-                        $query = $this->db->query("SELECT * from user_md a left join user_dtl b on a.userId = b.userId where user_dateRegistered between date_sub(now(),INTERVAL 1 WEEK) AND now() group by user_dateRegistered order by user_dateRegistered desc");
+                        $query = $this->db->query("SELECT userId from user_md where user_dateRegistered between date_sub(now(),INTERVAL 1 WEEK) AND now() group by user_dateRegistered order by user_dateRegistered desc");
                                 foreach($query->result() as $row):
+                                  $next=$this->post->profile($row->userId);
+                                  $arr= $next->row_array();
                           ?>
                           <tr>
                             <td><?php echo $row->userId?></td>
-                            <td><a href="#"></a><?php echo $row->user_fName;?>&nbsp;<?php echo $row->user_midInit;?>.&nbsp;<?php echo $row->user_lName;?></td>
-                            <td><?php echo $row->user_Type?></td>
-                            <td><?php echo $row->user_dateRegistered?></td>
+                            <td><a href="#"></a><?php echo $this->post->userProfile($row->userId);?></td>
+                            <td><?php echo $arr['user_Type']?></td>
+                            <td><?php echo $arr['user_dateRegistered']?></td>
                           </tr>
                            <?php endforeach ?>
                         </tbody>

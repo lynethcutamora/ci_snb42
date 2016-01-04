@@ -34,7 +34,8 @@
                         $investor = $query->num_rows();
 
                         $this->db->select('*');
-                        $this->db->from('company_dtl');
+                        $this->db->from('user_md');
+                        $this->db->where('user_Type','Company');
                         $query = $this->db->get();
                         $company = $query->num_rows();
                         
