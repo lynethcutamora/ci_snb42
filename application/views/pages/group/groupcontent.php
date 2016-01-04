@@ -63,18 +63,9 @@
               <!-- Custom Tabs (Pulled to the right) -->
               <div class="nav-tabs-custom">
                 <ul class="nav nav-tabs pull-right">
-                  <li class="active"><a href="#tab_1-1" data-toggle="tab">Group Chat</a></li>
-                  <li><a href="#tab_2-2" data-toggle="tab">Important Files</a></li>
-                  <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                      Projects (<?php echo count($allproject); ?>) <span class="caret"></span>
-                    </a>
-                    <ul class="dropdown-menu">
-                      <?php foreach($allproject as $row):?>
-                      <li role="presentation"><a role="menuitem" tabindex="-1" name="projectname" href="<?php echo base_url(); ?>pages/group/<?php echo $groupid;?>/<?php echo $row['postId'];?>"><?php echo $row['postTitle'];?></a></li>
-                      <?php endforeach;?>
-                    </ul>
-                  </li>
+            
+                
+             
                   <li class="pull-left header"><i class="fa fa-calendar-check-o"></i> Group Activity</li>
                 </ul>
                 <div class="tab-content">
@@ -105,84 +96,60 @@
                                             };
                                       </script>
                     </div>
-                    <!-- Chat box -->
-                        <div class="box box-success">
-                          <div class="box-header">
-                            <i class="fa fa-comments-o"></i>
-                            <?php foreach($projectdtl as $row):?>
-                            <h3 class="box-title"><?php echo $row['postTitle'];  $projectid=$row['postId'];?></h3>
-                            <?php endforeach;?>
-                            <div class="box-tools pull-right" data-toggle="tooltip" title="Status">
-                              <div class="btn-group" data-toggle="btn-toggle" >
-                                <button type="button" class="btn btn-default btn-sm active"><i class="fa fa-square text-green"></i></button>
-                                <button type="button" class="btn btn-default btn-sm"><i class="fa fa-square text-red"></i></button>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="box-body chat" id="chat-box">
-                            <!-- chat item -->
-                            <div class="item">
-                              <img src="../../images/team/index3.jpg" alt="user image" class="online">
-                              <p class="message">
-                                <a href="#" class="name">
-                                  <small class="text-muted pull-right"><i class="fa fa-clock-o"></i> 2:15</small>
-                                  Bob Uy
-                                </a>
-                                I would like to meet you to discuss the latest news about
-                                the arrival of the new theme. They say it is going to be one the
-                                best themes on the market
-                              </p>
-                              <div class="attachment">
-                                <h4>Attachments:</h4>
-                                <p class="filename">
-                                  Theme-thumbnail-image.jpg
-                                </p>
-                                <div class="pull-right">
-                                  <button class="btn btn-primary btn-sm btn-flat">Open</button>
-                                </div>
-                              </div><!-- /.attachment -->
-                            </div><!-- /.item -->
-                            <!-- chat item -->
-                            <div class="item">
-                              <img src="../../images/team/index1.jpg" alt="user image" class="offline">
-                              <p class="message">
-                                <a href="#" class="name">
-                                  <small class="text-muted pull-right"><i class="fa fa-clock-o"></i> 5:15</small>
-                                  Wang Kig
-                                </a>
-                                I would like to meet you to discuss the latest news about
-                                the arrival of the new theme. They say it is going to be one the
-                                best themes on the market
-                              </p>
-                            </div><!-- /.item -->
-                            <!-- chat item -->
-                            <div class="item">
-                              <img src="../../images/team/index4.jpg" alt="user image" class="offline">
-                              <p class="message">
-                                <a href="#" class="name">
-                                  <small class="text-muted pull-right"><i class="fa fa-clock-o"></i> 5:30</small>
-                                  Teigo Wang
-                                </a>
-                                I would like to meet you to discuss the latest news about
-                                the arrival of the new theme. They say it is going to be one the
-                                best themes on the market
-                              </p>
-                            </div><!-- /.item -->
-                          </div><!-- /.chat -->
-                          <div class="box-footer">
-                            <div class="input-group">
-                              <input class="form-control" placeholder="Type message...">
-                              <div class="input-group-btn">
-                                <button class="btn btn-success"><i class="fa fa-plus"></i></button>
-                              </div>
-                            </div>
-                          </div>
-                        </div><!-- /.box (chat box) -->
+                     <div class="box box-primary direct-chat direct-chat-primary">
+                <div class="box-header with-border">
+                  <h3 class="box-title"><b>Group Chat</b></h3>
+                  <div class="box-tools pull-right">                  </div>
+                </div><!-- /.box-header -->
+                <div class="box-body">
+                  <!-- Conversations are loaded here -->
+                  <div class="direct-chat-messages">
+                    <!-- Message. Default to the left -->
+               
+                  </div><!--/.direct-chat-messages-->
+
+               
+                </div><!-- /.box-body -->
+                <div class="box-footer">
+                  <form action="#" method="post">
+                    <div class="input-group">
+                      <input name="message" placeholder="Type Message ..." class="form-control" type="text">
+                      <span class="input-group-btn">
+                        <button type="button" class="btn btn-primary btn-flat">Send</button>
+                      </span>
+                    </div>
+                  </form>
+                </div><!-- /.box-footer-->
+              </div>
                   </div><!-- /.tab-pane -->
-                  <div class="tab-pane" id="tab_2-2">
-                    <div class="box">
+                </div><!-- /.tab-content -->
+              </div><!-- nav-tabs-custom -->
+              <?php if($this->post->checkProject($groupid) == 'true'){?>
+              <div class="box box-info">
+                <div class="box-header with-border">
+                  <h3 class="box-title">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                      Projects (<?php echo count($allproject); ?>) <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                      <?php foreach($allproject as $row):?>
+                      <li role="presentation"><a role="menuitem" tabindex="-1" name="projectname" href="<?php echo base_url(); ?>pages/group/<?php echo $groupid;?>/<?php echo $row['postId'];?>"><?php echo $row['postTitle'];?></a></li>
+                      <?php endforeach;?>
+                    </ul>
+                  </h3>
+                  <div class="box-tools pull-right">
+                    <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                    <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                  </div>
+                </div><!-- /.box-header -->
+                <div class="box-body">
+                   <div class="box">
                       <div class="box-header with-border">
-                        <p>Update Status</p>
+                        <p><?php
+                        if($projectId =='0')
+                          echo $this->post->projectName($this->post->firstProject($groupid));
+                          else
+                         echo $this->post->projectName($projectId);?></p>
                       </div><!-- /.box-header -->
                       <!-- form start -->
                       <?php foreach($allproject as $row):?>
@@ -285,10 +252,12 @@
                         <?php  endforeach;?>
                       </div><!--/.body-->
                     </div><!-- /.post -->
-                  </div><!-- /.tab-pane -->
-                </div><!-- /.tab-content -->
-              </div><!-- nav-tabs-custom -->
-            </div><!-- /.col -->
+                </div><!-- /.box-body -->
+               
+              </div>
+           
+            <?php }?>
+ </div><!-- /.col -->
 
             <div class="col-md-3">
                 <div class="box box-solid">

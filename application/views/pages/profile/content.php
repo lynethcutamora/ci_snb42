@@ -892,17 +892,14 @@
                         
                         ?>
 
-                   
+                     <?php endforeach; ?>
                       </select>
-                      <?php 
-                        echo $userId;
-                        echo $row['groupId'];
-                      ?>
+                      
                       <input type="text"  hidden="true" value="<?php echo $userId;?>" name="userid">
                       <input type="text"  hidden="true" value="<?php echo $row['groupId'];?>" name="groupid">
                 </div>&nbsp;&nbsp;
                 <button class="btn btn-default pull-right" value="addmember"><i class="fa fa-user-plus"></i>&nbsp;&nbsp;&nbsp;Add member</button>
-                <?php endforeach ?>
+              
                 </form>
             </div>
             </div>

@@ -374,5 +374,30 @@
             return 'false';
         }
 
+        public function projectName($projectId)
+        {
+            $this->db->select('postTitle');
+            $this->db->from('userpost');
+            $query =$this->db->where('postId',$projectId);
+            $query = $this->db->get();
+            $row = $query->row_array();
+            return $row['postTitle'];
+
+
+        }
+
+        public function checkProject($groupId)
+        {
+            $this->db->select('postId');
+            $this->db->from('userpost');
+            $this->db->where('postType',$groupId);
+            $query = $this->db->get();
+            $rows = $query->num_rows();
+            if($rows==0)
+                return 'false';
+            else
+                return 'true';
+        }
+
     }
 ?>

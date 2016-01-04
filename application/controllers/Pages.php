@@ -259,12 +259,16 @@ class Pages extends CI_Controller {
 				
 			if(isset($groupId)){
 				if($groupDetails->num_rows()==0) {
-					$groupDetails->result_array();
+					header('Location:'.base_url().'pages/nogroup/');
+
 				}else{
 					if(isset($projectId)){
 						$projectdtl= $this->projectdtl($groupId,$projectId);
 						$data['projectdtl'] = $projectdtl->result_array();
+						$data['projectId'] = $projectId;
+
 					}else{
+						$data['projectId'] = '0';
 						$allproject= $this->allproject($groupId);
 
 						$projectdtl= $this->projectdtl($groupId,$this->post->firstProject($groupId));
@@ -302,7 +306,29 @@ class Pages extends CI_Controller {
 		}
 	}
 
+	public function nogroup()
 
+	{
+			if(($this->session->userdata('userId')!=""))
+		{
+		$query=$this->_userData();
+		$data['data']=$query->result_array();
+		$data['pages']='nogroup';
+		$data['countgroup'] = $this->countGroups();
+		$groupquery= $this->groupdetails();
+		$data['groupdetails'] = $groupquery->result_array();
+
+		
+		$this->load->view('pages/dashboard/fixed',$data);
+		$this->load->view('pages/group/nogroup',$data); 
+		$this->load->view('pages/dashboard/controlsidebar');
+		$this->load->view('pages/dashboard/end');
+		}
+		else
+		{
+			$this->_landing();
+		}
+	}
 	public function newgroup()
 	{
 		if(($this->session->userdata('userId')!=""))
