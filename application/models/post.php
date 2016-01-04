@@ -63,6 +63,7 @@
 
                 return $query;
         }
+        
           public function showLinks($postId)
         {
                 $this->db->select('*');
@@ -86,6 +87,17 @@
                         $this->db->set('extType',$type);
                         $this->db->set('postId',$postId);
                         $this->db->insert('userpost_ext');
+                }
+        }
+        public function profilePic($content,$userId)
+        {
+                if($content==null){
+
+                }
+                else{
+                        $this->db->where('userId', $userId);
+                        $this->db->set('avatar_name', $content);
+                        $this->db->update('avatar_dtl');
                 }
         }
         public function file($content, $type,$postId)
@@ -150,8 +162,8 @@
             $this->db->join('company_dtl c', 'c.userId=a.userId','left');
             $this->db->join('userpost d', 'd.userId=a.userId');
             $this->db->join('avatar_dtl e', 'e.userId=d.userId');
-            $this->db->join('badge_dtl f', 'f.userId=a.userId','left');
             $this->db->where('d.userId',$userId);
+            $this->db->where('d.postType','1');
             $this->db->order_by('postDate', 'DESC');
             $query = $this->db->get();
             return $query;

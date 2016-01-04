@@ -21,6 +21,7 @@
     <!-- AdminLTE for demo purposes -->
     <script src="<?php echo base_url(); ?>dist/js/demo.js"></script>
 
+
     <script>
     $(function () {
       $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({

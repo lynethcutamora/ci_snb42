@@ -484,7 +484,7 @@ class Pages extends CI_Controller {
 			$post=$this->input->post('btnSave');
 			if(!isset($post))
 			{
-				$this->load->view('pages/register/index');
+				$this->load->view('pages/profile/index');
 			}
 			else if($post=='Ideator' || $post=='Investor')
 			{
@@ -537,6 +537,44 @@ class Pages extends CI_Controller {
 		$this->db->where('userId', $userId);
 		$this->db->update('company_dtl', $data);
 		redirect('pages/profile');
+	}
+	public function updateProfile()
+	{
+		$userId = $this->session->userdata('userId');
+		$post = $this->input->post('btnUpload');
+		
+		
+		if(!isset($post))
+		{
+			$this->load->view('pages/profile/index');
+		}
+		else
+		{	
+			$url = $this->profile_upload();
+
+			if($url==null){
+				
+				redirect('pages/profile/scz'.$userId);
+
+			}
+			else
+			{
+				$this->post->profilePic($url,$userId);
+				
+				redirect('pages/profile/'.$userId);
+			}
+		}
+	}
+	private function profile_upload()
+	{
+		$type = explode('.', $_FILES["pic"]["name"]);
+		$type = strtolower($type[count($type)-1]);
+		$url = "./user/".uniqid(rand()).'.'.$type;
+		if(in_array($type, array("jpg", "jpeg", "gif", "png")))
+			if(is_uploaded_file($_FILES["pic"]["tmp_name"]))
+				if(move_uploaded_file($_FILES["pic"]["tmp_name"],$url))
+					return $url;
+		return "";
 	}
 	public function logout()
 	{
@@ -1236,7 +1274,7 @@ class Pages extends CI_Controller {
 				);
 
 				$this->db->insert('upvote_dtl',$data);
-				$this->profile($userId);
+				header('Location:'.base_url().'pages/profile/'.$userId);
 			}
 			else {$this->index();}
 			
@@ -1454,6 +1492,31 @@ public function send()
 			);
 
 			$this->db->insert('conference_dtl', $data);
+	}
+
+	public function videoconferencing($groupId=null)
+	{
+		if(($this->session->userdata('userId')!=""))
+		{	
+			if(isset($groupId))
+			{	
+				$data['groupId'] = $groupId;
+				$query=$this->_userData();
+				$data['data']=$query->result_array();
+				$data['pages']='message';
+				$data['countgroup'] = $this->countGroups();
+				$groupquery= $this->groupdetails();
+				$data['groupdetails'] = $groupquery->result_array();
+				
+				$this->load->view('pages/dashboard/fixed',$data);
+				$this->load->view('pages/videocon/content'); 
+				$this->load->view('pages/dashboard/controlsidebar');
+				$this->load->view('pages/dashboard/end');
+			}
+		}else
+		{
+			$this->_landing();
+		}
 	}
 
 }
