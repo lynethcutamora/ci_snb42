@@ -1504,6 +1504,8 @@ class Pages extends CI_Controller {
 
 public function send()
 {
+	if(($this->session->userdata('userId')!=""))
+		{	
 			$datetime = date('Y-m-d H:i:s'); 
 
 			$data = array(
@@ -1514,6 +1516,10 @@ public function send()
 			);
 
 			$this->db->insert('conference_dtl', $data);
+		}else
+		{
+			$this->_landing();
+		}
 
 	}
 
@@ -1544,11 +1550,11 @@ public function send()
 
 	public function groupchatshow($groupid)
 	{
-			echo '';
+			
 
                     foreach($this->post->showMsg($groupid)->result_array() as $row):
                   
-
+				if($this->post->checkUser($row['userId'])!='true')	{
                    echo ' <div class="direct-chat-msg">';
                     echo '  <div class="direct-chat-info clearfix">';
                       echo '  <span class="direct-chat-name pull-left">';
@@ -1565,7 +1571,27 @@ public function send()
                            echo $row['msgContent'];
                       echo '</div><!-- /.direct-chat-text -->
                     </div><!-- /.direct-chat-msg -->';
+                }else{
+
+                	echo '<div class="direct-chat-msg right">
+                          <div class="direct-chat-info clearfix">
+                            <span class="direct-chat-name pull-right">';
+                            echo $this->post->userProfile($row['userId']);
+                        echo '   </span>
+                            <span class="direct-chat-timestamp pull-left">';
+
+                            echo $row['dateSent'];
+                          echo '</span>
+                          </div><!-- /.direct-chat-info -->
+                         <img class="direct-chat-img" src="';echo base_url();echo'user/';echo $this->post->getAvatar($row['userId']); echo '"><!-- /.direct-chat-img -->';
+                       echo '<div class="direct-chat-text">';
+                            echo $row['msgContent'];
+                        echo '</div>
+                        </div><!-- /.direct-chat-msg -->';
+                }
                   endforeach;
+
+
                    
           
 
