@@ -259,12 +259,16 @@ class Pages extends CI_Controller {
 				
 			if(isset($groupId)){
 				if($groupDetails->num_rows()==0) {
-					$groupDetails->result_array();
+					header('Location:'.base_url().'pages/nogroup/');
+
 				}else{
 					if(isset($projectId)){
 						$projectdtl= $this->projectdtl($groupId,$projectId);
 						$data['projectdtl'] = $projectdtl->result_array();
+						$data['projectId'] = $projectId;
+
 					}else{
+						$data['projectId'] = '0';
 						$allproject= $this->allproject($groupId);
 
 						$projectdtl= $this->projectdtl($groupId,$this->post->firstProject($groupId));
@@ -302,7 +306,29 @@ class Pages extends CI_Controller {
 		}
 	}
 
+	public function nogroup()
 
+	{
+			if(($this->session->userdata('userId')!=""))
+		{
+		$query=$this->_userData();
+		$data['data']=$query->result_array();
+		$data['pages']='nogroup';
+		$data['countgroup'] = $this->countGroups();
+		$groupquery= $this->groupdetails();
+		$data['groupdetails'] = $groupquery->result_array();
+
+		
+		$this->load->view('pages/dashboard/fixed',$data);
+		$this->load->view('pages/group/nogroup',$data); 
+		$this->load->view('pages/dashboard/controlsidebar');
+		$this->load->view('pages/dashboard/end');
+		}
+		else
+		{
+			$this->_landing();
+		}
+	}
 	public function newgroup()
 	{
 		if(($this->session->userdata('userId')!=""))
@@ -484,7 +510,7 @@ class Pages extends CI_Controller {
 			$post=$this->input->post('btnSave');
 			if(!isset($post))
 			{
-				$this->load->view('pages/register/index');
+				$this->load->view('pages/profile/index');
 			}
 			else if($post=='Ideator' || $post=='Investor')
 			{
@@ -538,6 +564,44 @@ class Pages extends CI_Controller {
 		$this->db->update('company_dtl', $data);
 		redirect('pages/profile');
 	}
+	public function updateProfile()
+	{
+		$userId = $this->session->userdata('userId');
+		$post = $this->input->post('btnUpload');
+		
+		
+		if(!isset($post))
+		{
+			$this->load->view('pages/profile/index');
+		}
+		else
+		{	
+			$url = $this->profile_upload();
+
+			if($url==null){
+				
+				redirect('pages/profile/scz'.$userId);
+
+			}
+			else
+			{
+				$this->post->profilePic($url,$userId);
+				
+				redirect('pages/profile/'.$userId);
+			}
+		}
+	}
+	private function profile_upload()
+	{
+		$type = explode('.', $_FILES["pic"]["name"]);
+		$type = strtolower($type[count($type)-1]);
+		$url = "./user/".uniqid(rand()).'.'.$type;
+		if(in_array($type, array("jpg", "jpeg", "gif", "png")))
+			if(is_uploaded_file($_FILES["pic"]["tmp_name"]))
+				if(move_uploaded_file($_FILES["pic"]["tmp_name"],$url))
+					return $url;
+		return "";
+	}
 	public function logout()
 	{
 		$this->session->sess_destroy();
@@ -569,7 +633,8 @@ class Pages extends CI_Controller {
 				
 			);
 			$this->session->set_userdata($data);
-			$this->index();
+			header('Location:'.base_url());
+
 		}
 		else // incorrect username or password
 		{
@@ -865,9 +930,10 @@ class Pages extends CI_Controller {
 				header('Location:'.base_url().'pages/profile/'.$this->session->userdata('userId'));
 
 			}else{
-			$this->post->image($url, '1',$postId);
+			
 			
 			$this->db->insert('userpost', $data);
+			$this->post->image($url, '1',substr($postId, 0,10));
 			header('Location:'.base_url().'pages/profile/'.$this->session->userdata('userId'));
 			}
 
@@ -878,10 +944,10 @@ class Pages extends CI_Controller {
 	{
 		$type = explode('.', $_FILES["pic"]["name"]);
 		$type = strtolower($type[count($type)-1]);
-		$url = "./post_image/".uniqid(rand()).'.'.$type;
+		$url = uniqid(rand()).'.'.$type;
 		if(in_array($type, array("jpg", "jpeg", "gif", "png")))
 			if(is_uploaded_file($_FILES["pic"]["tmp_name"]))
-				if(move_uploaded_file($_FILES["pic"]["tmp_name"],$url))
+				if(move_uploaded_file($_FILES["pic"]["tmp_name"],"./post_image/".$url))
 					return $url;
 		return "";
 	}
@@ -1155,67 +1221,119 @@ class Pages extends CI_Controller {
 		}
 	}	
 
-	public function showpost()
+	public function showpost($userId)
 	{
-		$query = $this->post->alluserData($userId)
-;
-		foreach ($query->result_array() as $postdtl) {
-			echo "
-			<div class='box box-widget'>
-                <div class='box-header with-border'>
-                  <div class='user-block'>
-                    <img class='img-circle' src='../../images/team/index2.jpg' alt='user image'>
-                    <span class='username'>
-                    <a href='#'>";
+			 foreach($this->post->profile($userId)->result_array() as $userdtl):
+	         foreach($this->post->alluserData($userId)->result_array() as $postdtl):
 
-                                  if($postdtl['user_Type']=='Ideator'||$postdtl['user_Type']=='Investor')
-                                  {
-                                      if($postdtl['user_midInit']==null)
-                                         echo $postdtl['user_fName']."  ".$postdtl['user_lName'];
-                                       else
-                                         echo $postdtl['user_fName']." ".$postdtl['user_midInit'].". ".$postdtl['user_lName'];
-                                  }
-                                  else
-                                  {
-                                    echo $postdtl['company_name'];
-                                  }
-                        
-            echo "</a></span>
-                    &nbsp;&nbsp;&nbsp;<button class='btn btn-default btn-xs'><i class='fa fa-star' style='color:Gold'></i> <span class='label label-primary'>10</span> </button><button class='btn btn-default btn-xs'><i class='fa fa-star' style='color:Silver'></i><span class='label label-primary'>5</span> </button><button class='btn btn-default btn-xs'><i class='fa fa-star' style='color:SandyBrown'></i><span class='label label-primary'>20</span> </button>
-                   <span class='description'>Posted - 7:30 PM Today</span>
-                  </div><!-- /.user-block -->
-                </div><!-- /.box-header -->
-                <div class='box-body'>
-                  <p>";
-				 echo $postdtl['postContent'];
-				  $postId = $postdtl['postId'];
-             echo "</p>
-             	<table>
-            		  <tr><td><button class='btn btn-default btn-xs'><i class='fa fa-share'></i> Share</button></td>
-             	  <form method='post' action='".base_url()."pages/upvote'>
-             	  <input type=text hidden='true' value='$postId' name='postId'>
-                  ";
+	          echo '<div class="row">
+	          
+	            <div class="col-md-12">
+	            <!-- Box Comment -->
+	              <div class="box box-widget">
+	                <div class="box-header with-border">
+	                  <div class="user-block">
+	                    <img class="img-circle" src="'.base_url()."user/".$postdtl["avatar_name"].'"><span class="username">';
+	                    echo '<a href="'.base_url()."pages/profile/".$postdtl['userId'].'">';
+	                       
+	                                  if($postdtl['user_Type']=='Ideator'||$postdtl['user_Type']=='Investor')
+	                                  {
+	                                      if($postdtl['user_midInit']==null)
+	                                         echo $postdtl['user_fName']."  ".$postdtl['user_lName'];
+	                                       else
+	                                         echo $postdtl['user_fName']." ".$postdtl['user_midInit'].". ".$postdtl['user_lName'];
+	                                  }
+	                                  else
+	                                  {
+	                                    echo $postdtl['company_name'];
+	                                  }
+	                         
+	                      echo '</a>
+	                      </span>
+	                    &nbsp;&nbsp;&nbsp;';
+	                  $gold=$this->post->gold($userId);
+	                  $silver=$this->post->silver($userId);
+	                  $bronze=$this->post->gold($userId);
+	                 if($gold==0 && $silver==0 && $bronze==0)
+	                 {
+	                     echo '<i class="fa fa-star" style="color:SandyBrown"></i>';
+	                 }
+	                 elseif ($gold>=$silver && $gold>=$bronze) 
+	                 {
+	                     echo '<i class="fa fa-star" style="color:Gold"></i>';  
+	                 } 
+	                 elseif ($silver>$gold && $silver>=$bronze)
+	                 {
+	                     echo '<i class="fa fa-star" style="color:Silver"></i>';
+	                 }
+	                 elseif ($bronze>$gold && $bronze>$silver)
+	                 {
+	                     echo '<i class="fa fa-star" style="color:SandyBrown"></i>';
+	                 }
+	                   
+	                
+	                  echo "<span class='description'>";    
+	                  echo $postdtl['postDate'];
+	                  echo "</span>
+	                  </div><!-- /.user-block -->
+	                  <div class='box-tools'>
 
-                  if($this->validUpvote($postId)=='false'){
-            	  echo "<td><button id='add' class='btn btn-default btn-xs'><i class='fa fa-arrow-circle-up'></i> Upvote</button> </td></form>";
-            	 }
-            	  else{
-            	   	echo "<td><button class='btn btn-default btn-xs disabled' disabled><i class='fa fa-arrow-circle-up'></i> Upvoted</button></td></form>";
-            	  }
+	                  
+	                  </div><!-- /.box-tools -->
+	                </div><!-- /.box-header -->
+	                <div class='box-body'>
+	                  <h5><b><a href=".base_url()."pages/post/".$postdtl['postId'].'>';
+	                  echo $postdtl['postTitle'];
+	                  echo "</a></b></h3>
+	                  <p>";
+	                      $query=$this->post->showImage($postdtl['postId']);
+	                      foreach ($query->result_array() as $row) {
+	                        echo "<img src='".base_url().'/post_image/'.$row['extContent']."' height='200px' width='200px'>"; 
+	                      }
+	                   echo"
+	                  </p>
 
-                echo "</table>
-                  <span class='pull-right text-muted'>";
-                
-                  $this->post->upvotecount($postId);
-                 
-            echo "</span>
-                </div><!-- /.box-body -->
-               
-                
-              </div><!-- /.box -->";
-             
+	                  <p><h4>";
+	                  echo $postdtl['postContent'];
 
-		}
+	                  echo"</h4></p>
+	                  <p>";
+	                    
+	                      $query=$this->post->showLinks($postdtl['postId']);
+
+	                      foreach ($query->result_array() as $row) {
+	                        echo "<p>Related Links:</p>";
+	                        $myArray = explode(',', $row['extContent']);
+	                           foreach ($myArray as $row) {
+	                            
+	                            echo "<a href='http://".$row."' target='_blank'>".$row."</a><br>"; 
+	                            }
+	                      }
+	                    
+	                  echo '</p>
+	                  <a href="'.base_url().'pages/post/'.$postdtl['postId'].'" class="uppercase">View this Post</a>
+	                  ';
+	                  echo "
+	                 
+	                
+	                
+	                  <span class='pull-right text-muted'>"; $this->post->upvotecount($postdtl['postId']); echo '-'; $this->post->commentCount($postdtl['postId']);echo'</span>
+	                </div><!-- /.box-body -->
+	               
+
+	                          
+	              </div><!-- /.box -->
+	              
+	                  </div>
+	                  </div>';
+
+				endforeach;
+
+				endforeach;
+
+				echo "  
+  <script src='http://code.jquery.com/jquery-1.9.1.js'></script>
+";
 
 	
 	}
@@ -1236,7 +1354,7 @@ class Pages extends CI_Controller {
 				);
 
 				$this->db->insert('upvote_dtl',$data);
-				$this->profile($userId);
+				header('Location:'.base_url().'pages/post/'.$this->input->post('postId'));
 			}
 			else {$this->index();}
 			
@@ -1263,7 +1381,7 @@ class Pages extends CI_Controller {
 			return TRUE;
 		}
 	}
-	public function search()
+	public function search($key=null)
 	{	
 		if(($this->session->userdata('userId')!=""))
 		{
@@ -1274,7 +1392,7 @@ class Pages extends CI_Controller {
 		$groupquery= $this->groupdetails();
 		$data['groupdetails'] = $groupquery->result_array();
 
-		if($this->input->post('key')==null){
+		if($key==null){
 			$idea= $this->post->searchIdea('asdsdwq1qweskdqw213ew9eqwek12ewe91ewkqe212945rfre544e331e23d32d!#$2');
 			$data['idea'] = $idea->result_array();
 			$group= $this->post->searchGroup('asdsdwq1qweskdqw213ew9eqwek12ewe91ewkqe212945rfre544e331e23d32d!#$2');
@@ -1283,11 +1401,11 @@ class Pages extends CI_Controller {
 			$data['people'] = $people->result_array();
 
 		}else{
-		$idea= $this->post->searchIdea($this->input->post('key'));
+		$idea= $this->post->searchIdea($key);
 		$data['idea'] = $idea->result_array();
-		$group= $this->post->searchGroup($this->input->post('key'));
+		$group= $this->post->searchGroup($key);
 		$data['group'] = $group->result_array();
-		$people= $this->post->searchPeople($this->input->post('key'));
+		$people= $this->post->searchPeople($key);
 		$data['people'] = $people->result_array();
 
 		}
@@ -1305,6 +1423,12 @@ class Pages extends CI_Controller {
 		}
 	}
 		
+	public function search_proxy() {
+   	 $search_query = $this->input->post('key');
+    // if needed urlencode or other search query manipulation
+    	redirect('pages/search/'.$search_query);
+	}
+
 	public function postGroup($groupid,$projectid)
 	{	
          $this->form_validation->set_rules('inputDescription', 'Description', 'required|trim');
@@ -1331,9 +1455,10 @@ class Pages extends CI_Controller {
 				$this->db->insert('userpost', $data);
 				header('Location:'.base_url().'pages/group/'.$groupid.'/'.$projectid);
 			}else{
-				$this->post->file($url,'3',$postId);
+				
 				
 				$this->db->insert('userpost', $data);
+				$this->post->file($url,'3',$postId);
 				header('Location:'.base_url().'pages/group/'.$groupid.'/'.$projectid);
 			}
 		}	
@@ -1342,10 +1467,10 @@ class Pages extends CI_Controller {
 	{
 		$type = explode('.', $_FILES["file"]["name"]);
 		$type = strtolower($type[count($type)-1]);
-		$url = "./post_files/".uniqid(rand()).'.'.$type;
+		$url = uniqid(rand()).'.'.$type;
 		if(in_array($type, array("txt", "docx")))
 			if(is_uploaded_file($_FILES["file"]["tmp_name"]))
-				if(move_uploaded_file($_FILES["file"]["tmp_name"],$url)){
+				if(move_uploaded_file($_FILES["file"]["tmp_name"],"./post_files/".$url)){
 					return $url;
 				}
 		return "";
@@ -1447,14 +1572,107 @@ class Pages extends CI_Controller {
 			
 				$this->load->view('pages/post1/collapsed',$data);
 				$this->load->view('pages/post1/content',$data);
-			 
-				
-				
 
-
-
-			
 	}
 
+public function send()
+{
+	if(($this->session->userdata('userId')!=""))
+		{	
+			$datetime = date('Y-m-d H:i:s'); 
 
+			$data = array(
+			'msgId' => $this->input->post('msgId'),
+			'dateSent' =>$datetime,
+			'userId' =>	$this->session->userdata('userId'),
+			'msgContent' => $this->input->post('message')
+			);
+
+			$this->db->insert('conference_dtl', $data);
+		}else
+		{
+			$this->_landing();
+		}
+
+	}
+
+	public function videoconferencing($groupId=null)
+	{
+		if(($this->session->userdata('userId')!=""))
+		{	
+			if(isset($groupId))
+			{	
+				$data['groupId'] = $groupId;
+				$query=$this->_userData();
+				$data['data']=$query->result_array();
+				$data['pages']='message';
+				$data['countgroup'] = $this->countGroups();
+				$groupquery= $this->groupdetails();
+				$data['groupdetails'] = $groupquery->result_array();
+				
+				$this->load->view('pages/dashboard/fixed',$data);
+				$this->load->view('pages/videocon/content'); 
+				$this->load->view('pages/dashboard/controlsidebar');
+				$this->load->view('pages/dashboard/end');
+			}
+		}else
+		{
+			$this->_landing();
+		}
+	}
+
+	public function groupchatshow($groupid)
+	{
+			
+
+                    foreach($this->post->showMsg($groupid)->result_array() as $row):
+                  
+				if($this->post->checkUser($row['userId'])!='true')	{
+                   echo ' <div class="direct-chat-msg">';
+                    echo '  <div class="direct-chat-info clearfix">';
+                      echo '  <span class="direct-chat-name pull-left">';
+                      echo $this->post->userProfile($row['userId']);
+                      echo '</span>
+                        <span class="direct-chat-timestamp pull-right">';
+
+                        echo $row['dateSent'];
+
+                        echo '</span>
+                      </div><!-- /.direct-chat-info -->
+                       <img class="direct-chat-img" src="';echo base_url();echo'user/';echo $this->post->getAvatar($row['userId']); echo '"><!-- /.direct-chat-img -->';
+                        echo '<div class="direct-chat-text">';
+                           echo $row['msgContent'];
+                      echo '</div><!-- /.direct-chat-text -->
+                    </div><!-- /.direct-chat-msg -->';
+                }else{
+
+                	echo '<div class="direct-chat-msg right">
+                          <div class="direct-chat-info clearfix">
+                            <span class="direct-chat-name pull-right">';
+                            echo $this->post->userProfile($row['userId']);
+                        echo '   </span>
+                            <span class="direct-chat-timestamp pull-left">';
+
+                            echo $row['dateSent'];
+                          echo '</span>
+                          </div><!-- /.direct-chat-info -->
+                         <img class="direct-chat-img" src="';echo base_url();echo'user/';echo $this->post->getAvatar($row['userId']); echo '"><!-- /.direct-chat-img -->';
+                       echo '<div class="direct-chat-text">';
+                            echo $row['msgContent'];
+                        echo '</div>
+                        </div><!-- /.direct-chat-msg -->';
+                }
+                  endforeach;
+	 }
+
+	 function your_function($content){
+    $this->load->helper('download');
+    $data = file_get_contents(base_url().'post_files/'.$content); // Read the file's contents
+    $name = $content;
+    force_download($name, $data);
+}
+
+
+
+	
 }

@@ -1,4 +1,5 @@
 <!-- Content Wrapper. Contains page content -->
+    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
       <div class="content-wrapper">
         <!-- Content Header (Page header) -->
         <section class="content-header">
@@ -63,9 +64,111 @@
               <!-- Custom Tabs (Pulled to the right) -->
               <div class="nav-tabs-custom">
                 <ul class="nav nav-tabs pull-right">
-                  <li class="active"><a href="#tab_1-1" data-toggle="tab">Group Chat</a></li>
-                  <li><a href="#tab_2-2" data-toggle="tab">Important Files</a></li>
-                  <li class="dropdown">
+            
+                
+             
+                  <li class="pull-left header"><i class="fa fa-calendar-check-o"></i> Group Activity</li>
+                </ul>
+                <div class="tab-content">
+                  <div class="tab-pane active" id="tab_1-1">
+                    <div>
+                     <button type="button"  id="openNewSessionButton" class="btn btn-app"  style="background-color:#3C8DBC;color:white;">
+                        <i class="fa fa-video-camera"></i>Call a conference               
+                      </button>
+                  
+                                      <section id="local-media-stream">
+                                      <style>
+                                        video {
+                                        width: 40%;
+                                        }
+                                        </style>
+                                      </section>
+                                      <script>
+                                      
+                                      var connection = new RTCMultiConnection().connect('<?php echo $groupid;?>');
+                                      document.querySelector('#openNewSessionButton').onclick = function() {
+                                          connection.open('<?php echo $groupid;?>');
+                                          
+                                      };
+                                        connection.onstream = function(e) {
+                                                var mediaElement = e.mediaElement;
+                                                if (e.type === 'remote') document.getElementById('local-media-stream').appendChild(mediaElement);
+                                                if (e.type === 'local') document.getElementById('local-media-stream').appendChild(mediaElement);
+                                            };
+                                      </script>
+                    </div>
+                     <div class="box box-primary direct-chat direct-chat-primary">
+                <div class="box-header with-border">
+                  <h3 class="box-title"><b>Group Chat</b></h3>
+                  <div class="box-tools pull-right">                  </div>
+                </div><!-- /.box-header -->
+                <div class="box-body">
+                  <div class="direct-chat-messages" name="direct-chat-messages" id="direct-chat-messages">
+                  <!-- Conversations are loaded here -->
+                 <div class="chat" name="chat" id="chat"></div>
+               
+                </div>
+                </div><!-- /.box-body -->
+                <div class="box-footer">
+
+        
+    <script>
+    
+                 function loadNowPlaying(){
+                  $(window).on("scroll",function(){
+                   
+               $('#direct-chat-messages').scrollTop(1000000);
+                  });
+
+                $("#chat").load("<?php echo base_url().'pages/groupchatshow/'.$groupid; ?>");
+                }
+                setInterval(function(){loadNowPlaying()}, 500);
+            
+      $(function () {
+     
+        $('#form').on('submit', function (e) {
+      var message = $("#message").val();
+      var msgId = $("#msgId").val();
+       var dataString = 'message='+ message + '&msgId=' + msgId;
+          e.preventDefault();
+
+          $.ajax({
+            type: 'post',
+            url: '<?php echo base_url()."pages/send"; ?>',
+            data:dataString,
+            success: function () {
+          
+            var delay = 500;
+              setTimeout(function() {
+               $('#direct-chat-messages').scrollTop(1000000);
+              }, delay);
+               
+                $('#message').val('');
+            }
+          });
+
+        });
+
+      });
+    </script>
+                   <form method="post" name="form" id="form">
+                    <div class="input-group">
+                      <input name='msgId' id="msgId" value="<?php echo $groupid;?>" type="text" hidden="true">
+                      <input  type="text" name="message" value="" id="message" class="form-control">
+                      <span class="input-group-btn">
+                        <input type="submit" class="btn btn-primary btn-flat" value="send" id="submit" name="submit">
+                      </span>
+                    </div>
+                  </form>
+                </div><!-- /.box-footer-->
+              </div>
+                  </div><!-- /.tab-pane -->
+                </div><!-- /.tab-content -->
+              </div><!-- nav-tabs-custom -->
+              <?php if($this->post->checkProject($groupid) == 'true'){?>
+              <div class="box box-info">
+                <div class="box-header with-border">
+                  <h3 class="box-title">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                       Projects (<?php echo count($allproject); ?>) <span class="caret"></span>
                     </a>
@@ -74,94 +177,20 @@
                       <li role="presentation"><a role="menuitem" tabindex="-1" name="projectname" href="<?php echo base_url(); ?>pages/group/<?php echo $groupid;?>/<?php echo $row['postId'];?>"><?php echo $row['postTitle'];?></a></li>
                       <?php endforeach;?>
                     </ul>
-                  </li>
-                  <li class="pull-left header"><i class="fa fa-calendar-check-o"></i> Group Activity</li>
-                </ul>
-                <div class="tab-content">
-                  <div class="tab-pane active" id="tab_1-1">
-                    <div>
-                      <a class="btn btn-app" data-toogle="tooltip" title="Send Message">
-                        <i class="fa fa-video-camera"></i>Call a conference
-                      </a>
-                    </div>
-                    <!-- Chat box -->
-                        <div class="box box-success">
-                          <div class="box-header">
-                            <i class="fa fa-comments-o"></i>
-                            <?php foreach($projectdtl as $row):?>
-                            <h3 class="box-title"><?php echo $row['postTitle'];  $projectid=$row['postId'];?></h3>
-                            <?php endforeach;?>
-                            <div class="box-tools pull-right" data-toggle="tooltip" title="Status">
-                              <div class="btn-group" data-toggle="btn-toggle" >
-                                <button type="button" class="btn btn-default btn-sm active"><i class="fa fa-square text-green"></i></button>
-                                <button type="button" class="btn btn-default btn-sm"><i class="fa fa-square text-red"></i></button>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="box-body chat" id="chat-box">
-                            <!-- chat item -->
-                            <div class="item">
-                              <img src="../../images/team/index3.jpg" alt="user image" class="online">
-                              <p class="message">
-                                <a href="#" class="name">
-                                  <small class="text-muted pull-right"><i class="fa fa-clock-o"></i> 2:15</small>
-                                  Bob Uy
-                                </a>
-                                I would like to meet you to discuss the latest news about
-                                the arrival of the new theme. They say it is going to be one the
-                                best themes on the market
-                              </p>
-                              <div class="attachment">
-                                <h4>Attachments:</h4>
-                                <p class="filename">
-                                  Theme-thumbnail-image.jpg
-                                </p>
-                                <div class="pull-right">
-                                  <button class="btn btn-primary btn-sm btn-flat">Open</button>
-                                </div>
-                              </div><!-- /.attachment -->
-                            </div><!-- /.item -->
-                            <!-- chat item -->
-                            <div class="item">
-                              <img src="../../images/team/index1.jpg" alt="user image" class="offline">
-                              <p class="message">
-                                <a href="#" class="name">
-                                  <small class="text-muted pull-right"><i class="fa fa-clock-o"></i> 5:15</small>
-                                  Wang Kig
-                                </a>
-                                I would like to meet you to discuss the latest news about
-                                the arrival of the new theme. They say it is going to be one the
-                                best themes on the market
-                              </p>
-                            </div><!-- /.item -->
-                            <!-- chat item -->
-                            <div class="item">
-                              <img src="../../images/team/index4.jpg" alt="user image" class="offline">
-                              <p class="message">
-                                <a href="#" class="name">
-                                  <small class="text-muted pull-right"><i class="fa fa-clock-o"></i> 5:30</small>
-                                  Teigo Wang
-                                </a>
-                                I would like to meet you to discuss the latest news about
-                                the arrival of the new theme. They say it is going to be one the
-                                best themes on the market
-                              </p>
-                            </div><!-- /.item -->
-                          </div><!-- /.chat -->
-                          <div class="box-footer">
-                            <div class="input-group">
-                              <input class="form-control" placeholder="Type message...">
-                              <div class="input-group-btn">
-                                <button class="btn btn-success"><i class="fa fa-plus"></i></button>
-                              </div>
-                            </div>
-                          </div>
-                        </div><!-- /.box (chat box) -->
-                  </div><!-- /.tab-pane -->
-                  <div class="tab-pane" id="tab_2-2">
-                    <div class="box">
+                  </h3>
+                  <div class="box-tools pull-right">
+                    <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                    <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                  </div>
+                </div><!-- /.box-header -->
+                <div class="box-body">
+                   <div class="box">
                       <div class="box-header with-border">
-                        <p>Update Status</p>
+                        <p><?php
+                        if($projectId =='0')
+                          echo $this->post->projectName($this->post->firstProject($groupid));
+                          else
+                         echo $this->post->projectName($projectId);?></p>
                       </div><!-- /.box-header -->
                       <!-- form start -->
                       <?php foreach($allproject as $row):?>
@@ -225,9 +254,9 @@
                               <!--<img class="attachment-img" src="../../dist/img/photo1.png" alt="attachment image">-->
                               <span class="pull-left"><button class="btn btn-app"><i class="fa fa-file"></i></button></span>
                               <div class="attachment-pushed">
-                                <h5 class="attachment-heading"><a href=" base_url()."pages/post/".$post[\'postId\'];"><br/>View Post</a></h5>
+                                <h5 class="attachment-heading"><a title="Click to download" href="'.base_url().'pages/your_function/'.$post['extContent'].'" >Download</a></h5>
                                 <div class="attachment-text">
-                                  .docx file
+                                  '.$post['extContent'].'
                                 </div><!-- /.attachment-text -->
                               </div><!-- /.attachment-pushed -->
                             </div><!-- /.attachment-block -->';
@@ -257,17 +286,19 @@
                             <!-- </div>/.box-comment -->
                           <!--</div> /.box-footer -->
                           <div class="box-footer">
-                            <h5><a href="<?php echo base_url()."pages/post/".$post['postId'];?>"><br/>Comment</a></h5>
+                          
                           </div><!-- /.box-footer -->
                         </div><!-- /.box -->
 
                         <?php  endforeach;?>
                       </div><!--/.body-->
                     </div><!-- /.post -->
-                  </div><!-- /.tab-pane -->
-                </div><!-- /.tab-content -->
-              </div><!-- nav-tabs-custom -->
-            </div><!-- /.col -->
+                </div><!-- /.box-body -->
+               
+              </div>
+           
+            <?php }?>
+ </div><!-- /.col -->
 
             <div class="col-md-3">
                 <div class="box box-solid">
@@ -452,3 +483,4 @@
           </div><!--/.modal dialog-->
         </div><!--add project-->
       </div><!--/.content wrapper-->
+

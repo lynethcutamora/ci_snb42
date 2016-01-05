@@ -48,7 +48,6 @@ theForm.scrolly.value = scrolly;
                     <span class="description"> <?php echo $postdtl['postDate'];?></span>
                   </div><!-- /.user-block -->
                   <div class="box-tools">
-                    <button class="btn btn-box-tool" data-toggle="tooltip" title="Mark as read"><i class="fa fa-circle-o"></i></button>
                     <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
                     <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
                   </div><!-- /.box-tools -->
@@ -60,7 +59,7 @@ theForm.scrolly.value = scrolly;
                       $query= $this->post->showImage($postdtl['postId']);
 
                       foreach ($query->result_array() as $row) {
-                        echo "<img src='".base_url().$row['extContent']."' height='200px' width='200px'>"; 
+                        echo "<img src='".base_url().'/post_image/'.$row['extContent']."' height='200px' width='200px'>"; 
                       }
                     ?>
                   </p>  
@@ -82,7 +81,7 @@ theForm.scrolly.value = scrolly;
                   </p>
                       <table><tr><td>
                   <button class='btn btn-default btn-xs'><i class='fa fa-share'></i> Share</button></td>
-                  <form method="POST" action="<?php echo base_url()."pages/post/".$postId;?>" name="form"  onsubmit="return saveScrollPositions(this);"> 
+                  <form method="POST" action="<?php echo base_url()."pages/upvote/".$postdtl['userId'];?>" name="form"  onsubmit="return saveScrollPositions(this);"> 
                   <input type="hidden" name="scrollx" id="scrollx" value="0" />
 
                      <input type="hidden" name="scrolly" id="scrolly" value="0" />

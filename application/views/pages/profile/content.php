@@ -1,24 +1,4 @@
-<script type="text/javascript">
-
-function saveScrollPositions(theForm) {
-
-if(theForm) {
-
-var scrolly = typeof window.pageYOffset != 'undefined' ? window.pageYOffset : document.documentElement.scrollTop;
-
-var scrollx = typeof window.pageXOffset != 'undefined' ? window.pageXOffset : document.documentElement.scrollLeft;
-
-theForm.scrollx.value = scrollx;
-
-theForm.scrolly.value = scrolly;
-
-}
-
-}
-
-</script>
-
-
+    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
       <?php
       //$badge = $totalRep;
                   
@@ -266,7 +246,7 @@ theForm.scrolly.value = scrolly;
                 <ul class="nav nav-tabs">
                   <li class="active"><a href="#activity" data-toggle="tab">Activity</a></li>
                   <?php if($userId==$this->session->userdata('userId')){?>
-                  <li><a href="#profilePic" data-toggle="tab">Change Profile</a></li>
+                  <li><a href="#profilePic" data-toggle="tab">Change Avatar</a></li>
                   <li><a href="#account" data-toggle="tab">Change Account Information</a></li>
                   <li><a href="#password" data-toggle="tab">Change Password</a></li>
                   <?php }?>
@@ -274,136 +254,42 @@ theForm.scrolly.value = scrolly;
                 <div class="tab-content">
                   <div class="active tab-pane" id="activity">
                     <!-- Post -->
-            <?php  foreach($profileDtl as $userdtl):?>
-            <?php foreach($alldata as $postdtl):?>
+                    <div class='post1' name='post1' id="post1"></div>
+                     <script>
+    
+                 function loadNowPlaying(){
+                     $("#post1").load("<?php echo base_url().'pages/showpost/'.$userId; ?>");
+                }
+                setInterval(function(){loadNowPlaying()}, 1000);  
 
-          <div class="row">
-          
-            <div class="col-md-12">
-            <!-- Box Comment -->
-              <div class="box box-widget">
-                <div class='box-header with-border'>
-                  <div class='user-block'>
-                    <img class='img-circle' src='<?php echo base_url();?>user/<?php echo $postdtl['avatar_name']?>' alt='user image'>
-                    <span class='username'>
-                    <a href="#">
-                        <?php
-                                  if($postdtl['user_Type']=='Ideator'||$postdtl['user_Type']=='Investor')
-                                  {
-                                      if($postdtl['user_midInit']==null)
-                                         echo $postdtl['user_fName']."  ".$postdtl['user_lName'];
-                                       else
-                                         echo $postdtl['user_fName']." ".$postdtl['user_midInit'].". ".$postdtl['user_lName'];
-                                  }
-                                  else
-                                  {
-                                    echo $postdtl['company_name'];
-                                  }
-                          ?>
-                      </a>
-                      </span>
-                    &nbsp;&nbsp;&nbsp;
-                   <?php
-                 if($gold==0 && $silver==0 && $bronze==0)
-                 {
-                     ?><i class='fa fa-star' style="color:SandyBrown"></i><?php
-                 }
-                 elseif ($gold>=$silver && $gold>=$bronze) 
-                 {
-                     ?><i class='fa fa-star' style="color:Gold"></i><?php   
-                 } 
-                 elseif ($silver>$gold && $silver>=$bronze)
-                 {
-                     ?><i class='fa fa-star' style="color:Silver"></i><?php
-                 }
-                 elseif ($bronze>$gold && $bronze>$silver)
-                 {
-                     ?><i class='fa fa-star' style="color:SandyBrown"></i><?php
-                 }
-                   
-                ?>
-                    <span class='description'>    <?php echo $postdtl['postDate'];?></span>
-                  </div><!-- /.user-block -->
-                  <div class='box-tools'>
-
-                  
-                  </div><!-- /.box-tools -->
-                </div><!-- /.box-header -->
-                <div class='box-body'>
-                  <h5><b><a href="<?php echo base_url()."pages/post/".$postdtl['postId'];?>" ><?php echo $postdtl['postTitle'];?></a></b></h3>
-                  <p>
-                    <?php 
-                      $query=$this->post->showImage($postdtl['postId']);
-                      foreach ($query->result_array() as $row) {
-                        echo "<img src='".base_url().$row['extContent']."' height='200px' width='200px'>"; 
-                      }
-                    ?>
-                  </p>
-
-                  <p><h4><?php echo $postdtl['postContent'];?></h4></p>
-                  <p>
-                    <?php 
-                      $query=$this->post->showLinks($postdtl['postId']);
-
-                      foreach ($query->result_array() as $row) {
-                        echo "<p>Related Links:</p>";
-                        $myArray = explode(',', $row['extContent']);
-                           foreach ($myArray as $row) {
-                            
-                            echo "<a href='http://".$row."' target='_blank'>".$row."</a><br>"; 
-                            }
-                      }
-                    ?>
-                  </p>
-                  <table><tr><td>
-                  <button class='btn btn-default btn-xs'><i class='fa fa-share'></i> Share</button></td>
-                  <form method="POST" action="<?php echo  base_url()."pages/upvote/".$userId;?>" name="form"  onsubmit="return saveScrollPositions(this);"> 
-                  <input type="hidden" name="scrollx" id="scrollx" value="0" />
-
-                     <input type="hidden" name="scrolly" id="scrolly" value="0" />
-                    <input type="text" hidden="true" name="postId" value="<?php echo $postdtl['postId'];?>">
-                      <?php if($this->post->validUpvote($postdtl['postId'])=='false'){
-                echo "<td><button id='add' class='btn btn-default btn-xs'><i class='fa fa-arrow-circle-up'></i> Upvote</button> </td></form>";
-               }
-                else{
-                  echo "<td><button class='btn btn-default btn-xs disabled' disabled><i class='fa fa-arrow-circle-up'></i> Upvoted</button></td></form>";
-                }?></table>
-                </form>
-                
-                  <span class='pull-right text-muted'><?php $this->post->upvotecount($postdtl['postId']);?> - <?php $this->post->commentCount($postdtl['postId']);?></span>
-                </div><!-- /.box-body -->
-               
-
-                          
-              </div><!-- /.box -->
-              
-                  </div>
-                  </div>
-
-<?php  endforeach;?>
-
-<?php  endforeach;?>
+               </script>
                   </div><!-- /.tab-pane -->
-                 
-                  <div class="tab-pane" id="profilePic">
-                    <form class="form-horizontal">
+                  <?php foreach($alldata as $postdtl):?>
+                  <div class="tab-pane" id="profilePic">              
                       <div class="form-group">
+                      <?php echo form_open_multipart('../pages/updateProfile');?>
                       <div class="row">
                         <div class="col-sm-1"></div>
-                        <div class="col-sm-3"><img src="<?php echo base_url();?>user/1.png" style="size:contain;" /></div>
-                        <div class="col-sm-8">
+                        <div class="col-sm-3">
+                          
+                        <img class='img-circle' src='<?php echo base_url();?>user/<?php echo $postdtl['avatar_name']?>' alt='user image'></div>
+                        
+                        <div class="col-sm-7">
                           <br/><br/>Change your avatar: <br/><br/>
-                          <input type="file" name="fileToUpload" id="fileToUpload">
+                          <?php echo form_upload('pic'); ?>                     
+                        <br/>
+                        <br/>
+                        <input class="pull-right" type="submit" value="Upload" id="btnUpload" name="btnUpload">                   
+                         </div>
 
-                        </div>
                       </div>
+                      </form>
                       </br>
                       </br>
                       
                       </div>
-                    </form>
                     </div>
-
+<?php endforeach;?>
                     <div class="tab-pane" id="account">
                       <div class="form-group">
                       <div class="row">
@@ -653,7 +539,7 @@ theForm.scrolly.value = scrolly;
                 <span class="info-box-icon bg-yellow"><i class="fa fa-files-o"></i></span>
                 <div class="info-box-content">
                   <span>IDEAS SHARED</span>
-                  <span class="info-box-number">57</span>
+                  <span class="info-box-number">0</span>
                 </div><!-- /.info-box-content -->
               </div><!-- /.info-box -->
 
@@ -661,7 +547,7 @@ theForm.scrolly.value = scrolly;
                 <span class="info-box-icon bg-aqua"><i class="fa fa-tasks"></i></span>
                 <div class="info-box-content">
                   <span>CURRENT PROJECTS</span>
-                  <span class="info-box-number">5</span>
+                  <span class="info-box-number">0</span>
                 </div><!-- /.info-box-content -->
               </div><!-- /.info-box -->
 
@@ -669,7 +555,7 @@ theForm.scrolly.value = scrolly;
                 <span class="info-box-icon bg-green"><i class="fa fa-flag-o"></i></span>
                 <div class="info-box-content">
                   <span>COMPLETED PROJECTS</span>
-                  <span class="info-box-number">7</span>
+                  <span class="info-box-number">0</span>
                 </div><!-- /.info-box-content -->
               </div><!-- /.info-box -->
 
@@ -677,7 +563,7 @@ theForm.scrolly.value = scrolly;
                 <span class="info-box-icon bg-red"><i class="fa fa-group"></i></span>
                 <div class="info-box-content">
                   <span>GROUPS</span>
-                  <span class="info-box-number">3</span>
+                  <span class="info-box-number">0</span>
                 </div><!-- /.info-box-content -->
               </div><!-- /.info-box -->
 
@@ -892,6 +778,7 @@ theForm.scrolly.value = scrolly;
               </div>
             </div>
             <div class="modal-footer">
+            <form method="post" action="<?php echo base_url()."pages/addmember";?>">
                 <div class="btn-group">
                       <select name="group" class="form-control">     
                       <?php
@@ -904,13 +791,18 @@ theForm.scrolly.value = scrolly;
                         <?php foreach($query->result_array() as $row): 
                        
                         echo "<option>".$row['groupname']."</option>";
-                 
+                        
                         ?>
 
-                        <?php endforeach ?>
+                     <?php endforeach; ?>
                       </select>
+                      
+                      <input type="text"  hidden="true" value="<?php echo $userId;?>" name="userid">
+                      <input type="text"  hidden="true" value="<?php echo $row['groupId'];?>" name="groupid">
                 </div>&nbsp;&nbsp;
                 <button class="btn btn-default pull-right" value="addmember"><i class="fa fa-user-plus"></i>&nbsp;&nbsp;&nbsp;Add member</button>
+              
+                </form>
             </div>
             </div>
         </div>
@@ -950,28 +842,3 @@ theForm.scrolly.value = scrolly;
         </div>
 
       </div>
-<?php
-
-$scrollx = 0;
-
-$scrolly = 0;
-
-if(!empty($_REQUEST['scrollx'])) {
-
-$scrollx = $_REQUEST['scrollx'];
-
-}
-
-if(!empty($_REQUEST['scrolly'])) {
-
-$scrolly = $_REQUEST['scrolly'];
-
-}
-
-?>
-
-<script type="text/javascript">
-
-  window.scrollTo(<?php echo "$scrollx" ?>, <?php echo "$scrolly" ?>);
-
-</script>

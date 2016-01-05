@@ -25,9 +25,21 @@
          */
 
         var donutData = [
-          {label: "Company", data: 30, color: "#3c8dbc"},
-          {label: "Investors", data: 20, color: "#0073b7"},
-          {label: "Ideators", data: 50, color: "#00c0ef"}
+          {label: "Company", data: <?php
+                         $query = $this->db->query("SELECT * from user_md where user_Type = 'Company'");
+                         $company = $query->num_rows(); 
+                           echo json_encode($company);
+                          ?>, color: "#3c8dbc"},
+          {label: "Investor", data: <?php
+                         $query = $this->db->query("SELECT * from user_md where user_Type = 'Investor'");
+                         $investor = $query->num_rows(); 
+                           echo json_encode($investor);
+                          ?>, color: "#0073b7"},
+          {label: "Ideator", data: <?php
+                         $query = $this->db->query("SELECT * from user_md where user_Type = 'Ideator'");
+                         $ideator = $query->num_rows(); 
+                           echo json_encode($ideator);                
+                          ?>, color: "#00c0ef"}
         ];
         $.plot("#donut-chart", donutData, {
           series: {
@@ -45,7 +57,7 @@
             }
           },
           legend: {
-            show: true
+            show: false
           }
         });
         /*
@@ -54,28 +66,30 @@
 
       });
 
-       /*
-       * Custom Label formatter
-       * ----------------------
-       */
-      function labelFormatter(label, series) {
-        return '<div style="font-size:13px; text-align:center; padding:2px; color: #fff; font-weight: 600;">'
-                + label
-                + "<br>"
-                + Math.round(series.percent) + "%</div>";
-      }
-
+    
 
        $(function () {
    /*
          * DONUT CHART
          * -----------
          */
-
+    
         var donutData = [
-          {label: "Likes", data: 60, color: "#4ffdbc"},
-          {label: "Comment", data: 30, color: "#ff73b7"},
-          {label: "Post Idea", data: 10, color: "#00ffff"}
+          {label: "Likes", data: <?php
+                         $query = $this->db->query("SELECT * from upvote_dtl where voteType = '1'");
+                         $like = $query->num_rows(); 
+                           echo json_encode($like);
+                          ?>, color: "#4ffdbc"},
+          {label: "Comment", data: <?php
+                         $query = $this->db->query("SELECT * from comment_dtl where commentType = '1'");
+                         $comment = $query->num_rows(); 
+                           echo json_encode($comment);
+                          ?>, color: "#ff73b7"},
+          {label: "Post Idea", data: <?php
+                         $query = $this->db->query("SELECT * from userpost");
+                         $post = $query->num_rows(); 
+                           echo json_encode($post);
+                          ?>, color: "#00ffff"}
         ];
         $.plot("#donut-chart1", donutData, {
           series: {
@@ -93,7 +107,7 @@
             }
           },
           legend: {
-            show: true
+            show: false
           }
         });
         /*

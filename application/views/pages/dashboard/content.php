@@ -59,7 +59,7 @@
                         <tbody>
                         <?php 
                         
-                        $query = $this->db->query("SELECT *, COUNT(c.postId) as number_of_votes from upvote_dtl c left join userpost v on c.postId = v.postId left join user_md b on v.userId = b.userId left join user_dtl d on b.userId = d.userId where voteType = '1' group by c.postId order by number_of_votes desc limit 5");
+                        $query = $this->db->query("SELECT *, COUNT(c.postId) as number_of_votes from upvote_dtl c left join userpost v on c.postId = v.postId left join user_md b on v.userId = b.userId left join user_dtl d on b.userId = d.userId where voteType = '1' AND postType = '1' group by c.postId order by number_of_votes desc limit 5");
                              $i = 0;
                                 foreach($query->result() as $row):
                              $i++;
@@ -123,7 +123,7 @@
                         <tr>
                             <td><?php echo $i;?></td>
                             <td><a href="<?php echo base_url()."pages/post/".$row->postId;?>"><?php echo $row->postTitle;?></a></td>
-                            <td><?php echo $row->user_fName;?>&nbsp;<?php echo $row->user_midInit;?>.&nbsp;<?php echo $row->user_lName;?></td>
+                            <td><a href="<?php echo base_url()."pages/profile/".$row->userId;?>"><?php echo $row->user_fName;?>&nbsp;<?php echo $row->user_midInit;?>.&nbsp;<?php echo $row->user_lName;?></a></td>
                             <td><?php echo $row->user_Type;?></td>
                             <td><i class="fa fa-star" style="color:#ffd700;"></i>&nbsp;<span class="label label-default"><?php echo $rep;?></span></td>
                             <td>
@@ -230,7 +230,7 @@
                       $query= $this->post->showImage($row->postId);
 
                       foreach ($query->result_array() as $row) :
-                        echo "<img src='".base_url().$row['extContent']."' height='200px' width='200px'>"; 
+                        echo "<img src='".base_url().'/post_image/'.$row['extContent']."' height='200px' width='200px'>"; 
                      
                      ?>
                       <?php  endforeach;?>
@@ -281,7 +281,7 @@
                       $query= $this->post->showImage($row->postId);
 
                       foreach ($query->result_array() as $row) :
-                        echo "<img src='".base_url().$row['extContent']."' height='100px' width='100px'>"; 
+                        echo "<img src='".base_url().'/post_image/'.$row['extContent']."' height='100px' width='100px'>"; 
                      
                      ?>
                       <?php  endforeach;?>  
@@ -302,7 +302,7 @@
                         <p>Startup Ideas</p>
                         <?php 
 
-                            $query = $this->db->query("SELECT * from userpost v left join user_md b on v.userId = b.userId left join user_dtl d on b.userId = d.userId left join avatar_dtl e on d.userId = e.userId where postType = '1' group by postDate order by postDate desc limit 5");
+                            $query = $this->db->query("SELECT postId , postTitle ,userId ,postContent from userpost  where postType = '1' group by postDate order by postDate desc limit 5");
                          foreach($query->result() as $row):
                         ?>
                         
@@ -313,8 +313,7 @@
                            </div>
                             <div class="product-info">
                               <a href="<?php echo base_url()."pages/post/".$row->postId;?>"><?php echo $row->postTitle;?></a></br>
-                                by: <?php echo $row->user_lName?>, <?php echo $row->user_fName?>
-                              </span>
+                                by: <?php echo $this->post->userProfile($row->userId)?></span>
                             </div>
                           </li><!-- /.item -->
                             <div class="product-img">
@@ -322,11 +321,12 @@
                       $query= $this->post->showImage($row->postId);
 
                       foreach ($query->result_array() as $row) :
-                        echo "<img src='".base_url().$row['extContent']."' height='100px' width='100px'>"; 
+                        echo "<img src='".base_url().'/post_image/'.$row['extContent']."' height='100px' width='100px'>"; 
                      
                      ?>
+
                       <?php  endforeach;?>  
-                           
+                             <hr>
                           <?php  endforeach;?>
                         </ul>
                       </div><!-- /.box-body -->

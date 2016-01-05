@@ -11,5 +11,5 @@
     // Create File
     fwrite($file, $binary);
     fclose($file);
-    echo 'Congratulations, you are member of the startNboost now!.';
+    echo 'Congratulations, you are now a member of the startNboost Community!.';
 ?>
