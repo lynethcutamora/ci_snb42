@@ -278,6 +278,7 @@
             $row = $query->row_array();
             return $row['postId'];
         }
+        
         public function messageUser()
         {
             $query = $this->db->query("SELECT DISTINCT groupId,a.userId, a.msgId,b.user_fName , b.user_lName ,b.user_midInit, c.company_fName,c.company_lName,c.company_midInit ,d.user_Type from conference_dtl a left join user_dtl b ON a.groupId = b.userId left join company_dtl c ON a.groupId = b.userId left join user_md d on d.userId = a.groupId  where a.userId='".$this->session->userdata("userId")."'");

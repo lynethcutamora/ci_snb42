@@ -993,7 +993,8 @@ class Pages extends CI_Controller {
 
 			$this->db->insert('userpost',$data);
 			#$this->db->where('userId',$this->session->userdata('userId'));
-			$this->group($this->input->post('groupid'));
+			#$this->group($this->input->post('groupid'));
+			header('Location:'.base_url().'pages/group/'.$this->input->post('groupid').'/'.$projId);
 		}
 	}
 
@@ -1351,6 +1352,23 @@ class Pages extends CI_Controller {
 	}
 
 
+	// public function projectfiles($projectid){
+	// 	$this->db->select('*');
+	// 	$this->db->from('userpost a');
+	// 	$this->db->join('userpost_ext b','a.postId=b.postId','left');
+	// 	$this->db->join('user_md c','c.userId=a.userId','left');
+	// 	$this->db->join('user_dtl d','d.userId=c.userId','left');
+	// 	$this->db->join('avatar_dtl e','e.userId=d.userId','left');
+	// 	$this->db->join('badge_dtl f','f.userId=e.userId','left');
+	// 	$this->db->join('company_dtl g','g.userId=f.userId','left');
+	// 	$this->db->where('extType','3');
+	// 	$this->db->where('postType',$projectid);
+	// 	$this->db->order_by('postDate', 'DESC');
+ //        $query = $this->db->get();
+
+ //        return $query;
+	// }
+
 	public function projectfiles($projectid){
 		$this->db->select('*');
 		$this->db->from('userpost a');
@@ -1366,6 +1384,7 @@ class Pages extends CI_Controller {
 
         return $query;
 	}
+
 
 
 	public function countgroupfiles($groupid){
