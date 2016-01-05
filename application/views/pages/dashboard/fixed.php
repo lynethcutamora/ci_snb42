@@ -293,18 +293,7 @@
                       <?php  endforeach;?>
                     </p>
                   </li>
-                  <!-- Menu Body -->
-                  <li class="user-body">
-                    <div class="col-xs-4 text-center">
-                      <a href="#">Gold</a>
-                    </div>
-                    <div class="col-xs-4 text-center">
-                      <a href="#">Silver</a>
-                    </div>
-                    <div class="col-xs-4 text-center">
-                      <a href="#">Bronze</a>
-                    </div>
-                  </li>
+                 
                   <!-- Menu Footer-->
                   <li class="user-footer">
                     <div class="pull-left">
@@ -317,9 +306,7 @@
                 </ul>
               </li>
               <!-- Control Sidebar Toggle Button -->
-              <li>
-                <a href="#" data-toggle="control-sidebar"></a>
-              </li>
+              
             </ul>
           </div>
         </nav>
