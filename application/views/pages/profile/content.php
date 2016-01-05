@@ -264,7 +264,7 @@
 
                </script>
                   </div><!-- /.tab-pane -->
-                  <?php foreach($alldata as $postdtl):?>
+                 
                   <div class="tab-pane" id="profilePic">              
                       <div class="form-group">
                       <?php echo form_open_multipart('../pages/updateProfile');?>
@@ -272,7 +272,7 @@
                         <div class="col-sm-1"></div>
                         <div class="col-sm-3">
                           
-                        <img class='img-circle' src='<?php echo base_url();?>user/<?php echo $postdtl['avatar_name']?>' alt='user image' width="100px" height="200px"></div>
+                        <img class='img-circle' src='<?php echo base_url();?>user/<?php echo $this->post->getAvatar($this->session->userdata('userId'))?>' alt='user image' width="100px" height="200px"></div>
                         
                         <div class="col-sm-7">
                           <br/><br/>Change your avatar: <br/><br/>
@@ -289,7 +289,7 @@
                       
                       </div>
                     </div>
-<?php endforeach;?>
+
                     <div class="tab-pane" id="account">
                       <div class="form-group">
                       <div class="row">
