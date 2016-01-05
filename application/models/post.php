@@ -203,8 +203,10 @@
             $this->db->join('company_dtl c', 'c.userId=a.userId','left');
             $this->db->join('avatar_dtl d', 'd.userId=a.userId','left');
             $this->db->join('user_md e', 'e.userId=a.userId','left');
+
             $this->db->like('a.postTitle', $match = $key, $side = 'both');
             $this->db->or_like('a.postContent', $match = $key, $side = 'both');
+             $this->db->where('a.postType','1');
             $query = $this->db->get();
              return $query;
         }

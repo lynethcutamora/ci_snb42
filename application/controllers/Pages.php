@@ -595,10 +595,10 @@ class Pages extends CI_Controller {
 	{
 		$type = explode('.', $_FILES["pic"]["name"]);
 		$type = strtolower($type[count($type)-1]);
-		$url = "./user/".uniqid(rand()).'.'.$type;
+		$url = uniqid(rand()).'.'.$type;
 		if(in_array($type, array("jpg", "jpeg", "gif", "png")))
 			if(is_uploaded_file($_FILES["pic"]["tmp_name"]))
-				if(move_uploaded_file($_FILES["pic"]["tmp_name"],$url))
+				if(move_uploaded_file($_FILES["pic"]["tmp_name"],"./user/".$url))
 					return $url;
 		return "";
 	}
