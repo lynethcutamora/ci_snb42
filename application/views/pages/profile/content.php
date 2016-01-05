@@ -56,8 +56,8 @@
                 echo '<div class="widget-user-header bg-black" style="background: url(\''.base_url().'/user/defaultcover_user.png\') center center; background-size:contain;">';
                   
                 echo '</div>
-                <div class="widget-user-image">';
-                  echo'<img class="img-circle" src="'.base_url().'/user/'.$row['avatar_name'].'" alt="User Avatar">
+                <div class="">';
+                  echo'<img class="" src="'.base_url().'/user/'.$row['avatar_name'].'" width="250px" height="200px">
                 </div>
                 <div class="box-footer">
                 <h3>';
@@ -272,7 +272,7 @@
                         <div class="col-sm-1"></div>
                         <div class="col-sm-3">
                           
-                        <img class='img-circle' src='<?php echo base_url();?>user/<?php echo $postdtl['avatar_name']?>' alt='user image'></div>
+                        <img class='img-circle' src='<?php echo base_url();?>user/<?php echo $postdtl['avatar_name']?>' alt='user image' width="100px" height="200px"></div>
                         
                         <div class="col-sm-7">
                           <br/><br/>Change your avatar: <br/><br/>
