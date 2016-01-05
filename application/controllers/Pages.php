@@ -930,9 +930,10 @@ class Pages extends CI_Controller {
 				header('Location:'.base_url().'pages/profile/'.$this->session->userdata('userId'));
 
 			}else{
-			$this->post->image($url, '1',$postId);
+			
 			
 			$this->db->insert('userpost', $data);
+			$this->post->image($url, '1',substr($postId, 0,10));
 			header('Location:'.base_url().'pages/profile/'.$this->session->userdata('userId'));
 			}
 
@@ -943,10 +944,10 @@ class Pages extends CI_Controller {
 	{
 		$type = explode('.', $_FILES["pic"]["name"]);
 		$type = strtolower($type[count($type)-1]);
-		$url = "./post_image/".uniqid(rand()).'.'.$type;
+		$url = uniqid(rand()).'.'.$type;
 		if(in_array($type, array("jpg", "jpeg", "gif", "png")))
 			if(is_uploaded_file($_FILES["pic"]["tmp_name"]))
-				if(move_uploaded_file($_FILES["pic"]["tmp_name"],$url))
+				if(move_uploaded_file($_FILES["pic"]["tmp_name"],"./post_image/".$url))
 					return $url;
 		return "";
 	}
@@ -1219,67 +1220,119 @@ class Pages extends CI_Controller {
 		}
 	}	
 
-	public function showpost()
+	public function showpost($userId)
 	{
-		$query = $this->post->alluserData($userId)
-;
-		foreach ($query->result_array() as $postdtl) {
-			echo "
-			<div class='box box-widget'>
-                <div class='box-header with-border'>
-                  <div class='user-block'>
-                    <img class='img-circle' src='../../images/team/index2.jpg' alt='user image'>
-                    <span class='username'>
-                    <a href='#'>";
+			 foreach($this->post->profile($userId)->result_array() as $userdtl):
+	         foreach($this->post->alluserData($userId)->result_array() as $postdtl):
 
-                                  if($postdtl['user_Type']=='Ideator'||$postdtl['user_Type']=='Investor')
-                                  {
-                                      if($postdtl['user_midInit']==null)
-                                         echo $postdtl['user_fName']."  ".$postdtl['user_lName'];
-                                       else
-                                         echo $postdtl['user_fName']." ".$postdtl['user_midInit'].". ".$postdtl['user_lName'];
-                                  }
-                                  else
-                                  {
-                                    echo $postdtl['company_name'];
-                                  }
-                        
-            echo "</a></span>
-                    &nbsp;&nbsp;&nbsp;<button class='btn btn-default btn-xs'><i class='fa fa-star' style='color:Gold'></i> <span class='label label-primary'>10</span> </button><button class='btn btn-default btn-xs'><i class='fa fa-star' style='color:Silver'></i><span class='label label-primary'>5</span> </button><button class='btn btn-default btn-xs'><i class='fa fa-star' style='color:SandyBrown'></i><span class='label label-primary'>20</span> </button>
-                   <span class='description'>Posted - 7:30 PM Today</span>
-                  </div><!-- /.user-block -->
-                </div><!-- /.box-header -->
-                <div class='box-body'>
-                  <p>";
-				 echo $postdtl['postContent'];
-				  $postId = $postdtl['postId'];
-             echo "</p>
-             	<table>
-            		  <tr><td><button class='btn btn-default btn-xs'><i class='fa fa-share'></i> Share</button></td>
-             	  <form method='post' action='".base_url()."pages/upvote'>
-             	  <input type=text hidden='true' value='$postId' name='postId'>
-                  ";
+	          echo '<div class="row">
+	          
+	            <div class="col-md-12">
+	            <!-- Box Comment -->
+	              <div class="box box-widget">
+	                <div class="box-header with-border">
+	                  <div class="user-block">
+	                    <img class="img-circle" src="'.base_url()."user/".$postdtl["avatar_name"].'"><span class="username">';
+	                    echo '<a href="'.base_url()."pages/profile/".$postdtl['userId'].'">';
+	                       
+	                                  if($postdtl['user_Type']=='Ideator'||$postdtl['user_Type']=='Investor')
+	                                  {
+	                                      if($postdtl['user_midInit']==null)
+	                                         echo $postdtl['user_fName']."  ".$postdtl['user_lName'];
+	                                       else
+	                                         echo $postdtl['user_fName']." ".$postdtl['user_midInit'].". ".$postdtl['user_lName'];
+	                                  }
+	                                  else
+	                                  {
+	                                    echo $postdtl['company_name'];
+	                                  }
+	                         
+	                      echo '</a>
+	                      </span>
+	                    &nbsp;&nbsp;&nbsp;';
+	                  $gold=$this->post->gold($userId);
+	                  $silver=$this->post->silver($userId);
+	                  $bronze=$this->post->gold($userId);
+	                 if($gold==0 && $silver==0 && $bronze==0)
+	                 {
+	                     echo '<i class="fa fa-star" style="color:SandyBrown"></i>';
+	                 }
+	                 elseif ($gold>=$silver && $gold>=$bronze) 
+	                 {
+	                     echo '<i class="fa fa-star" style="color:Gold"></i>';  
+	                 } 
+	                 elseif ($silver>$gold && $silver>=$bronze)
+	                 {
+	                     echo '<i class="fa fa-star" style="color:Silver"></i>';
+	                 }
+	                 elseif ($bronze>$gold && $bronze>$silver)
+	                 {
+	                     echo '<i class="fa fa-star" style="color:SandyBrown"></i>';
+	                 }
+	                   
+	                
+	                  echo "<span class='description'>";    
+	                  echo $postdtl['postDate'];
+	                  echo "</span>
+	                  </div><!-- /.user-block -->
+	                  <div class='box-tools'>
 
-                  if($this->validUpvote($postId)=='false'){
-            	  echo "<td><button id='add' class='btn btn-default btn-xs'><i class='fa fa-arrow-circle-up'></i> Upvote</button> </td></form>";
-            	 }
-            	  else{
-            	   	echo "<td><button class='btn btn-default btn-xs disabled' disabled><i class='fa fa-arrow-circle-up'></i> Upvoted</button></td></form>";
-            	  }
+	                  
+	                  </div><!-- /.box-tools -->
+	                </div><!-- /.box-header -->
+	                <div class='box-body'>
+	                  <h5><b><a href=".base_url()."pages/post/".$postdtl['postId'].'>';
+	                  echo $postdtl['postTitle'];
+	                  echo "</a></b></h3>
+	                  <p>";
+	                      $query=$this->post->showImage($postdtl['postId']);
+	                      foreach ($query->result_array() as $row) {
+	                        echo "<img src='".base_url().'/post_image/'.$row['extContent']."' height='200px' width='200px'>"; 
+	                      }
+	                   echo"
+	                  </p>
 
-                echo "</table>
-                  <span class='pull-right text-muted'>";
-                
-                  $this->post->upvotecount($postId);
-                 
-            echo "</span>
-                </div><!-- /.box-body -->
-               
-                
-              </div><!-- /.box -->";
-             
+	                  <p><h4>";
+	                  echo $postdtl['postContent'];
 
-		}
+	                  echo"</h4></p>
+	                  <p>";
+	                    
+	                      $query=$this->post->showLinks($postdtl['postId']);
+
+	                      foreach ($query->result_array() as $row) {
+	                        echo "<p>Related Links:</p>";
+	                        $myArray = explode(',', $row['extContent']);
+	                           foreach ($myArray as $row) {
+	                            
+	                            echo "<a href='http://".$row."' target='_blank'>".$row."</a><br>"; 
+	                            }
+	                      }
+	                    
+	                  echo '</p>
+	                  <a href="'.base_url().'pages/post/'.$postdtl['postId'].'" class="uppercase">View this Post</a>
+	                  ';
+	                  echo "
+	                 
+	                
+	                
+	                  <span class='pull-right text-muted'>"; $this->post->upvotecount($postdtl['postId']); echo '-'; $this->post->commentCount($postdtl['postId']);echo'</span>
+	                </div><!-- /.box-body -->
+	               
+
+	                          
+	              </div><!-- /.box -->
+	              
+	                  </div>
+	                  </div>';
+
+				endforeach;
+
+				endforeach;
+
+				echo "  
+  <script src='http://code.jquery.com/jquery-1.9.1.js'></script>
+";
 
 	
 	}
@@ -1300,7 +1353,7 @@ class Pages extends CI_Controller {
 				);
 
 				$this->db->insert('upvote_dtl',$data);
-				header('Location:'.base_url().'pages/profile/'.$userId);
+				header('Location:'.base_url().'pages/post/'.$this->input->post('postId'));
 			}
 			else {$this->index();}
 			
@@ -1327,7 +1380,7 @@ class Pages extends CI_Controller {
 			return TRUE;
 		}
 	}
-	public function search($key)
+	public function search($key=null)
 	{	
 		if(($this->session->userdata('userId')!=""))
 		{
@@ -1401,9 +1454,10 @@ class Pages extends CI_Controller {
 				$this->db->insert('userpost', $data);
 				header('Location:'.base_url().'pages/group/'.$groupid.'/'.$projectid);
 			}else{
-				$this->post->file($url,'3',$postId);
+				
 				
 				$this->db->insert('userpost', $data);
+				$this->post->file($url,'3',$postId);
 				header('Location:'.base_url().'pages/group/'.$groupid.'/'.$projectid);
 			}
 		}	
@@ -1412,10 +1466,10 @@ class Pages extends CI_Controller {
 	{
 		$type = explode('.', $_FILES["file"]["name"]);
 		$type = strtolower($type[count($type)-1]);
-		$url = "./post_files/".uniqid(rand()).'.'.$type;
+		$url = uniqid(rand()).'.'.$type;
 		if(in_array($type, array("txt", "docx")))
 			if(is_uploaded_file($_FILES["file"]["tmp_name"]))
-				if(move_uploaded_file($_FILES["file"]["tmp_name"],$url)){
+				if(move_uploaded_file($_FILES["file"]["tmp_name"],"./post_files/".$url)){
 					return $url;
 				}
 		return "";
@@ -1590,11 +1644,16 @@ public function send()
                         </div><!-- /.direct-chat-msg -->';
                 }
                   endforeach;
+	 }
 
-
-                   
-          
-
-               
+	 function your_function($content){
+    $this->load->helper('download');
+    $data = file_get_contents(base_url().'post_files/'.$content); // Read the file's contents
+    $name = $content;
+    force_download($name, $data);
 }
+
+
+
+	
 }

@@ -1,4 +1,4 @@
-
+    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
       <?php
       //$badge = $totalRep;
                   
@@ -254,115 +254,17 @@
                 <div class="tab-content">
                   <div class="active tab-pane" id="activity">
                     <!-- Post -->
-            <?php  foreach($profileDtl as $userdtl):?>
-            <?php foreach($alldata as $postdtl):?>
+                    <div class='post1' name='post1' id="post1"></div>
+                     <script>
+    
+                 function loadNowPlaying(){
+                     $("#post1").load("<?php echo base_url().'pages/showpost/'.$userId; ?>");
+                }
+                setInterval(function(){loadNowPlaying()}, 1000);  
 
-          <div class="row">
-          
-            <div class="col-md-12">
-            <!-- Box Comment -->
-              <div class="box box-widget">
-                <div class='box-header with-border'>
-                  <div class='user-block'>
-                    <img class='img-circle' src='<?php echo base_url();?>user/<?php echo $postdtl['avatar_name']?>' alt='user image'>
-                    <span class='username'>
-                    <a href="#">
-                        <?php
-                                  if($postdtl['user_Type']=='Ideator'||$postdtl['user_Type']=='Investor')
-                                  {
-                                      if($postdtl['user_midInit']==null)
-                                         echo $postdtl['user_fName']."  ".$postdtl['user_lName'];
-                                       else
-                                         echo $postdtl['user_fName']." ".$postdtl['user_midInit'].". ".$postdtl['user_lName'];
-                                  }
-                                  else
-                                  {
-                                    echo $postdtl['company_name'];
-                                  }
-                          ?>
-                      </a>
-                      </span>
-                    &nbsp;&nbsp;&nbsp;
-                   <?php
-                 if($gold==0 && $silver==0 && $bronze==0)
-                 {
-                     ?><i class='fa fa-star' style="color:SandyBrown"></i><?php
-                 }
-                 elseif ($gold>=$silver && $gold>=$bronze) 
-                 {
-                     ?><i class='fa fa-star' style="color:Gold"></i><?php   
-                 } 
-                 elseif ($silver>$gold && $silver>=$bronze)
-                 {
-                     ?><i class='fa fa-star' style="color:Silver"></i><?php
-                 }
-                 elseif ($bronze>$gold && $bronze>$silver)
-                 {
-                     ?><i class='fa fa-star' style="color:SandyBrown"></i><?php
-                 }
-                   
-                ?>
-                    <span class='description'>    <?php echo $postdtl['postDate'];?></span>
-                  </div><!-- /.user-block -->
-                  <div class='box-tools'>
-
-                  
-                  </div><!-- /.box-tools -->
-                </div><!-- /.box-header -->
-                <div class='box-body'>
-                  <h5><b><a href="<?php echo base_url()."pages/post/".$postdtl['postId'];?>" ><?php echo $postdtl['postTitle'];?></a></b></h3>
-                  <p>
-                    <?php 
-                      $query=$this->post->showImage($postdtl['postId']);
-                      foreach ($query->result_array() as $row) {
-                        echo "<img src='".base_url().$row['extContent']."' height='200px' width='200px'>"; 
-                      }
-                    ?>
-                  </p>
-
-                  <p><h4><?php echo $postdtl['postContent'];?></h4></p>
-                  <p>
-                    <?php 
-                      $query=$this->post->showLinks($postdtl['postId']);
-
-                      foreach ($query->result_array() as $row) {
-                        echo "<p>Related Links:</p>";
-                        $myArray = explode(',', $row['extContent']);
-                           foreach ($myArray as $row) {
-                            
-                            echo "<a href='http://".$row."' target='_blank'>".$row."</a><br>"; 
-                            }
-                      }
-                    ?>
-                  </p>
-                  <table><tr><td>
-                  <button class='btn btn-default btn-xs'><i class='fa fa-share'></i> Share</button></td>
-                  <form id="form" name="form"> 
-                    <input type="text" hidden="true" name="userId" value="<?php echo $userId;?>">
-                    <input type="text" hidden="true" name="postId" value="<?php echo $postdtl['postId'];?>">
-                      <?php if($this->post->validUpvote($postdtl['postId'])=='false'){
-                echo "<td><button id='upvote' name='upvote' class='btn btn-default btn-xs'><i class='fa fa-arrow-circle-up'></i> Upvote</button> </td></form>";
-               }
-                else{
-                  echo "<td><button class='btn btn-default btn-xs disabled' disabled><i class='fa fa-arrow-circle-up'></i> Upvoted</button></td></form>";
-                }?></table>
-                </form>
-                
-                  <span class='pull-right text-muted'><?php $this->post->upvotecount($postdtl['postId']);?> - <?php $this->post->commentCount($postdtl['postId']);?></span>
-                </div><!-- /.box-body -->
-               
-
-                          
-              </div><!-- /.box -->
-              
-                  </div>
-                  </div>
-
-<?php  endforeach;?>
-
-<?php  endforeach;?>
+               </script>
                   </div><!-- /.tab-pane -->
-<?php foreach($alldata as $postdtl):?>
+                  <?php foreach($alldata as $postdtl):?>
                   <div class="tab-pane" id="profilePic">              
                       <div class="form-group">
                       <?php echo form_open_multipart('../pages/updateProfile');?>
@@ -940,23 +842,3 @@
         </div>
 
       </div>
-
-<script>
-    $(document).ready(function() {
-    $("#upvote").click(function() {
-    var userId = $("#userId").val();
-    var postId = $("#postId").val();
-    
-    // Returns successful data submission message when the entered information is stored in database.
-    $.post(<?php echo base_url()."pages/upvote/";?>.userId, {
-    userId: userid,
-    postId: postId,
-    }, function(data) {
-    alert(data);
-    $('#form')[0].reset(); // To reset form fields
-    });
-    
-    });
-    });
-
-</script>

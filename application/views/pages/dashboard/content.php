@@ -230,7 +230,7 @@
                       $query= $this->post->showImage($row->postId);
 
                       foreach ($query->result_array() as $row) :
-                        echo "<img src='".base_url().$row['extContent']."' height='200px' width='200px'>"; 
+                        echo "<img src='".base_url().'/post_image/'.$row['extContent']."' height='200px' width='200px'>"; 
                      
                      ?>
                       <?php  endforeach;?>
@@ -281,7 +281,7 @@
                       $query= $this->post->showImage($row->postId);
 
                       foreach ($query->result_array() as $row) :
-                        echo "<img src='".base_url().$row['extContent']."' height='100px' width='100px'>"; 
+                        echo "<img src='".base_url().'/post_image/'.$row['extContent']."' height='100px' width='100px'>"; 
                      
                      ?>
                       <?php  endforeach;?>  
@@ -321,7 +321,7 @@
                       $query= $this->post->showImage($row->postId);
 
                       foreach ($query->result_array() as $row) :
-                        echo "<img src='".base_url().$row['extContent']."' height='100px' width='100px'>"; 
+                        echo "<img src='".base_url().'/post_image/'.$row['extContent']."' height='100px' width='100px'>"; 
                      
                      ?>
 

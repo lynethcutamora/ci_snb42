@@ -1,4 +1,5 @@
 <!-- Content Wrapper. Contains page content -->
+    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
       <div class="content-wrapper">
         <!-- Content Header (Page header) -->
         <section class="content-header">
@@ -71,7 +72,7 @@
                 <div class="tab-content">
                   <div class="tab-pane active" id="tab_1-1">
                     <div>
-                     <button type="button"  id="openNewSessionButton" class="btn btn-app" data-toggle="modal" data-target="#message" title="Send Message" style="background-color:#3C8DBC;color:white;">
+                     <button type="button"  id="openNewSessionButton" class="btn btn-app"  style="background-color:#3C8DBC;color:white;">
                         <i class="fa fa-video-camera"></i>Call a conference               
                       </button>
                   
@@ -110,7 +111,7 @@
                 </div><!-- /.box-body -->
                 <div class="box-footer">
 
-        <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+        
     <script>
     
                  function loadNowPlaying(){
@@ -253,9 +254,9 @@
                               <!--<img class="attachment-img" src="../../dist/img/photo1.png" alt="attachment image">-->
                               <span class="pull-left"><button class="btn btn-app"><i class="fa fa-file"></i></button></span>
                               <div class="attachment-pushed">
-                                <h5 class="attachment-heading"><a href=" base_url()."pages/post/".$post[\'postId\'];"><br/>View Post</a></h5>
+                                <h5 class="attachment-heading"><a title="Click to download" href="'.base_url().'pages/your_function/'.$post['extContent'].'" >Download</a></h5>
                                 <div class="attachment-text">
-                                  .docx file
+                                  '.$post['extContent'].'
                                 </div><!-- /.attachment-text -->
                               </div><!-- /.attachment-pushed -->
                             </div><!-- /.attachment-block -->';
@@ -285,7 +286,7 @@
                             <!-- </div>/.box-comment -->
                           <!--</div> /.box-footer -->
                           <div class="box-footer">
-                            <h5><a href="<?php echo base_url()."pages/post/".$post['postId'];?>"><br/>Comment</a></h5>
+                          
                           </div><!-- /.box-footer -->
                         </div><!-- /.box -->
 

@@ -130,7 +130,7 @@ theForm.scrolly.value = scrolly;
                       $query= $this->post->showImage($postdtl['postId']);
 
                       foreach ($query->result_array() as $row) {
-                        echo "<img src='".base_url().$row['extContent']."' height='200px' width='200px'>"; 
+                        echo "<img src='".base_url().'/post_image/'.$row['extContent']."' height='200px' width='200px'>"; 
                       }
                     ?>
                   </p>  
