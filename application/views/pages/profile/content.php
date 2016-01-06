@@ -53,11 +53,11 @@
               <?php foreach($profileDtl as $row):
                 echo '<div class="box box-widget widget-user">';
                 # Add the bg color to the header using any of the bg-* classes -->
-                echo '<div class="widget-user-header bg-black" style="background: url(\''.base_url().'/user/defaultcover_user.png\') center center; background-size:contain;">';
+                echo '<div class="widget-user-header bg-yellow" style="background: url(\''.base_url().'/user/defaultcover_user.png\') center center; background-size:contain;">';
                   
                 echo '</div>
-                <div class="">';
-                  echo'<img class="" src="'.base_url().'/user/'.$row['avatar_name'].'" width="250px" height="200px">
+                <div class="widget-user-image">';
+                  echo'<img class="img-circle" src="'.base_url().'/user/'.$row['avatar_name'].'" width="250px" height="200px">
                 </div>
                 <div class="box-footer">
                 <h3>';

@@ -117,7 +117,7 @@
                  function loadNowPlaying(){
                   $(window).on("scroll",function(){
                    
-               $('#direct-chat-messages').scrollTop(1000000);
+                $('#direct-chat-messages').scrollTop(1000000);
                   });
 
                 $("#chat").load("<?php echo base_url().'pages/groupchatshow/'.$groupid; ?>");
@@ -194,8 +194,8 @@
                       </div><!-- /.box-header -->
                       <!-- form start -->
                       <?php foreach($allproject as $row):?>
+                        <?php $projectid=$row['postId']; ?>
                       <?php echo form_open_multipart('../pages/postGroup/'.$groupid.'/'.$row['postId'].'',"class=form-horizontal"); ?>
-                      <?php endforeach;?>
                         <div class="box-body">
                           <div class="form-group">
                             <label for="inputDescription" class="col-sm-2 control-label">Information</label>
@@ -211,6 +211,7 @@
                           </form>
                         </div><!-- /.box-footer -->
                       </form><!--/.form-->
+                      <?php endforeach;?>
                     </div><!-- /.box -->
                     <!-- Post -->
                     <div class="post">
@@ -309,9 +310,16 @@
                       <?php foreach($memberinfo as $row):?>
                       <div class='user-block'>
                         <img class='img-circle' src='<?php echo base_url();?>/user/<?php echo $row['avatar_name']?>' alt='user image'>
-                          <span class='username'><a href="#"><?php echo $row['user_fName']." ".$row['user_midInit'].". ".$row['user_lName']?></a></span>
-                          <span class='description'>Reputation:<span class="pull-right"><i class='fa fa-star' style="color:#ffd700;"></i><b>&nbsp;&nbsp;0</b></span></span>
-                          <br/>
+                          <?php if($row['user_Type']=="Company"){
+                              echo '<span class=\'username\'><a href="#">'.$row['company_name'].'</a></span>
+                                    <span class=\'description\'>Reputation:<span class="pull-right"><i class=\'fa fa-star\' style="color:#ffd700;"></i><b>&nbsp;&nbsp;0</b></span></span>
+                                    ';
+                            }else{
+                              echo '<span class=\'username\'><a href="#">'.$row['user_fName'].' '.$row['user_midInit'].'. '.$row['user_lName'].'</a></span>
+                                    <span class=\'description\'>Reputation:<span class="pull-right"><i class=\'fa fa-star\' style="color:#ffd700;"></i><b>&nbsp;&nbsp;0</b></span></span>
+                                    ';
+                            }
+                          ?><br/>
                       </div><!-- /.user-block -->
                       <?php  endforeach;?>
                     </div><!-- /.box-header -->
@@ -384,7 +392,7 @@
                               if($row['user_Type']=='Company'){
                                  echo '<span class="pull-left"><i class="fa fa-user" style="color:gray;"></i></span>
                                     <p class="text-muted">&nbsp;&nbsp;'.$row['company_name'].'
-                                    <span class="pull-right"><button name="btnaddmember" class="form-control btn-primary" type="submit" href="'.base_url().'pages/group/'.$groupid.'/'.$projectid.'"><i class="fa fa-user-plus"></i></button></span></p>';
+                                    <span class="pull-right"><button name="btnaddmember" class="form-control btn-primary" type="submit" href="'.base_url().'pages/group/'.$groupid.'"><i class="fa fa-user-plus"></i></button></span></p>';
                               }else{
                                 echo '<span class="pull-left"><i class="fa fa-user" style="color:gray;"></i></span>
                                       <p class="text-muted">&nbsp;&nbsp;'.$row['user_fName']." ".$row['user_midInit'].". ".$row['user_lName'].'
