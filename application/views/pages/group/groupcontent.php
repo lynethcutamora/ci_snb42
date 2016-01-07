@@ -1,5 +1,5 @@
 <!-- Content Wrapper. Contains page content -->
-    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    <script src="<?php echo base_url(); ?>plugins/jQuery/jQuery-2.1.4.min.js"></script>
       <div class="content-wrapper">
         <!-- Content Header (Page header) -->
         <section class="content-header">

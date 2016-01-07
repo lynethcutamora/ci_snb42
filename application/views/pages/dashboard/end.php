@@ -5,7 +5,8 @@
     </div><!-- ./wrapper -->
 
     <!-- jQuery 2.1.4 -->
-    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+
+   <script src="<?php echo base_url(); ?>plugins/jQuery/jQuery-2.1.4.min.js"></script>
     <!-- Bootstrap 3.3.5 -->
     <script src="<?php echo base_url(); ?>bootstrap/js/bootstrap.min.js"></script>
     <!-- SlimScroll -->
