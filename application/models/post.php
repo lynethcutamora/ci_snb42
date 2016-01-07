@@ -402,6 +402,12 @@
                 return 'true';
         }
 
-
+        public function autosearchduplicate($text){
+            $sql = "SELECT postTitle, postContent 
+                    FROM userpost
+                    WHERE MATCH (postTitle) AGAINST (?)>0";
+            $query=$this->db->query($sql,array($text,$text));
+            return $query->result();
+        }
     }
 ?>
