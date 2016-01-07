@@ -1583,9 +1583,9 @@ class Pages extends CI_Controller {
 
 	}
 
-public function send()
-{
-	if(($this->session->userdata('userId')!=""))
+	public function send()
+	{
+		if(($this->session->userdata('userId')!=""))
 		{	
 			$datetime = date('Y-m-d H:i:s'); 
 
@@ -1602,31 +1602,6 @@ public function send()
 			$this->_landing();
 		}
 
-	}
-
-	public function videoconferencing($groupId=null)
-	{
-		if(($this->session->userdata('userId')!=""))
-		{	
-			if(isset($groupId))
-			{	
-				$data['groupId'] = $groupId;
-				$query=$this->_userData();
-				$data['data']=$query->result_array();
-				$data['pages']='message';
-				$data['countgroup'] = $this->countGroups();
-				$groupquery= $this->groupdetails();
-				$data['groupdetails'] = $groupquery->result_array();
-				
-				$this->load->view('pages/dashboard/fixed',$data);
-				$this->load->view('pages/videocon/content'); 
-				$this->load->view('pages/dashboard/controlsidebar');
-				$this->load->view('pages/dashboard/end');
-			}
-		}else
-		{
-			$this->_landing();
-		}
 	}
 
 	public function groupchatshow($groupid)
@@ -1673,12 +1648,35 @@ public function send()
                   endforeach;
 	 }
 
-	 function your_function($content){
-    $this->load->helper('download');
-    $data = file_get_contents(base_url().'post_files/'.$content); // Read the file's contents
-    $name = $content;
-    force_download($name, $data);
-}
+	public function your_function($content)
+	{
+	    $this->load->helper('download');
+	    $data = file_get_contents(base_url().'post_files/'.$content); // Read the file's contents
+	    $name = $content;
+	    force_download($name, $data);
+	}
+
+
+	public function StartIdea()
+	{
+		if(($this->session->userdata('userId')!=""))
+		{	
+			
+				$query=$this->_userData();
+				$data['data']=$query->result_array();
+				$data['pages']='startIdea';
+				$data['countgroup'] = $this->countGroups();
+				$groupquery= $this->groupdetails();
+				$data['groupdetails'] = $groupquery->result_array();
+				
+				$this->load->view('pages/dashboard/fixed',$data);
+				$this->load->view('pages/startidea/content');
+				$this->load->view('pages/dashboard/end');
+		}else
+		{
+			$this->_landing();
+		}
+	}
 
 
 
