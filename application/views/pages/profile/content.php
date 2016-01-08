@@ -224,7 +224,7 @@
                         <label for="inputLinks" class="col-sm-2 control-label">Links</label>
                         <div class="col-sm-10">
                         <?php echo form_error('relatedlinks'); ?>
-                          <input type="text" class="form-control"name="relatedlinks" id="relatedlinks" placeholder="Related Links (Separated by comma)" value="<?php echo set_value('relatedlinks'); ?>"/>
+                          <input type="text" class="form-control" name="relatedlinks" id="relatedlinks" placeholder="Related Links (Separated by comma)" value="<?php echo set_value('relatedlinks'); ?>"/>
                         </div>
                       </div>
                     </div><!-- /.box-body -->

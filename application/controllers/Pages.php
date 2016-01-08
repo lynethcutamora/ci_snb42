@@ -102,6 +102,8 @@ class Pages extends CI_Controller {
 		$groupquery= $this->groupdetails();
 		$data['groupdetails'] = $groupquery->result_array();
 		$data['alldata']=$query->result_array();
+
+
 		$this->load->view('pages/dashboard/fixed',$data);
 		$this->load->view('pages/newsfeedonfire/onfirecontent'); 
 		$this->load->view('pages/dashboard/controlsidebar');
@@ -924,15 +926,20 @@ class Pages extends CI_Controller {
 			'postDate' =>$datetime
 			);
 
-			$this->post->link($this->input->post('relatedlinks'), '2',$postId);
+
 			if($url==null){
+
 					$this->db->insert('userpost', $data);
+				
+			$this->post->link($this->input->post('relatedlinks'), '2',$postId);
 				header('Location:'.base_url().'pages/profile/'.$this->session->userdata('userId'));
 
 			}else{
 			
 			
 			$this->db->insert('userpost', $data);
+			$this->post->link($this->input->post('relatedlinks'), '2',$postId);
+			
 			$this->post->image($url, '1',substr($postId, 0,10));
 			header('Location:'.base_url().'pages/profile/'.$this->session->userdata('userId'));
 			}

@@ -1,4 +1,4 @@
-      <?php  ?>
+ <?php  ?>
       <!-- Content Wrapper. Contains page content -->
       <div class="content-wrapper">
         <!-- Content Header (Page header) -->
@@ -151,7 +151,7 @@
                 <div class="box box-primary">
                   <div class="box-header with-border">
                     <i class="fa fa-fire"></i>
-                    <h3 class="box-title">On Fire Posts</h3><br/>
+                    <h3 class="box-title">Most Discuss Post</h3><br/>
                   </div><!-- /.box-header -->
                   <div class="box-body">
                   <div class="box box-widget">
@@ -214,7 +214,6 @@
                          <span class='description'><?php echo $row->postDate;?></span>
                       </div><!-- /.user-block -->
                       <div class='box-tools'>
-                        <button class='btn btn-box-tool' data-toggle='tooltip' title='Mark attachment-pushed read'><i class='fa fa-circle-o'></i></button>
                         <button class='btn btn-box-tool' data-widget='collapse'><i class='fa fa-minus'></i></button>
                       </div><!-- /.box-tools -->
                     </div><!-- /.box-header -->
@@ -263,7 +262,7 @@
                         <p>Startup Products</p>
                          <?php 
 
-                        $query = $this->db->query("SELECT * from userpost v left join user_md b on v.userId = b.userId left join user_dtl d on b.userId = d.userId left join avatar_dtl e on d.userId = e.userId where postType = '2' group by postDate order by postDate desc limit 5");
+                        $query = $this->db->query("SELECT postId , postTitle ,userId ,postContent from userpost where postType = '2' group by postDate order by postDate desc limit 5");
                          foreach($query->result() as $row):
                         ?>
                        <div class="box-body">
@@ -272,8 +271,7 @@
                            </div>
                             <div class="product-info">
                               <a href="<?php echo base_url()."pages/post/".$row->postId;?>"><?php echo $row->postTitle;?></a></br>
-                                by: <?php echo $row->user_lName?>, <?php echo $row->user_fName?>
-                              </span>
+                                by: <?php echo $this->post->userProfile($row->userId)?></span>
                             </div>
                           </li><!-- /.item -->
                             <div class="product-img">
@@ -284,13 +282,14 @@
                         echo "<img src='".base_url().'/post_image/'.$row['extContent']."' height='100px' width='100px'>"; 
                      
                      ?>
+
                       <?php  endforeach;?>  
-                           
+                             <hr>
                           <?php  endforeach;?>
                         </ul>
                       </div><!-- /.box-body -->
                       <div class="box-footer text-center">
-                        <a href="<?php echo base_url(); ?>index.php/pages/startupproduct">View Products</a>
+                        <a href="<?php echo base_url(); ?>index.php/pages/startupproduct">View Latest Products</a>
                       </div><!-- /.box-footer -->
                     </div><!-- /.box -->
 
