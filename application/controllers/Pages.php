@@ -1066,7 +1066,8 @@ class Pages extends CI_Controller {
 
 			$this->db->insert('userpost',$data);
 			#$this->db->where('userId',$this->session->userdata('userId'));
-			$this->group($this->input->post('groupid'));
+			#$this->group($this->input->post('groupid'));
+			header('Location:'.base_url().'pages/group/'.$this->input->post('groupid').'/'.$projId);
 		}
 	}
 
@@ -1091,9 +1092,9 @@ class Pages extends CI_Controller {
 	}
 
 	public function _searchpeople(){
-		$this->db->select('*');
+		$this->db->select('a.userId,b.user_lName,b.user_fName,b.user_midInit,c.company_name,a.user_Type');
 		$this->db->from('user_md a');
-		$this->db->join('company_dtl c','a.userId=c.userId','left');
+		$this->db->join('company_dtl c','c.userId=a.userId','left');
 		$this->db->join('user_dtl b','a.userId=b.userId','left');
 		$this->db->like('user_fName',$this->input->post('txtsearch'),'both');
 		$this->db->or_like('user_lName',$this->input->post('txtsearch'),'both');
@@ -1102,6 +1103,7 @@ class Pages extends CI_Controller {
 
 		return $query;
 	}
+
 	
 	public function _searchinvestor(){
 		$this->db->select('*');
@@ -1118,7 +1120,9 @@ class Pages extends CI_Controller {
 		$this->db->from('group_ext a');
 		$this->db->join('avatar_dtl b', 'a.userId=b.userId','left');
 		$this->db->join('badge_dtl c', 'a.userId=c.userId', 'left');
-		$this->db->join('user_dtl e', 'a.userId=e.userId', 'left');
+		$this->db->join('user_md d', 'a.userId=d.userId', 'left');
+		$this->db->join('user_dtl e', 'd.userId=e.userId', 'left');
+		$this->db->join('company_dtl f', 'd.userId=f.userId', 'left');
 		$this->db->where('a.groupId',$groupid);
 		$query=$this->db->get();
 
@@ -1299,16 +1303,16 @@ class Pages extends CI_Controller {
 	                   echo"
 	                  </p>
 
-	                  <p><h4>";
+	                  <p><h5>";
 	                  echo $postdtl['postContent'];
 
-	                  echo"</h4></p>
+	                  echo"</h5></p>
 	                  <p>";
 	                    
 	                      $query=$this->post->showLinks($postdtl['postId']);
 
 	                      foreach ($query->result_array() as $row) {
-	                        echo "<p>Related Links:</p>";
+	                        echo "<h5>Related Links:</h5>";
 	                        $myArray = explode(',', $row['extContent']);
 	                           foreach ($myArray as $row) {
 	                            
@@ -1483,6 +1487,23 @@ class Pages extends CI_Controller {
 	}
 
 
+	// public function projectfiles($projectid){
+	// 	$this->db->select('*');
+	// 	$this->db->from('userpost a');
+	// 	$this->db->join('userpost_ext b','a.postId=b.postId','left');
+	// 	$this->db->join('user_md c','c.userId=a.userId','left');
+	// 	$this->db->join('user_dtl d','d.userId=c.userId','left');
+	// 	$this->db->join('avatar_dtl e','e.userId=d.userId','left');
+	// 	$this->db->join('badge_dtl f','f.userId=e.userId','left');
+	// 	$this->db->join('company_dtl g','g.userId=f.userId','left');
+	// 	$this->db->where('extType','3');
+	// 	$this->db->where('postType',$projectid);
+	// 	$this->db->order_by('postDate', 'DESC');
+ //        $query = $this->db->get();
+
+ //        return $query;
+	// }
+
 	public function projectfiles($projectid){
 		$this->db->select('*');
 		$this->db->from('userpost a');
@@ -1498,6 +1519,7 @@ class Pages extends CI_Controller {
 
         return $query;
 	}
+
 
 
 	public function countgroupfiles($groupid){
@@ -1563,9 +1585,9 @@ class Pages extends CI_Controller {
 
 	}
 
-public function send()
-{
-	if(($this->session->userdata('userId')!=""))
+	public function send()
+	{
+		if(($this->session->userdata('userId')!=""))
 		{	
 			$datetime = date('Y-m-d H:i:s'); 
 
@@ -1582,31 +1604,6 @@ public function send()
 			$this->_landing();
 		}
 
-	}
-
-	public function videoconferencing($groupId=null)
-	{
-		if(($this->session->userdata('userId')!=""))
-		{	
-			if(isset($groupId))
-			{	
-				$data['groupId'] = $groupId;
-				$query=$this->_userData();
-				$data['data']=$query->result_array();
-				$data['pages']='message';
-				$data['countgroup'] = $this->countGroups();
-				$groupquery= $this->groupdetails();
-				$data['groupdetails'] = $groupquery->result_array();
-				
-				$this->load->view('pages/dashboard/fixed',$data);
-				$this->load->view('pages/videocon/content'); 
-				$this->load->view('pages/dashboard/controlsidebar');
-				$this->load->view('pages/dashboard/end');
-			}
-		}else
-		{
-			$this->_landing();
-		}
 	}
 
 	public function groupchatshow($groupid)
@@ -1653,12 +1650,35 @@ public function send()
                   endforeach;
 	 }
 
-	 function your_function($content){
-    $this->load->helper('download');
-    $data = file_get_contents(base_url().'post_files/'.$content); // Read the file's contents
-    $name = $content;
-    force_download($name, $data);
-}
+	public function your_function($content)
+	{
+	    $this->load->helper('download');
+	    $data = file_get_contents(base_url().'post_files/'.$content); // Read the file's contents
+	    $name = $content;
+	    force_download($name, $data);
+	}
+
+
+	public function StartIdea()
+	{
+		if(($this->session->userdata('userId')!=""))
+		{	
+			
+				$query=$this->_userData();
+				$data['data']=$query->result_array();
+				$data['pages']='startIdea';
+				$data['countgroup'] = $this->countGroups();
+				$groupquery= $this->groupdetails();
+				$data['groupdetails'] = $groupquery->result_array();
+				
+				$this->load->view('pages/dashboard/fixed',$data);
+				$this->load->view('pages/startidea/content');
+				$this->load->view('pages/dashboard/end');
+		}else
+		{
+			$this->_landing();
+		}
+	}
 
 
 
