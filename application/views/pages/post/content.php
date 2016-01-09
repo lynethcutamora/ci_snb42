@@ -118,7 +118,13 @@ theForm.scrolly.value = scrolly;
                           ?>
                         <span class="text-muted pull-right"> <?php echo $comment['commentDate'];?></span>
                       </span><!-- /.username -->
-                     <?php echo $comment['commentContent'];?>
+                     <?php 
+                        if($comment['disallowed']>0){
+                          echo '<i class="fa fa-warning pull-right" style="color:#f56954;">&nbsp;&nbsp;<span class="text-muted" style="color:#f56954;">(This comment contains disallowed words)</span>&nbsp;&nbsp;<a href="#">report user</a></i>'.$comment['commentContent'].'';
+                        }else
+                          echo $comment['commentContent'];
+
+                      ?>
                     </div><!-- /.comment-text -->
                   </div><!-- /.box-comment -->
                       <?php  endforeach;?>
