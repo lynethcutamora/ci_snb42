@@ -102,6 +102,8 @@ class Pages extends CI_Controller {
 		$groupquery= $this->groupdetails();
 		$data['groupdetails'] = $groupquery->result_array();
 		$data['alldata']=$query->result_array();
+
+
 		$this->load->view('pages/dashboard/fixed',$data);
 		$this->load->view('pages/newsfeedonfire/onfirecontent'); 
 		$this->load->view('pages/dashboard/controlsidebar');
@@ -974,7 +976,8 @@ class Pages extends CI_Controller {
 
          if ($this->form_validation->run() == FALSE)
         {
-         	$this->post();
+         	
+			header('Location:'.base_url().'pages/post/'.$postId);	
         }
         else
 		{

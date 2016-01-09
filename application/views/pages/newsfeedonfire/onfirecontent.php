@@ -1,48 +1,21 @@
-
-      <!-- Content Wrapper. Contains page content -->
+<!-- Content Wrapper. Contains page content -->
       <div class="content-wrapper">
         <!-- Content Header (Page header) -->
         <section class="content-header">
-          <h1>
-            Start&Boost
-            <small>"Start with an idea and boost it here."</small>
-          </h1>
-          <ol class="breadcrumb">
-            <li class="active"><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-          </ol>
-        </section>
-
-        <!-- Main content -->
-        <section class="content">
-        <!-- Callouts -->
-          <div class="box box-default">
-            <div class="box-header with-border">
-              <i class="fa fa-bullhorn"></i>
-              <h3 class="box-title">Callouts</h3>
-            </div><!-- /.box-header -->
-            <div class="box-body">
-              <div class="callout callout-info">
-              <?php foreach($data as $row):?>
-                <h4>Hello <?php echo $row['user_fName'];?>! You caught us before we're ready.</h4>
-                <p>Development team $index[5] is working hard to put finishing touches onto Start&Boost. Things are going well and it should be heady to help you with lean startup soon.<br/><br/>Thanks! :-)</p>
-              <?php endforeach;?>
-              </div>
-            </div>
-          </div><!-- /.box -->
-
+        <h1><center><i class="fa fa-fire"></i>
+            Most Discuss Posts</center></h1>
           <div class="row">
 <!------------------------------------------------------>
 
           
                   <div class="box-header with-border">
-                    <center><i class="fa fa-fire"></i>
-                    <h3 class="box-title">OnFire Post</h3><br/></center>
                   </div><!-- /.box-header -->
                   <div class="box-body">
                   <div class="box box-widget">
                   <?php 
                         
-                        $query = $this->db->query("SELECT *, COUNT(c.postId) as number_of_comments from comment_dtl c left join userpost v on c.postId = v.postId left join user_md b on v.userId = b.userId left join user_dtl d on b.userId = d.userId  where postType = '1' group by c.postId order by number_of_comments desc limit 20");   
+                        $query = $this->db->query("SELECT *, COUNT(c.postId) as number_of_comments from comment_dtl c left join userpost v on c.postId = v.postId left join user_md b on v.userId = b.userId left join user_dtl d on b.userId = d.userId  where postType = '1' group by c.postId order by number_of_comments desc");
+  
                       foreach($query->result() as $row):
                         $this->db->select('*');
                         $this->db->from('badge_dtl');
@@ -100,9 +73,8 @@
 
                     <div class='box-header with-border'>
                       <div class='user-block'>
-                        <?php foreach($alldata as $postdtl):?>
-                        <img class='img-circle' src='<?php echo base_url();?>user/<?php echo $postdtl['avatar_name']?>' alt='user image'>
-                        <?php  endforeach;?>
+                         <img class='img-circle' src='<?php echo base_url();?>user/<?php echo $this->post->getAvatar($row->userId)?>' alt='user image'>
+                    
                         <span class='username'><a href="<?php echo base_url()."pages/profile/".$row->userId;?>"><?php echo $row->user_fName;?>&nbsp;<?php echo $row->user_midInit;?>.&nbsp;<?php echo $row->user_lName;?></a>&nbsp;&nbsp;<i class='fa fa-star' style="color:#ffd700;"></i><b>&nbsp;&nbsp;<?php echo $rep;?></b></span>
                         <span class='description'><?php echo $row->postDate;?></span>
                       </div><!-- /.user-block -->
