@@ -1,69 +1,23 @@
-<script type="text/javascript">
-
-function saveScrollPositions(theForm) {
-
-if(theForm) {
-
-var scrolly = typeof window.pageYOffset != 'undefined' ? window.pageYOffset : document.documentElement.scrollTop;
-
-var scrollx = typeof window.pageXOffset != 'undefined' ? window.pageXOffset : document.documentElement.scrollLeft;
-
-theForm.scrollx.value = scrollx;
-
-theForm.scrolly.value = scrolly;
-
-}
-
-}
-
-</script>
-      <!-- Content Wrapper. Contains page content -->
+<!-- Content Wrapper. Contains page content -->
       <div class="content-wrapper">
         <!-- Content Header (Page header) -->
         <section class="content-header">
-          <h1>
-            Start&Boost
-            <small>"Start with an idea and boost it here."</small>
-          </h1>
-          <ol class="breadcrumb">
-            <li class="active"><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-          </ol>
-        </section>
-
-        <!-- Main content -->
-        <section class="content">
-        <!-- Callouts -->
-          <div class="box box-default">
-            <div class="box-header with-border">
-              <i class="fa fa-bullhorn"></i>
-              <h3 class="box-title">Callouts</h3>
-            </div><!-- /.box-header -->
-            <div class="box-body">
-              <div class="callout callout-info">
-               <?php foreach($data as $row):?>
-                <h4>Hello <?php echo $row['user_fName'];?>! You caught us before we're ready.</h4>
-                <p>Development team $index[5] is working hard to put finishing touches onto Start&Boost. Things are going well and it should be heady to help you with lean startup soon.<br/><br/>Thanks! :-)</p>
-              <?php endforeach;?>
-              </div>
-            </div>
-          </div><!-- /.box -->
-
+        <h1><center><i class="fa fa-star"></i>
+            TopRated Post</center></h1>
           <div class="row">
 <!------------------------------------------------------>
 
-         
+          
                   <div class="box-header with-border">
-                    <center><i class="fa fa-star"></i>
-                    <h3 class="box-title">TopRated Post</h3><br/></center>
                   </div><!-- /.box-header -->
                   <div class="box-body">
                   <div class="box box-widget">
-                    <?php 
+                  <?php 
                         
-                        $query = $this->db->query("SELECT *, COUNT(c.postId) as number_of_votes from upvote_dtl c left join userpost v on c.postId = v.postId left join user_md b on v.userId = b.userId left join user_dtl d on b.userId = d.userId where voteType = '1' AND postType = '1' group by c.postId order by number_of_votes desc limit 20");
-                             $i = 0;
-                                foreach($query->result() as $row):
-                             $i++;
+                        $query = $this->db->query("SELECT *, COUNT(c.postId) as number_of_votes from upvote_dtl c left join userpost v on c.postId = v.postId left join user_md b on v.userId = b.userId left join user_dtl d on b.userId = d.userId where voteType = '1' AND postType = '1' group by c.postId order by number_of_votes desc");
+                        $i=0;
+                      foreach($query->result() as $row):
+                        $i++;
                         $this->db->select('*');
                         $this->db->from('badge_dtl');
                         $this->db->where('voteBadge','1');
@@ -115,15 +69,13 @@ theForm.scrolly.value = scrolly;
                         $query = $this->db->get();
                         $comment = $query->num_rows();
 
-
                         ?>
-                          
+                    
+
                     <div class='box-header with-border'>
                       <div class='user-block'>
-                      <?php foreach($alldata as $postdtl):?>
-                        <img class='img-circle' src='<?php echo base_url();?>user/<?php echo $postdtl['avatar_name']?>' alt='user image'>
-                        <?php  endforeach;?>
-                        <span class='username'><a href="<?php echo base_url()."pages/profile/".$row->userId;?>"><?php echo $row->user_fName;?>&nbsp;<?php echo $row->user_midInit;?>.&nbsp;<?php echo $row->user_lName;?></a>&nbsp;&nbsp;<i class='fa fa-star' style="color:#ffd700;"></i><b>&nbsp;&nbsp;<?php echo $rep;?></b></span>
+                        <img class='img-circle' src='<?php echo base_url();?>user/<?php echo $this->post->getAvatar($row->userId)?>' alt='user image'>
+                                                <span class='username'><a href="<?php echo base_url()."pages/profile/".$row->userId;?>"><?php echo $row->user_fName;?>&nbsp;<?php echo $row->user_midInit;?>.&nbsp;<?php echo $row->user_lName;?></a>&nbsp;&nbsp;<i class='fa fa-star' style="color:#ffd700;"></i><b>&nbsp;&nbsp;<?php echo $rep;?></b></span>
                         <span class='description'><?php echo $row->postDate;?></span>
                       </div><!-- /.user-block -->
                       <div class='box-tools'>
@@ -132,31 +84,29 @@ theForm.scrolly.value = scrolly;
                     </div><!-- /.box-header -->
                     <div class='box-body'>
                       <!-- post text -->
-                       <p><b><?php echo $i;?>.</b>&nbsp;&nbsp;<b><a href="<?php echo base_url()."pages/post/".$row->postId;?>"><?php echo $row->postTitle;?></a></b></p>
+                      <p><b><?php echo $i;?>.</b>&nbsp;&nbsp;<b><b><a href="<?php echo base_url()."pages/post/".$row->postId;?>"><?php echo $row->postTitle;?></a></b></p>
                       <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $row->postContent;?></p>
-
 
                       <!-- Attachment -->
                       <div class="attachment-block clearfix">
                       <?php 
-                      $query= $this->post->showImage($row->postId);
+                        $query= $this->post->showImage($row->postId);
 
-                      foreach ($query->result_array() as $row) :
-                        echo "<img src='".base_url().$row['extContent']."' height='200px' width='200px'>"; 
+                          foreach ($query->result_array() as $row) :
+                           echo "<img src='".base_url().'/post_image/'.$row['extContent']."' height='200px' width='200px'>"; 
                      
                      ?>
-                      <?php  endforeach;?>  
+                          <?php  endforeach;?>  
                     
                             
                       </div><!-- /.attachment-block -->
+
                       <!-- Social sharing buttons -->
-                      
                       <span class='pull-right text-muted'><?php echo $like;?> likes - <?php echo $comment;?> comments</span>
                     </div><!-- /.box-body -->
                     <?php  endforeach;?>
-                    </br></br></br>
-                  
-            
+                    
+                
                 </div><!--/.body-->
                 </div><!--/.box-->
               </div><!--/.col-->
