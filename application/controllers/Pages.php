@@ -974,7 +974,8 @@ class Pages extends CI_Controller {
 
          if ($this->form_validation->run() == FALSE)
         {
-         	$this->post();
+         	
+			header('Location:'.base_url().'pages/post/'.$postId);	
         }
         else
 		{
