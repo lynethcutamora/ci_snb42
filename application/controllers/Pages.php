@@ -1131,7 +1131,7 @@ class Pages extends CI_Controller {
 		$this->db->select('*');
 		$this->db->from('group_ext a');
 		$this->db->join('avatar_dtl b', 'a.userId=b.userId','left');
-		$this->db->join('badge_dtl c', 'a.userId=c.userId', 'left');
+		// $this->db->join('badge_dtl c', 'a.userId=c.userId', 'left');
 		$this->db->join('user_md d', 'a.userId=d.userId', 'left');
 		$this->db->join('user_dtl e', 'd.userId=e.userId', 'left');
 		$this->db->join('company_dtl f', 'd.userId=f.userId', 'left');
