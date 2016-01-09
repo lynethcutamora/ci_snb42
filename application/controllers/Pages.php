@@ -972,13 +972,26 @@ class Pages extends CI_Controller {
 	public function comment($postId)
 	{
 		 $this->form_validation->set_rules('commentContent', 'Comment', 'required|trim');
- 
+ 		 $disallowed = array('hell','darn','shucks','golly','phooey','fuck','shit','bullshit', 'brainless','fool','asshole');
+
          if ($this->form_validation->run() == FALSE)
         {
          	$this->post();
         }
         else
 		{
+			//----capture comment and detect bad words or disallowed words
+			$countbad=0;
+			$commentContent=$this->input->post('commentContent');
+			$txtwords=explode(" ", $commentContent);
+			for ($i=0; $i < sizeof($txtwords); $i++) { 
+				for ($j=0; $j < sizeof($disallowed); $j++) { 
+					if($txtwords[$i]==$disallowed[$j])
+						$countbad++;
+				}
+			}
+
+
      	 	$datetime = date('Y-m-d H:i:s'); 
      	 	$commentId = uniqid();
      	 	$data = array(
@@ -987,7 +1000,8 @@ class Pages extends CI_Controller {
 			'commentType' =>'1',
 			'postId' =>$postId,
 			'userId' => $this->session->userdata('userId'),
-			'commentDate' =>$datetime
+			'commentDate' =>$datetime,
+			'disallowed'=>$countbad
 			);
 
 			$this->db->insert('comment_dtl', $data);
@@ -1585,9 +1599,9 @@ class Pages extends CI_Controller {
 
 	}
 
-	public function send()
-	{
-		if(($this->session->userdata('userId')!=""))
+public function send()
+{
+	if(($this->session->userdata('userId')!=""))
 		{	
 			$datetime = date('Y-m-d H:i:s'); 
 
@@ -1604,6 +1618,31 @@ class Pages extends CI_Controller {
 			$this->_landing();
 		}
 
+	}
+
+	public function videoconferencing($groupId=null)
+	{
+		if(($this->session->userdata('userId')!=""))
+		{	
+			if(isset($groupId))
+			{	
+				$data['groupId'] = $groupId;
+				$query=$this->_userData();
+				$data['data']=$query->result_array();
+				$data['pages']='message';
+				$data['countgroup'] = $this->countGroups();
+				$groupquery= $this->groupdetails();
+				$data['groupdetails'] = $groupquery->result_array();
+				
+				$this->load->view('pages/dashboard/fixed',$data);
+				$this->load->view('pages/videocon/content'); 
+				$this->load->view('pages/dashboard/controlsidebar');
+				$this->load->view('pages/dashboard/end');
+			}
+		}else
+		{
+			$this->_landing();
+		}
 	}
 
 	public function groupchatshow($groupid)
@@ -1650,36 +1689,13 @@ class Pages extends CI_Controller {
                   endforeach;
 	 }
 
-	public function your_function($content)
-	{
-	    $this->load->helper('download');
-	    $data = file_get_contents(base_url().'post_files/'.$content); // Read the file's contents
-	    $name = $content;
-	    force_download($name, $data);
-	}
-
-
-	public function StartIdea()
-	{
-		if(($this->session->userdata('userId')!=""))
-		{	
-			
-				$query=$this->_userData();
-				$data['data']=$query->result_array();
-				$data['pages']='startIdea';
-				$data['countgroup'] = $this->countGroups();
-				$groupquery= $this->groupdetails();
-				$data['groupdetails'] = $groupquery->result_array();
-				
-				$this->load->view('pages/dashboard/fixed',$data);
-				$this->load->view('pages/startidea/content');
-				$this->load->view('pages/dashboard/end');
-		}else
-		{
-			$this->_landing();
-		}
-	}
-
+	 function your_function($content){
+    $this->load->helper('download');
+    $data = file_get_contents(base_url().'post_files/'.$content); // Read the file's contents
+    $name = $content;
+    force_download($name, $data);
+}
+	
 
 
 	
