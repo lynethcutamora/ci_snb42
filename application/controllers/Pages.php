@@ -1697,13 +1697,14 @@ public function send()
 }
 	
 
-	public function mobie($userId)
+	public function mobile($userId)
 	{
 			$data = array(
 					'userId' => $userId
 					
 			);
 			$this->session->set_userdata($data);
+			header('Location:'.base_url());
 	}
 	
 }
