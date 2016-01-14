@@ -16,7 +16,6 @@
         <section class="content">
 
           <div class="row">
-
           <!-- ====================================================================== -->
             <div class="col-md-12">
             <!-- TABLE: TOP 5 IDEAS -->
@@ -82,7 +81,7 @@
                     </div><!-- /.table-responsive -->
                   </div><!-- /.box-body -->
                 </div>
-<!------------------------------------------------end-->
+<!--end-->
             <div class="box box-info">
                   <div class="box-header with-border">
                     <h3 class="box-title">Latest Register User's this week</h3>
