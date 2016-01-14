@@ -3,7 +3,7 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
         <h1><center><i class="fa fa-fire"></i>
-            Most Discuss Posts</center></h1>
+            Most Discuss Post</center></h1>
           <div class="row">
 <!------------------------------------------------------>
 
