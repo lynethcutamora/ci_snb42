@@ -3,7 +3,7 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
           <h1>
-            Startup Products
+            Venture Capitalist Post  <i class="fa fa-feed"></i>
           </h1>
            <div class="row">
 <!------------------------------------------------------>
@@ -13,7 +13,7 @@
                   <div class="box box-widget">
                <?php 
 
-                        $query = $this->db->query("SELECT * from userpost v left join user_md b on v.userId = b.userId left join user_dtl d on b.userId = d.userId  where postType = '2' group by postDate order by postDate desc limit 20");
+                        $query = $this->db->query("SELECT * from userpost v left join user_md b on v.userId = b.userId left join user_dtl d on b.userId = d.userId  where postType = '2' group by postDate order by postDate desc");
                        
                                 foreach($query->result() as $row):
                          
@@ -104,15 +104,11 @@
                       <span class='pull-right text-muted'><?php echo $like;?> likes - <?php echo $comment;?> comments</span>
                     </div><!-- /.box-body -->
                     <?php  endforeach;?>
-            </div><!-- /.col -->
-         
-       
-            <div class="col-md-10">
-
-            </div>
-
-       
-         <div class="info-box bg-aqua">
+                  </div><!--/.body-->
+                </div><!--/.box-->
+              </div><!--/.col-->
+<!-------------------------------------------------------------------------------------->
+              <div class="info-box bg-aqua">
                     <span class="info-box-icon"><i class="fa fa-thumbs-o-up"></i></span>
                     <div class="info-box-content">
                       <span class="info-box-text">Facebook Likes</span>
@@ -129,5 +125,8 @@
                   <div>
                     <p>Visit our Facebook Page by clicking the clink below:<br/><a href="#">facebook/startandboost</a><br/><br/>Start and Boost by $index[5].<br/></p>
                   </div>
-          </section><!-- /.content -->
+                
+              </div><!-- /.col -->
+            </div><!--/.row-->
+        </section><!-- /.content -->
       </div><!-- /.content-wrapper -->

@@ -392,7 +392,7 @@
               </a>
               <ul class="treeview-menu">
                 <li><a href="<?php echo base_url(); ?>pages/latest"><i class="fa fa-circle-o"></i>Latest</a></li>
-                <li><a href="<?php echo base_url(); ?>pages/onfire"><i class="fa fa-fire"></i>On Fire</a></li>
+                <li><a href="<?php echo base_url(); ?>pages/onfire"><i class="fa fa-fire"></i>Most Discuss</a></li>
                 <li><a href="<?php echo base_url(); ?>pages/toprated"><i class="fa fa-star"></i>Top Rated</a></li>
               </ul>
             </li><!-- 

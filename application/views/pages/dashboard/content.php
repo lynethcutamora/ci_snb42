@@ -32,9 +32,13 @@
             </div>
           </div><!-- /.box -->
         </div>
-        
-          <div class="row">
+        <div class="col-md-3">
+              <div>
+            <p>Visit our Facebook Page by clicking the clink below:<br/><a href="#">facebook/startandboost</a><br/><br/>Start and Boost by $index[5].<br/></p>
+          </div>
+        </div>
 
+          <div class="row">
           <!-- ====================================================================== -->
             <div class="col-md-9">
             <!-- TABLE: TOP 5 IDEAS -->
@@ -58,10 +62,10 @@
                           <tr>
                             <th>Top</th>
                             <th>Title</th>
-                             <th>Name</th>
-                            <th>User Type</th>
-                            <th>Reputation</th>
-                            <th>Popularity</th>
+                             <th>Owner(s)</th>
+                            <th>Investor</th>
+                            <th>Upvotes</th>
+                            <!-- <th>Popularity</th> -->
                           </tr>
                         </thead>
                         <tbody>
@@ -132,13 +136,16 @@
                             <td><?php echo $i;?></td>
                             <td><a href="<?php echo base_url()."pages/post/".$row->postId;?>"><?php echo $row->postTitle;?></a></td>
                             <td><a href="<?php echo base_url()."pages/profile/".$row->userId;?>"><?php echo $row->user_fName;?>&nbsp;<?php echo $row->user_midInit;?>.&nbsp;<?php echo $row->user_lName;?></a></td>
-                            <td><?php echo $row->user_Type;?></td>
-                            <td><i class="fa fa-star" style="color:#ffd700;"></i>&nbsp;<span class="label label-default"><?php echo $rep;?></span></td>
+                            <td>Steve Jobs</td>
                             <td>
+                              <span class="label label-default"><i class="fa fa-thumbs-up">&nbsp;<?php echo $like;?></i></span>
+                            </td>
+                            <!-- <td><i class="fa fa-star" style="color:#ffd700;"></i>&nbsp;<span class="label label-default"><?php echo $rep;?></span></td> -->
+                            <!-- <td>
                               <span class="label label-default"><i class="fa fa-thumbs-up">&nbsp;<?php echo $like;?></i></span>
                               <span class="label label-default"><i class="fa fa-share">&nbsp;<?php echo $share;?></i></span>
                               <span class="label label-default"><i class="fa fa-comments">&nbsp;<?php echo $comment;?></i></span>
-                            </td>
+                            </td> -->
                           </tr>
                           <?php  endforeach;?>
                           </tr>
@@ -147,7 +154,7 @@
                     </div><!-- /.table-responsive -->
                   </div><!-- /.box-body -->
                   <div class="box-footer clearfix">
-                    <a href="<?php echo base_url()."pages/toprated/"?>" class="btn btn-sm btn-default btn-flat pull-right">View More</a>
+                    <!-- <a href="<?php echo base_url()."pages/toprated/"?>" class="btn btn-sm btn-default btn-flat pull-right">View More</a> -->
                   </div><!-- /.box-footer -->
                 </div><!-- /.box -->
 
@@ -159,7 +166,7 @@
                 <div class="box box-primary">
                   <div class="box-header with-border">
                     <i class="fa fa-fire"></i>
-                    <h3 class="box-title">Most Discuss Post</h3><br/>
+                    <h3 class="box-title">On Fire</h3><br/>
                   </div><!-- /.box-header -->
                   <div class="box-body">
                   <div class="box box-widget">
@@ -227,11 +234,12 @@
                     </div><!-- /.box-header -->
                     <div class='box-body'>
                       <!-- post text -->
-                      <p><b><a href="<?php echo base_url()."pages/post/".$row->postId;?>"><?php echo $row->postTitle;?></a></b></p>
+<!--                       <p><b><a href="<?php echo base_url()."pages/post/".$row->postId;?>"><?php echo $row->postTitle;?></a></b></p>
                       <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $row->postContent;?></p>
-
+ -->
+                    <br/>
                       <!-- Attachment -->
-                    
+                    <div class="col-md-7">
                       <div class="attachment-block clearfix">
                         <?php 
                       $query= $this->post->showImage($row->postId);
@@ -239,11 +247,21 @@
                       foreach ($query->result_array() as $row) :
                         echo "<img src='".base_url().'/post_image/'.$row['extContent']."' height='200px' width='200px'>"; 
                      
-                     ?>
+                      ?>
                       <?php  endforeach;?>
-
+                        <p>This product was developed by index5. Click the link to explore. <a href="#">google.playstore.com/startupproduct1</a></p>
                       </div><!-- /.attachment-block -->
+                    </div>
+                    <div class="col-md-5">
 
+                    <div class="info-box">
+                      <span class="info-box-icon bg-green"><i class="ion ion-ios-cart-outline"></i></span>
+                      <div class="info-box-content">
+                        <span class="info-box-text">STARTUP PRODUCT 1</span>
+                        <span class="info-box-number"><i class="fa fa-star"></i>&nbsp;&nbsp;760</span>
+                      </div><!-- /.info-box-content -->
+                    </div><!-- /.info-box -->
+                    </div>
                       <!-- Social sharing buttons -->
                       
                       <span class='pull-right text-muted'><?php echo $like;?> likes - <?php echo $comment;?> comments</span>
@@ -261,106 +279,38 @@
               <div class="col-md-3">
                 <div class="box box-primary">
                   <div class="box-header with-border">
-                    <i class="fa fa-paper-plane"></i>
-                    <h3 class="box-title">Recently Added</h3>
+                    <i class="fa fa-feed"></i>
+                    <h3 class="box-title">Recent News</h3>
                   </div><!-- /.box-header -->
                   <div class="box-body">
-                    <div class="box">
-                      <div class="box-header with-border">
-                        <p>Startup Products</p>
-                         <?php 
+                    <div class='user-block'>
+                      <img class='img-circle' src='<?php echo base_url();?>/user/<?php echo $row->avatar_name;?>' alt='user image'>
+                      <span class='username'><a href="<?php echo base_url()."pages/profile/".$row->userId;?>"><?php echo $row->user_fName;?>&nbsp;<?php echo $row->user_midInit;?>.&nbsp;<?php echo $row->user_lName;?>&nbsp;</a>&nbsp;&nbsp;<i class='fa fa-star' style="color:#ffd700;"></i><b>&nbsp;&nbsp;<?php echo $rep;?></b></span>
+                      <span class='description'><?php echo $row->postDate;?></span>
+                    </div><!-- /.user-block -->
+                    <div>
+                    <h6>I need a brilliant idea that would be marketable to all smartphones users.</h6>
+                    <a href="#"><h6 class="pull-right">50 - upvotes  |  12 - comments</h6></a>
+                    </div>
+                    <br/><hr/>
 
-                        $query = $this->db->query("SELECT postId , postTitle ,userId ,postContent from userpost where postType = '2' group by postDate order by postDate desc limit 5");
-                         foreach($query->result() as $row):
-                        ?>
-                       <div class="box-body">
-                        <ul class="products-list product-list-in-box">
-                          <li class="item">
-                           </div>
-                            <div class="product-info">
-                              <a href="<?php echo base_url()."pages/post/".$row->postId;?>"><?php echo $row->postTitle;?></a></br>
-                                by: <?php echo $this->post->userProfile($row->userId)?></span>
-                            </div>
-                          </li><!-- /.item -->
-                            <div class="product-img">
-                              <?php 
-                      $query= $this->post->showImage($row->postId);
-
-                      foreach ($query->result_array() as $row) :
-                        echo "<img src='".base_url().'/post_image/'.$row['extContent']."' height='100px' width='100px'>"; 
-                     
-                     ?>
-
-                      <?php  endforeach;?>  
-                             <hr>
-                          <?php  endforeach;?>
-                        </ul>
-                      </div><!-- /.box-body -->
-                      <div class="box-footer text-center">
-                        <a href="<?php echo base_url(); ?>index.php/pages/startupproduct">View Latest Products</a>
-                      </div><!-- /.box-footer -->
-                    </div><!-- /.box -->
-
-                    <div class="box">
-                      <div class="box-header with-border">
-                      <div class="box-tools pull-right">
-                          <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-                        </div>
-                        <p>Startup Ideas</p>
-                        <?php 
-
-                            $query = $this->db->query("SELECT postId , postTitle ,userId ,postContent from userpost  where postType = '1' group by postDate order by postDate desc limit 5");
-                         foreach($query->result() as $row):
-                        ?>
-                        
-                      </div><!-- /.box-header -->
-                      <div class="box-body">
-                        <ul class="products-list product-list-in-box">
-                          <li class="item">
-                           </div>
-                            <div class="product-info">
-                              <a href="<?php echo base_url()."pages/post/".$row->postId;?>"><?php echo $row->postTitle;?></a></br>
-                                by: <?php echo $this->post->userProfile($row->userId)?></span>
-                            </div>
-                          </li><!-- /.item -->
-                            <div class="product-img">
-                              <?php 
-                      $query= $this->post->showImage($row->postId);
-
-                      foreach ($query->result_array() as $row) :
-                        echo "<img src='".base_url().'/post_image/'.$row['extContent']."' height='100px' width='100px'>"; 
-                     
-                     ?>
-
-                      <?php  endforeach;?>  
-                             <hr>
-                          <?php  endforeach;?>
-                        </ul>
-                      </div><!-- /.box-body -->
-                      <div class="box-footer text-center">
-                        <a href="<?php echo base_url()."pages/latest/"?>" class="uppercase">View Latest Ideas</a>
-                      </div><!-- /.box-footer -->
-                    </div><!-- /.box -->
+                    <div class='user-block'>
+                      <img class='img-circle' src='<?php echo base_url();?>/user/<?php echo $row->avatar_name;?>' alt='user image'>
+                      <span class='username'><a href="<?php echo base_url()."pages/profile/".$row->userId;?>"><?php echo $row->user_fName;?>&nbsp;<?php echo $row->user_midInit;?>.&nbsp;<?php echo $row->user_lName;?>&nbsp;</a>&nbsp;&nbsp;<i class='fa fa-star' style="color:#ffd700;"></i><b>&nbsp;&nbsp;<?php echo $rep;?></b></span>
+                      <span class='description'><?php echo $row->postDate;?></span>
+                    </div><!-- /.user-block -->
+                    <div>
+                    <h6>We need a programmer expert in java. Poke if you want to apply.</h6>
+                    <a href="#"><h6 class="pull-right">50 - upvotes  |  12 - comments</h6></a>
+                    </div>
                   </div><!--/.box body-->
+
+                  <div class="box-footer text-center">
+                    <a href="<?php echo base_url(); ?>index.php/pages/startupproduct">Go to news feed</a>
+                  </div><!-- /.box-footer -->
                 </div><!-- /.box -->
 
-                  <div class="info-box bg-aqua">
-                    <span class="info-box-icon"><i class="fa fa-thumbs-o-up"></i></span>
-                    <div class="info-box-content">
-                      <span class="info-box-text">Facebook Likes</span>
-                      <span class="info-box-number">41,410</span>
-                      <div class="progress">
-                        <div class="progress-bar" style="width: 70%"></div>
-                      </div>
-                      <span class="progress-description">
-                        70% Increase in 30 Days
-                      </span>
-                    </div><!-- /.info-box-content -->
-                  </div><!-- /.info-box -->
-
-                  <div>
-                    <p>Visit our Facebook Page by clicking the clink below:<br/><a href="#">facebook/startandboost</a><br/><br/>Start and Boost by $index[5].<br/></p>
-                  </div>
+                  
                 
               </div><!-- /.col -->
             </div><!--/.row-->
