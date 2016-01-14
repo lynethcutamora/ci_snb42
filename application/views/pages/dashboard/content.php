@@ -270,7 +270,7 @@
                   </div><!-- /.box -->
                 </div><!--/.body-->
                 <div class="box-footer text-center">
-                    <a href="<?php echo base_url()."pages/onfire/"?>" class="uppercase">View More Posts</a>
+                    <a href="<?php echo base_url()."pages/onfire/"?>" class="uppercase">View Startup Products</a>
                   </div><!-- /.box-footer -->
                 </div><!--/.box-->
               </div><!--/.col-->

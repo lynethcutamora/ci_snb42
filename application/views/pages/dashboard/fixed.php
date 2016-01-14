@@ -370,8 +370,8 @@
                 <i class="fa fa-feed"></i><span>News Feed</span>
               </a>
             </li>
-            <li class="treeview <?php if($pages=='profile') {echo "active";}else echo "";?>">
-              <a href="<?php echo base_url(); ?>index.php/pages/profile">
+            <li class="treeview <?php if($pages=='postidea') {echo "active";}else echo "";?>">
+              <a href="<?php echo base_url(); ?>index.php/pages/ideatorpost">
                 <i class="fa fa-edit"></i> <span>Post Idea</span>
               </a>
             </li>

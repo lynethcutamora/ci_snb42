@@ -176,6 +176,25 @@ class Pages extends CI_Controller {
 			$this->_landing();
 		}
 	}
+	public function ideatorpost()
+	{
+		if(($this->session->userdata('userId')!=""))
+		{
+		$query=$this->_userData();
+		$data['data']=$query->result_array();
+		$data['pages']='postidea';
+		$data['countgroup'] = $this->countGroups();
+		$groupquery= $this->groupdetails();
+		$data['groupdetails'] = $groupquery->result_array();
+		$data['alldata']=$query->result_array();
+		$this->load->view('pages/dashboard/fixed',$data);
+		$this->load->view('pages/postidea/content'); 
+		$this->load->view('pages/dashboard/controlsidebar');
+		$this->load->view('pages/dashboard/end');
+		}else{
+			$this->_landing();
+		}
+	}
 	public function adminPage1()
 	{
 		if(($this->session->userdata('userId')!=""))
