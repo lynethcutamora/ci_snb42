@@ -265,7 +265,7 @@ class Pages extends CI_Controller {
 				
 			if(isset($groupId)){
 				if($groupDetails->num_rows()==0) {
-					header('Location:'.base_url().'pages/nogroup/');
+					header('Location:'.base_url().'pages/pagenotfound');
 
 				}else{
 					if(isset($projectId)){
@@ -312,7 +312,7 @@ class Pages extends CI_Controller {
 		}
 	}
 
-	public function nogroup()
+	public function pagenotfound()
 
 	{
 			if(($this->session->userdata('userId')!=""))
@@ -1031,6 +1031,7 @@ class Pages extends CI_Controller {
 	}
 
 	public function createGroup(){
+
 		$this->form_validation->set_rules('inputGroupName', 'Group Name', 'required');
 		$this->form_validation->set_rules('inputDescription', 'Group Description', 'trim');
 
@@ -1309,10 +1310,7 @@ class Pages extends CI_Controller {
 	                  echo $postdtl['postDate'];
 	                  echo "</span>
 	                  </div><!-- /.user-block -->
-	                  <div class='box-tools'>
-
 	                  
-	                  </div><!-- /.box-tools -->
 	                </div><!-- /.box-header -->
 	                <div class='box-body'>
 	                  <h5><b><a href=".base_url()."pages/post/".$postdtl['postId'].'>';
@@ -1355,18 +1353,14 @@ class Pages extends CI_Controller {
 	               
 
 	                          
-	              </div><!-- /.box -->
-	              
-	                  </div>
+	            
 	                  </div>';
 
 				endforeach;
 
 				endforeach;
 
-				echo "  
-  <script src='http://code.jquery.com/jquery-1.9.1.js'></script>
-";
+				echo " </div></div><script src='http://code.jquery.com/jquery-1.9.1.js'></script>";
 
 	
 	}
@@ -1608,57 +1602,34 @@ class Pages extends CI_Controller {
 
 	}
 
-public function send()
-{
-	if(($this->session->userdata('userId')!=""))
-		{	
-			$datetime = date('Y-m-d H:i:s'); 
-
-			$data = array(
-			'msgId' => $this->input->post('msgId'),
-			'dateSent' =>$datetime,
-			'userId' =>	$this->session->userdata('userId'),
-			'msgContent' => $this->input->post('message')
-			);
-
-			$this->db->insert('conference_dtl', $data);
-		}else
-		{
-			$this->_landing();
-		}
-
-	}
-
-	public function videoconferencing($groupId=null)
+	public function send()
 	{
 		if(($this->session->userdata('userId')!=""))
-		{	
-			if(isset($groupId))
 			{	
-				$data['groupId'] = $groupId;
-				$query=$this->_userData();
-				$data['data']=$query->result_array();
-				$data['pages']='message';
-				$data['countgroup'] = $this->countGroups();
-				$groupquery= $this->groupdetails();
-				$data['groupdetails'] = $groupquery->result_array();
-				
-				$this->load->view('pages/dashboard/fixed',$data);
-				$this->load->view('pages/videocon/content'); 
-				$this->load->view('pages/dashboard/controlsidebar');
-				$this->load->view('pages/dashboard/end');
+				$datetime = date('Y-m-d H:i:s'); 
+
+				$data = array(
+				'msgId' => $this->input->post('msgId'),
+				'dateSent' =>$datetime,
+				'userId' =>	$this->session->userdata('userId'),
+				'msgContent' => $this->input->post('message')
+				);
+
+				$this->db->insert('conference_dtl', $data);
+			}else
+			{
+				$this->_landing();
 			}
-		}else
-		{
-			$this->_landing();
-		}
+
 	}
+
+
 
 	public function groupchatshow($groupid)
 	{
 			
 
-                    foreach($this->post->showMsg($groupid)->result_array() as $row):
+                   foreach($this->post->showMsg($groupid)->result_array() as $row):
                   
 				if($this->post->checkUser($row['userId'])!='true')	{
                    echo ' <div class="direct-chat-msg">';
@@ -1715,5 +1686,181 @@ public function send()
 			$this->session->set_userdata($data);
 			header('Location:'.base_url());
 	}
+
+	public function investorpost()
+	{
+		if(($this->session->userdata('userId')!=""))
+		{
+			if($this->post->checkUserType()=='false'){
+				$query=$this->_userData();
+				$data['data']=$query->result_array();
+				$data['pages']='post';
+				$data['countgroup'] = $this->countGroups();
+				$groupquery= $this->groupdetails();
+				$data['groupdetails'] = $groupquery->result_array();
+				
+				$this->load->view('pages/dashboard/fixed',$data);
+				$this->load->view('pages/investorpost/content'); 
+				$this->load->view('pages/dashboard/controlsidebar');
+				$this->load->view('pages/dashboard/end');
+			}else
+			{
+				header('Location:'.base_url().'pages/pagenotfound');
+			}
+		}else
+		{
+			$this->_landing();
+		}
+	}
+	public function postInvestor()
+	{
+		if(($this->session->userdata('userId')!=""))
+		{
+			if($this->post->checkUserType()=='false'){
+		         $this->form_validation->set_rules('inputDescription', 'Description', 'required|trim');
+		         if ($this->form_validation->run() == FALSE)
+		        {
+		         	$this->profile($this->session->userdata('userId'));
+		        }
+		        else
+				{	
+		     	 	$datetime = date('Y-m-d H:i:s'); 
+		     	 	$postId = uniqid();
+		     	 	
+		     	 	$data = array(
+					'postId' => $postId,
+					'postTitle' =>'investor Post',
+					'postContent' =>$this->input->post('inputDescription'),
+					'postType' => 'investpost',
+					'userId' => $this->session->userdata('userId'),
+					'postDate' => $datetime
+					);
+					$this->db->insert('userpost', $data);
+
+					
+				}
+			}
+
+					
+		}else
+		{
+			$this->_landing();
+		}
+	}
+	public function showInvestorpost($userId)
+	{
+			 foreach($this->post->profile($userId)->result_array() as $userdtl):
+	         foreach($this->post->postInvestor($userId)->result_array() as $postdtl):
+
+	          echo '<div class="row">
+	          
+	            <div class="col-md-12">
+	            <!-- Box Comment -->
+	              <div class="box box-widget">
+	                <div class="box-header with-border">
+	                  <div class="user-block">
+	                    <img class="img-circle" src="'.base_url()."user/".$postdtl["avatar_name"].'"><span class="username">';
+	                    echo '<a href="'.base_url()."pages/profile/".$postdtl['userId'].'">';
+	                       
+	                                  if($postdtl['user_Type']=='Ideator'||$postdtl['user_Type']=='Investor')
+	                                  {
+	                                      if($postdtl['user_midInit']==null)
+	                                         echo $postdtl['user_fName']."  ".$postdtl['user_lName'];
+	                                       else
+	                                         echo $postdtl['user_fName']." ".$postdtl['user_midInit'].". ".$postdtl['user_lName'];
+	                                  }
+	                                  else
+	                                  {
+	                                    echo $postdtl['company_name'];
+	                                  }
+	                         
+	                      echo '</a>
+	                      </span>
+	                    &nbsp;&nbsp;&nbsp;';
+	                  $gold=$this->post->gold($userId);
+	                  $silver=$this->post->silver($userId);
+	                  $bronze=$this->post->gold($userId);
+	                 if($gold==0 && $silver==0 && $bronze==0)
+	                 {
+	                     echo '<i class="fa fa-star" style="color:SandyBrown"></i>';
+	                 }
+	                 elseif ($gold>=$silver && $gold>=$bronze) 
+	                 {
+	                     echo '<i class="fa fa-star" style="color:Gold"></i>';  
+	                 } 
+	                 elseif ($silver>$gold && $silver>=$bronze)
+	                 {
+	                     echo '<i class="fa fa-star" style="color:Silver"></i>';
+	                 }
+	                 elseif ($bronze>$gold && $bronze>$silver)
+	                 {
+	                     echo '<i class="fa fa-star" style="color:SandyBrown"></i>';
+	                 }
+	                   
+	                
+	                  echo "<span class='description'>";    
+	                  echo $postdtl['postDate'];
+	                  echo "</span>
+	                  </div><!-- /.user-block -->
+	                  
+	                </div><!-- /.box-header -->
+	                <div class='box-body'>
+	                  <h5><b><a href=".base_url()."pages/post/".$postdtl['postId'].'>';
+	    
+	                  echo "</a></b></h3>
+	                  <p>";
+	                      $query=$this->post->showImage($postdtl['postId']);
+	                      foreach ($query->result_array() as $row) {
+	                        echo "<img src='".base_url().'/post_image/'.$row['extContent']."' height='200px' width='200px'>"; 
+	                      }
+	                   echo"
+	                  </p>
+
+	                  <p><h5>";
+	                  echo $postdtl['postContent'];
+
+	                  echo"</h5></p>
+	                  <p>";
+	                    
+	                  
+	                    
+	                  echo '</p>
+	                  <a href="'.base_url().'pages/post/'.$postdtl['postId'].'" class="uppercase">View this Post</a>
+	                  ';
+	                  echo "<span class='pull-right text-muted'></div><!-- /.box-body -->
+	               
+
+	                          
+	            
+	                  </div>";
+
+				endforeach;
+
+				endforeach;
+
+				echo " </div></div><script src='http://code.jquery.com/jquery-1.9.1.js'></script>";
+
 	
+	}
+	
+	public function newsfeed()
+	{
+		if(($this->session->userdata('userId')!=""))
+		{
+				$query=$this->_userData();
+				$data['data']=$query->result_array();
+				$data['pages']='post';
+				$data['countgroup'] = $this->countGroups();
+				$groupquery= $this->groupdetails();
+				$data['groupdetails'] = $groupquery->result_array();
+				
+				$this->load->view('pages/dashboard/fixed',$data);
+				$this->load->view('pages/newsfeed/content'); 
+				$this->load->view('pages/dashboard/controlsidebar');
+				$this->load->view('pages/dashboard/end');
+		}else
+		{
+			$this->_landing();
+		}
+	}
 }
