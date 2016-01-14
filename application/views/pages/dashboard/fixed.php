@@ -365,20 +365,20 @@
                 <i class="fa fa-dashboard"></i> <span>Dashboard</span> <!--<i class="fa fa-angle-left pull-right">--></i>
               </a>            
             </li>
+            <li class="treeview <?php if($pages=='newsfeed') {echo "active";}else echo "";?>">
+              <a href="<?php echo base_url(); ?>index.php/pages/startupproduct">
+                <i class="fa fa-feed"></i><span>News Feed</span>
+              </a>
+            </li>
             <li class="treeview <?php if($pages=='profile') {echo "active";}else echo "";?>">
               <a href="<?php echo base_url(); ?>index.php/pages/profile">
                 <i class="fa fa-edit"></i> <span>Post Idea</span>
               </a>
             </li>
             <li class="treeview <?php if($pages=='startup') {echo "active";}else echo "";?>">
-              <a href="<?php echo base_url(); ?>index.php/pages/startupproduct">
-                <i class="fa fa-paper-plane"></i> <span>Startup Products</span>
-              </a>
-            </li>
-            <li class="treeview <?php if($pages=='newsfeed') {echo "active";}else echo "";?>">
               <a href="#">
-                <i class="fa fa-feed"></i>
-                <span>News Feed</span>
+                <i class="fa fa-paper-plane"></i> 
+                <span>Startup Products</span>
                 <i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu">
@@ -386,13 +386,13 @@
                 <li><a href="<?php echo base_url(); ?>pages/onfire"><i class="fa fa-fire"></i>On Fire</a></li>
                 <li><a href="<?php echo base_url(); ?>pages/toprated"><i class="fa fa-star"></i>Top Rated</a></li>
               </ul>
-            </li>
+            </li><!-- 
              <li class="treeview <?php if($pages=='timeline') {echo "active";}else echo "";?>">
               <a href="<?php echo base_url(); ?>pages/timeline">
                     <i class="fa fa-calendar"></i> <span>Timeline</span>
                  </a>
              
-            </li>
+            </li> -->
             <li class="treeview <?php if($pages=='group') {echo "active";}else echo "";?>">
               <a href="#">
                <i class="fa fa-group"></i>

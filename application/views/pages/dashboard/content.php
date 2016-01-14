@@ -15,6 +15,7 @@
         <!-- Main content -->
         <section class="content">
         <!-- Callouts -->
+        <div class="col-md-9">
           <div class="box box-default">
             <div class="box-header with-border">
               <i class="fa fa-bullhorn"></i>
@@ -24,12 +25,14 @@
               <div class="callout callout-info">
               <?php foreach($data as $row):?>
                 <h4>Hello <?php echo $row['user_fName'];?>! You caught us before we're ready.</h4>
-                <p>Development team $index[5] is working hard to put finishing touches onto Start&Boost. Things are going well and it should be heady to help you with lean startup soon.<br/><br/>Thanks! :-)</p>
+                <!-- <p>Development team $index[5] is working hard to put finishing touches onto Start&Boost. Things are going well and it should be heady to help you with lean startup soon.<br/><br/>Thanks! :-)</p> -->
+                <p>There will be a Philippine Startup Challenge hosted by SMART on February 29, 2016. It's your time to shine! For more information, you can contact this number: 0932-429-765. <br/>If you wish to register, you can visit this link: <a href="#">googledocs.com/startupchallenge2k16/fillup?</a><br/><br/>Thanks! :-)</p>
               <?php endforeach;?>
               </div>
             </div>
           </div><!-- /.box -->
-
+        </div>
+        
           <div class="row">
 
           <!-- ====================================================================== -->
@@ -44,6 +47,11 @@
                     </div>
                   </div><!-- /.box-header -->
                   <div class="box-body">
+                    <div class="alert alert-danger alert-dismissable">
+                      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                      <h4><i class="icon fa fa-ban"></i> Alert!</h4>
+                        Note: These ideas were already owned by ideators with their investors. Illegal copying is strictly not allowed.  
+                      </div>
                     <div class="table-responsive">
                       <table class="table no-margin">
                         <thead>

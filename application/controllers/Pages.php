@@ -146,14 +146,18 @@ class Pages extends CI_Controller {
 		$data['groupdetails'] = $groupquery->result_array();
 		$this->load->view('pages/dashboard/fixed',$data);
 		$this->load->view('pages/timeline/content'); 
-		$this->load->view('pages/dashboard/controlsidebar');
-		$this->load->view('pages/dashboard/end');
-		}else
+
+
+		}
+
+
+
+		
 		{
 			$this->_landing();
 		}
 	}
-			public function startupproduct()
+	public function startupproduct()
 	{
 		if(($this->session->userdata('userId')!=""))
 		{
@@ -973,10 +977,13 @@ class Pages extends CI_Controller {
 	{
 		 $this->form_validation->set_rules('commentContent', 'Comment', 'required|trim');
  		 $disallowed = array('hell','darn','shucks','golly','phooey','fuck','shit','bullshit', 'brainless','fool','asshole');
+ 		 
+ 		 // set_include_path(base_url().'/badwordlib');
+ 		 // $read = file_get_contents('badwords.txt', FILE_USE_INCLUDE_PATH);
+ 		 // $disallowed=explode(" ", $read);
 
          if ($this->form_validation->run() == FALSE)
         {
-         	
 			header('Location:'.base_url().'pages/post/'.$postId);	
         }
         else
@@ -985,12 +992,14 @@ class Pages extends CI_Controller {
 			$countbad=0;
 			$commentContent=$this->input->post('commentContent');
 			$txtwords=explode(" ", $commentContent);
-			for ($i=0; $i < sizeof($txtwords); $i++) { 
-				for ($j=0; $j < sizeof($disallowed); $j++) { 
-					if($txtwords[$i]==$disallowed[$j])
-						$countbad++;
+
+			
+				for ($i=0; $i < sizeof($txtwords); $i++) { 
+					for ($j=0; $j < sizeof($disallowed); $j++) { 
+						if(strtolower($txtwords[$i])==$disallowed[$j])
+							$countbad++;
+					}
 				}
-			}
 
 
      	 	$datetime = date('Y-m-d H:i:s'); 

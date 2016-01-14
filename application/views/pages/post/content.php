@@ -43,6 +43,7 @@ theForm.scrolly.value = scrolly;
                                   {
                                     echo $postdtl['company_name'];
                                   }
+
                           ?>
                     </a></span>
                     <span class="description"> <?php echo $postdtl['postDate'];?></span>
