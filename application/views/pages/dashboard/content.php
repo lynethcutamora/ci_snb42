@@ -279,87 +279,35 @@
               <div class="col-md-3">
                 <div class="box box-primary">
                   <div class="box-header with-border">
-                    <i class="fa fa-paper-plane"></i>
-                    <h3 class="box-title">Recently Added</h3>
+                    <i class="fa fa-feed"></i>
+                    <h3 class="box-title">Recent News</h3>
                   </div><!-- /.box-header -->
                   <div class="box-body">
-                    <div class="box">
-                      <div class="box-header with-border">
-                        <p>Startup Products</p>
-                         <?php 
+                    <div class='user-block'>
+                      <img class='img-circle' src='<?php echo base_url();?>/user/<?php echo $row->avatar_name;?>' alt='user image'>
+                      <span class='username'><a href="<?php echo base_url()."pages/profile/".$row->userId;?>"><?php echo $row->user_fName;?>&nbsp;<?php echo $row->user_midInit;?>.&nbsp;<?php echo $row->user_lName;?>&nbsp;</a>&nbsp;&nbsp;<i class='fa fa-star' style="color:#ffd700;"></i><b>&nbsp;&nbsp;<?php echo $rep;?></b></span>
+                      <span class='description'><?php echo $row->postDate;?></span>
+                    </div><!-- /.user-block -->
+                    <div>
+                    <h6>I need a brilliant idea that would be marketable to all smartphones users.</h6>
+                    <a href="#"><h6 class="pull-right">50 - upvotes  |  12 - comments</h6></a>
+                    </div>
+                    <br/><hr/>
 
-                        $query = $this->db->query("SELECT postId , postTitle ,userId ,postContent from userpost where postType = '2' group by postDate order by postDate desc limit 5");
-                         foreach($query->result() as $row):
-                        ?>
-                       <div class="box-body">
-                        <ul class="products-list product-list-in-box">
-                          <li class="item">
-                           </div>
-                            <div class="product-info">
-                              <a href="<?php echo base_url()."pages/post/".$row->postId;?>"><?php echo $row->postTitle;?></a></br>
-                                by: <?php echo $this->post->userProfile($row->userId)?></span>
-                            </div>
-                          </li><!-- /.item -->
-                            <div class="product-img">
-                              <?php 
-                      $query= $this->post->showImage($row->postId);
-
-                      foreach ($query->result_array() as $row) :
-                        echo "<img src='".base_url().'/post_image/'.$row['extContent']."' height='100px' width='100px'>"; 
-                     
-                     ?>
-
-                      <?php  endforeach;?>  
-                             <hr>
-                          <?php  endforeach;?>
-                        </ul>
-                      </div><!-- /.box-body -->
-                      <div class="box-footer text-center">
-                        <a href="<?php echo base_url(); ?>index.php/pages/startupproduct">View Latest Products</a>
-                      </div><!-- /.box-footer -->
-                    </div><!-- /.box -->
-
-                    <div class="box">
-                      <div class="box-header with-border">
-                      <div class="box-tools pull-right">
-                          <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-                        </div>
-                        <p>Startup Ideas</p>
-                        <?php 
-
-                            $query = $this->db->query("SELECT postId , postTitle ,userId ,postContent from userpost  where postType = '1' group by postDate order by postDate desc limit 5");
-                         foreach($query->result() as $row):
-                        ?>
-                        
-                      </div><!-- /.box-header -->
-                      <div class="box-body">
-                        <ul class="products-list product-list-in-box">
-                          <li class="item">
-                           </div>
-                            <div class="product-info">
-                              <a href="<?php echo base_url()."pages/post/".$row->postId;?>"><?php echo $row->postTitle;?></a></br>
-                                by: <?php echo $this->post->userProfile($row->userId)?></span>
-                            </div>
-                          </li><!-- /.item -->
-                            <div class="product-img">
-                              <?php 
-                      $query= $this->post->showImage($row->postId);
-
-                      foreach ($query->result_array() as $row) :
-                        echo "<img src='".base_url().'/post_image/'.$row['extContent']."' height='100px' width='100px'>"; 
-                     
-                     ?>
-
-                      <?php  endforeach;?>  
-                             <hr>
-                          <?php  endforeach;?>
-                        </ul>
-                      </div><!-- /.box-body -->
-                      <div class="box-footer text-center">
-                        <a href="<?php echo base_url()."pages/latest/"?>" class="uppercase">View Latest Ideas</a>
-                      </div><!-- /.box-footer -->
-                    </div><!-- /.box -->
+                    <div class='user-block'>
+                      <img class='img-circle' src='<?php echo base_url();?>/user/<?php echo $row->avatar_name;?>' alt='user image'>
+                      <span class='username'><a href="<?php echo base_url()."pages/profile/".$row->userId;?>"><?php echo $row->user_fName;?>&nbsp;<?php echo $row->user_midInit;?>.&nbsp;<?php echo $row->user_lName;?>&nbsp;</a>&nbsp;&nbsp;<i class='fa fa-star' style="color:#ffd700;"></i><b>&nbsp;&nbsp;<?php echo $rep;?></b></span>
+                      <span class='description'><?php echo $row->postDate;?></span>
+                    </div><!-- /.user-block -->
+                    <div>
+                    <h6>We need a programmer expert in java. Poke if you want to apply.</h6>
+                    <a href="#"><h6 class="pull-right">50 - upvotes  |  12 - comments</h6></a>
+                    </div>
                   </div><!--/.box body-->
+
+                  <div class="box-footer text-center">
+                    <a href="<?php echo base_url(); ?>index.php/pages/startupproduct">Go to news feed</a>
+                  </div><!-- /.box-footer -->
                 </div><!-- /.box -->
 
                   
