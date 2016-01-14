@@ -283,6 +283,15 @@
             $black = $query->num_rows();
             return $black;
         }
+        public function reputation($userId)
+        {
+           $gold= $this->gold($userId);
+           $silver = $this->silver($userId);
+           $bronze = $this->bronze($userId);
+           $black = $this->black($userId);
+             $rep = (($gold*20)+($silver*10)+($bronze*5))-($black*15);   
+             return $rep;
+        }
         public function firstProject($groupId)
         {
             $this->db->select('*');

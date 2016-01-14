@@ -107,6 +107,10 @@
             </div><!-- /.col -->
          
        
+            <div class="col-md-10">
+
+            </div>
+
        
          <div class="info-box bg-aqua">
                     <span class="info-box-icon"><i class="fa fa-thumbs-o-up"></i></span>

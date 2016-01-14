@@ -312,11 +312,11 @@
                         <img class='img-circle' src='<?php echo base_url();?>/user/<?php echo $row['avatar_name']?>' alt='user image'>
                           <?php if($row['user_Type']=="Company"){
                               echo '<span class=\'username\'><a href="#">'.$row['company_name'].'</a></span>
-                                    <span class=\'description\'>Reputation:<span class="pull-right"><i class=\'fa fa-star\' style="color:#ffd700;"></i><b>&nbsp;&nbsp;0</b></span></span>
+                                    <span class=\'description\'>Reputation:<span class="pull-right"><i class=\'fa fa-star\' style="color:#ffd700;"></i><b>&nbsp;&nbsp;'.$row['userId'].'</b></span></span>
                                     ';
                             }else{
                               echo '<span class=\'username\'><a href="#">'.$row['user_fName'].' '.$row['user_midInit'].'. '.$row['user_lName'].'</a></span>
-                                    <span class=\'description\'>Reputation:<span class="pull-right"><i class=\'fa fa-star\' style="color:#ffd700;"></i><b>&nbsp;&nbsp;0</b></span></span>
+                                    <span class=\'description\'>Reputation:<span class="pull-right"><i class=\'fa fa-star\' style="color:#ffd700;"></i><b>&nbsp;&nbsp;'.$row['userId'].'</b></span></span>
                                     ';
                             }
                           ?><br/>
@@ -348,7 +348,7 @@
                       <div class='user-block'>
                         <img class='img-circle' src='<?php echo base_url();?>/user/<?php echo $row['avatar_name']?>' alt='user image'>
                           <span class='username'><a href="#"><?php echo $row['user_fName']." ".$row['user_midInit'].". ".$row['user_lName']?></a></span>
-                          <span class='description'>Reputation:<span class="pull-right"><i class='fa fa-star' style="color:#ffd700;"></i><b>&nbsp;&nbsp;0</b></span></span>
+                          <span class='description'>Reputation:<span class="pull-right"><i class='fa fa-star' style="color:#ffd700;"></i><b>&nbsp;&nbsp;<?php $this->post->reputation($row['userid'])?></b></span></span>
                           <br/>
                       </div><!-- /.user-block -->
                       <?php  endforeach;?>
