@@ -176,25 +176,7 @@ class Pages extends CI_Controller {
 			$this->_landing();
 		}
 	}
-	public function ideatorpost()
-	{
-		if(($this->session->userdata('userId')!=""))
-		{
-		$query=$this->_userData();
-		$data['data']=$query->result_array();
-		$data['pages']='postidea';
-		$data['countgroup'] = $this->countGroups();
-		$groupquery= $this->groupdetails();
-		$data['groupdetails'] = $groupquery->result_array();
-		$data['alldata']=$query->result_array();
-		$this->load->view('pages/dashboard/fixed',$data);
-		$this->load->view('pages/postidea/content'); 
-		$this->load->view('pages/dashboard/controlsidebar');
-		$this->load->view('pages/dashboard/end');
-		}else{
-			$this->_landing();
-		}
-	}
+
 	public function adminPage1()
 	{
 		if(($this->session->userdata('userId')!=""))
@@ -374,6 +356,47 @@ class Pages extends CI_Controller {
 	}
 
 	public function profile($userId=null)
+	{	if(($this->session->userdata('userId')!=""))
+		{
+
+			if(isset($userId))
+			{
+				$query=$this->_userData();
+				$data['data']=$query->result_array();
+				$data['pages']='profile';
+				$data['countgroup'] = $this->countGroups();
+				$groupquery= $this->groupdetails();
+				$data['groupdetails'] = $groupquery->result_array();
+				$query=$this->post->alluserData($userId);
+				$data['alldata']=$query->result_array();
+
+				$query=$this->post->profile($userId);
+				$data['profileDtl']=$query->result_array();
+				$data['userId']=$userId;
+
+				$groupDetails= $this->post->profile($userId);
+				if($groupDetails->num_rows()==0) {
+					$groupDetails->result_array();
+
+					$this->load->view('pages/dashboard/fixed',$data);
+					$this->load->view('pages/group/nogroup',$data); 
+					$this->load->view('pages/dashboard/controlsidebar');
+					$this->load->view('pages/dashboard/end');
+				}else{
+					$this->load->view('pages/dashboard/fixed',$data);
+					$this->load->view('pages/profile/content',$data); 
+					$this->load->view('pages/dashboard/controlsidebar');
+					$this->load->view('pages/dashboard/end');
+				}
+			}else{
+				$this->profile($this->session->userdata('userId'));
+			}
+		}else{
+			$this->_landing();
+		}
+	}
+
+	public function ideatorpost($userId=null)
 	{	if(($this->session->userdata('userId')!=""))
 		{
 
