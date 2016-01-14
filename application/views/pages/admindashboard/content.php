@@ -84,7 +84,7 @@
 <!--end-->
             <div class="box box-info">
                   <div class="box-header with-border">
-                    <h3 class="box-title">Latest User's this week</h3>
+                    <h3 class="box-title">Latest Register User's this week</h3>
                     <div class="box-tools pull-right">
                       <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
                     </div>
