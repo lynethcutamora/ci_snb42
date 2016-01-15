@@ -55,8 +55,6 @@ class Pages extends CI_Controller {
 
 	public function _dashboard()
 	{
-
-		
 		$query=$this->_userData();
 		$data['data']=$query->result_array();
 		$data['pages']='dashboard';
@@ -64,6 +62,8 @@ class Pages extends CI_Controller {
 		$groupquery= $this->groupdetails();
 		$data['alldata']=$query->result_array();
 		$data['groupdetails'] = $groupquery->result_array();
+		$feed = $this->post->newsfeedideator();
+		$data['investorpost'] = $feed->result_array();
 		$this->load->view('pages/dashboard/fixed',$data);
 		$this->load->view('pages/dashboard/content',$data);
 		$this->load->view('pages/dashboard/footer');
@@ -1905,4 +1905,5 @@ class Pages extends CI_Controller {
 			$this->_landing();
 		}
 	}
+
 }

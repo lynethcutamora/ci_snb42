@@ -452,5 +452,22 @@
             $query = $this->db->get();
             return $query;
         }
+
+        public function newsfeedideator()
+        {
+            $this->db->select('*');
+            $this->db->from('user_md a');
+            $this->db->join('user_dtl b', 'a.userId=b.userId','left');
+            $this->db->join('company_dtl c', 'c.userId=a.userId','left');
+            $this->db->join('userpost d', 'd.userId=a.userId');
+            $this->db->join('avatar_dtl e', 'e.userId=d.userId');
+            $this->db->where('d.postType','investpost');
+            $this->db->order_by('postDate', 'DESC');
+            $this->db->limit('5');
+            $query = $this->db->get();
+            return $query;
+        }
     }
+
+
 ?>

@@ -275,7 +275,7 @@
                 </div><!--/.box-->
               </div><!--/.col-->
 
-
+              
               <div class="col-md-3">
                 <div class="box box-primary">
                   <div class="box-header with-border">
@@ -283,33 +283,25 @@
                     <h3 class="box-title">Recent News</h3>
                   </div><!-- /.box-header -->
                   <div class="box-body">
+                    <?php foreach($investorpost as $inv): ?>
                     <div class='user-block'>
-                      <img class='img-circle' src='<?php echo base_url();?>/user/<?php echo $row->avatar_name;?>' alt='user image'>
-                      <span class='username'><a href="<?php echo base_url()."pages/profile/".$row->userId;?>"><?php echo $row->user_fName;?>&nbsp;<?php echo $row->user_midInit;?>.&nbsp;<?php echo $row->user_lName;?>&nbsp;</a>&nbsp;&nbsp;<i class='fa fa-star' style="color:#ffd700;"></i><b>&nbsp;&nbsp;<?php echo $rep;?></b></span>
-                      <span class='description'><?php echo $row->postDate;?></span>
+                      <img class='img-circle' src='<?php echo base_url();?>/user/<?php echo $inv['avatar_name'];?>' alt='user image'>
+                      <span class='username'><a href="<?php echo base_url()."pages/profile/".$inv['userId']?>"><?php echo $inv['user_fName'];?>&nbsp;<?php echo $inv['user_midInit'];?>.&nbsp;<?php echo $inv['user_lName'];?>&nbsp;</a>&nbsp;&nbsp;<i class='fa fa-star' style="color:#ffd700;"></i><b>&nbsp;&nbsp;<?php echo $rep;?></b></span>
+                      <span class='description'><?php echo $inv['postDate'];?></span>
                     </div><!-- /.user-block -->
+
                     <div>
-                    <h6>I need a brilliant idea that would be marketable to all smartphones users.</h6>
-                    <a href="#"><h6 class="pull-right">50 - upvotes  |  12 - comments</h6></a>
+                    <h6><?php echo $inv['postContent']; ?></h6>
+                      <a href="#"><h6 class="pull-right">50 - upvotes  |  12 - comments</h6></a>
                     </div>
                     <br/><hr/>
 
-                    <div class='user-block'>
-                      <img class='img-circle' src='<?php echo base_url();?>/user/<?php echo $row->avatar_name;?>' alt='user image'>
-                      <span class='username'><a href="<?php echo base_url()."pages/profile/".$row->userId;?>"><?php echo $row->user_fName;?>&nbsp;<?php echo $row->user_midInit;?>.&nbsp;<?php echo $row->user_lName;?>&nbsp;</a>&nbsp;&nbsp;<i class='fa fa-star' style="color:#ffd700;"></i><b>&nbsp;&nbsp;<?php echo $rep;?></b></span>
-                      <span class='description'><?php echo $row->postDate;?></span>
-                    </div><!-- /.user-block -->
-                    <div>
-                    <h6>We need a programmer expert in java. Poke if you want to apply.</h6>
-                    <a href="#"><h6 class="pull-right">50 - upvotes  |  12 - comments</h6></a>
-                    </div>
-                  </div><!--/.box body-->
+                    <?php endforeach; ?>
 
                   <div class="box-footer text-center">
                     <a href="<?php echo base_url(); ?>index.php/pages/startupproduct">Go to news feed</a>
                   </div><!-- /.box-footer -->
                 </div><!-- /.box -->
-
                   
                 
               </div><!-- /.col -->
