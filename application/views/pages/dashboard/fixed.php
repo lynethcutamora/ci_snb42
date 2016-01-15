@@ -361,20 +361,29 @@
             <li class="header">MAIN NAVIGATION</li>
             
             <li class="treeview <?php if($pages=='dashboard') {echo "active";}else echo "";?>">
-              <a href="<?php echo base_url(); ?>index.php/pages/index">
+              <a href="<?php echo base_url(); ?>pages/index">
                 <i class="fa fa-dashboard"></i> <span>Dashboard</span> <!--<i class="fa fa-angle-left pull-right">--></i>
               </a>            
             </li>
             <li class="treeview <?php if($pages=='newsfeed') {echo "active";}else echo "";?>">
-              <a href="<?php echo base_url(); ?>index.php/pages/startupproduct">
+              <a href="<?php echo base_url(); ?>pages/newsfeed">
                 <i class="fa fa-feed"></i><span>News Feed</span>
               </a>
             </li>
-            <li class="treeview <?php if($pages=='postidea') {echo "active";}else echo "";?>">
-              <a href="<?php echo base_url(); ?>index.php/pages/ideatorpost">
+            <?php if($this->post->checkUserType()=='true'){?>
+            <li class="treeview <?php if($pages=='profile') {echo "active";}else echo "";?>">
+              <a href="<?php echo base_url(); ?>pages/profile">
                 <i class="fa fa-edit"></i> <span>Post Idea</span>
               </a>
             </li>
+             <?php }else{?>
+            <li class="treeview <?php if($pages=='profile') {echo "active";}else echo "";?>">
+              <a href="<?php echo base_url(); ?>pages/investorpost">
+                <i class="fa fa-edit"></i> <span>Post</span>
+              </a>
+            </li>
+
+             <?php } ?> 
             <li class="treeview <?php if($pages=='startup') {echo "active";}else echo "";?>">
               <a href="#">
                 <i class="fa fa-paper-plane"></i> 

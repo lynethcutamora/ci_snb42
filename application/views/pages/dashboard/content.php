@@ -166,7 +166,7 @@
                 <div class="box box-primary">
                   <div class="box-header with-border">
                     <i class="fa fa-fire"></i>
-                    <h3 class="box-title">On Fire</h3><br/>
+                    <h3 class="box-title">Most Discuss Post</h3><br/>
                   </div><!-- /.box-header -->
                   <div class="box-body">
                   <div class="box box-widget">

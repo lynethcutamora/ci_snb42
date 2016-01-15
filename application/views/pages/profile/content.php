@@ -154,7 +154,7 @@
                   <h3 class="box-title">About Me</h3>
                 </div><!-- /.box-header -->
                 <div class="box-body">
-                  <strong><i class="fa fa-book margin-r-5"></i>  Self Description</strong>
+                  <strong><i class="fa fa-book margin-r-5"></i>  Skills</strong>
                   <p class="text-muted">
                 
                     
@@ -348,7 +348,7 @@
                                         </div>
                                       </div>
                                       <div class="form-group">
-                                        <label for="inputDescription" class="col-sm-2 control-label">About Me</label>
+                                        <label for="inputDescription" class="col-sm-2 control-label">Skills</label>
                                         <div class="col-sm-9">
                                           <input type="text" class="form-control" name="inputDescription" id="inputDescription" required="required" placeholder="Short Self-Description"  value="<?php echo $userdtl['user_shortSelfDescription']; ?>">
                                         </div>
@@ -615,7 +615,7 @@
               
                 
                 <?php foreach($data as $userdtl):?>
-                <?php if($this->post->validBadge($userId)=='false'){?>;
+                <?php if($this->post->validBadge($userId)=='false'){?>
                 
                 <?php echo form_open('../pages/badge'); 
                 echo '<input type="text" hidden="true" name="userId" value="'.$userId.'">';

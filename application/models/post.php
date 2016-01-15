@@ -154,6 +154,7 @@
             $query = $this->db->get();
             return $query;
         }
+
         public function alluserData($userId)
         {
             $this->db->select('*');
@@ -418,5 +419,38 @@
         //     $query=$this->db->query($sql,array($text,$text));
         //     return $query->result();
         // }
+        public function getUserType($userId)
+        {
+            $this->db->select('user_Type');
+            $this->db->from('user_md');
+            $query =$this->db->where('userId',$userId);
+            $query = $this->db->get();
+            $row = $query->row_array();
+            return $row['user_Type'];
+
+
+        }
+
+        public function checkUserType()
+        {
+            if($this->getUserType($this->session->userdata('userId'))=='Ideator')
+                return 'true'; 
+            else 
+                return 'false';
+        }
+          public function postInvestor($userId)
+        {
+            $this->db->select('*');
+            $this->db->from('user_md a');
+            $this->db->join('user_dtl b', 'a.userId=b.userId','left');
+            $this->db->join('company_dtl c', 'c.userId=a.userId','left');
+            $this->db->join('userpost d', 'd.userId=a.userId');
+            $this->db->join('avatar_dtl e', 'e.userId=d.userId');
+            $this->db->where('d.userId',$userId);
+            $this->db->where('d.postType','investpost');
+            $this->db->order_by('postDate', 'DESC');
+            $query = $this->db->get();
+            return $query;
+        }
     }
 ?>
