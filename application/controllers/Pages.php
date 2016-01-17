@@ -2070,7 +2070,60 @@ class Pages extends CI_Controller {
 
 	
 	}
+	public function searchList()
+	{
+		$this->load->view('pages/dashboard/js');
+		$key=$this->input->post('key');
+		$aw = explode(" ",$key);
+		foreach (array_unique($aw) as $key => $value) {
+			# code...
+		
+		$this->db->select('a.userId,b.user_lName,b.user_fName,b.user_midInit,c.company_name,a.user_Type');
+		$this->db->from('user_md a');
+		$this->db->join('company_dtl c','c.userId=a.userId','left');
+		$this->db->join('user_dtl b','a.userId=b.userId','left');
+		$this->db->like('user_fName',$value,'both');
+		$this->db->or_like('user_lName',$value,'both');
+		$this->db->or_like('company_name',$value,'both');
+		$query=$this->db->get();
+			
 
+			foreach ($query->result_array() as $key => $value) {
+			
+				echo '<form method="post" name="form" id="form">';
+      				
+        			  foreach ($this->post->profile($value['userId'])->result_array() as $value){
+
+               	
+              echo '<div class="user-block">
+                     <img class="img-circle" src="'.base_url().'user/'.$value['avatar_name'].'" alt="user image">
+                     <span class="username">
+                    <a href="#" style="color:white">';
+               echo ellipsize($this->post->userProfile($value['userId']), 20);
+                    echo $value['user_Type'];
+
+                 
+             	echo ' </a></span>
+                    <div class="pull-right">
+                  
+                    
+                        <button type="button" class="btn btn-block btn-primary btn-xs" value="'.$value['userId'].'" name="poke" data-toggle="modal" data-target="#poke2">poke</button>
+                  
+                      
+                    </div>
+                  
+                  </div><!-- /.user-block -->
+                 
+        		  <hr>';
+        		}
+        	
+             echo "</form>";
+
+			}
+		}
+	
+
+	}
 
 }
 
