@@ -1891,7 +1891,7 @@ class Pages extends CI_Controller {
 		}
 	}
 
-<<<<<<< HEAD
+
 	public function getAll()
 	{
 
@@ -1924,7 +1924,7 @@ class Pages extends CI_Controller {
 	}
 
 
-=======
+
 	public function ideatorpost()
 	{
 		if(($this->session->userdata('userId')!=""))
@@ -2071,7 +2071,7 @@ class Pages extends CI_Controller {
 	
 	}
 
->>>>>>> 21081468e657a5e5403eafd3087e179417077992
+
 }
 
 

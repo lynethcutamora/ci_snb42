@@ -452,10 +452,19 @@
             $query = $this->db->get();
             return $query;
         }
-<<<<<<< HEAD
 
-        public function allUsers($userId)
-=======
+
+        public function allUsers($userId){
+            $this->db->select('*');
+            $this->db->from('user_md a');
+            $this->db->join('user_dtl b', 'a.userId=b.userId','left');
+            $this->db->join('company_dtl c', 'c.userId=a.userId','left');
+            $this->db->join('avatar_dtl d', 'd.userId=a.userId');
+            $this->db->where_not_in('a.userId',$userId);
+            $query = $this->db->get();
+            return $query;
+        }
+
         public function postIdeator($userId)
         {
             $this->db->select('*');
@@ -515,22 +524,17 @@
         }
        
        public function recentideator()
->>>>>>> 21081468e657a5e5403eafd3087e179417077992
+
         {
             $this->db->select('*');
             $this->db->from('user_md a');
             $this->db->join('user_dtl b', 'a.userId=b.userId','left');
             $this->db->join('company_dtl c', 'c.userId=a.userId','left');
-<<<<<<< HEAD
             $this->db->join('avatar_dtl e', 'e.userId=a.userId');
-            $this->db->where_not_in('a.userId',$userId);
-=======
             $this->db->join('userpost d', 'd.userId=a.userId');
-            $this->db->join('avatar_dtl e', 'e.userId=d.userId');
             $this->db->where('d.postType','investpost');
             $this->db->order_by('postDate', 'DESC');
             $this->db->limit('5');
->>>>>>> 21081468e657a5e5403eafd3087e179417077992
             $query = $this->db->get();
             return $query;
         }
