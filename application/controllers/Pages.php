@@ -1990,19 +1990,7 @@ class Pages extends CI_Controller {
 			                  <div class="user-block">
 			                    <img class="img-circle" src="'.base_url()."user/".$postdtl["avatar_name"].'"><span class="username">';
 			                    echo '<a href="'.base_url()."pages/profile/".$postdtl['userId'].'">';
-			                       
-			                                  if($postdtl['user_Type']=='Ideator'||$postdtl['user_Type']=='Investor')
-			                                  {
-			                                      if($postdtl['user_midInit']==null)
-			                                         echo $postdtl['user_fName']."  ".$postdtl['user_lName'];
-			                                       else
-			                                         echo $postdtl['user_fName']." ".$postdtl['user_midInit'].". ".$postdtl['user_lName'];
-			                                  }
-			                                  else
-			                                  {
-			                                    echo $postdtl['company_name'];
-			                                  }
-			                         
+			                       echo $this->post->userProfile($postdtl['userId']);  
 			                      echo '</a>
 			                      </span>
 					                    &nbsp;&nbsp;&nbsp;';
@@ -2047,7 +2035,8 @@ class Pages extends CI_Controller {
 
 			                  <p><h5>";
 			                  echo '<b>'.$postdtl['postTitle'].'</b><br/><br/>';
-			                  echo $postdtl['postContent'];
+			                  echo $postdtl['postContent']. $postdtl['postId'];
+			                  echo print_r($postdtl);
 			                  if($postdtl['extContent']!=""){
 			                  	echo '<h5>Related Links:</h5>'.$postdtl['extContent'];
 			              	  }
