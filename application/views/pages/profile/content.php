@@ -1,4 +1,4 @@
-    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    <script src="<?php echo base_url(); ?>plugins/jQuery/jQuery-2.1.4.min.js"></script>
       <?php
       //$badge = $totalRep;
                   

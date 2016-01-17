@@ -1,79 +1,105 @@
-
+  <script src="<?php echo base_url(); ?>plugins/jQuery/jQuery-2.1.4.min.js"></script>
       <!-- Control Sidebar -->
       <aside class="control-sidebar control-sidebar-dark">
         <!-- Create the tabs -->
         <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
-         
+           
         </ul>
         <!-- Tab panes -->
+          <ul class="sidebar-menu">
+
+      <li class="header"><center><h5 style="color:white">Users</h5></center></li>
+      <!-- search form -->
+          <form action="<?php echo  base_url()."pages/search_proxy";?>" method="post" class="sidebar-form">
+            <div class="input-group">
+              <input type="text" name="key" class="form-control" required="required"placeholder="Search...">
+              <span class="input-group-btn">
+                <button type="submit" name="search" id="search" class="btn btn-flat"><i class="fa fa-search"></i></button>
+              </span>
+            </div>
+          </form>
+          <!-- /.search form -->
+</ul>
         <div class="tab-content">
-        <div class="box box-primary direct-chat direct-chat-primary">
-                <div class="box-header with-border">
-                  <h3 class="box-title">Direct Chat</h3>
-                  <div class="box-tools pull-right">
-                    <span data-toggle="tooltip" title="3 New Messages" class="badge bg-light-blue">3</span>
-                    <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-                    <button data-original-title="Contacts" class="btn btn-box-tool" data-toggle="tooltip" title="" data-widget="chat-pane-toggle"><i class="fa fa-comments"></i></button>
-                    <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-                  </div>
-                </div><!-- /.box-header -->
-                <div class="box-body">
-                  <!-- Conversations are loaded here -->
-                  <div class="direct-chat-messages">
-                    <!-- Message. Default to the left -->
-                    <div class="direct-chat-msg">
-                      <div class="direct-chat-info clearfix">
-                        <span class="direct-chat-name pull-left">Alexander Pierce</span>
-                        <span class="direct-chat-timestamp pull-right">23 Jan 2:00 pm</span>
-                      </div><!-- /.direct-chat-info -->
-                      <img class="direct-chat-img" src="../dist/img/user1-128x128.jpg" alt="message user image"><!-- /.direct-chat-img -->
-                      <div class="direct-chat-text">
-                        Is this template really for free? That's unbelievable!
-                      </div><!-- /.direct-chat-text -->
-                    </div><!-- /.direct-chat-msg -->
+ <form method="post" name="form" id="form">
+          <?php             $i=0;
+          foreach ($this->post->allUsers($this->session->userdata('userId'))->result_array() as $value):?>
+               
+              <div class="user-block">
+                     <img class='img-circle' src='<?php echo base_url();?>user/<?php echo $value['avatar_name']?>' alt='user image'>
+                     <span class="username">
+                    <a href="#" style="color:white">
+                      <?php echo ellipsize($this->post->userProfile($value['userId']), 20); ?>
+                         <?php echo $value['user_Type'];
 
-                    <!-- Message to the right -->
-                    <div class="direct-chat-msg right">
-                      <div class="direct-chat-info clearfix">
-                        <span class="direct-chat-name pull-right">Sarah Bullock</span>
-                        <span class="direct-chat-timestamp pull-left">23 Jan 2:05 pm</span>
-                      </div><!-- /.direct-chat-info -->
-                      <img class="direct-chat-img" src="../dist/img/user3-128x128.jpg" alt="message user image"><!-- /.direct-chat-img -->
-                      <div class="direct-chat-text">
-                        You better believe it!
-                      </div><!-- /.direct-chat-text -->
-                    </div><!-- /.direct-chat-msg -->
+                         ?>
+                    </a></span>
+                    <div class="pull-right">
+                  
                     
-                  </div><!--/.direct-chat-messages-->
-
-                  <!-- Contacts are loaded here -->
-                  <div class="direct-chat-contacts">
-                    <ul class="contacts-list">
-                      <li>
-                        <a href="#">
-                          <img class="contacts-list-img" src="../dist/img/user1-128x128.jpg">
-                          <div class="contacts-list-info">
-                            <span class="contacts-list-name">
-                              Count Dracula
-                              <small class="contacts-list-date pull-right">2/28/2015</small>
-                            </span>
-                            <span class="contacts-list-msg">How have you been? I was...</span>
-                          </div><!-- /.contacts-list-info -->
-                        </a>
-                      </li><!-- End Contact Item -->
-                    </ul><!-- /.contatcts-list -->
-                  </div><!-- /.direct-chat-pane -->
-                </div><!-- /.box-body -->
-                <div class="box-footer">
-                  <form action="#" method="post">
-                    <div class="input-group">
-                      <input name="message" placeholder="Type Message ..." class="form-control" type="text">
-                      <span class="input-group-btn">
-                        <button type="button" class="btn btn-primary btn-flat">Send</button>
-                      </span>
+                        <button type="button" class="btn btn-block btn-primary btn-xs" value="<?php echo $value['userId'];?>" name="poke" data-toggle="modal" data-target="#poke2">poke</button>
+                  
+                      
                     </div>
-                  </form>
-                </div><!-- /.box-footer-->
-              </div>
+                  
+                  </div><!-- /.user-block -->
+                 
+          <hr>
+        <?php endforeach;?>
+             </form>
         </div>
       </aside><!-- /.control-sidebar -->
+     <div class="modal fade" id="poke2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                  <h4 class="modal-title" id="myModalLabel">Poke</h4>
+                </div>
+                <div class="modal-body">
+                  <center>      
+                   <div name="session" id="session">
+
+
+                   </div>
+                  <label>Leave Message:</label>
+                    <textarea class="form-control" rows="3" placeholder="Enter ..."></textarea><br> 
+                      <button type="submit" class="btn btn-primary btn-block" name='userid' id='userid'>send</button>
+                  
+                  
+                  </center>
+                </div><!-- /.register-box -->
+
+              </div>
+            </div>
+          </div>
+       
+      <script>
+     function loadNowPlaying1(){
+               
+                $("#session").load("<?php echo base_url().'pages/sessionpoke'; ?>"); }
+                setInterval(function(){loadNowPlaying1()}, 100);
+
+        $(function () {
+     
+         $('button[name="poke"]').click(function(e){
+        var userId = $(this).attr("value");
+        
+          e.preventDefault();
+            var dataString = 'userId='+ userId;
+          $.ajax({
+            type: 'post',
+            url:"<?php echo base_url().'pages/getAll/'?>",
+            data:dataString,
+            success: function (data) {
+        
+              document.getElementById("userid").value = userId;
+            }
+          });
+
+        });
+
+      });
+
+
+      </script>
