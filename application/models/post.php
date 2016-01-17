@@ -452,17 +452,89 @@
             $query = $this->db->get();
             return $query;
         }
+<<<<<<< HEAD
 
         public function allUsers($userId)
+=======
+        public function postIdeator($userId)
         {
             $this->db->select('*');
             $this->db->from('user_md a');
             $this->db->join('user_dtl b', 'a.userId=b.userId','left');
             $this->db->join('company_dtl c', 'c.userId=a.userId','left');
+            $this->db->join('userpost d', 'd.userId=a.userId');
+            $this->db->join('avatar_dtl e', 'e.userId=d.userId');
+            $this->db->join('userpost_ext f','f.postId=d.postId','left');
+            $this->db->where('d.userId',$userId);
+            $this->db->where('d.postType','1');
+            $this->db->order_by('postDate', 'DESC');
+            $query = $this->db->get();
+            return $query;
+        }
+        public function newsfeedideator()
+        {
+            $this->db->select('*');
+            $this->db->from('user_md a');
+            $this->db->join('user_dtl b', 'a.userId=b.userId','left');
+            $this->db->join('company_dtl c', 'c.userId=a.userId','left');
+            $this->db->join('userpost d', 'd.userId=a.userId');
+            $this->db->join('avatar_dtl e', 'e.userId=d.userId');
+            $this->db->where('d.postType','investpost');
+            $this->db->order_by('postDate', 'DESC');
+            $query = $this->db->get();
+            return $query;
+        }
+
+        public function newsfeedinvestor()
+        {
+            $this->db->select('*');
+            $this->db->from('user_md a');
+            $this->db->join('user_dtl b', 'a.userId=b.userId','left');
+            $this->db->join('company_dtl c', 'c.userId=a.userId','left');
+            $this->db->join('userpost d', 'd.userId=a.userId');
+            $this->db->join('avatar_dtl e', 'e.userId=d.userId');
+            $this->db->where('d.postType','1');
+            $this->db->order_by('postDate', 'DESC');
+            $query = $this->db->get();
+            return $query;
+        }
+
+        public function recentinvestor()
+        {
+            $this->db->select('*');
+            $this->db->from('user_md a');
+            $this->db->join('user_dtl b', 'a.userId=b.userId','left');
+            $this->db->join('company_dtl c', 'c.userId=a.userId','left');
+            $this->db->join('userpost d', 'd.userId=a.userId');
+            $this->db->join('avatar_dtl e', 'e.userId=d.userId');
+            $this->db->where('d.postType','1');
+            $this->db->order_by('postDate', 'DESC');
+            $this->db->limit('5');
+            $query = $this->db->get();
+            return $query;
+        }
+       
+       public function recentideator()
+>>>>>>> 21081468e657a5e5403eafd3087e179417077992
+        {
+            $this->db->select('*');
+            $this->db->from('user_md a');
+            $this->db->join('user_dtl b', 'a.userId=b.userId','left');
+            $this->db->join('company_dtl c', 'c.userId=a.userId','left');
+<<<<<<< HEAD
             $this->db->join('avatar_dtl e', 'e.userId=a.userId');
             $this->db->where_not_in('a.userId',$userId);
+=======
+            $this->db->join('userpost d', 'd.userId=a.userId');
+            $this->db->join('avatar_dtl e', 'e.userId=d.userId');
+            $this->db->where('d.postType','investpost');
+            $this->db->order_by('postDate', 'DESC');
+            $this->db->limit('5');
+>>>>>>> 21081468e657a5e5403eafd3087e179417077992
             $query = $this->db->get();
             return $query;
         }
     }
+
+
 ?>

@@ -235,7 +235,6 @@
                   </form>
                     
                     </div><!-- /.box-footer -->
-                 
                     </div>
                
             
@@ -534,40 +533,6 @@
                 </div>         
 
                 </div><!-- /.tab-content -->
-                <div class="col-md-2">
-              <div class="info-box">
-                <span class="info-box-icon bg-yellow"><i class="fa fa-files-o"></i></span>
-                <div class="info-box-content">
-                  <span>IDEAS SHARED</span>
-                  <span class="info-box-number">0</span>
-                </div><!-- /.info-box-content -->
-              </div><!-- /.info-box -->
-
-              <div class="info-box">
-                <span class="info-box-icon bg-aqua"><i class="fa fa-tasks"></i></span>
-                <div class="info-box-content">
-                  <span>CURRENT PROJECTS</span>
-                  <span class="info-box-number">0</span>
-                </div><!-- /.info-box-content -->
-              </div><!-- /.info-box -->
-
-              <div class="info-box">
-                <span class="info-box-icon bg-green"><i class="fa fa-flag-o"></i></span>
-                <div class="info-box-content">
-                  <span>COMPLETED PROJECTS</span>
-                  <span class="info-box-number">0</span>
-                </div><!-- /.info-box-content -->
-              </div><!-- /.info-box -->
-
-              <div class="info-box">
-                <span class="info-box-icon bg-red"><i class="fa fa-group"></i></span>
-                <div class="info-box-content">
-                  <span>GROUPS</span>
-                  <span class="info-box-number">0</span>
-                </div><!-- /.info-box-content -->
-              </div><!-- /.info-box -->
-
-            </div><!-- /.col -->
             </div><!-- /.col -->
 
 
