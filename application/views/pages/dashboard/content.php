@@ -34,7 +34,7 @@
         </div>
         <div class="col-md-3">
               <div>
-            <p>Visit our Facebook Page by clicking the clink below:<br/><a href="#">facebook/startandboost</a><br/><br/>Start and Boost by $index[5].<br/></p>
+            <p>Having a hard time thinking of a start-up idea?</br></br> Visit our special feature by clicking the link below:</a><br/><br/><a href="<?php echo base_url()."pages/startidea"?>">Special feature</a> :) by $index[5].<br/></p>
           </div>
         </div>
 
@@ -264,7 +264,7 @@
                     </div>
                       <!-- Social sharing buttons -->
                       
-                      <span class='pull-right text-muted'><?php echo $like;?> likes - <?php echo $comment;?> comments</span>
+                      <span class='pull-right text-muted'><?php echo $like;?> upvotes - <?php echo $comment;?> comments</span>
                     </div><!-- /.box-body -->
                       <?php  endforeach;?>
                   </div><!-- /.box -->
@@ -283,23 +283,66 @@
                     <h3 class="box-title">Recent News</h3>
                   </div><!-- /.box-header -->
                   <div class="box-body">
-                    <?php foreach($investorpost as $inv): ?>
-                    <div class='user-block'>
+
+                <?php if($this->post->checkUserType()=='true'){?>
+             
+              <a href="<?php echo base_url(); ?>pages/newsfeedideator">
+              <?php foreach($recentinvestor as $inv): ?>
+                    <div class='user-block'>  
                       <img class='img-circle' src='<?php echo base_url();?>/user/<?php echo $inv['avatar_name'];?>' alt='user image'>
-                      <span class='username'><a href="<?php echo base_url()."pages/profile/".$inv['userId']?>"><?php echo $inv['user_fName'];?>&nbsp;<?php echo $inv['user_midInit'];?>.&nbsp;<?php echo $inv['user_lName'];?>&nbsp;</a>&nbsp;&nbsp;<i class='fa fa-star' style="color:#ffd700;"></i><b>&nbsp;&nbsp;<?php echo $rep;?></b></span>
+                      <span class='username'><a href="<?php echo base_url()."pages/profile/".$inv['userId']?>"><?php echo $inv['user_fName'];?>&nbsp;<?php echo $inv['user_midInit'];?>.&nbsp;<?php echo $inv['user_lName'];?>&nbsp;</a>&nbsp;&nbsp;<i class='fa fa-star' style="color:#ffd700;"></i><?php echo $this->post->reputation($inv['userId']);?><b>&nbsp;&nbsp;</b></span>
                       <span class='description'><?php echo $inv['postDate'];?></span>
                     </div><!-- /.user-block -->
 
                     <div>
-                    <h6><?php echo $inv['postContent']; ?></h6>
-                      <a href="#"><h6 class="pull-right">50 - upvotes  |  12 - comments</h6></a>
+                    <h6><?php echo $inv['postTitle']; ?></h6>
+                      <h6 class="pull-right"><?php $this->post->upvotecount($inv['postId']);?>  |  <?php $this->post->commentCount($inv['postId']);?></h6></a>
                     </div>
                     <br/><hr/>
 
                     <?php endforeach; ?>
+              </a>
+            </li>
+              <?php }else{?>
+            
+              <a href="<?php echo base_url(); ?>pages/newsfeedinvestor">
+              <?php foreach($recentideator as $ideator): ?>
+                    <div class='user-block'>  
+                      <img class='img-circle' src='<?php echo base_url();?>/user/<?php echo $ideator['avatar_name'];?>' alt='user image'>
+                      <span class='username'><a href="<?php echo base_url()."pages/profile/".$ideator['userId']?>"><?php echo $ideator['user_fName'];?>&nbsp;<?php echo $ideator['user_midInit'];?>.&nbsp;<?php echo $ideator['user_lName'];?>&nbsp;</a>&nbsp;&nbsp;<i class='fa fa-star' style="color:#ffd700;"></i><b>&nbsp;&nbsp;</b><?php echo $this->post->reputation($ideator['userId']);?></span>
+                      <span class='description'><?php echo $ideator['postDate'];?></span>
+                    </div><!-- /.user-block -->
 
+                    <div>
+                    <h6><?php echo $ideator['postTitle']; ?></h6>
+                      <h6 class="pull-right"><?php $this->post->upvotecount($ideator['postId']);?>  |  <?php $this->post->commentCount($ideator['postId']);?></h6>
+                    </div>
+                    <br/><hr/>
+
+                    <?php endforeach; ?>
+               
+              </a>
+            </li>
+            <?php } ?>
+                    
+                   
+                    
+                  
                   <div class="box-footer text-center">
-                    <a href="<?php echo base_url(); ?>index.php/pages/startupproduct">Go to news feed</a>
+                    <?php if($this->post->checkUserType()=='true'){?>
+               <?php if($pages=='newsfeedideator') {echo "active";}else echo "";?>
+              <a href="<?php echo base_url(); ?>pages/newsfeedideator">
+                <span>Go to News Feed</span>
+              </a>
+            </li>
+              <?php }else{?>
+              <?php if($pages=='newsfeedinvestor') {echo "active";}else echo "";?>
+              <a href="<?php echo base_url(); ?>pages/newsfeedinvestor">
+                <span>Go to News Feed</span>
+              </a>
+            </li>
+            <?php } ?>
+
                   </div><!-- /.box-footer -->
                 </div><!-- /.box -->
                   

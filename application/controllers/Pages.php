@@ -62,8 +62,10 @@ class Pages extends CI_Controller {
 		$groupquery= $this->groupdetails();
 		$data['alldata']=$query->result_array();
 		$data['groupdetails'] = $groupquery->result_array();
-		$feed = $this->post->newsfeedideator();
-		$data['investorpost'] = $feed->result_array();
+		$feed = $this->post->recentideator();
+		$data['recentideator'] = $feed->result_array();
+		$feed = $this->post->recentinvestor();
+		$data['recentinvestor'] = $feed->result_array();
 		$this->load->view('pages/dashboard/fixed',$data);
 		$this->load->view('pages/dashboard/content',$data);
 		$this->load->view('pages/dashboard/footer');
@@ -1843,7 +1845,7 @@ class Pages extends CI_Controller {
 	
 	}
 	
-	public function newsfeed()
+	public function newsfeedideator()
 	{
 		if(($this->session->userdata('userId')!=""))
 		{
@@ -1853,9 +1855,37 @@ class Pages extends CI_Controller {
 				$data['countgroup'] = $this->countGroups();
 				$groupquery= $this->groupdetails();
 				$data['groupdetails'] = $groupquery->result_array();
-				
+				$feed = $this->post->newsfeedideator();
+				$data['investorpost'] = $feed->result_array();
+			
+
+
 				$this->load->view('pages/dashboard/fixed',$data);
-				$this->load->view('pages/newsfeed/content'); 
+				$this->load->view('pages/newsfeedideator/content'); 
+				$this->load->view('pages/dashboard/controlsidebar');
+				$this->load->view('pages/dashboard/end');
+		}else
+		{
+			$this->_landing();
+		}
+	}
+
+	public function newsfeedinvestor()
+	{
+		if(($this->session->userdata('userId')!=""))
+		{
+				$query=$this->_userData();
+				$data['data']=$query->result_array();
+				$data['pages']='post';
+				$data['countgroup'] = $this->countGroups();
+				$groupquery= $this->groupdetails();
+				$data['groupdetails'] = $groupquery->result_array();
+				$feed = $this->post->newsfeedinvestor();
+				$data['ideatorpost'] = $feed->result_array();
+				
+
+				$this->load->view('pages/dashboard/fixed',$data);
+				$this->load->view('pages/newsfeedinvestor/content'); 
 				$this->load->view('pages/dashboard/controlsidebar');
 				$this->load->view('pages/dashboard/end');
 		}else
@@ -1888,6 +1918,27 @@ class Pages extends CI_Controller {
 		{
 			$this->_landing();
 		}
+	}
+
+	public function startidea()
+	{
+		
+				$query=$this->_userData();
+				$data['data']=$query->result_array();
+				$data['pages']='post';
+				$data['countgroup'] = $this->countGroups();
+				$groupquery= $this->groupdetails();
+				$data['groupdetails'] = $groupquery->result_array();
+				$feed = $this->post->newsfeedinvestor();
+				$data['ideatorpost'] = $feed->result_array();
+				
+
+				$this->load->view('pages/dashboard/fixed',$data);
+				$this->load->view('pages/startidea/content'); 
+				$this->load->view('pages/dashboard/controlsidebar');
+				$this->load->view('pages/dashboard/end');
+		
+		
 	}
 
 	public function showIdeatorPost($userId)
