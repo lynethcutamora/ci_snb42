@@ -365,14 +365,22 @@
                 <i class="fa fa-dashboard"></i> <span>Dashboard</span> <!--<i class="fa fa-angle-left pull-right">--></i>
               </a>            
             </li>
-            <li class="treeview <?php if($pages=='newsfeed') {echo "active";}else echo "";?>">
-              <a href="<?php echo base_url(); ?>pages/newsfeed">
+            <?php if($this->post->checkUserType()=='true'){?>
+            <li class="treeview <?php if($pages=='newsfeedideator') {echo "active";}else echo "";?>">
+              <a href="<?php echo base_url(); ?>pages/newsfeedideator">
                 <i class="fa fa-feed"></i><span>News Feed</span>
               </a>
             </li>
+            <?php }else{?>
+             <li class="treeview <?php if($pages=='newsfeedinvestor') {echo "active";}else echo "";?>">
+              <a href="<?php echo base_url(); ?>pages/newsfeedinvestor">
+                <i class="fa fa-feed"></i><span>News Feed</span>
+              </a>
+            </li>
+            <?php } ?>
             <?php if($this->post->checkUserType()=='true'){?>
-            <li class="treeview <?php if($pages=='profile') {echo "active";}else echo "";?>">
-              <a href="<?php echo base_url(); ?>pages/profile">
+            <li class="treeview <?php if($pages=='ideatorpost') {echo "active";}else echo "";?>">
+              <a href="<?php echo base_url(); ?>pages/ideatorpost">
                 <i class="fa fa-edit"></i> <span>Post Idea</span>
               </a>
             </li>
