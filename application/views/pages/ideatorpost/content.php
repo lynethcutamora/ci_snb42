@@ -14,7 +14,8 @@
   <div class="col-md-10"> 
     <div class="box">
                   <div class="box-header with-border">
-                    <p>Post New Idea</p><button type="submit" class="btn btn-primary" id="btnGenerate">Generate Title</button>
+                    <span class="pull-left"><p>Post New Idea</p></span>
+                    <span class="pull-right"><button type="submit" class="btn btn-primary" id="btnGenerate">Generate Title</button></span>
                   </div><!-- /.box-header -->
                   <!-- form start -->
                  <?php echo form_open_multipart('../pages/postIdea',"class=form-horizontal"); ?>
@@ -74,7 +75,7 @@
           });
 
         });
-      })
+      });
 </script>
 <script>
                 $(document).ready(function() {
@@ -96,7 +97,8 @@
                       var a = 'A';  
                     }  
                     
-                        $("#ideatitle").html(a+" "+sentence);
+                        // $("#ideatitle").html(a+" "+sentence);
+                        document.getElementById("ideatitle").value=a+" "+sentence;
                   }); 
               });
            </script>
