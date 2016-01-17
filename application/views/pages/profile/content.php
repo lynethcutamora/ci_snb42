@@ -305,9 +305,13 @@
                                       <div class="form-group">
                                         <label for="inputDescription" class="col-sm-2 control-label">Skills</label>
                                         <div class="col-sm-9">
-                                          <input type="checkbox" name="inputDescription[]" value="Programmer">Programmer<br>
-                                          <input type="checkbox" name="inputDescription[]" value="Web Designer">Web Designer<br>
-                                          <input type="checkbox" name="inputDescription[]" value="Data Gathering">Data Gathering<br>
+                                        <?php
+                                          $skills = $userdtl['user_shortSelfDescription'];
+                                          $res = explode(', ', $skills);
+                                        ?>
+                                          <input type="checkbox" name="inputDescription[]" value="Programmer" <?php if(in_array("Programmer", $res)) echo "checked";?> >Programmer<br>
+                                          <input type="checkbox" name="inputDescription[]" value="Web Designer" <?php if(in_array("Web Designer", $res)) echo "checked";?> >Web Designer<br>
+                                          <input type="checkbox" name="inputDescription[]" value="Data Gathering" <?php if(in_array("Data Gathering", $res)) echo "checked";?> >Data Gathering<br>
                                         </div>
                                       </div>
                     
