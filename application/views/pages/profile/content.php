@@ -349,7 +349,9 @@
                                       <div class="form-group">
                                         <label for="inputDescription" class="col-sm-2 control-label">Skills</label>
                                         <div class="col-sm-9">
-                                          <input type="text" class="form-control" name="inputDescription" id="inputDescription" required="required" placeholder="Short Self-Description"  value="<?php echo $userdtl['user_shortSelfDescription']; ?>">
+                                          <input type="checkbox" name="inputDescription[]" value="Programmer">Programmer<br>
+                                          <input type="checkbox" name="inputDescription[]" value="Web Designer">Web Designer<br>
+                                          <input type="checkbox" name="inputDescription[]" value="Data Gathering">Data Gathering<br>
                                         </div>
                                       </div>
                     
