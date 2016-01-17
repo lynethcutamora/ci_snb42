@@ -912,7 +912,8 @@ class Pages extends CI_Controller {
          $this->form_validation->set_rules('relatedlinks', 'Links', 'trim');
          if ($this->form_validation->run() == FALSE)
         {
-         	$this->profile($this->session->userdata('userId'));
+         	header('Location:'.base_url().'pages/ideatorpost/'.$this->session->userdata('userId'));
+
         }
         else
 		{	
@@ -1980,7 +1981,7 @@ class Pages extends CI_Controller {
 	          echo '
 	      		<div class="container">
 		      		<div class="row">
-		            	<div class="col-md-10">
+		            	<div class="col-md-9">
 	            		<!-- Box Comment -->
 			              <div class="box box-widget">
 			                <div class="box-header with-border">
@@ -2043,27 +2044,25 @@ class Pages extends CI_Controller {
 			                  </p>
 
 			                  <p><h5>";
-			                  echo $postdtl['postTitle'];
+			                  echo '<b>'.$postdtl['postTitle'].'</b><br/><br/>';
 			                  echo $postdtl['postContent'];
-			                  echo '<h5>Related Links:</h5>'.$postdtl['extContent'];
+			                  if($postdtl['extContent']!=""){
+			                  	echo '<h5>Related Links:</h5>'.$postdtl['extContent'];
+			              	  }
 
 			                  echo"</h5></p>
 			                  <p>";
 			                    
-			                  
-			                    
 			                  echo '</p>
 			                  <a href="'.base_url().'pages/post/'.$postdtl['postId'].'" class="uppercase">View this Post</a>
 			                  ';
-			                  echo "<span class='pull-right text-muted'></div><!-- /.box-body -->
-			               
+			                  echo "<span class='pull-right text-muted'>
 
-	                          
-	            
-	                  </div></div>";
+			                  </div><!-- /.box-body -->
+	                  </div><!-- /.box-widget -->
+	                  </div><!--/.col-10-->";
 
 				endforeach;
-
 				endforeach;
 
 				echo " </div></div><script src='http://code.jquery.com/jquery-1.9.1.js'></script>";
