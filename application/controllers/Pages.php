@@ -533,13 +533,14 @@ class Pages extends CI_Controller {
 	public function _changeIdeator()
 	{
 		$userId = $this->session->userdata('userId');
+		$inputDescription = implode(', ', $this->input->post('inputDescription[]'));
 
 		$data = array(
 			'user_lName' => ucfirst(strtolower($this->input->post('inputLName'))),
 			'user_fName' => ucfirst(strtolower($this->input->post('inputFName'))),
 			'user_midInit' => strtoupper($this->input->post('inputMI')),
 			'user_age' => $this->input->post('inputAge'),
-			'user_shortSelfDescription' => $this->input->post('inputDescription'),
+			'user_shortSelfDescription' => $inputDescription,
 			);
 		$data1 = array(
 			'location_address1' => $this->input->post('inputAddress1'),
@@ -667,7 +668,7 @@ class Pages extends CI_Controller {
          $this->form_validation->set_rules('inputRegion', 'Region/State', 'trim|max_length[45]');
          $this->form_validation->set_rules('inputZIP', 'Zip Code', 'alpha_numeric|max_length[10]');
          $this->form_validation->set_rules('inputCounty', 'Country', 'trim|max_length[13]');
-         $this->form_validation->set_rules('inputDescription', 'Short Description', 'trim|max_length[100]');
+         $this->form_validation->set_rules('inputDescription[]', 'Skills', 'required|trim|max_length[100]');
          $this->form_validation->set_rules('checkbox1', 'Terms and Condition', 'required');
 
 
@@ -683,6 +684,7 @@ class Pages extends CI_Controller {
 			$picId = uniqid('pi'); 
 			$password=$this->input->post('inputPassword');
 			$locationId = uniqid('li');
+			$inputDescription = implode(', ', $this->input->post('inputDescription[]'));
 
 			$data = array(
 			'userId' => $userId,
@@ -701,7 +703,7 @@ class Pages extends CI_Controller {
 			'user_midInit' => strtoupper($this->input->post('inputMI')),
 			'user_age' => $this->input->post('inputAge'),
 			'user_gender' => $this->input->post('r3'),
-			'user_shortSelfDescription' => $this->input->post('inputDescription'),
+			'user_shortSelfDescription' => $inputDescription,
 			);
 
 			$data2 = array(
@@ -912,7 +914,8 @@ class Pages extends CI_Controller {
          $this->form_validation->set_rules('relatedlinks', 'Links', 'trim');
          if ($this->form_validation->run() == FALSE)
         {
-         	$this->profile($this->session->userdata('userId'));
+         	header('Location:'.base_url().'pages/ideatorpost/'.$this->session->userdata('userId'));
+
         }
         else
 		{	
@@ -1980,26 +1983,14 @@ class Pages extends CI_Controller {
 	          echo '
 	      		<div class="container">
 		      		<div class="row">
-		            	<div class="col-md-10">
+		            	<div class="col-md-9">
 	            		<!-- Box Comment -->
 			              <div class="box box-widget">
 			                <div class="box-header with-border">
 			                  <div class="user-block">
 			                    <img class="img-circle" src="'.base_url()."user/".$postdtl["avatar_name"].'"><span class="username">';
 			                    echo '<a href="'.base_url()."pages/profile/".$postdtl['userId'].'">';
-			                       
-			                                  if($postdtl['user_Type']=='Ideator'||$postdtl['user_Type']=='Investor')
-			                                  {
-			                                      if($postdtl['user_midInit']==null)
-			                                         echo $postdtl['user_fName']."  ".$postdtl['user_lName'];
-			                                       else
-			                                         echo $postdtl['user_fName']." ".$postdtl['user_midInit'].". ".$postdtl['user_lName'];
-			                                  }
-			                                  else
-			                                  {
-			                                    echo $postdtl['company_name'];
-			                                  }
-			                         
+			                       echo $this->post->userProfile($postdtl['userId']);  
 			                      echo '</a>
 			                      </span>
 					                    &nbsp;&nbsp;&nbsp;';
@@ -2043,27 +2034,26 @@ class Pages extends CI_Controller {
 			                  </p>
 
 			                  <p><h5>";
-			                  echo $postdtl['postTitle'];
-			                  echo $postdtl['postContent'];
-			                  echo '<h5>Related Links:</h5>'.$postdtl['extContent'];
+			                  echo '<b>'.$postdtl['postTitle'].'</b><br/><br/>';
+			                  echo $postdtl['postContent']. $postdtl['postId'];
+			                  echo print_r($postdtl);
+			                  if($postdtl['extContent']!=""){
+			                  	echo '<h5>Related Links:</h5>'.$postdtl['extContent'];
+			              	  }
 
 			                  echo"</h5></p>
 			                  <p>";
 			                    
-			                  
-			                    
 			                  echo '</p>
 			                  <a href="'.base_url().'pages/post/'.$postdtl['postId'].'" class="uppercase">View this Post</a>
 			                  ';
-			                  echo "<span class='pull-right text-muted'></div><!-- /.box-body -->
-			               
+			                  echo "<span class='pull-right text-muted'>
 
-	                          
-	            
-	                  </div></div>";
+			                  </div><!-- /.box-body -->
+	                  </div><!-- /.box-widget -->
+	                  </div><!--/.col-10-->";
 
 				endforeach;
-
 				endforeach;
 
 				echo " </div></div><script src='http://code.jquery.com/jquery-1.9.1.js'></script>";
