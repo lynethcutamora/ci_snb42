@@ -371,8 +371,8 @@
               </a>
             </li>
             <?php if($this->post->checkUserType()=='true'){?>
-            <li class="treeview <?php if($pages=='profile') {echo "active";}else echo "";?>">
-              <a href="<?php echo base_url(); ?>pages/profile">
+            <li class="treeview <?php if($pages=='ideatorpost') {echo "active";}else echo "";?>">
+              <a href="<?php echo base_url(); ?>pages/ideatorpost">
                 <i class="fa fa-edit"></i> <span>Post Idea</span>
               </a>
             </li>

@@ -235,7 +235,6 @@
                   </form>
                     
                     </div><!-- /.box-footer -->
-                 
                     </div>
                
             
