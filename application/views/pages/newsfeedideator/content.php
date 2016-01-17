@@ -3,7 +3,7 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
           <h1>
-            Venture Capitalist Post  <i class="fa fa-feed"></i>
+            <i class="fa fa-feed"></i>&nbsp;&nbsp;Venture Capitalist Post  
           </h1>
           <div class="container">
           <div class="row">
@@ -26,7 +26,7 @@
                     <h6><a href="<?php echo base_url()."pages/post/".$inv['postId'];?>"><?php echo $inv['postTitle']; ?></h6>
                     <h6 class="pull-right"><?php $this->post->upvotecount($inv['postId']);?>  |  <?php $this->post->commentCount($inv['postId']);?></h6>
                     </div>
-                    <br/><hr/>
+                    <br/><hr/><hr/>
                   
                    
                     
