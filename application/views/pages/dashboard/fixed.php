@@ -305,6 +305,10 @@
                   </li>
                 </ul>
               </li>
+
+              <li>
+                <a href="#" data-toggle="control-sidebar"><i class="fa fa-group"></i></a>
+              </li>
               <!-- Control Sidebar Toggle Button -->
               
             </ul>

@@ -377,10 +377,7 @@ class Pages extends CI_Controller {
 				if($groupDetails->num_rows()==0) {
 					$groupDetails->result_array();
 
-					$this->load->view('pages/dashboard/fixed',$data);
-					$this->load->view('pages/group/nogroup',$data); 
-					$this->load->view('pages/dashboard/controlsidebar');
-					$this->load->view('pages/dashboard/end');
+					$this->pagenotfound();
 				}else{
 					$this->load->view('pages/dashboard/fixed',$data);
 					$this->load->view('pages/profile/content',$data); 
@@ -1720,7 +1717,7 @@ class Pages extends CI_Controller {
 		         $this->form_validation->set_rules('inputDescription', 'Description', 'required|trim');
 		         if ($this->form_validation->run() == FALSE)
 		        {
-		         	$this->profile($this->session->userdata('userId'));
+		         	header('location:'.base_url().'pages/investorpost');
 		        }
 		        else
 				{	
@@ -1863,4 +1860,37 @@ class Pages extends CI_Controller {
 			$this->_landing();
 		}
 	}
+
+	public function getAll()
+	{
+
+	$_SESSION['poke'] = $_POST['userId'];
+		
+	}
+	public function sessionpoke()
+	{
+	
+		echo '
+
+              <!-- Profile Image -->
+              <div class="box box-primary">
+                <div class="box-body box-profile">
+                  <img class="profile-user-img img-responsive img-circle" src="';echo base_url().'user/'.$this->post->getAvatar($this->session->userdata('poke')).'" alt="User profile picture">
+                  <h3 class="profile-username text-center">'.$this->post->userProfile($this->session->userdata('poke')).'</h3>
+                  <p class="text-muted text-center">'.$this->post->getUserType($this->session->userdata('poke')).'</p>
+
+                  <ul class="list-group list-group-unbordered">
+                    <li class="list-group-item">
+                      <b>Skills</b> :<p>asdasds</p>
+                    </li>
+                  </ul>
+
+                 
+                </div><!-- /.box-body -->
+              </div><!-- /.box -->
+
+              ';
+	}
+
+
 }

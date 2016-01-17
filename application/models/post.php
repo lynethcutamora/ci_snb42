@@ -452,5 +452,17 @@
             $query = $this->db->get();
             return $query;
         }
+
+        public function allUsers($userId)
+        {
+            $this->db->select('*');
+            $this->db->from('user_md a');
+            $this->db->join('user_dtl b', 'a.userId=b.userId','left');
+            $this->db->join('company_dtl c', 'c.userId=a.userId','left');
+            $this->db->join('avatar_dtl e', 'e.userId=a.userId');
+            $this->db->where_not_in('a.userId',$userId);
+            $query = $this->db->get();
+            return $query;
+        }
     }
 ?>
