@@ -96,6 +96,11 @@ theForm.scrolly.value = scrolly;
 
 <div class="col-md-10">
               <!-- Box Comment -->
+              <div class="alert alert-danger alert-dismissable">
+                      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                      <h4><i class="icon fa fa-ban"></i> Alert!</h4>
+                        Note: These ideas were already owned by ideators with their investors. Illegal copying is strictly not allowed.  
+                      </div>
               <?php foreach($postDetail as $postdtl):?>
               <div class="box box-widget">
                 <div class="box-header with-border">

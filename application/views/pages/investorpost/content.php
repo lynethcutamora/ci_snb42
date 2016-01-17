@@ -11,8 +11,7 @@
 <div class="content-wrapper">
   <br>
  <form method="post" name="form" id="form">
-  <div class="col-md-12">
-    
+  <div class="col-md-10"> 
             <div class="box">
               <div class="box-header with-border">
                
