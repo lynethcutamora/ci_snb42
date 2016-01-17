@@ -1988,7 +1988,7 @@ class Pages extends CI_Controller {
 			              <div class="box box-widget">
 			                <div class="box-header with-border">
 			                  <div class="user-block">
-			                    <img class="img-circle" src="'.base_url()."user/".$postdtl["avatar_name"].'"><span class="username">';
+			                    <img class="img-circle" src="'.base_url()."user/".$this->post->getAvatar($postdtl['userId']).'"><span class="username">';
 			                    echo '<a href="'.base_url()."pages/profile/".$postdtl['userId'].'">';
 			                       echo $this->post->userProfile($postdtl['userId']);  
 			                      echo '</a>
@@ -2035,8 +2035,7 @@ class Pages extends CI_Controller {
 
 			                  <p><h5>";
 			                  echo '<b>'.$postdtl['postTitle'].'</b><br/><br/>';
-			                  echo $postdtl['postContent']. $postdtl['postId'];
-			                  echo print_r($postdtl);
+			                  echo $postdtl['postContent'];
 			                  if($postdtl['extContent']!=""){
 			                  	echo '<h5>Related Links:</h5>'.$postdtl['extContent'];
 			              	  }
