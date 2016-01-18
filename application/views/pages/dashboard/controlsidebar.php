@@ -10,18 +10,19 @@
 
       <li class="header"><center><h5 style="color:white">Users</h5></center></li>
       <!-- search form -->
-          <form action="<?php echo  base_url()."pages/search_proxy";?>" method="post" class="sidebar-form">
+          <form method="post" name="form3" id="form3" class="sidebar-form">
             <div class="input-group">
-              <input type="text" name="key" class="form-control" required="required"placeholder="Search...">
+              <input type="text" name="key" id="key" class="form-control" required="required" placeholder="Search...">
               <span class="input-group-btn">
-                <button type="submit" name="search" id="search" class="btn btn-flat"><i class="fa fa-search"></i></button>
+                <button type="submit" name="search1" id="search1" value="1" class="btn btn-flat"><i class="fa fa-search"></i></button>
               </span>
             </div>
           </form>
           <!-- /.search form -->
 </ul>
-        <div class="tab-content">
- <form method="post" name="form" id="form">
+        <div class="tab-content" name="listuser" id="listuser">
+     
+       <form method="post" name="form" id="form">
           <?php             $i=0;
           foreach ($this->post->allUsers($this->session->userdata('userId'))->result_array() as $value):?>
                
@@ -47,7 +48,8 @@
           <hr>
         <?php endforeach;?>
              </form>
-        </div>
+     
+      </div>
       </aside><!-- /.control-sidebar -->
      <div class="modal fade" id="poke2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
             <div class="modal-dialog" role="document">
@@ -78,7 +80,7 @@
      function loadNowPlaying1(){
                
                 $("#session").load("<?php echo base_url().'pages/sessionpoke'; ?>"); }
-                setInterval(function(){loadNowPlaying1()}, 100);
+                setInterval(function(){loadNowPlaying1()}, 1000);
 
         $(function () {
      
@@ -98,6 +100,23 @@
           });
 
         });
+            $('button[name="search1"]').click(function(e){
+      
+          var key = $("#key").val();
+          e.preventDefault();
+            var dataString = 'key='+ key;
+          $.ajax({
+            type: 'post',
+            url:"<?php echo base_url().'pages/searchList'?>",
+            data:dataString,
+            success: function (data) {
+              $('#listuser').html(data);
+            }
+          });
+
+        });
+
+
 
       });
 
