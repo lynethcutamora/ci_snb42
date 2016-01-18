@@ -534,7 +534,27 @@ class Pages extends CI_Controller {
 	{
 		$userId = $this->session->userdata('userId');
 		$inputDescription = implode(', ', $this->input->post('inputDescription[]'));
+		if($inputDescription == null)
+		{
+		$data = array(
+			'user_lName' => ucfirst(strtolower($this->input->post('inputLName'))),
+			'user_fName' => ucfirst(strtolower($this->input->post('inputFName'))),
+			'user_midInit' => strtoupper($this->input->post('inputMI')),
+			'user_age' => $this->input->post('inputAge'),
+			'user_shortSelfDescription' => "Please update your skills",
+			);
+		$data1 = array(
+			'location_address1' => $this->input->post('inputAddress1'),
+			'location_city' => $this->input->post('inputCity'),
+			'location_country' => $this->input->post('inputCountry'),
+			);
 
+		$this->db->where('userId', $userId);
+		$this->db->update('user_dtl', $data);
+		$this->db->update('location_dtl', $data1);
+		redirect('pages/profile');
+		}
+		else{
 		$data = array(
 			'user_lName' => ucfirst(strtolower($this->input->post('inputLName'))),
 			'user_fName' => ucfirst(strtolower($this->input->post('inputFName'))),
@@ -552,6 +572,7 @@ class Pages extends CI_Controller {
 		$this->db->update('user_dtl', $data);
 		$this->db->update('location_dtl', $data1);
 		redirect('pages/profile');
+		}
 	}
 	public function _changeCompany()
 	{

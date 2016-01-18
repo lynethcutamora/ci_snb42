@@ -33,6 +33,7 @@
 
       $rep = (($gold*20)+($silver*10)+($bronze*5))-($black*15);   
       ?>
+
       <div class="content-wrapper">
         <!-- Content Header (Page header) -->
         <section class="content-header">
@@ -308,13 +309,15 @@
                                         <?php
                                           $skills = $userdtl['user_shortSelfDescription'];
                                           $res = explode(', ', $skills);
+
                                         ?>
-                                          <input type="checkbox" name="inputDescription[]" value="Programmer" <?php if(in_array("Programmer", $res)) echo "checked";?> >Programmer<br>
-                                          <input type="checkbox" name="inputDescription[]" value="Web Designer" <?php if(in_array("Web Designer", $res)) echo "checked";?> >Web Designer<br>
-                                          <input type="checkbox" name="inputDescription[]" value="Data Gathering" <?php if(in_array("Data Gathering", $res)) echo "checked";?> >Data Gathering<br>
+                                       
+                                          <input type="checkbox" name="inputDescription[]" value="Programmer"  <?php if(in_array("Programmer", $res)) echo "checked";?> >Programmer<br>
+                                          <input type="checkbox" name="inputDescription[]" value="Web Designer"  <?php if(in_array("Web Designer", $res)) echo "checked";?> >Web Designer<br>
+                                          <input type="checkbox" name="inputDescription[]" value="Data Gathering"  <?php if(in_array("Data Gathering", $res)) echo "checked";?> >Data Gathering<br>
+                                        
                                         </div>
                                       </div>
-                    
                                       <div class="form-group">
                                         <div class="col-sm-offset-2 col-sm-10">
                                           <button type="submit" class="btn btn-primary" name="btnSave" value="Ideator">Save</button>
@@ -454,12 +457,17 @@
                         <div class="form-group">
                         <div class="row">
                         <div class="col-sm-12">
-                        
-                              <?php form_open('../pages/');?>      
+                      
+                              <?php
+                                $userId = $this->session->userdata('userId');
+
+                                $row = mysql_query("SELECT * FROM user_md WHERE userId = $userId");
+                                $oldPass = $row['user_password'];
+                              ?>     
                               <div class='form-group'>
                                       <label for='inputOldPassword' class='col-sm-2 control-label'>Old Password</label>
                                       <div class='col-sm-9'>
-                                        <input type='password' class='form-control' name='inputOldPassword' id='inputOldPassword' required='required' placeholder='Old Password' value='<?php echo set_value('inputOldPassword'); ?>'>
+                                        <input type='password' class='form-control' name='inputOldPassword' id='inputOldPassword' required='required' placeholder='Old Password' value='<?php ?>'>
                                       </div>
                                     </div>
                                     <br>
@@ -467,7 +475,7 @@
                                     <div class='form-group'>
                                       <label for='inputNewPassword' class='col-sm-2 control-label'>New Password</label>
                                       <div class='col-sm-9'>
-                                        <input type='password' class='form-control' name='inputNewPassword' id='inputNewPassword' required='required' placeholder='New Password' value='<?php echo set_value('inputNewPassword'); ?>'>
+                                        <input type='password' class='form-control' name='inputNewPassword' id='inputNewPassword' required='required' placeholder='New Password' value=''>
                                       </div>
                                     </div>
                                           <br>
@@ -475,16 +483,17 @@
                                     <div class='form-group'>
                                       <label for='inputNewRepassword' class='col-sm-2 control-label'>New Password Confirmation</label>
                                       <div class='col-sm-9'>
-                                        <input type='password' class='form-control' name='inputNewRepassword' id='inputNewRepassword' required='required' placeholder='New Password Confirmation' value='<?php echo set_value('inputNewRepassword'); ?>'>
+                                        <input type='password' class='form-control' name='inputNewRepassword' id='inputNewRepassword' required='required' placeholder='New Password Confirmation' value=''>
                                       </div>
                                     </div>
                                             <br>
                                             <br>
                                       <div class='form-group'>
                                         <div class='col-sm-offset-2 col-sm-10'>
-                                          <button type='submit' class='btn btn-primary' name='btnSave' value='Ideator'>Save</button>
+                                          <button type='submit' class='btn btn-primary' name='btnChangePass' value='Ideator'>Save</button>
                                         </div>
                                     </div>
+                                 
                      
                         </div>
                         </div>
