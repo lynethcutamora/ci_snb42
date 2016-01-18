@@ -467,13 +467,13 @@
 
         public function postIdeator($userId)
         {
-            $this->db->select('*');
+            $this->db->select('a.userId ,d.postContent,d.postDate,d.postId,d.postTitle,f.extContent');
             $this->db->from('user_md a');
             $this->db->join('user_dtl b', 'a.userId=b.userId','left');
             $this->db->join('company_dtl c', 'c.userId=a.userId','left');
             $this->db->join('userpost d', 'd.userId=a.userId');
-            $this->db->join('userpost_ext f','f.postId=d.postId','left');
             $this->db->join('avatar_dtl e', 'e.userId=d.userId');
+            $this->db->join('userpost_ext f','f.postId=d.postId','left');
             $this->db->where('d.userId',$userId);
             $this->db->where('d.postType','1');
             $this->db->order_by('postDate', 'DESC');
