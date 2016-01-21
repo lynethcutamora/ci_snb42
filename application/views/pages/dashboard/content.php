@@ -348,6 +348,21 @@
                   
                 
               </div><!-- /.col -->
+
+              
             </div><!--/.row-->
+            <div class="col-md-3">
+                <div class="box box-default">
+                  <div class="box-header with-border">
+                    Ads
+                  </div>
+                  <div class="box-body">
+                    ADS's area
+                  </div>
+                  <div class="box-footer text-center">
+                    <a><small>See more</small></a>
+                  </div>
+                </div>
+            </div>
         </section><!-- /.content -->
       </div><!-- /.content-wrapper -->

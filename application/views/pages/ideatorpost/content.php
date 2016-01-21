@@ -50,6 +50,19 @@
                   </form>
     </div><!-- /.box-->
   </div><!-- /.col-10-->
+  <div class="col-md-2">
+                <div class="box box-default">
+                  <div class="box-header with-border">
+                    Ads
+                  </div>
+                  <div class="box-body">
+                    ADS's area
+                  </div>
+                  <div class="box-footer text-center">
+                    <a><small>See more</small></a>
+                  </div>
+                </div>
+            </div>
      <div name="post1" id="post1"></div>
 </div><!-- /.container-->
 
