@@ -61,7 +61,7 @@
                     </div>
                   </form>
     </div><!-- /.box-->
-  </div><!-- /.col-10-->
+  </div><!-- /.col-9-->
 
   <!-- adds area -->
     <div class="col-md-3">
@@ -77,6 +77,45 @@
         </div>
       </div>
     </div>
+
+  <div class="col-md-9"> 
+    <div class="box">
+                  <div class="box-header with-border">
+                    <span class="pull-left"><p>Post Startup Product</p></span>
+                  </div><!-- /.box-header -->
+                  <!-- form start -->
+                 <?php echo form_open_multipart('../pages/postIdea',"class=form-horizontal"); ?>
+                    <div class="box-body">
+                      <div class="form-group">
+                        <label for="producttitle" class="col-sm-2 control-label">Product Name*</label>
+                        <div class="col-sm-10">
+                        <?php echo form_error('ideatitle'); ?>
+                          <input type="text" class="form-control" name="producttitle" id="producttitle" placeholder="Product Title" value="<?php echo set_value('ideatitle'); ?>"/>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label for="inputDescription"  class="col-sm-2 control-label">Description*</label>
+                        <div class="col-sm-10">
+                         <?php echo form_error('inputDescription'); ?>
+                          <textarea class="form-control"name="inputDescription" id="inputDescription" placeholder="Description" value="<?php echo set_value('inputDescription'); ?>"></textarea>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label for="inputLinks" class="col-sm-2 control-label">Links</label>
+                        <div class="col-sm-10">
+                        <?php echo form_error('relatedlinks'); ?>
+                          <input type="text" class="form-control" name="relatedlinks" id="relatedlinks" placeholder="Related Links (Separated by comma)" value="<?php echo set_value('relatedlinks'); ?>"/>
+                        </div>
+                      </div>
+                    </div><!-- /.box-body -->
+                    <div class="box-footer">
+                     
+                         <?php echo form_upload('pic'); ?>
+                          <input class="btn btn-info pull-right" type="submit" value="Post Idea" id="submit" name="button">
+                    </div>
+                  </form>
+    </div><!-- /.box-->
+  </div><!-- /.col-9-->
 
     <!-- retrieved posts area -->
      <div name="post1" id="post1"></div>
