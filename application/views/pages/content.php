@@ -248,22 +248,24 @@
             </div>
 
             <div class="row mrgn30">
-
-                <form method="post" action="" id="contactfrm" role="form">
+            	<?php echo form_open('pages/submitcomment'); ?>
 
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label for="name">Name</label>
+                            <?php echo form_error('name'); ?>
                             <input type="text" class="form-control" name="name" id="name" placeholder="Enter name" title="Please enter your name (at least 2 characters)">
                         </div>
                         <div class="form-group">
                             <label for="email">Email</label>
+                            <?php echo form_error('email'); ?>
                             <input type="email" class="form-control" name="email" id="email" placeholder="Enter email" title="Please enter a valid email address">
                         </div>
                     </div>
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label for="comments">Comments</label>
+                            <?php echo form_error('comment'); ?>
                             <textarea name="comment" class="form-control" id="comments" cols="3" rows="5" placeholder="Enter your message…" title="Please enter your message (at least 10 characters)"></textarea>
                         </div>
                         <button name="submit" type="submit" class="btn btn-lg btn-primary" id="submit">Submit</button>
