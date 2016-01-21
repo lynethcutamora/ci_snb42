@@ -330,7 +330,7 @@
         {
             $query = $this->profile($userId);
             $row = $query->row_array();
-            if($row['user_Type']=='Ideator'||$row['user_Type']=='Investor')
+            if($row['user_Type']=='Ideator'||$row['user_Type']=='Investor'||$row['user_Type']=='Admin')
             {
                 if($row['user_midInit']==null)
                     $str = $row['user_fName']."  ".$row['user_lName'];
@@ -538,6 +538,27 @@
             $query = $this->db->get();
             return $query;
         }
+
+        public function reportdtl()
+        {
+            $this->db->select('*');
+            $this->db->from('report_dtl');
+            $this->db->order_by('reportDate', 'DESC');
+            $query = $this->db->get();
+            return $query;
+        }
+        public function investorRequest()
+        {
+            $this->db->select('*');
+            $this->db->from('user_md a');
+            $this->db->join('user_dtl b', 'a.userId=b.userId','left');
+            $this->db->where('a.user_Type','Investor');
+            $this->db->where('a.user_status','0');
+            $this->db->order_by('a.user_dateRegistered', 'DESC');
+            $query = $this->db->get();
+            return $query;
+        }
+
     }
 
 

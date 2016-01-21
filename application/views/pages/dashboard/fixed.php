@@ -1,4 +1,10 @@
-
+<?php 
+foreach($data as $row):
+if($row['user_Type']=='Admin'){
+  header('Location:'.base_url().'pages/admin');
+}
+endforeach;
+?>
 <!DOCTYPE html>
 <html>
   <head>

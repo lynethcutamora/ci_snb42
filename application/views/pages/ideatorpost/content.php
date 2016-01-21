@@ -10,8 +10,20 @@
 </script>
 
 <div class="content-wrapper">
-  <br>  
-  <div class="col-md-10"> 
+  </br>
+  <div class="col-md-4">                          
+    <select id="userType" name="userType" class="form-control select2" style="width: 100%;">
+      <option name="userType" selected="selected">-- Select Post Type --</option>
+      <option name="userType" value="ideator">Post Startup Idea</option>
+      <option name="userType" value="investor">Post Startup Product</option>
+      <option name="userType" value="company">Normal Post</option>
+    </select>
+  </div>
+  <div class="col-md-2">
+    <button type="submit" class="btn btn-primary btn-block btn-flat">Go</button>               
+  </div>
+  </br> </br>
+  <div class="col-md-9"> 
     <div class="box">
                   <div class="box-header with-border">
                     <span class="pull-left"><p>Post New Idea</p></span>
@@ -50,9 +62,25 @@
                   </form>
     </div><!-- /.box-->
   </div><!-- /.col-10-->
+
+  <!-- adds area -->
+    <div class="col-md-3">
+      <div class="box box-default">
+        <div class="box-header with-border">
+          Advertisement(s)
+        </div>
+        <div class="box-body">
+          <img src="<?php echo base_url().'images/ind.png' ?>" width="100%"><br/><hr/>
+        </div>
+        <div class="box-footer text-center">
+          <a><small>See more</small></a>
+        </div>
+      </div>
+    </div>
+
+    <!-- retrieved posts area -->
      <div name="post1" id="post1"></div>
 </div><!-- /.container-->
-
 
 <script>
        $(function () {

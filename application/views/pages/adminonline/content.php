@@ -34,7 +34,7 @@
                 <div class="box-header">
                 </div><!-- /.box-header -->
                 <div class="box-body">
-                  <table id="example2" class="table table-bordered table-hover">
+                  <table id="example1" class="table table-bordered table-hover">
                     <thead>
                       <tr>
                         <th>UserId</th>
@@ -44,44 +44,12 @@
                       </tr>
                     </thead>
                     <tbody>
-                        <?php 
-                        $query = $this->db->query("SELECT * from user_md a left join user_dtl b on a.userId = b.userId where user_status = '1'");
-                            foreach($query->result() as $row):
-                        $this->db->select('*');
-                        $this->db->from('badge_dtl');
-                        $this->db->where('voteBadge','1');
-                        $this->db->where('userId',$row->userId);
-                        $query = $this->db->get();
-                        $gold = $query->num_rows();
-
-                        $this->db->select('*');
-                        $this->db->from('badge_dtl');
-                        $this->db->where('voteBadge','2');
-                        $this->db->where('userId',$row->userId);
-                        $query = $this->db->get();
-                        $silver = $query->num_rows();
-
-                        $this->db->select('*');
-                        $this->db->from('badge_dtl');
-                        $this->db->where('voteBadge','3');
-                        $this->db->where('userId',$row->userId);
-                        $query = $this->db->get();
-                        $bronze = $query->num_rows();
-
-                        $this->db->select('*');
-                        $this->db->from('badge_dtl');
-                        $this->db->where('voteBadge','4');
-                        $this->db->where('userId',$row->userId);
-                        $query = $this->db->get();
-                        $black = $query->num_rows();
-
-                        $rep = (($gold*20)+($silver*10)+($bronze*5))-($black*15);
-                        ?>
+                      <?php foreach($this->post->allUsers($this->session->userdata('userId'))->result_array() as $value):?>
                       <tr> 
-                        <td><?php echo $row->userId;?></td>
-                        <td><a href="#"><?php echo $row->user_fName;?>&nbsp;<?php echo $row->user_midInit;?>.&nbsp;<?php echo $row->user_lName;?> </a></td>
-                        <td><i class="fa fa-star" style="color:#ffd700;"></i>&nbsp;<span class="label label-default"><?php echo $rep;?></span></td>
-                        <td><span class="fa fa-circle text-success"><?php if($row->user_status=='1')echo 'Online';?></td>
+                        <td> <?php echo $value['userId'];?></td>
+                        <td> <?php echo $this->post->userProfile($value['userId']);?></td>
+                        <td> <?php echo $this->post->reputation($value['userId']);?></td>
+                        <td> <?php echo $value['user_status'];?></td>
                       </tr>
                          <?php  endforeach;?>
                         </tbody>
@@ -106,3 +74,32 @@
             </div><!--/.row-->
         </section><!-- /.content -->
       </div><!-- /.content-wrapper -->
+
+   <script src="<?php echo base_url();?>plugins/jQuery/jQuery-2.1.4.min.js"></script>
+    <!-- Bootstrap 3.3.5 -->
+    <script src="<?php echo base_url();?>bootstrap/js/bootstrap.min.js"></script>
+    <!-- DataTables -->
+    <script src="<?php echo base_url();?>plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="<?php echo base_url();?>plugins/datatables/dataTables.bootstrap.min.js"></script>
+    <!-- SlimScroll -->
+    <script src="<?php echo base_url();?>plugins/slimScroll/jquery.slimscroll.min.js"></script>
+    <!-- FastClick -->
+    <script src="<?php echo base_url();?>plugins/fastclick/fastclick.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="<?php echo base_url();?>dist/js/app.min.js"></script>
+    <!-- AdminLTE for demo purposes -->
+    <script src="<?php echo base_url();?>dist/js/demo.js"></script>
+    
+      <script>
+      $(function () {
+        $("#example1").DataTable();
+        $('#example2').DataTable({
+          "paging": true,
+          "lengthChange": false,
+          "searching": false,
+          "ordering": true,
+          "info": true,
+          "autoWidth": false
+        });
+      });
+    </script>
