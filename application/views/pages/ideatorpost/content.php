@@ -10,8 +10,21 @@
 </script>
 
 <div class="content-wrapper">
-  <br>  
-  <div class="col-md-10"> 
+  </br>
+  <div class="col-md-4">                          
+    <select id="userType" name="userType" class="form-control select2" style="width: 100%;">
+      <option name="userType" selected="selected">-- Select Post Type --</option>
+      <option name="userType" value="idea">Post Startup Idea</option>
+      <option name="userType" value="product">Post Startup Product</option>
+      <option name="userType" value="competition">Post a competition</option>
+      <option name="userType" value="normal">Normal Post</option>
+    </select>
+  </div>
+  <div class="col-md-2">
+    <button type="submit" class="btn btn-primary btn-block btn-flat">Go</button>               
+  </div>
+  </br> </br>
+  <div class="col-md-9"> 
     <div class="box">
                   <div class="box-header with-border">
                     <span class="pull-left"><p>Post New Idea</p></span>
@@ -49,23 +62,133 @@
                     </div>
                   </form>
     </div><!-- /.box-->
-  </div><!-- /.col-10-->
-  <div class="col-md-2">
-                <div class="box box-default">
+  </div><!-- /.col-9-->
+
+  <!-- adds area -->
+    <div class="col-md-3">
+      <div class="box box-default">
+        <div class="box-header with-border">
+          Advertisement(s)
+        </div>
+        <div class="box-body">
+          <img src="<?php echo base_url().'images/ind.png' ?>" width="100%"><br/><hr/>
+        </div>
+        <div class="box-footer text-center">
+          <a><small>See more</small></a>
+        </div>
+      </div>
+    </div>
+
+  <div class="col-md-9"> 
+    <div class="box">
                   <div class="box-header with-border">
-                    Ads
-                  </div>
-                  <div class="box-body">
-                    ADS's area
-                  </div>
-                  <div class="box-footer text-center">
-                    <a><small>See more</small></a>
-                  </div>
-                </div>
-            </div>
+                    <span class="pull-left"><p>Post Startup Product</p></span>
+                  </div><!-- /.box-header -->
+                  <!-- form start -->
+                 <?php echo form_open_multipart('../pages/postIdea',"class=form-horizontal"); ?>
+                    <div class="box-body">
+                      <div class="form-group">
+                        <label for="producttitle" class="col-sm-2 control-label">Product Name*</label>
+                        <div class="col-sm-10">
+                        <?php echo form_error('ideatitle'); ?>
+                          <input type="text" class="form-control" name="producttitle" id="producttitle" placeholder="Product Title" value="<?php echo set_value('ideatitle'); ?>"/>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label for="inputDescription"  class="col-sm-2 control-label">Description*</label>
+                        <div class="col-sm-10">
+                         <?php echo form_error('inputDescription'); ?>
+                          <textarea class="form-control"name="inputDescription" id="inputDescription" placeholder="Description" value="<?php echo set_value('inputDescription'); ?>"></textarea>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label for="downloadlink" class="col-sm-2 control-label">Links</label>
+                        <div class="col-sm-10">
+                        <?php echo form_error('relatedlinks'); ?>
+                          <input type="text" class="form-control" name="downloadlink" id="downloadlink" placeholder="Download Link" value="<?php echo set_value('relatedlinks'); ?>"/>
+                        </div>
+                      </div>
+                    </div><!-- /.box-body -->
+                    <div class="box-footer">
+                          <small>Upload Product Branding (logo)</small>
+                         <?php echo form_upload('pic'); ?>
+                          <input class="btn btn-info pull-right" type="submit" value="Post Product" id="submit" name="button">
+                    </div>
+                  </form>
+    </div><!-- /.box-->
+  </div><!-- /.col-9-->
+
+  <div class="col-md-9"> 
+    <div class="box">
+                  <div class="box-header with-border">
+                    <span class="pull-left"><p>Normal Post</p></span>
+                  </div><!-- /.box-header -->
+                  <!-- form start -->
+                 <?php echo form_open_multipart('../pages/postIdea',"class=form-horizontal"); ?>
+                    <div class="box-body">
+                      <div class="form-group">
+                        <label for="inputDescription"  class="col-sm-2 control-label">Description*</label>
+                        <div class="col-sm-10">
+                         <?php echo form_error('inputDescription'); ?>
+                          <textarea class="form-control"name="inputDescription" id="inputDescription" placeholder="What do you want to announce?" value="<?php echo set_value('inputDescription'); ?>"></textarea>
+                        </div>
+                      </div>
+                      <<div class="form-group">
+                        <label for="area" class="col-sm-2 control-label">Areas*</label>
+                        <div class="col-sm-10">
+                        <?php echo form_error('ideatitle'); ?>
+                          <input type="text" class="form-control" name="area" id="area" placeholder="Enter specific area (i.e. mobile, medical) separated by comma (,)" value="<?php echo set_value('ideatitle'); ?>"/>
+                        </div>
+                      </div>
+                    </div><!-- /.box-body -->
+                    <div class="box-footer">
+                          <input class="btn btn-info pull-right" type="submit" value="Post" id="submit" name="button">
+                    </div>
+                  </form>
+    </div><!-- /.box-->
+  </div><!-- /.col-9-->
+
+  <div class="col-md-9"> 
+    <div class="box">
+                  <div class="box-header with-border">
+                    <span class="pull-left"><p>Post Competition</p></span>
+                  </div><!-- /.box-header -->
+                  <!-- form start -->
+                 <?php echo form_open_multipart('../pages/postIdea',"class=form-horizontal"); ?>
+                    <div class="box-body">
+                      <div class="form-group">
+                        <label for="inputDescription"  class="col-sm-2 control-label">Description*</label>
+                        <div class="col-sm-10">
+                         <?php echo form_error('inputDescription'); ?>
+                          <textarea class="form-control"name="inputDescription" id="inputDescription" placeholder="Competition Description" value="<?php echo set_value('inputDescription'); ?>"></textarea>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label for="area" class="col-sm-2 control-label">Areas*</label>
+                        <div class="col-sm-10">
+                        <?php echo form_error('ideatitle'); ?>
+                          <input type="text" class="form-control" name="area" id="area" placeholder="Enter specific area (i.e. mobile, medical) separated by comma (,)" value="<?php echo set_value('ideatitle'); ?>"/>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label for="competitionnote" class="col-sm-2 control-label">Notes</label>
+                        <div class="col-sm-10">
+                        <?php echo form_error('relatedlinks'); ?>
+                          <input type="text" class="form-control" name="competitionnote" id="competitionnote" placeholder="Enter competition notes (i.e prizes) etc." value="<?php echo set_value('relatedlinks'); ?>"/>
+                        </div>
+                      </div>
+                    </div><!-- /.box-body -->
+                    <div class="box-footer">
+                          <input class="btn btn-info pull-right" type="submit" value="Start the Competition" id="submit" name="button">
+                    </div>
+                  </form>
+    </div><!-- /.box-->
+  </div><!-- /.col-9-->
+
+
+    <!-- retrieved posts area -->
      <div name="post1" id="post1"></div>
 </div><!-- /.container-->
-
 
 <script>
        $(function () {
