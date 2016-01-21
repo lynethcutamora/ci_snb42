@@ -1,4 +1,4 @@
-    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    <script src="<?php echo base_url(); ?>plugins/jQuery/jQuery-2.1.4.min.js"></script>
       <?php
       //$badge = $totalRep;
                   
@@ -196,6 +196,7 @@
               <!-- Horizontal Form -->
                 <div class="row">
           
+
             <div class="col-md-12">
             
                
@@ -203,6 +204,7 @@
              
                 </div>
               </div>
+
               <div class="nav-tabs-custom">
                 <ul class="nav nav-tabs">
                   <li class="active"><a href="#activity" data-toggle="tab">Activity</a></li>
@@ -311,7 +313,13 @@
                                       <div class="form-group">
                                         <label for="inputDescription" class="col-sm-2 control-label">About Me</label>
                                         <div class="col-sm-9">
-                                          <input type="text" class="form-control" name="inputDescription" id="inputDescription" required="required" placeholder="Short Self-Description"  value="<?php echo $userdtl['user_shortSelfDescription']; ?>">
+                                        <?php
+                                          $skills = $userdtl['user_shortSelfDescription'];
+                                          $res = explode(', ', $skills);
+                                        ?>
+                                          <input type="checkbox" name="inputDescription[]" value="Programmer" <?php if(in_array("Programmer", $res)) echo "checked";?> >Programmer<br>
+                                          <input type="checkbox" name="inputDescription[]" value="Web Designer" <?php if(in_array("Web Designer", $res)) echo "checked";?> >Web Designer<br>
+                                          <input type="checkbox" name="inputDescription[]" value="Data Gathering" <?php if(in_array("Data Gathering", $res)) echo "checked";?> >Data Gathering<br>
                                         </div>
                                       </div>
                     
@@ -455,7 +463,7 @@
                         <div class="row">
                         <div class="col-sm-12">
                         
-                              <?php form_open('../pages/');?>      
+                              <?php form_open('../pages/');?>   
                               <div class='form-group'>
                                       <label for='inputOldPassword' class='col-sm-2 control-label'>Old Password</label>
                                       <div class='col-sm-9'>

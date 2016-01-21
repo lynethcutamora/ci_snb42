@@ -330,7 +330,7 @@
         {
             $query = $this->profile($userId);
             $row = $query->row_array();
-            if($row['user_Type']=='Ideator'||$row['user_Type']=='Investor')
+            if($row['user_Type']=='Ideator'||$row['user_Type']=='Investor'||$row['user_Type']=='Admin')
             {
                 if($row['user_midInit']==null)
                     $str = $row['user_fName']."  ".$row['user_lName'];
@@ -452,9 +452,22 @@
             $query = $this->db->get();
             return $query;
         }
+
+
+        public function allUsers($userId){
+            $this->db->select('*');
+            $this->db->from('user_md a');
+            $this->db->join('user_dtl b', 'a.userId=b.userId','left');
+            $this->db->join('company_dtl c', 'c.userId=a.userId','left');
+            $this->db->join('avatar_dtl d', 'd.userId=a.userId');
+            $this->db->where_not_in('a.userId',$userId);
+            $query = $this->db->get();
+            return $query;
+        }
+
         public function postIdeator($userId)
         {
-            $this->db->select('*');
+            $this->db->select('a.userId ,d.postContent,d.postDate,d.postId,d.postTitle,f.extContent');
             $this->db->from('user_md a');
             $this->db->join('user_dtl b', 'a.userId=b.userId','left');
             $this->db->join('company_dtl c', 'c.userId=a.userId','left');
@@ -510,18 +523,40 @@
         }
        
        public function recentideator()
+
         {
             $this->db->select('*');
             $this->db->from('user_md a');
             $this->db->join('user_dtl b', 'a.userId=b.userId','left');
             $this->db->join('company_dtl c', 'c.userId=a.userId','left');
+            $this->db->join('avatar_dtl e', 'e.userId=a.userId');
             $this->db->join('userpost d', 'd.userId=a.userId');
-            $this->db->join('avatar_dtl e', 'e.userId=d.userId');
             $this->db->order_by('postDate', 'DESC');
             $this->db->limit('5');
             $query = $this->db->get();
             return $query;
         }
+
+        public function reportdtl()
+        {
+            $this->db->select('*');
+            $this->db->from('report_dtl');
+            $this->db->order_by('reportDate', 'DESC');
+            $query = $this->db->get();
+            return $query;
+        }
+        public function investorRequest()
+        {
+            $this->db->select('*');
+            $this->db->from('user_md a');
+            $this->db->join('user_dtl b', 'a.userId=b.userId','left');
+            $this->db->where('a.user_Type','Investor');
+            $this->db->where('a.user_status','0');
+            $this->db->order_by('a.user_dateRegistered', 'DESC');
+            $query = $this->db->get();
+            return $query;
+        }
+
     }
 
 

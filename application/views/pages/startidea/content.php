@@ -1,15 +1,15 @@
             <br>
                 <script src="<?php echo base_url(); ?>plugins/jQuery/jQuery-2.1.4.min.js"></script>
             <div class="content-wrapper">
-               <div class="col-md-12">
+               <div class="col-md-10">
               <div class="box box-primary">
                 <div class="box-header with-border">
-                  <h3 class="box-title">Generate Ideas</h3>
+                  <h3 class="box-title">Generate Title</h3>
                 </div><!-- /.box-header -->
                 <!-- form start -->
              
                   <div class="box-body">
-                    <div id="title"></div>
+                    <div id="title">Click Generate Button below to generate title</div>
                   </div><!-- /.box-body -->
 
                   <div class="box-footer">

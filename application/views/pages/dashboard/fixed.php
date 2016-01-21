@@ -1,4 +1,10 @@
-
+<?php 
+foreach($data as $row):
+if($row['user_Type']=='Admin'){
+  header('Location:'.base_url().'pages/admin');
+}
+endforeach;
+?>
 <!DOCTYPE html>
 <html>
   <head>
@@ -304,6 +310,10 @@
                     </div>
                   </li>
                 </ul>
+              </li>
+
+              <li>
+                <a href="#" data-toggle="control-sidebar"><i class="fa fa-group"></i></a>
               </li>
               <!-- Control Sidebar Toggle Button -->
               

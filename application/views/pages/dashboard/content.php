@@ -34,7 +34,7 @@
         </div>
         <div class="col-md-3">
               <div>
-            <p>Having a hard time thinking of a start-up idea?</br></br> Visit our special feature by clicking the link below:</a><br/><br/><a href="<?php echo base_url()."pages/startidea"?>">Special feature</a> :) by $index[5].<br/></p>
+            <p>Having a hard time thinking of a start-up idea?</br></br> Visit our special feature by clicking the link below:</a><br/><br/><a href="<?php echo base_url()."pages/startidea"?>"><h1><u><center>Click here</h1></u></center></a><br/></p>
           </div>
         </div>
 
@@ -309,7 +309,7 @@
                     </div><!-- /.user-block -->
 
                     <div>
-                    <h6><?php echo $inv['postTitle']; ?></h6>
+                    <h6><?php echo $inv['postContent']; ?></h6>
                       <h6 class="pull-right"><?php $this->post->upvotecount($inv['postId']);?>  |  <?php $this->post->commentCount($inv['postId']);?></h6></a>
                     </div>
                     <br/><hr/>
@@ -328,7 +328,12 @@
                     </div><!-- /.user-block -->
 
                     <div>
-                    <h6><?php echo $ideator['postTitle']; ?></h6>
+                    <?php if($ideator['postType']=='investpost'){?>
+                    <h6><?php echo $ideator['postContent'];?></a></h6>
+                    <?php }else{?>
+                    <h6><a href="<?php echo base_url()."pages/post/".$ideator['postId'];?>"><?php echo $ideator['postTitle']; ?></a></h6>
+                    <?php }?>
+                 
                       <h6 class="pull-right"><?php $this->post->upvotecount($ideator['postId']);?>  |  <?php $this->post->commentCount($ideator['postId']);?></h6>
                     </div>
                     <br/><hr/>
@@ -362,6 +367,21 @@
                   
                 
               </div><!-- /.col -->
+
+              
             </div><!--/.row-->
+            <div class="col-md-3">
+                <div class="box box-default">
+                  <div class="box-header with-border">
+                    Ads
+                  </div>
+                  <div class="box-body">
+                    ADS's area
+                  </div>
+                  <div class="box-footer text-center">
+                    <a><small>See more</small></a>
+                  </div>
+                </div>
+            </div>
         </section><!-- /.content -->
       </div><!-- /.content-wrapper -->

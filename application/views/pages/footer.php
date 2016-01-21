@@ -2,7 +2,7 @@
         <div class="container">
             <div class="social text-center">
                 <a href="#"><i class="fa fa-twitter"></i></a>
-                <a href="#"><i class="fa fa-facebook"></i></a>
+                <a target = '_blank' href="https://www.facebook.com/StartAndBoostbyIndex01234/"><i class="fa fa-facebook"></i></a>
                 <a href="#"><i class="fa fa-dribbble"></i></a>
                 <a href="#"><i class="fa fa-flickr"></i></a>
                 <a href="#"><i class="fa fa-github"></i></a>

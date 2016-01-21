@@ -14,7 +14,8 @@
   <div class="col-md-10"> 
     <div class="box">
                   <div class="box-header with-border">
-                    <p>Post New Idea</p>
+                    <span class="pull-left"><p>Post New Idea</p></span>
+                    <span class="pull-right"><button type="submit" class="btn btn-primary" id="btnGenerate">Generate Title</button></span>
                   </div><!-- /.box-header -->
                   <!-- form start -->
                  <?php echo form_open_multipart('../pages/postIdea',"class=form-horizontal"); ?>
@@ -45,14 +46,25 @@
                      
                          <?php echo form_upload('pic'); ?>
                           <input class="btn btn-info pull-right" type="submit" value="Post Idea" id="submit" name="button">
+                    </div>
                   </form>
-                    
-                    </div><!-- /.box-footer -->
-                   
-         
-        </div>
+    </div><!-- /.box-->
+  </div><!-- /.col-10-->
+  <div class="col-md-2">
+                <div class="box box-default">
+                  <div class="box-header with-border">
+                    Ads
+                  </div>
+                  <div class="box-body">
+                    ADS's area
+                  </div>
+                  <div class="box-footer text-center">
+                    <a><small>See more</small></a>
+                  </div>
+                </div>
+            </div>
      <div name="post1" id="post1"></div>
-</div>
+</div><!-- /.container-->
 
 
 <script>
@@ -76,6 +88,30 @@
           });
 
         });
-
       });
 </script>
+<script>
+                $(document).ready(function() {
+                  $("#btnGenerate").click(function(){
+                    var result1 = ["integrated","parallel","virtual","interactive","responsive","synchronized","balanced","virtual","meta-level","optimized","active","parameterized","conceptual","scalable","dynamic","high-level","collaborative","reliable","open","coordinated"][Math.floor(Math.random() * 21)]
+                    var result2 = [ "mobility","functional","programmable"  ,"distributed","logical" ,"digital" ,"concurrent" ,"knowledge-based ","multimedia" ,"binary","object-oriented","secure" ,"high-speed ",  "real-time","functional" ,"parallelizing", "watermarking"  ,"proxy","cloud-based","big data","bioinformatic"][Math.floor(Math.random() * 21)]
+                    var result3 = [ "network","preprocessor","compiler","system","interface","protocol","architecture","database","algorithm","toolkit","display","technology","solution","language","agent","theorem prover","work cluster","cache","network","data center","hypervisor"][Math.floor(Math.random() * 21)]
+                    var result4 = ["integrated","parallel","virtual","interactive","responsive","synchronized","balanced","virtual","meta-level","optimized","active","parameterized","conceptual","scalable","dynamic","high-level","collaborative","reliable","open","coordinated"][Math.floor(Math.random() * 21)]
+                    var result5= [ "mobility","functional","programmable"  ,"distributed","logical" ,"digital" ,"concurrent" ,"knowledge-based ","multimedia" ,"binary","object-oriented","secure" ,"high-speed ",  "real-time","functional" ,"parallelizing", "watermarking"  ,"proxy","cloud-based","big data","bioinformatic"][Math.floor(Math.random() * 21)]
+                    var result6= [ "network","preprocessor","compiler","system","interface","protocol","architecture","database","algorithm","toolkit","display","technology","solution","language","agent","theorem prover","work cluster","cache","network","data center","hypervisor"][Math.floor(Math.random() * 21)]
+                    var sen1 = [ "for","related to","derived from","applied to","embedded in"][Math.floor(Math.random() *5)]
+                    var sentence = [result1+" "+result2+" "+result3,result1+" "+result2+" "+result3+" "+sen1+" "+result4+" "+result5+" "+result6][Math.floor(Math.random() * 2)]
+
+                    var vowels = ['A', 'E', 'I', 'O', 'U','a','e','i','o','u'];  
+                   
+                    if (jQuery.inArray(sentence.substring(0,1),vowels)!=-1) {  
+                      var a = 'An';  
+                    } else {  
+                      var a = 'A';  
+                    }  
+                    
+                        // $("#ideatitle").html(a+" "+sentence);
+                        document.getElementById("ideatitle").value=a+" "+sentence;
+                  }); 
+              });
+           </script>
