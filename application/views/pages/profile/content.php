@@ -154,7 +154,7 @@
                   <h3 class="box-title">About Me</h3>
                 </div><!-- /.box-header -->
                 <div class="box-body">
-                  <strong><i class="fa fa-book margin-r-5"></i>  Skills</strong>
+                  <strong><i class="fa fa-book margin-r-5"></i>  Self Description</strong>
                   <p class="text-muted">
                 
                     
@@ -196,7 +196,15 @@
               <!-- Horizontal Form -->
                 <div class="row">
           
+
+            <div class="col-md-12">
             
+               
+            
+             
+                </div>
+              </div>
+
               <div class="nav-tabs-custom">
                 <ul class="nav nav-tabs">
                   <li class="active"><a href="#activity" data-toggle="tab">Activity</a></li>
@@ -303,7 +311,7 @@
                                         </div>
                                       </div>
                                       <div class="form-group">
-                                        <label for="inputDescription" class="col-sm-2 control-label">Skills</label>
+                                        <label for="inputDescription" class="col-sm-2 control-label">About Me</label>
                                         <div class="col-sm-9">
                                         <?php
                                           $skills = $userdtl['user_shortSelfDescription'];
@@ -495,6 +503,40 @@
                 </div>         
 
                 </div><!-- /.tab-content -->
+                <div class="col-md-2">
+              <div class="info-box">
+                <span class="info-box-icon bg-yellow"><i class="fa fa-files-o"></i></span>
+                <div class="info-box-content">
+                  <span>IDEAS SHARED</span>
+                  <span class="info-box-number">0</span>
+                </div><!-- /.info-box-content -->
+              </div><!-- /.info-box -->
+
+              <div class="info-box">
+                <span class="info-box-icon bg-aqua"><i class="fa fa-tasks"></i></span>
+                <div class="info-box-content">
+                  <span>CURRENT PROJECTS</span>
+                  <span class="info-box-number">0</span>
+                </div><!-- /.info-box-content -->
+              </div><!-- /.info-box -->
+
+              <div class="info-box">
+                <span class="info-box-icon bg-green"><i class="fa fa-flag-o"></i></span>
+                <div class="info-box-content">
+                  <span>COMPLETED PROJECTS</span>
+                  <span class="info-box-number">0</span>
+                </div><!-- /.info-box-content -->
+              </div><!-- /.info-box -->
+
+              <div class="info-box">
+                <span class="info-box-icon bg-red"><i class="fa fa-group"></i></span>
+                <div class="info-box-content">
+                  <span>GROUPS</span>
+                  <span class="info-box-number">0</span>
+                </div><!-- /.info-box-content -->
+              </div><!-- /.info-box -->
+
+            </div><!-- /.col -->
             </div><!-- /.col -->
 
 
@@ -576,7 +618,7 @@
               
                 
                 <?php foreach($data as $userdtl):?>
-                <?php if($this->post->validBadge($userId)=='false'){?>
+                <?php if($this->post->validBadge($userId)=='false'){?>;
                 
                 <?php echo form_open('../pages/badge'); 
                 echo '<input type="text" hidden="true" name="userId" value="'.$userId.'">';

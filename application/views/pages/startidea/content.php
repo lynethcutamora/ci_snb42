@@ -9,7 +9,7 @@
                 <!-- form start -->
              
                   <div class="box-body">
-                    <div id="title"></div>
+                    <div id="title">Click Generate Button below to generate title</div>
                   </div><!-- /.box-body -->
 
                   <div class="box-footer">

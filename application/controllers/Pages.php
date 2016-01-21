@@ -1826,6 +1826,7 @@ class Pages extends CI_Controller {
 				$data['groupdetails'] = $groupquery->result_array();
 				$feed = $this->post->newsfeedideator();
 				$data['investorpost'] = $feed->result_array();
+				
 			
 
 
@@ -1839,7 +1840,7 @@ class Pages extends CI_Controller {
 		}
 	}
 
-	public function newsfeedinvestor()
+	public function newsfeedinvestor($postId = null)
 	{
 		if(($this->session->userdata('userId')!=""))
 		{
@@ -1851,6 +1852,8 @@ class Pages extends CI_Controller {
 				$data['groupdetails'] = $groupquery->result_array();
 				$feed = $this->post->newsfeedinvestor();
 				$data['ideatorpost'] = $feed->result_array();
+				$postdtlquery= $this->post->postdtl($postId);		
+				$data['postdtl']=$postdtlquery->result_array();
 				
 
 				$this->load->view('pages/dashboard/fixed',$data);
@@ -2113,7 +2116,6 @@ class Pages extends CI_Controller {
 				$data['pages']='post';
 				$data['countgroup'] = $this->countGroups();
 				$groupquery= $this->groupdetails();
-				$data['groupdetails'] = $groupquery->result_array();
 				$data['alldata']=$query->result_array();
 				$postdtlquery= $this->post->postdtl($postId);	
 				$data['postId']=$postId;	

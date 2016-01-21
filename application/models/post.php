@@ -502,7 +502,6 @@
             $this->db->join('company_dtl c', 'c.userId=a.userId','left');
             $this->db->join('userpost d', 'd.userId=a.userId');
             $this->db->join('avatar_dtl e', 'e.userId=d.userId');
-            $this->db->where('d.postType','1');
             $this->db->order_by('postDate', 'DESC');
             $query = $this->db->get();
             return $query;
@@ -516,7 +515,7 @@
             $this->db->join('company_dtl c', 'c.userId=a.userId','left');
             $this->db->join('userpost d', 'd.userId=a.userId');
             $this->db->join('avatar_dtl e', 'e.userId=d.userId');
-            $this->db->where('d.postType','1');
+            $this->db->where('d.postType','investpost');
             $this->db->order_by('postDate', 'DESC');
             $this->db->limit('5');
             $query = $this->db->get();
@@ -532,7 +531,6 @@
             $this->db->join('company_dtl c', 'c.userId=a.userId','left');
             $this->db->join('avatar_dtl e', 'e.userId=a.userId');
             $this->db->join('userpost d', 'd.userId=a.userId');
-            $this->db->where('d.postType','investpost');
             $this->db->order_by('postDate', 'DESC');
             $this->db->limit('5');
             $query = $this->db->get();
