@@ -458,7 +458,27 @@ class Pages extends CI_Controller {
 	{
 		$userId = $this->session->userdata('userId');
 		$inputDescription = implode(', ', $this->input->post('inputDescription[]'));
+		if($inputDescription == null)
+		{
+		$data = array(
+			'user_lName' => ucfirst(strtolower($this->input->post('inputLName'))),
+			'user_fName' => ucfirst(strtolower($this->input->post('inputFName'))),
+			'user_midInit' => strtoupper($this->input->post('inputMI')),
+			'user_age' => $this->input->post('inputAge'),
+			'user_shortSelfDescription' => "Please update your skills",
+			);
+		$data1 = array(
+			'location_address1' => $this->input->post('inputAddress1'),
+			'location_city' => $this->input->post('inputCity'),
+			'location_country' => $this->input->post('inputCountry'),
+			);
 
+		$this->db->where('userId', $userId);
+		$this->db->update('user_dtl', $data);
+		$this->db->update('location_dtl', $data1);
+		redirect('pages/profile');
+		}
+		else{
 		$data = array(
 			'user_lName' => ucfirst(strtolower($this->input->post('inputLName'))),
 			'user_fName' => ucfirst(strtolower($this->input->post('inputFName'))),
@@ -476,6 +496,7 @@ class Pages extends CI_Controller {
 		$this->db->update('user_dtl', $data);
 		$this->db->update('location_dtl', $data1);
 		redirect('pages/profile');
+		}
 	}
 	public function _changeCompany()
 	{
@@ -1917,7 +1938,7 @@ class Pages extends CI_Controller {
 			              <div class="box box-widget">
 			                <div class="box-header with-border">
 			                  <div class="user-block">
-			                    <img class="img-circle" src="'.base_url()."user/".$postdtl["avatar_name"].'"><span class="username">';
+			                    <img class="img-circle" src="'.base_url()."user/".$this->post->getAvatar($postdtl['userId']).'"><span class="username">';
 			                    echo '<a href="'.base_url()."pages/profile/".$postdtl['userId'].'">';
 			                       echo $this->post->userProfile($postdtl['userId']);  
 			                      echo '</a>
@@ -1964,8 +1985,7 @@ class Pages extends CI_Controller {
 
 			                  <p><h5>";
 			                  echo '<b>'.$postdtl['postTitle'].'</b><br/><br/>';
-			                  echo $postdtl['postContent']. $postdtl['postId'];
-			                  echo print_r($postdtl);
+			                  echo $postdtl['postContent'];
 			                  if($postdtl['extContent']!=""){
 			                  	echo '<h5>Related Links:</h5>'.$postdtl['extContent'];
 			              	  }
@@ -2005,7 +2025,6 @@ class Pages extends CI_Controller {
 		$this->db->or_like('user_lName',$value,'both');
 		$this->db->or_like('company_name',$value,'both');
 		$query=$this->db->get();
-			
 
 			foreach ($query->result_array() as $key => $value) {
 			
@@ -2021,6 +2040,19 @@ class Pages extends CI_Controller {
                echo ellipsize($this->post->userProfile($value['userId']), 20);
                     echo $value['user_Type'];
 
+			foreach ($query->result_array() as $key => $value) {
+			
+				echo '<form method="post" name="form" id="form">';
+      				
+        			  foreach ($this->post->profile($value['userId'])->result_array() as $value){
+
+               	
+              echo '<div class="user-block">
+                     <img class="img-circle" src="'.base_url().'user/'.$value['avatar_name'].'" alt="user image">
+                     <span class="username">
+                    <a href="#" style="color:white">';
+               echo ellipsize($this->post->userProfile($value['userId']), 20);
+                    echo $value['user_Type'];
                  
              	echo ' </a></span>
                     <div class="pull-right">
@@ -2043,7 +2075,9 @@ class Pages extends CI_Controller {
 	
 
 	}
+}
 
+}
 	public function investorPostSection($postId = null)
 	{
 		if(($this->session->userdata('userId')!=""))
@@ -2280,6 +2314,9 @@ class Pages extends CI_Controller {
 	}
 	
 
+
 }
+
+
 
 

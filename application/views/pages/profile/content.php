@@ -455,7 +455,7 @@
                         <div class="row">
                         <div class="col-sm-12">
                         
-                              <?php form_open('../pages/');?>      
+                              <?php form_open('../pages/');?>   
                               <div class='form-group'>
                                       <label for='inputOldPassword' class='col-sm-2 control-label'>Old Password</label>
                                       <div class='col-sm-9'>

@@ -7,8 +7,7 @@
           </h1>
           <div class="container">
           <div class="row">
-           <div class="col-md-10">
-<!------------------------------------------------------> 
+           <div class="col-md-8">
                   <div class="box-body">
                   <div class="box box-widget">
                
@@ -42,7 +41,21 @@
                 </div><!--/.body-->
 
               </div><!-- /.col -->
+              <div class="col-md-3">
+                <div class="box box-default">
+                  <div class="box-header with-border">
+                    Ads
+                  </div>
+                  <div class="box-body">
+                    ADS's area
+                  </div>
+                  <div class="box-footer text-center">
+                    <a><small>See more</small></a>
+                  </div>
+                </div>
+            </div>
               </div>
+
              </div>
         </section><!-- /.content -->
       </div><!-- /.content-wrapper -->
