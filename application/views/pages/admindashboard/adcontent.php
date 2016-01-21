@@ -13,7 +13,7 @@
             <div class="col-md-8">
                 <div class="box">
                 <div class="box-header">
-                  <h3 class="box-title">Hover Data Table</h3>
+                  <h3 class="box-title">Active ADs</h3>
                 </div><!-- /.box-header -->
                 <div class="box-body">
                   <table id="example2" class="table table-bordered table-hover">
@@ -431,15 +431,7 @@
                         <td>U</td>
                       </tr>
                     </tbody>
-                    <tfoot>
-                      <tr>
-                        <th>Rendering engine</th>
-                        <th>Browser</th>
-                        <th>Platform(s)</th>
-                        <th>Engine version</th>
-                        <th>CSS grade</th>
-                      </tr>
-                    </tfoot>
+                    
                   </table>
                 </div><!-- /.box-body -->
               </div><!-- /.box -->
@@ -459,8 +451,13 @@
                     </div>
                      <div class="form-group">
                       <label for="exampleInputEmail1">Ads Name:</label>
-                      <input class="form-control" id="exampleInputEmail1" placeholder="Name" type="Name">
+                      <input class="form-control" id="exampleInputEmail1" placeholder="Name" type="text">
                     </div>
+                     <div class="form-group">
+                      <label for="exampleInputEmail1">Ads link:</label>
+                      <input class="form-control" id="exampleInputEmail1" placeholder="Link" type="text">
+                    </div>
+
                     <div class="form-group">
                       <label for="exampleInputPassword1">Duration:</label>
                     
@@ -524,3 +521,4 @@
         });
       });
     </script>
+    <script type="text/javascript"></script>
