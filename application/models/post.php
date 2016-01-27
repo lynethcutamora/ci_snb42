@@ -626,6 +626,13 @@
            
         }
 
+        public function countMsg1on1($userId)
+        {
+                $query = $this->db->query("SELECT * FROM msg_dtl WHERE userId = '".$userId."'  AND msg_fromUserId = '".$this->session->userdata("userId")."' AND msg_status = '1' OR userId = '".$this->session->userdata("userId")."' AND msg_fromUserId = '".$userId."'  AND msg_status = '1'");
+                $num = $query->num_rows();
+                return $num;
+        }
+
 
     }
 
