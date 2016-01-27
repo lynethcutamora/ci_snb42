@@ -193,7 +193,6 @@
                          echo $this->post->projectName($projectId);?></p>
                       </div><!-- /.box-header -->
                       <!-- form start -->
-                      <?php foreach($allproject as $row):?>
                         <?php $projectid=$row['postId']; ?>
                       <?php echo form_open_multipart('../pages/postGroup/'.$groupid.'/'.$row['postId'].'',"class=form-horizontal"); ?>
                         <div class="box-body">
@@ -211,7 +210,7 @@
                           </form>
                         </div><!-- /.box-footer -->
                       </form><!--/.form-->
-                      <?php endforeach;?>
+                   
                     </div><!-- /.box -->
                     <!-- Post -->
                     <div class="post">
@@ -392,21 +391,21 @@
                               if($row['user_Type']=='Company'){
                                  echo '<span class="pull-left"><i class="fa fa-user" style="color:gray;"></i></span>
                                     <p class="text-muted">&nbsp;&nbsp;'.$row['company_name'].'
-                                    <span class="pull-right"><button name="btnaddmember" class="form-control btn-primary" type="submit" href="'.base_url().'pages/group/'.$groupid.'"><i class="fa fa-user-plus"></i></button></span></p>';
+                                    <span class="pull-right"><button name="btnaddmember" class="form-control btn-primary" type="submit" href="'.base_url().'pages/group/'.$groupid.'"><i class="fa fa-plus"></i></button></span></p>';
                               }else{
                                 echo '<span class="pull-left"><i class="fa fa-user" style="color:gray;"></i></span>
                                       <p class="text-muted">&nbsp;&nbsp;'.$row['user_fName']." ".$row['user_midInit'].". ".$row['user_lName'].'
-                                      <span class="pull-right"><button name="btnaddmember" class="form-control btn-primary" type="submit"><i class="fa fa-user-plus"></i></button></span></p>';
+                                      <span class="pull-right"><button name="btnaddmember" class="form-control btn-primary" type="submit"><i class="fa fa-plus"></i></button></span></p>';
                               }
                             }else{
                               if($row['user_Type']=='Company'){
                                  echo '<span class="pull-left"><i class="fa fa-user" style="color:gray;"></i></span>
                                     <p class="text-muted">&nbsp;&nbsp;'.$row['company_name'].'
-                                    <span class="pull-right"><button name="btnaddmember" class="form-control btn disabled" type="submit"><i class="fa fa-user-plus"></i></button></span></p>';
+                                    <span class="pull-right"><button name="btnaddmember" class="form-control btn disabled" type="submit"><i class="fa fa-plus"></i></button></span></p>';
                               }else{
                                 echo '<span class="pull-left"><i class="fa fa-user" style="color:gray;"></i></span>
                                       <p class="text-muted">&nbsp;&nbsp;'.$row['user_fName']." ".$row['user_midInit'].". ".$row['user_lName'].'
-                                      <span class="pull-right"><button name="btnaddmember" class="form-control btn disabled" disabled><i class="fa fa-user-plus"></i></button></span></p>';                      
+                                      <span class="pull-right"><button name="btnaddmember" class="form-control btn disabled" disabled><i class="fa fa-plus"></i></button></span></p>';                      
                               }
                            }
                         echo'</div>';
