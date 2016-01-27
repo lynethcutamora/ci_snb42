@@ -1682,41 +1682,6 @@ class Pages extends CI_Controller {
 			$this->_landing();
 		}
 	}
-	public function postInvestor()
-	{
-		if(($this->session->userdata('userId')!=""))
-		{
-			if($this->post->checkUserType()=='false'){
-		         $this->form_validation->set_rules('inputDescription', 'Description', 'required|trim');
-		         if ($this->form_validation->run() == FALSE)
-		        {
-		         	header('location:'.base_url().'pages/investorpost');
-		        }
-		        else
-				{	
-		     	 	$datetime = date('Y-m-d H:i:s'); 
-		     	 	$postId = uniqid();
-		     	 	
-		     	 	$data = array(
-					'postId' => $postId,
-					'postTitle' =>'investor Post',
-					'postContent' =>$this->input->post('inputDescription'),
-					'postType' => 'investpost',
-					'userId' => $this->session->userdata('userId'),
-					'postDate' => $datetime
-					);
-					$this->db->insert('userpost', $data);
-
-					
-				}
-			}
-
-					
-		}else
-		{
-			$this->_landing();
-		}
-	}
 	public function showInvestorpost($userId)
 	{
 			 foreach($this->post->profile($userId)->result_array() as $userdtl):
@@ -1725,7 +1690,7 @@ class Pages extends CI_Controller {
 	          echo '
 	      		<div class="container">
 		      		<div class="row">
-		            	<div class="col-md-10">
+		            	<div class="col-md-9">
 	            		<!-- Box Comment -->
 			              <div class="box box-widget">
 			                <div class="box-header with-border">
@@ -2335,6 +2300,43 @@ class Pages extends CI_Controller {
 		$this->load->view('pages/admindashboard/fixed',$data);
 		$this->load->view('pages/admindashboard/adcontent'); 
 		}else{
+			$this->_landing();
+		}
+	}
+
+
+	public function PostNewIdea()
+	{
+		if(($this->session->userdata('userId')!=""))
+		{
+			if($this->post->checkUserType()=='false'){
+		         $this->form_validation->set_rules('inputDescription', 'Description', 'required|trim');
+		         if ($this->form_validation->run() == FALSE)
+		        {
+		         	header('location:'.base_url().'pages/investorpost');
+		        }
+		        else
+				{	
+		     	 	$datetime = date('Y-m-d H:i:s'); 
+		     	 	$postId = uniqid();
+		     	 	
+		     	 	$data = array(
+					'postId' => $postId,
+					'postTitle' =>'investor Post',
+					'postContent' =>$this->input->post('inputDescription'),
+					'postType' => 'investpost',
+					'userId' => $this->session->userdata('userId'),
+					'postDate' => $datetime
+					);
+					$this->db->insert('userpost', $data);
+
+					
+				}
+			}
+
+					
+		}else
+		{
 			$this->_landing();
 		}
 	}
