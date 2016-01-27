@@ -80,7 +80,7 @@ class Pages extends CI_Controller {
 		{
 		$query=$this->_userData();
 		$data['data']=$query->result_array();
-		$data['pages']='newsfeed';
+		$data['pages']='startup';
 		$data['countgroup'] = $this->countGroups();
 		$groupquery= $this->groupdetails();
 		$data['groupdetails'] = $groupquery->result_array();
@@ -99,7 +99,7 @@ class Pages extends CI_Controller {
 		{
 		$query=$this->_userData();
 		$data['data']=$query->result_array();
-		$data['pages']='newsfeed';
+		$data['pages']='startup';
 		$data['countgroup'] = $this->countGroups();
 		$groupquery= $this->groupdetails();
 		$data['groupdetails'] = $groupquery->result_array();
@@ -122,7 +122,7 @@ class Pages extends CI_Controller {
 		{
 		$query=$this->_userData();
 		$data['data']=$query->result_array();
-		$data['pages']='newsfeed';
+		$data['pages']='startup';
 		$data['countgroup'] = $this->countGroups();
 		$groupquery= $this->groupdetails();
 		$data['alldata']=$query->result_array();
@@ -1826,6 +1826,7 @@ class Pages extends CI_Controller {
 				$data['groupdetails'] = $groupquery->result_array();
 				$feed = $this->post->newsfeedideator();
 				$data['investorpost'] = $feed->result_array();
+				
 			
 
 
@@ -1839,18 +1840,20 @@ class Pages extends CI_Controller {
 		}
 	}
 
-	public function newsfeedinvestor()
+	public function newsfeedinvestor($postId = null)
 	{
 		if(($this->session->userdata('userId')!=""))
 		{
 				$query=$this->_userData();
 				$data['data']=$query->result_array();
-				$data['pages']='post';
+				$data['pages']='newsfeedinvestor';
 				$data['countgroup'] = $this->countGroups();
 				$groupquery= $this->groupdetails();
 				$data['groupdetails'] = $groupquery->result_array();
 				$feed = $this->post->newsfeedinvestor();
 				$data['ideatorpost'] = $feed->result_array();
+				$postdtlquery= $this->post->postdtl($postId);		
+				$data['postdtl']=$postdtlquery->result_array();
 				
 
 				$this->load->view('pages/dashboard/fixed',$data);
@@ -2113,7 +2116,6 @@ class Pages extends CI_Controller {
 				$data['pages']='post';
 				$data['countgroup'] = $this->countGroups();
 				$groupquery= $this->groupdetails();
-				$data['groupdetails'] = $groupquery->result_array();
 				$data['alldata']=$query->result_array();
 				$postdtlquery= $this->post->postdtl($postId);	
 				$data['postId']=$postId;	
@@ -2307,7 +2309,7 @@ class Pages extends CI_Controller {
                			<tr>
                         <td>".$value['userId']."</td>
                         <td>".$this->post->userProfile($value['userId'])."</td>
-                        <td>".$value['reason']."</td>
+                        <td>".$value['user_reasons']."</td>
                         <td>".$value['user_dateRegistered']."</td>
                         <td><button type='button' class='btn btn-block btn-primary btn-xs' value='".$value['userId']."' name='approve' id='approve'>Approve</button> </td>
                         
