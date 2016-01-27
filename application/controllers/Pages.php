@@ -1022,6 +1022,7 @@ class Pages extends CI_Controller {
 				'groupId' => $groupId,
 				'userId' => $this->session->userdata('userId'),
 				'addedDate' => now(),
+				'status' => '0',
 			);
 
 			$this->db->insert('group_md',$data);
@@ -1118,6 +1119,7 @@ class Pages extends CI_Controller {
 		$this->db->join('user_dtl e', 'd.userId=e.userId', 'left');
 		$this->db->join('company_dtl f', 'd.userId=f.userId', 'left');
 		$this->db->where('a.groupId',$groupid);
+		$this->db->where('a.status','0');
 		$query=$this->db->get();
 
 		return $query;
@@ -1134,7 +1136,16 @@ class Pages extends CI_Controller {
 
 		return $query;
 	}
-
+	public function memberinvite()
+	{
+		$data = array(
+			'groupid' => $this->input->post('groupid'),
+			'userid' => $this->input->post('userid'),
+			'status' => '1'
+		);
+		$this->db->insert('group_ext',$data);
+		header('Location:'.base_url().'pages/group/'.$this->input->post('groupid'));
+	}
 	public function addmember(){
 		$data = array(
 				'groupId' => $this->input->post('groupid'),
