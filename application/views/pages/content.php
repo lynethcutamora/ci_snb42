@@ -1,4 +1,4 @@
-
+  <script src="<?php echo base_url(); ?>plugins/jQuery/jQuery-2.1.4.min.js"></script>
 <html>
   <head>
     <meta charset="utf-8">
@@ -9,9 +9,10 @@
     <!-- Bootstrap 3.3.5 -->
     <link rel="stylesheet" href="<?php echo base_url(); ?>bootstrap/css/bootstrap.min.css">
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="<?php echo base_url(); ?>/css/font-awesome.min.css">
     <!-- Ionicons -->
-    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link rel="stylesheet" href="<?php echo base_url(); ?>css/ionicons.min.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="<?php echo base_url(); ?>dist/css/AdminLTE.min.css">
     <!-- AdminLTE Skins. Choose a skin from the css/skins
@@ -248,7 +249,7 @@
             </div>
 
             <div class="row mrgn30">
-            	<?php echo form_open('pages/submitcomment'); ?>
+            	<form method="post" >
 
                     <div class="col-sm-4">
                         <div class="form-group">
@@ -259,7 +260,7 @@
                         <div class="form-group">
                             <label for="email">Email</label>
                             <?php echo form_error('email'); ?>
-                            <input type="email" class="form-control" name="email" id="email" placeholder="Enter email" title="Please enter a valid email address">
+                            <input type="text" class="form-control" name="email1" id="email1" placeholder="Enter email" title="Please enter a valid email address">
                         </div>
                     </div>
                     <div class="col-sm-4">
@@ -268,7 +269,7 @@
                             <?php echo form_error('comment'); ?>
                             <textarea name="comment" class="form-control" id="comments" cols="3" rows="5" placeholder="Enter your message…" title="Please enter your message (at least 10 characters)"></textarea>
                         </div>
-                        <button name="submit" type="submit" class="btn btn-lg btn-primary" id="submit">Submit</button>
+                        <button name="touch" type="submit" class="btn btn-lg btn-primary" id="touch">Submit</button>
                         <div class="result"></div>
                     </div>
                 </form>
@@ -290,5 +291,32 @@
         </div>
         <!--/.container-->
     </section>
+    <script>
+
+           $('button[name="touch"]').click(function(e){
+          var name = $("#name").val();
+          var email = $("#email1").val();
+          var comments = $("#comments").val();
+          
+            e.preventDefault();
+              var dataString = 'name='+ name  + '&email=' + email  + '&comments=' + comments ;
+            $.ajax({
+              type: 'post',
+              url:"<?php echo base_url().'pages/submitcomment/'?>",
+              data:dataString,
+              success: function (data) {
+          
+                 alert(data);
+                  $("#name").val('') ;
+                  $("#email").val('') ;
+                  $("#comments").val('') ;
+
+              }
+            });
+
+          });
+
+
+    </script>
   
 

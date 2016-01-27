@@ -855,25 +855,23 @@ class Pages extends CI_Controller {
 
     public function submitcomment()
 	{
-		$this->form_validation->set_rules('name', 'Name', 'required|trim');
-		$this->form_validation->set_rules('email', 'email', 'required|trim');
-		$this->form_validation->set_rules('comment', 'comment', 'required|trim');
 
 		$datetime = date('Y-m-d H:i:s');
-		$valuenull = 1;
+	
 		
 		$data = array(
-		'reportId' => $this->input->post('name'),
-		'userId' => $valuenull,
-		'fromUserId' => $valuenull,
-		'reportContent' => $this->input->post('comment'),
+		'reportId' => uniqid(),
+	
+		'reportContent' => $this->input->post('comments'),
 		'reportDate' => $datetime,
-		'reportStat' => $valuenull,
-		'reportType' => $valuenull
+		'reportStat' => '1',
+		'reportType' => '1',
+		'reportName' => $this->input->post('name'),
+		'reportEmail' => $this->input->post('email')
 		);
+
 		$this->db->insert('report_dtl', $data);
-		$this->load->view('pages/content');
-		$this->load->view('pages/footer');
+		echo "Thank you for your feedback!";
 	}
 
 	public function postIdea()
@@ -2376,6 +2374,7 @@ class Pages extends CI_Controller {
 		{
 			echo  '<input type="text" hidden="true" name="fromUserId" id="fromUserId" value="'.$this->session->userdata('poke').'"> ';
 		}
+
 
 }
 
