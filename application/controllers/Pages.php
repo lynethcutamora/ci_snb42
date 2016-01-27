@@ -58,7 +58,7 @@ class Pages extends CI_Controller {
 		$query=$this->_userData();
 		$data['data']=$query->result_array();
 		$data['pages']='dashboard';
-		$data['countgroup'] = $this->countGroups();
+		$data['countgroup'] = $this->countgrp();
 		$groupquery= $this->groupdetails();
 		$data['alldata']=$query->result_array();
 		$data['groupdetails'] = $groupquery->result_array();
@@ -845,7 +845,8 @@ class Pages extends CI_Controller {
 	                  'msg_Content' =>$this->input->post('inputDescription'),
 	                  'msg_fromUserId' => $this->session->userdata('userId'),
 	                  'userId' => $userId,
-	                  'msg_Date' =>$datetime
+	                  'msg_Date' =>$datetime,
+	                  'msg_status' => '1'
 	                  );
 	                  $this->db->insert('msg_dtl', $data);
 	                   redirect('pages/profile/'.$userId);
@@ -995,6 +996,15 @@ class Pages extends CI_Controller {
 		$this->db->select('groupId');
 		$this->db->from('group_ext');
 		$this->db->where('userId',$this->session->userdata('userId'));
+		$num_results=$this->db->count_all_results();
+
+		return $num_results;
+	}
+	public function countgrp(){
+		$this->db->select('groupId');
+		$this->db->from('group_ext');
+		$this->db->where('userId',$this->session->userdata('userId'));
+		$this->db->where('status','0');
 		$num_results=$this->db->count_all_results();
 
 		return $num_results;
@@ -2323,7 +2333,14 @@ class Pages extends CI_Controller {
            $num= $query->num_rows();
 		echo $num;
 	}
-
+	public function countntf()
+	{
+			$this->db->where('status','1');
+          	$this->db->where('userId', $this->session->userdata("userId"));
+          	$query = $this->db->get('group_ext');
+           	$num= $query->num_rows();
+		echo $num;
+	}
 
 }
 

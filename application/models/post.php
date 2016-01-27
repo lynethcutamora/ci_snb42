@@ -196,6 +196,17 @@
             if($numrows>0)  return true;
             else return false;
         }
+        public function groupstat($userId)
+        {
+            $this->db->select('*');
+            $this->db->from('group_ext');
+            $this->db->where('userId', $userId);
+            $this->db->where('status', '1');
+            $query=$this->db->get();
+            $numrows = $query->num_rows();
+            if($numrows>0)  return true;
+            else return false;
+        }
         public function pendingMember($groupId , $userId)
         {
             $this->db->select('*');
