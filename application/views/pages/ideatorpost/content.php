@@ -189,6 +189,161 @@
     <!-- retrieved posts area -->
      <div name="post1" id="post1"></div>
 
+      <div class="box box-widget">
+        <div class="box-header with-border">
+          <div class="user-block">
+            <img class='img-circle' src='<?php echo base_url().'user/1.png';?>' alt='user image'>
+            <span class="username">
+              <a href="#"><small>Lyneth C. Cutamora</small></a>
+            </span>
+            <span class="description"><small>10/25/2016</small></span>
+          </div><!-- /.user-block -->
+          <div class="box-tools">
+            <span class="label label-default">with BMC</span>
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+            <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+          </div><!-- /.box-tools -->
+        </div><!-- /.box-header --> 
+        <div class="box-body">
+          <div class="container-fluid">
+              <div class="info-box">
+                  <div class="row">
+                    <div class="col-md-3">
+                     <img src="<?php echo base_url().'/post_image/'.'8985568b6a3028ba2.jpg';?>" height='200px' width='200px' alt="Attachment image">
+                    </div>
+                    <div class="col-md-1"></div>
+                    <div class="col-md-7">
+                      <h5><b><a href="#" ><?php echo strtoupper("Start & Boost");?></a></b></h5>
+                      <h6><small>category: &nbsp;&nbsp; Web and Mobile</small></h6>
+                      <p style="text-align:justify;text-justify:inter-word;">This is a sample description of the idea. This is a sample description of the idea. This is a sample description of the idea. This is a sample description of the idea. This is a sample description of the idea.</p>
+                    </div>
+                  </div><!-- /.row -->
+                  <div class="col-md-1"></div>
+              </div><!-- /.info-box -->
+
+              <i><small>related links: &nbsp;&nbsp; <a href="#">https://github.com/lynethcutamora/ci_snb42</a></small></i><hr/>
+
+              <div class="col-md-12">
+                <div class="box box-default collapsed-box">
+                  <div class="box-header with-border">
+                    <h3 class="box-title"><small>Business Model Canvas</small></h3>
+                    <div class="box-tools pull-right">
+                      <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i></button>
+                    </div><!-- /.box-tools -->
+                  </div><!-- /.box-header -->
+                <div class="box-body">
+                  <table class="table table-bordered table-hover">
+                    <thead>
+                      <tr>
+                        <th><small>Key Partners</small></th>
+                        <th><small>Key Activities</small></th>
+                        <th><small>Values Propositions</small></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td><small style="text-align:justify;text-justify:inter-word;">
+                              •  Startup Companies
+                              • Technology Vendors
+                              • Social Media Sites
+                              • Universities
+                              • Investors
+                            </small>
+                        </td>
+                        <td><small style="text-align:justify;text-justify:inter-word;">
+                              •  Startup Companies
+                              • Technology Vendors
+                              • Social Media Sites
+                              • Universities
+                              • Investors
+                            </small>
+                        </td>
+                        <td><small style="text-align:justify;text-justify:inter-word;">
+                              •  Startup Companies
+                              • Technology Vendors
+                              • Social Media Sites
+                              • Universities
+                              • Investors
+                            </small>
+                        </td>
+                      </tr>
+                      <tr>
+                        <th><small>Customer Relationships</small></th>
+                        <th><small>Customer Segments</small></th>
+                        <th><small>Key Resources</small></th>
+                      </tr>
+                      <tr>
+                        <td><small style="text-align:justify;text-justify:inter-word;">
+                              •  Startup Companies
+                              • Technology Vendors
+                              • Social Media Sites
+                              • Universities
+                              • Investors
+                            </small>
+                        </td>
+                        <td><small style="text-align:justify;text-justify:inter-word;">
+                              •  Startup Companies
+                              • Technology Vendors
+                              • Social Media Sites
+                              • Universities
+                              • Investors
+                            </small>
+                        </td>
+                        <td><small style="text-align:justify;text-justify:inter-word;">
+                              •  Startup Companies
+                              • Technology Vendors
+                              • Social Media Sites
+                              • Universities
+                              • Investors
+                            </small>
+                        </td>
+                      </tr>
+                      <tr>
+                        <th><small>Channels</small></th>
+                        <th><small>Cost Structure</small></th>
+                        <th><small>Revenue Streams</small></th>
+                      </tr>
+                      <tr>
+                        <td><small style="text-align:justify;text-justify:inter-word;">
+                              •  Startup Companies
+                              • Technology Vendors
+                              • Social Media Sites
+                              • Universities
+                              • Investors
+                            </small>
+                        </td>
+                        <td><small style="text-align:justify;text-justify:inter-word;">
+                              •  Startup Companies
+                              • Technology Vendors
+                              • Social Media Sites
+                              • Universities
+                              • Investors
+                            </small>
+                        </td>
+                        <td><small style="text-align:justify;text-justify:inter-word;">
+                              •  Startup Companies
+                              • Technology Vendors
+                              • Social Media Sites
+                              • Universities
+                              • Investors
+                            </small>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div><!-- /.box-body -->
+              </div><!-- /.box -->
+            </div><!-- /.col-12 -->
+          </div><!-- /.container -->
+          </div><!-- /.box-body -->
+          <div class="box-footer">
+            <div class="container-fluid">
+            <span class="pull-right"><small><a href="#">5 upvotes - 2 comments</a></small></span>
+            </div>
+          </div>
+      </div> <!-- /. box-widget -->
+
   </div><!-- /.col-9-->
 
       <!-- adds area -->
