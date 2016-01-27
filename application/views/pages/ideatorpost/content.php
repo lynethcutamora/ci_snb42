@@ -199,8 +199,7 @@
             <span class="description"><small>10/25/2016</small></span>
           </div><!-- /.user-block -->
           <div class="box-tools">
-            <span class="label label-default">with BMC</span>
-            &nbsp;&nbsp;&nbsp;&nbsp;
+            <button class="btn btn-box-tool" data-widget="edit"><i class="fa fa-edit"></i></button>
             <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
             <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
           </div><!-- /.box-tools -->
@@ -214,7 +213,7 @@
                     </div>
                     <div class="col-md-1"></div>
                     <div class="col-md-7">
-                      <h5><b><a href="#" ><?php echo strtoupper("Start & Boost");?></a></b></h5>
+                      <h5><b><a href="#" ><?php echo strtoupper("Start & Boost");?></a></b><span class="label label-default pull-right">with BMC</span></h5>
                       <h6><small>category: &nbsp;&nbsp; Web and Mobile</small></h6>
                       <p style="text-align:justify;text-justify:inter-word;">This is a sample description of the idea. This is a sample description of the idea. This is a sample description of the idea. This is a sample description of the idea. This is a sample description of the idea.</p>
                     </div>
@@ -339,7 +338,8 @@
           </div><!-- /.box-body -->
           <div class="box-footer">
             <div class="container-fluid">
-            <span class="pull-right"><small><a href="#">5 upvotes - 2 comments</a></small></span>
+              <button class="btn btn-success btn-xs"><i class="fa fa-hand-o-left"></i>&nbsp;&nbsp;Poke</button>
+              <span class="pull-right"><small><a href="#">5 upvotes - 2 comments</a></small></span>
             </div>
           </div>
       </div> <!-- /. box-widget -->
