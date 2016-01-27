@@ -748,6 +748,7 @@
             </div>
             <div class="modal-footer">
             <form method="post" action="<?php echo base_url()."pages/addmember";?>">
+            Group: 
                 <div class="btn-group">
                       <select name="group" class="form-control">     
                       <?php
@@ -769,7 +770,7 @@
                       <input type="text"  hidden="true" value="<?php echo $userId;?>" name="userid">
                       <input type="text"  hidden="true" value="<?php echo $row['groupId'];?>" name="groupid">
                 </div>&nbsp;&nbsp;
-                <button class="btn btn-default pull-right" value="addmember"><i class="fa fa-user-plus"></i>&nbsp;&nbsp;&nbsp;Add member</button>
+                <button class="btn btn-default pull-right" value="addmember"><i class="fa fa-plus"></i>&nbsp;&nbsp;&nbsp;Add member</button>
               
                 </form>
             </div>

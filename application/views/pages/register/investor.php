@@ -189,6 +189,10 @@
                   They do not signify that we endorse the website(s). 
                   </li>
                   <li>
+                  The website and it's owner will not abide if the users will involve money when teaming
+                  up with other users. 
+                  </li>
+                  <li>
                   Your use of this website and any dispute arising out of such use of the website 
                   is subject to the laws of Philippines.
                   </li>
