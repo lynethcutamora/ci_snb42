@@ -1,54 +1,38 @@
   <script src="<?php echo base_url(); ?>plugins/jQuery/jQuery-2.1.4.min.js"></script>
       <!-- Control Sidebar -->
-      <aside class="control-sidebar control-sidebar-dark">
+      <aside class="control-sidebar control-sidebar-light">
         <!-- Create the tabs -->
-        <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
-           
-        </ul>
-        <!-- Tab panes -->
-          <ul class="sidebar-menu">
 
-      <li class="header"><center><h5 style="color:white">Users</h5></center></li>
-      <!-- search form -->
-          <form method="post" name="form3" id="form3" class="sidebar-form">
-            <div class="input-group">
-              <input type="text" name="key" id="key" class="form-control" required="required" placeholder="Search...">
-              <span class="input-group-btn">
-                <button type="submit" name="search1" id="search1" value="1" class="btn btn-flat"><i class="fa fa-search"></i></button>
-              </span>
-            </div>
-          </form>
-          <!-- /.search form -->
-</ul>
-        <div class="tab-content" name="listuser" id="listuser">
-     
-       <form method="post" name="form" id="form">
-          <?php             $i=0;
-          foreach ($this->post->allUsers($this->session->userdata('userId'))->result_array() as $value):?>
+               <div class="box box-primary">
                
-              <div class="user-block">
-                     <img class='img-circle' src='<?php echo base_url();?>user/<?php echo $value['avatar_name']?>' alt='user image'>
-                     <span class="username">
-                    <a href="#" style="color:white">
-                      <?php echo ellipsize($this->post->userProfile($value['userId']), 20); ?>
-                         <?php echo $value['user_Type'];
+                <div class="box-body">
+                  <table id="example2" class="table table-bordered table-hover">
+                    <thead>
+                   
+                        <th>Users</th>
+                        <th></th>
+                    </thead>
+                      <div class="col-md-1 col-sm-1">
+                    <tbody>
+                     <?php             $i=0;
+                   foreach ($this->post->allUsers($this->session->userdata('userId'))->result_array() as $value):?>
+               
+                      <tr>
+                          <td>  <?php echo ellipsize($this->post->userProfile($value['userId']), 20); ?></td>
+                          <td>  <button type="button" class="btn btn-block btn-primary btn-xs" value="<?php echo $value['userId'];?>" name="poke" data-toggle="modal" data-target="#poke2">poke</button></td>
+                      </tr>
 
-                         ?>
-                    </a></span>
-                    <div class="pull-right">
-                  
-                    
-                        <button type="button" class="btn btn-block btn-primary btn-xs" value="<?php echo $value['userId'];?>" name="poke" data-toggle="modal" data-target="#poke2">poke</button>
-                  
-                      
+                  <?php endforeach;?>
+
+               
+                    </tbody>
+                    <tfoot>
+                    </tfoot>
                     </div>
-                  
-                  </div><!-- /.user-block -->
-                 
-          <hr>
-        <?php endforeach;?>
-             </form>
-     
+                  </table>  
+
+                </div><!-- /.box-body -->
+              </div><!-- /.box -->
       </div>
       </aside><!-- /.control-sidebar -->
      <div class="modal fade" id="poke2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -65,8 +49,15 @@
 
                    </div>
                   <label>Leave Message:</label>
-                    <textarea class="form-control" rows="3" placeholder="Enter ..."></textarea><br> 
-                      <button type="submit" class="btn btn-primary btn-block" name='userid' id='userid'>send</button>
+                    <textarea class="form-control" rows="3" placeholder="Enter ..." name="message" id="message"></textarea><br> 
+                    <input type="text" hidden="true" name="fromUserId" id="fromUserId"value="<?php echo $this->session->userdata('poke'); ?>"> 
+
+                    <div name="errormsg" id="errormsg">
+                    
+                    </div>
+                   
+
+                      <button type="submit" class="btn btn-primary btn-block" name='btnSend' id='btnSend'>send</button>
                   
                   
                   </center>
@@ -75,7 +66,22 @@
               </div>
             </div>
           </div>
-       
+      
+    
+      <script>
+      $(function () {
+        $("#example1").DataTable();
+        $('#example2').DataTable({
+          "paging": true,
+          "lengthChange": false,
+          "searching": true,
+          "ordering": true,
+          "info": false,
+          "autoWidth": false
+        });
+      });
+    </script>
+
         <script>
        function loadNowPlaying1(){
                  
@@ -100,17 +106,21 @@
             });
 
           });
-              $('button[name="search1"]').click(function(e){
-        
-            var key = $("#key").val();
+
+           $('button[name="btnSend"]').click(function(e){
+          var message = $("#message").val();
+          var fromUserId = $("#fromUserId").val();
+          
             e.preventDefault();
-              var dataString = 'key='+ key;
+              var dataString = 'fromUserId='+ fromUserId  + '&message=' + message ;
             $.ajax({
               type: 'post',
-              url:"<?php echo base_url().'pages/searchList'?>",
+              url:"<?php echo base_url().'pages/sendPoke/'?>",
               data:dataString,
               success: function (data) {
-                $('#listuser').html(data);
+          
+                 $("#errormsg").html(data);
+                  $("#message").val('') ;
               }
             });
 

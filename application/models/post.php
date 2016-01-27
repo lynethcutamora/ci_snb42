@@ -557,7 +557,18 @@
             return $query;
         }
 
+        public function countmsg()
+        {
+            
+                $this->db->where('msg_status','1');
+                $this->db->where('msg_userId', $this->session->userdata("userId"));
+                $query = $this->db->get('msg_dtl');
+                return $query->num_rows();
+        }
+
     }
+
+
 
 
 ?>
