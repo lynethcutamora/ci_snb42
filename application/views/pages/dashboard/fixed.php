@@ -291,10 +291,10 @@ endforeach;
               </a>
             </li>
 
-             <?php } ?> 
+             <?php }; ?> 
             <li class="treeview <?php if($pages=='startup') {echo "active";}else echo "";?>">
               <a href="#">
-                <i class="fa fa-paper-plane"></i> 
+                <i class="fa fa-plus-square"></i>
                 <span>Startup Products</span>
                 <i class="fa fa-angle-left pull-right"></i>
               </a>
