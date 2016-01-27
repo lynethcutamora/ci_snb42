@@ -566,7 +566,56 @@
                 return $query->num_rows();
         }
 
+
+        public function notifmsgFirst()
+        {
+            $this->db->select('msg_fromUserId,userId');
+            $this->db->distinct();
+            $this->db->from('msg_dtl');
+            $this->db->where('userId',$this->session->userdata("userId"));
+            $this->db->or_where('msg_fromUserId',$this->session->userdata("userId"));
+            $this->db->order_by('msg_Date','DESC');
+            $query = $this->db->get();
+
+            return $query;
+
+        }
+         public function msg1on1($userId)
+        {
+              $query = $this->db->query("SELECT * FROM msg_dtl WHERE userId = '".$userId."'  AND msg_fromUserId = '".$this->session->userdata("userId")."' OR userId = '".$this->session->userdata("userId")."' AND msg_fromUserId = '".$userId."' ");
+            return $query;
+
+        }
+        public function returnFirstMsg()
+        {
+              $this->db->select('msg_fromUserId,userId');
+            $this->db->distinct();
+            $this->db->from('msg_dtl');
+            $this->db->where('userId',$this->session->userdata("userId"));
+            $this->db->or_where('msg_fromUserId',$this->session->userdata("userId"));
+            $this->db->where_not_in('userId',$this->session->userdata("userId"));
+            $this->db->order_by('msg_Date','DESC');
+            $query = $this->db->get();
+             $row = $query->row_array();
+           return $row['userId'];
+
+        }
+
+        public function msgSeen($userId)
+        {
+            $this->db->set('msg_status', '0');
+            $this->db->where('userId',$this->session->userdata("userId"));
+            $this->db->where('msg_status','1');
+            $this->db->or_where('msg_fromUserId',$this->session->userdata("userId"));
+            $this->db->update('msg_dtl');
+        
+
+           
+        }
+
+
     }
+
 
 
 

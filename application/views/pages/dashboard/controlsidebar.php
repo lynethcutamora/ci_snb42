@@ -49,8 +49,9 @@
 
                    </div>
                   <label>Leave Message:</label>
-                    <textarea class="form-control" rows="3" placeholder="Enter ..." name="message" id="message"></textarea><br> 
-                    <input type="text" hidden="true" name="fromUserId" id="fromUserId"value="<?php echo $this->session->userdata('poke'); ?>"> 
+                    <textarea class="form-control" rows="3" placeholder="Enter ..." name="message1" id="message1"></textarea><br> 
+                    <?php echo $this->session->userdata('poke'); ?>
+                    <div name="hiddenshit" id="hiddenshit"></div>
 
                     <div name="errormsg" id="errormsg">
                     
@@ -87,6 +88,10 @@
                  
                   $("#session").load("<?php echo base_url().'pages/sessionpoke'; ?>"); }
                   setInterval(function(){loadNowPlaying1()}, 1000);
+ function loadNowPlaying3(){
+                 
+                  $("#hiddenshit").load("<?php echo base_url().'pages/hiddenShit'; ?>"); }
+                  setInterval(function(){loadNowPlaying3()}, 1000);
 
           $(function () {
        
@@ -108,7 +113,7 @@
           });
 
            $('button[name="btnSend"]').click(function(e){
-          var message = $("#message").val();
+          var message = $("#message1").val();
           var fromUserId = $("#fromUserId").val();
           
             e.preventDefault();
@@ -119,8 +124,9 @@
               data:dataString,
               success: function (data) {
           
-                 $("#errormsg").html(data);
-                  $("#message").val('') ;
+                 alert(data);
+                  $("#message1").val('') ;
+
               }
             });
 
