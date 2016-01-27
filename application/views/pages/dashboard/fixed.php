@@ -71,7 +71,7 @@ endforeach;
             <ul class="nav navbar-nav">
               <!-- Messages: style can be found in dropdown.less-->
               <li class="dropdown messages-menu">
-                <a href="#" >
+                <a href="<?php echo base_url()."pages/notif"?>" >
                   <i class="fa fa-envelope-o"></i>
                   <span class="label label-success"><div name="countmsg" id="countmsg"></div></span>
                 </a>
