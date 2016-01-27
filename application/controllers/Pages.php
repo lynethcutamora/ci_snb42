@@ -80,7 +80,7 @@ class Pages extends CI_Controller {
 		{
 		$query=$this->_userData();
 		$data['data']=$query->result_array();
-		$data['pages']='newsfeed';
+		$data['pages']='startup';
 		$data['countgroup'] = $this->countGroups();
 		$groupquery= $this->groupdetails();
 		$data['groupdetails'] = $groupquery->result_array();
@@ -99,7 +99,7 @@ class Pages extends CI_Controller {
 		{
 		$query=$this->_userData();
 		$data['data']=$query->result_array();
-		$data['pages']='newsfeed';
+		$data['pages']='startup';
 		$data['countgroup'] = $this->countGroups();
 		$groupquery= $this->groupdetails();
 		$data['groupdetails'] = $groupquery->result_array();
@@ -122,7 +122,7 @@ class Pages extends CI_Controller {
 		{
 		$query=$this->_userData();
 		$data['data']=$query->result_array();
-		$data['pages']='newsfeed';
+		$data['pages']='startup';
 		$data['countgroup'] = $this->countGroups();
 		$groupquery= $this->groupdetails();
 		$data['alldata']=$query->result_array();
@@ -1022,6 +1022,7 @@ class Pages extends CI_Controller {
 				'groupId' => $groupId,
 				'userId' => $this->session->userdata('userId'),
 				'addedDate' => now(),
+				'status' => '0',
 			);
 
 			$this->db->insert('group_md',$data);
@@ -1118,6 +1119,7 @@ class Pages extends CI_Controller {
 		$this->db->join('user_dtl e', 'd.userId=e.userId', 'left');
 		$this->db->join('company_dtl f', 'd.userId=f.userId', 'left');
 		$this->db->where('a.groupId',$groupid);
+		$this->db->where('a.status','0');
 		$query=$this->db->get();
 
 		return $query;
@@ -1134,7 +1136,16 @@ class Pages extends CI_Controller {
 
 		return $query;
 	}
-
+	public function memberinvite()
+	{
+		$data = array(
+			'groupid' => $this->input->post('groupid'),
+			'userid' => $this->input->post('userid'),
+			'status' => '1'
+		);
+		$this->db->insert('group_ext',$data);
+		header('Location:'.base_url().'pages/group/'.$this->input->post('groupid'));
+	}
 	public function addmember(){
 		$data = array(
 				'groupId' => $this->input->post('groupid'),
@@ -1521,34 +1532,7 @@ class Pages extends CI_Controller {
         return $query;
 	}
 
-	public function message($msgId=null)
-	{
-		if(($this->session->userdata('userId')!=""))
-		{	
-			if(isset($msgId))
-			{	
-				$data['msgId'] = $msgId;
-
-			}else
-			{
-				$data['msgId'] = $this->post->firstMsg($msgId);
-			}
-				$query=$this->_userData();
-				$data['data']=$query->result_array();
-				$data['pages']='message';
-				$data['countgroup'] = $this->countGroups();
-				$groupquery= $this->groupdetails();
-				$data['groupdetails'] = $groupquery->result_array();
-				
-				$this->load->view('pages/dashboard/fixed',$data);
-				$this->load->view('pages/message/newcontent'); 
-				$this->load->view('pages/dashboard/controlsidebar');
-				$this->load->view('pages/dashboard/end');
-		}else
-		{
-			$this->_landing();
-		}
-	}
+	
 
 
 	public function post1($postId=null)
@@ -1682,41 +1666,6 @@ class Pages extends CI_Controller {
 			$this->_landing();
 		}
 	}
-	public function postInvestor()
-	{
-		if(($this->session->userdata('userId')!=""))
-		{
-			if($this->post->checkUserType()=='false'){
-		         $this->form_validation->set_rules('inputDescription', 'Description', 'required|trim');
-		         if ($this->form_validation->run() == FALSE)
-		        {
-		         	header('location:'.base_url().'pages/investorpost');
-		        }
-		        else
-				{	
-		     	 	$datetime = date('Y-m-d H:i:s'); 
-		     	 	$postId = uniqid();
-		     	 	
-		     	 	$data = array(
-					'postId' => $postId,
-					'postTitle' =>'investor Post',
-					'postContent' =>$this->input->post('inputDescription'),
-					'postType' => 'investpost',
-					'userId' => $this->session->userdata('userId'),
-					'postDate' => $datetime
-					);
-					$this->db->insert('userpost', $data);
-
-					
-				}
-			}
-
-					
-		}else
-		{
-			$this->_landing();
-		}
-	}
 	public function showInvestorpost($userId)
 	{
 			 foreach($this->post->profile($userId)->result_array() as $userdtl):
@@ -1725,7 +1674,7 @@ class Pages extends CI_Controller {
 	          echo '
 	      		<div class="container">
 		      		<div class="row">
-		            	<div class="col-md-10">
+		            	<div class="col-md-9">
 	            		<!-- Box Comment -->
 			              <div class="box box-widget">
 			                <div class="box-header with-border">
@@ -1846,7 +1795,7 @@ class Pages extends CI_Controller {
 		{
 				$query=$this->_userData();
 				$data['data']=$query->result_array();
-				$data['pages']='post';
+				$data['pages']='newsfeedinvestor';
 				$data['countgroup'] = $this->countGroups();
 				$groupquery= $this->groupdetails();
 				$data['groupdetails'] = $groupquery->result_array();
@@ -1870,6 +1819,7 @@ class Pages extends CI_Controller {
 	public function getAll()
 	{
 
+	unset($_SESSION['poke']);
 	$_SESSION['poke'] = $_POST['userId'];
 		
 	}
@@ -2036,75 +1986,8 @@ class Pages extends CI_Controller {
 
 	
 	}
-	public function searchList()
-	{
-		$this->load->view('pages/dashboard/js');
-		$key=$this->input->post('key');
-		$aw = explode(" ",$key);
-		foreach (array_unique($aw) as $key => $value) {
-			# code...
-		
-		$this->db->select('a.userId,b.user_lName,b.user_fName,b.user_midInit,c.company_name,a.user_Type');
-		$this->db->from('user_md a');
-		$this->db->join('company_dtl c','c.userId=a.userId','left');
-		$this->db->join('user_dtl b','a.userId=b.userId','left');
-		$this->db->like('user_fName',$value,'both');
-		$this->db->or_like('user_lName',$value,'both');
-		$this->db->or_like('company_name',$value,'both');
-		$query=$this->db->get();
 
-			foreach ($query->result_array() as $key => $value) {
-			
-				echo '<form method="post" name="form" id="form">';
-      				
-        			  foreach ($this->post->profile($value['userId'])->result_array() as $value){
 
-               	
-              echo '<div class="user-block">
-                     <img class="img-circle" src="'.base_url().'user/'.$value['avatar_name'].'" alt="user image">
-                     <span class="username">
-                    <a href="#" style="color:white">';
-               echo ellipsize($this->post->userProfile($value['userId']), 20);
-                    echo $value['user_Type'];
-
-			foreach ($query->result_array() as $key => $value) {
-			
-				echo '<form method="post" name="form" id="form">';
-      				
-        			  foreach ($this->post->profile($value['userId'])->result_array() as $value){
-
-               	
-              echo '<div class="user-block">
-                     <img class="img-circle" src="'.base_url().'user/'.$value['avatar_name'].'" alt="user image">
-                     <span class="username">
-                    <a href="#" style="color:white">';
-               echo ellipsize($this->post->userProfile($value['userId']), 20);
-                    echo $value['user_Type'];
-                 
-             	echo ' </a></span>
-                    <div class="pull-right">
-                  
-                    
-                        <button type="button" class="btn btn-block btn-primary btn-xs" value="'.$value['userId'].'" name="poke" data-toggle="modal" data-target="#poke2">poke</button>
-                  
-                      
-                    </div>
-                  
-                  </div><!-- /.user-block -->
-                 
-        		  <hr>';
-        		}
-        	
-             echo "</form>";
-
-			}
-		}
-	
-
-	}
-}
-
-}
 	public function investorPostSection($postId = null)
 	{
 		if(($this->session->userdata('userId')!=""))
@@ -2309,7 +2192,7 @@ class Pages extends CI_Controller {
                			<tr>
                         <td>".$value['userId']."</td>
                         <td>".$this->post->userProfile($value['userId'])."</td>
-                        <td>".$value['reason']."</td>
+                        <td>".$value['user_reasons']."</td>
                         <td>".$value['user_dateRegistered']."</td>
                         <td><button type='button' class='btn btn-block btn-primary btn-xs' value='".$value['userId']."' name='approve' id='approve'>Approve</button> </td>
                         
@@ -2338,8 +2221,161 @@ class Pages extends CI_Controller {
 			$this->_landing();
 		}
 	}
-	
 
+
+	public function PostNewIdea()
+	{
+		if(($this->session->userdata('userId')!=""))
+		{
+			if($this->post->checkUserType()=='false'){
+		         $this->form_validation->set_rules('inputDescription', 'Description', 'required|trim');
+		         if ($this->form_validation->run() == FALSE)
+		        {
+		         	header('location:'.base_url().'pages/investorpost');
+		        }
+		        else
+				{	
+		     	 	$datetime = date('Y-m-d H:i:s'); 
+		     	 	$postId = uniqid();
+		     	 	
+		     	 	$data = array(
+					'postId' => $postId,
+					'postTitle' =>'investor Post',
+					'postContent' =>$this->input->post('inputDescription'),
+					'postType' => 'investpost',
+					'userId' => $this->session->userdata('userId'),
+					'postDate' => $datetime
+					);
+					$this->db->insert('userpost', $data);
+
+					
+				}
+			}
+
+					
+		}else
+		{
+			$this->_landing();
+		}
+	}
+	
+	public function sendPoke()
+	{
+		if(($this->session->userdata('userId')!=""))
+		{
+			if($this->input->post("message")==null){
+				echo "Please Input message";
+			}
+				else{
+
+		     $datetime = date('Y-m-d H:i:s'); 
+		     $msgId = uniqid();
+		     $data = array(
+					'msgId' => $msgId,
+					'userId' =>$this->input->post("fromUserId"),
+					'msg_fromUserId' =>$this->session->userdata("userId"),
+					'msg_Content' =>$this->input->post("message"),
+					'msg_Date' => $datetime,
+					'msg_status' => '1',
+			);
+					
+			$this->db->insert('msg_dtl', $data);
+			echo "Message sent";
+			}
+					
+		}
+		else
+		{
+			$this->_landing();
+		}
+	}
+	public function countmsg()
+	{	
+		  $this->db->where('msg_status','1');
+          $this->db->where('userId', $this->session->userdata("userId"));
+          $query = $this->db->get('msg_dtl');
+           $num= $query->num_rows();
+		echo $num;
+	}
+	public function notif($key=null,$id=null)
+	{
+		if(($this->session->userdata('userId')!=""))
+		{	
+			if($key == 'msg')
+			{
+				$data['msg'] = $this->post->notifmsgFirst()->result_array();
+			   $data['fromUserId'] = $id;
+
+			}elseif($key =='group'){
+
+			}else{
+				$data['msg'] = $this->post->notifmsgFirst()->result_array();
+
+			}	
+				$query=$this->_userData();
+				$data['data']=$query->result_array();
+				$data['pages']='message';
+				$data['countgroup'] = $this->countGroups();
+				$groupquery= $this->groupdetails();
+				$data['groupdetails'] = $groupquery->result_array();
+				
+				$this->load->view('pages/dashboard/fixed',$data);
+				$this->load->view('pages/message/content'); 
+				$this->load->view('pages/dashboard/controlsidebar');
+				$this->load->view('pages/dashboard/end');
+		}else
+		{
+			$this->_landing();
+		}
+	}
+
+		public function chat1on1show($userId)
+		{
+			
+                foreach($this->post->msg1on1($userId)->result_array() as $row):
+                  
+				if($this->post->checkUser($row['userId'])=='true')	{
+                   echo ' <div class="direct-chat-msg">';
+                    echo '  <div class="direct-chat-info clearfix">';
+                      echo '  <span class="direct-chat-name pull-left">';
+                      echo $this->post->userProfile($row['msg_fromUserId']);
+                      echo '</span>
+                        <span class="direct-chat-timestamp pull-right">';
+
+                        echo $row['msg_Date'];
+
+                        echo '</span>
+                      </div><!-- /.direct-chat-info -->
+                       <img class="direct-chat-img" src="';echo base_url();echo'user/';echo $this->post->getAvatar($row['userId']); echo '"><!-- /.direct-chat-img -->';
+                        echo '<div class="direct-chat-text">';
+                           echo $row['msg_Content'];
+                      echo '</div><!-- /.direct-chat-text -->
+                    </div><!-- /.direct-chat-msg -->';
+                }else{
+
+                	echo '<div class="direct-chat-msg right">
+                          <div class="direct-chat-info clearfix">
+                            <span class="direct-chat-name pull-right">';
+                            echo $this->post->userProfile($row['msg_fromUserId']);
+                        echo '   </span>
+                            <span class="direct-chat-timestamp pull-left">';
+
+                            echo $row['msg_Date'];
+                          echo '</span>
+                          </div><!-- /.direct-chat-info -->
+                         <img class="direct-chat-img" src="';echo base_url();echo'user/';echo $this->post->getAvatar($row['userId']); echo '"><!-- /.direct-chat-img -->';
+                       echo '<div class="direct-chat-text">';
+                            echo $row['msg_Content'];
+                        echo '</div>
+                        </div><!-- /.direct-chat-msg -->';
+                }
+                  endforeach;
+		}
+
+		public function hiddenShit()
+		{
+			echo  '<input type="text" hidden="true" name="fromUserId" id="fromUserId" value="'.$this->session->userdata('poke').'"> ';
+		}
 
 }
 

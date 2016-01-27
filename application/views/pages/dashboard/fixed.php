@@ -21,9 +21,9 @@ endforeach;
     <!-- Bootstrap 3.3.5 -->
     <link rel="stylesheet" href="<?php echo base_url(); ?>bootstrap/css/bootstrap.min.css">
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="<?php echo base_url(); ?>/css/font-awesome.min.css">
     <!-- Ionicons -->
-    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link rel="stylesheet" href="<?php echo base_url(); ?>css/ionicons.min.css">
     <!-- iCheck for checkboxes and radio inputs -->
     <link rel="stylesheet" href="<?php echo base_url(); ?>plugins/iCheck/all.css">
     <!-- Theme style -->
@@ -71,127 +71,17 @@ endforeach;
             <ul class="nav navbar-nav">
               <!-- Messages: style can be found in dropdown.less-->
               <li class="dropdown messages-menu">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <a href="<?php echo base_url()."pages/notif"?>" >
                   <i class="fa fa-envelope-o"></i>
-                  <span class="label label-success">4</span>
+                  <span class="label label-success"><div name="countmsg" id="countmsg"></div></span>
                 </a>
-                <ul class="dropdown-menu">
-                  <li class="header"></li>
-                  <li>
-                    <!-- inner menu: contains the actual data -->
-                    <ul class="menu">
-                      <li><!-- start message -->
-                        <a href="#">
-                          <div class="pull-left">
-                            <img src="<?php echo base_url(); ?>dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
-                          </div>
-                          <h4>
-                            Support Team
-                            <small><i class="fa fa-clock-o"></i> 5 mins</small>
-                          </h4>
-                          <p>Why not buy a new awesome theme?</p>
-                        </a>
-                      </li><!-- end message -->
-                        <li><!-- start message -->
-                        <a href="#">
-                          <div class="pull-left">
-                            <img src="<?php echo base_url(); ?>dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
-                          </div>
-                          <h4>
-                            Support Team
-                            <small><i class="fa fa-clock-o"></i> 5 mins</small>
-                          </h4>
-                          <p>Why not buy a new awesome theme?</p>
-                        </a>
-                      </li><!-- end message -->
-                        <li><!-- start message -->
-                        <a href="#">
-                          <div class="pull-left">
-                            <img src="<?php echo base_url(); ?>dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
-                          </div>
-                          <h4>
-                            Support Team
-                            <small><i class="fa fa-clock-o"></i> 5 mins</small>
-                          </h4>
-                          <p>Why not buy a new awesome theme?</p>
-                        </a>
-                      </li><!-- end message -->
-                        <li><!-- start message -->
-                        <a href="#">
-                          <div class="pull-left">
-                            <img src="<?php echo base_url(); ?>dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
-                          </div>
-                          <h4>
-                            Support Team
-                            <small><i class="fa fa-clock-o"></i> 5 mins</small>
-                          </h4>
-                          <p>Why not buy a new awesome theme?</p>
-                        </a>
-                      </li><!-- end message -->
-                        <li><!-- start message -->
-                        <a href="#">
-                          <div class="pull-left">
-                            <img src="<?php echo base_url(); ?>dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
-                          </div>
-                          <h4>
-                            Support Team
-                            <small><i class="fa fa-clock-o"></i> 5 mins</small>
-                          </h4>
-                          <p>Why not buy a new awesome theme?</p>
-                        </a>
-                      </li><!-- end message -->
-                        <li><!-- start message -->
-                        <a href="#">
-                          <div class="pull-left">
-                            <img src="<?php echo base_url(); ?>dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
-                          </div>
-                          <h4>
-                            Support Team
-                            <small><i class="fa fa-clock-o"></i> 5 mins</small>
-                          </h4>
-                          <p>Why not buy a new awesome theme?</p>
-                        </a>
-                      </li><!-- end message -->
-                        <li><!-- start message -->
-                        <a href="#">
-                          <div class="pull-left">
-                            <img src="<?php echo base_url(); ?>dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
-                          </div>
-                          <h4>
-                            Support Team
-                            <small><i class="fa fa-clock-o"></i> 5 mins</small>
-                          </h4>
-                          <p>Why not buy a new awesome theme?</p>
-                        </a>
-                      </li><!-- end message -->
-                        <li><!-- start message -->
-                        <a href="#">
-                          <div class="pull-left">
-                            <img src="<?php echo base_url(); ?>dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
-                          </div>
-                          <h4>
-                            Support Team
-                            <small><i class="fa fa-clock-o"></i> 5 mins</small>
-                          </h4>
-                          <p>Why not buy a new awesome theme?</p>
-                        </a>
-                      </li><!-- end message -->
-                        <li><!-- start message -->
-                        <a href="#">
-                          <div class="pull-left">
-                            <img src="<?php echo base_url(); ?>dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
-                          </div>
-                          <h4>
-                            Support Team
-                            <small><i class="fa fa-clock-o"></i> 5 mins</small>
-                          </h4>
-                          <p>Why not buy a new awesome theme?</p>
-                        </a>
-                      </li><!-- end message -->
-                    </ul>
-                  </li>
-                  <li class="footer"><a href="#">See All Messages</a></li>
-                </ul>
+               <script>
+                  function loadNowPlaying4(){
+                 
+                  $("#countmsg").load("<?php echo base_url().'pages/countmsg'; ?>"); }
+                  setInterval(function(){loadNowPlaying4()}, 1000);
+
+               </script>
               </li>
               <!-- Notifications: style can be found in dropdown.less -->
               <li class="dropdown notifications-menu">
@@ -395,16 +285,16 @@ endforeach;
               </a>
             </li>
              <?php }else{?>
-            <li class="treeview <?php if($pages=='profile') {echo "active";}else echo "";?>">
+            <li class="treeview <?php if($pages=='post') {echo "active";}else echo "";?>">
               <a href="<?php echo base_url(); ?>pages/investorpost">
                 <i class="fa fa-edit"></i> <span>Post</span>
               </a>
             </li>
 
-             <?php } ?> 
+             <?php }; ?> 
             <li class="treeview <?php if($pages=='startup') {echo "active";}else echo "";?>">
               <a href="#">
-                <i class="fa fa-paper-plane"></i> 
+                <i class="fa fa-plus-square"></i>
                 <span>Startup Products</span>
                 <i class="fa fa-angle-left pull-right"></i>
               </a>
