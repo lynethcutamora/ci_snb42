@@ -24,8 +24,7 @@
   </br> </br>
     <div class="col-md-9"> 
       <?php if($this->input->post("postType")=="product"){ ?>
-
-         <div class="box">
+ <div class="box">
                   <div class="box-header with-border">
                     <span class="pull-left"><p>Post Startup Product</p></span>
                   </div><!-- /.box-header -->
@@ -37,6 +36,21 @@
                         <div class="col-sm-10">
                         <?php echo form_error('ideatitle'); ?>
                           <input type="text" class="form-control" name="producttitle" id="producttitle" placeholder="Product Title" value="<?php echo set_value('ideatitle'); ?>"/>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label for="ideatitle" class="col-sm-2 control-label">Category*</label>
+                        <div class="col-sm-4">
+                          <select name="categorytxt" class="form-control">
+                            <option value="selected">-- select category --</option>
+                            <option value="androidapp">android application</option>
+                            <option value="website">web site</option>
+                            <option value="desktopapp">desktop application</option>
+                          </select>
+                        </div>
+                        <label for="ideatitle" class="col-sm-2 control-label">/ others:</label>
+                        <div class="col-sm-4">
+                          <input type="text" class="form-control" name="ideatitle" id="ideatitle" placeholder="Specify category" value="<?php echo set_value('ideatitle'); ?>"/>
                         </div>
                       </div>
                       <div class="form-group">
@@ -60,7 +74,7 @@
                           <input class="btn btn-info pull-right" type="submit" value="Post Product" id="submit" name="button">
                     </div>
                   </form>
-          </div><!-- /.box-->
+    </div><!-- /.box-->
           <?php }else if($this->input->post("postType")=="normal"){?>
           <div class="box">
                   <div class="box-header with-border">
@@ -125,10 +139,10 @@
                   </form>
     </div><!-- /.box-->
           <?php }else if($this->input->post("postType")=="idea"){?>
-            <div class="box">
+             <div class="box">
                   <div class="box-header with-border">
                     <span class="pull-left"><p>Post New Idea</p></span>
-                    <span class="pull-right"><button type="submit" class="btn btn-primary" id="btnGenerate">Generate Title</button></span>
+                    <span class="pull-right"><button type="submit" class="btn btn-primary btn-xs" id="btnGenerate">Generate Title</button></span>
                   </div><!-- /.box-header -->
                   <!-- form start -->
                  <?php echo form_open_multipart('../pages/postIdea',"class=form-horizontal"); ?>
@@ -138,6 +152,21 @@
                         <div class="col-sm-10">
                         <?php echo form_error('ideatitle'); ?>
                           <input type="text" class="form-control" name="ideatitle" id="ideatitle" placeholder="Title" value="<?php echo set_value('ideatitle'); ?>"/>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label for="ideatitle" class="col-sm-2 control-label">Category*</label>
+                        <div class="col-sm-4">
+                          <select name="categorytxt" class="form-control">
+                            <option value="selected">-- select category --</option>
+                            <option value="androidapp">android application</option>
+                            <option value="website">web site</option>
+                            <option value="desktopapp">desktop application</option>
+                          </select>
+                        </div>
+                        <label for="ideatitle" class="col-sm-2 control-label">/ others:</label>
+                        <div class="col-sm-4">
+                          <input type="text" class="form-control" name="ideatitle" id="ideatitle" placeholder="Specify category" value="<?php echo set_value('ideatitle'); ?>"/>
                         </div>
                       </div>
                       <div class="form-group">
@@ -154,6 +183,54 @@
                           <input type="text" class="form-control" name="relatedlinks" id="relatedlinks" placeholder="Related Links (Separated by comma)" value="<?php echo set_value('relatedlinks'); ?>"/>
                         </div>
                       </div>
+                      <div class="col-md-12">
+                        <div class="box box-default collapsed-box">
+                          <div class="box-header with-border">
+                            <h3 class="box-title"><small>Add Business Model Canvas</small></h3>
+                            <div class="box-tools pull-right">
+                              <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i></button>
+                            </div><!-- /.box-tools -->
+                          </div><!-- /.box-header -->
+                          <div class="box-body">
+                              <table class="table table-bordered table-hover">
+                                <thead>
+                                  <tr>
+                                    <th><small>Key Partners</small></th>
+                                    <th><small>Key Activities</small></th>
+                                    <th><small>Values Propositions</small></th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                      <td><textarea class="form-control"name="inputKeyPartners" id="inputKeyPartners" placeholder="Who are out Key Partners?"></textarea></td>
+                                      <td><textarea class="form-control"name="inputKeyActivities" id="inputKeyActivities" placeholder="What Key activities do our Value Propositions requires?"></textarea></td>
+                                      <td><textarea class="form-control"name="inputValuePropositions" id="inputValuePropositions" placeholder="What value do we deliver to the customer?"></textarea></td>
+                                    </tr>
+                                  <tr>
+                                    <th><small>Customer Relationships</small></th>
+                                    <th><small>Customer Segments</small></th>
+                                    <th><small>Key Resources</small></th>
+                                  </tr>
+                                    <tr>
+                                      <td><textarea class="form-control"name="inputCustomerRelationship" id="inputCustomerRelationship" placeholder="What type of relationship does each of our Customer Segments expect us to establish and maintain with them?"></textarea></td>
+                                      <td><textarea class="form-control"name="inputCusomerSegments" id="inputCusomerSegments" placeholder="From whom are we creating value?"></textarea></td>
+                                      <td><textarea class="form-control"name="inputKeyResources" id="inputKeyResources" placeholder="What Key Resources do our Value Propositions require?"></textarea></td>
+                                    </tr>
+                                  <tr>
+                                    <th><small>Channels</small></th>
+                                    <th><small>Cost Structure</small></th>
+                                    <th><small>Revenue Streams</small></th>
+                                  </tr>
+                                    <tr>
+                                      <td><textarea class="form-control"name="inputChannels" id="inputChannels" placeholder="Through what channel do our Customer Segments want to be reached?"></textarea></td>
+                                      <td><textarea class="form-control"name="inputCostStructure" id="inputCostStructure" placeholder="What are the most important costs inherent in our business model?"></textarea></td>
+                                      <td><textarea class="form-control"name="inputRevenueStreams" id="inputRevenueStreams" placeholder="For what value are our customers willing to pay?"></textarea></td>
+                                    </tr>
+                                </tbody>
+                              </table>
+                          </div><!-- /.box-body -->
+                        </div><!-- /.box -->
+                      </div><!-- /.col -->
                     </div><!-- /.box-body -->
                     <div class="box-footer">
                      
