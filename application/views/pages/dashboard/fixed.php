@@ -99,7 +99,10 @@ endforeach;
                   <li>
                     <!-- inner menu: contains the actual data -->
                     <ul class="menu">
+                      <?php echo form_open('../pages/addmember');?>
                         <?php foreach($groupdetails as $row):?>
+                          <input type="text" hidden="true" name="groupid" value="<?php echo $row['groupId']?>">
+                          <input type="text" hidden="true" name="userid" value="<?php echo $row['userId']?>">
                           <?php if($this->post->groupstat($row['userId'])==false)
                           {
                             echo "";
@@ -107,11 +110,12 @@ endforeach;
                           else
                           {
                             echo $row['groupname']."<br>";
-                            echo "<small>Would like to add you into their group</small><br>";
+                            echo "<small>Invite you into their group</small><br>";
                             echo "<span class='pull-right'><input type='submit' name='btnAccept' value='Accept'>&nbsp;&nbsp;&nbsp;&nbsp;
-                            <input type='submit' name='btnDecline' value='Decline'></span>";    
+                            <input type='submit' name='btnDecline' value='Decline'>&nbsp;&nbsp;</span>";    
                           } ?>
                         <?php endforeach;?>
+                      </form>
                     </ul>
                   </li>
                   <li class="footer">

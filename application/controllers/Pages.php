@@ -1155,13 +1155,27 @@ class Pages extends CI_Controller {
 		header('Location:'.base_url().'pages/group/'.$this->input->post('groupid'));
 	}
 	public function addmember(){
-		$data = array(
-				'groupId' => $this->input->post('groupid'),
-				'userId' => $this->input->post('userid')
-			);
+		$groupid = $this->input->post('groupid');
+		$userid = $this->input->post('userid');
 
-		$this->db->insert('group_ext',$data);
-		header('Location:'.base_url().'pages/group/'.$this->input->post('groupid'));
+		$this->db->select('*');
+		$this->db->from('group_ext');
+		$this->db->where('groupId',$groupid);
+		$this->db->where('userId',$userid);
+		if(isset($_POST['btnAccept'])){
+			$data = array(
+					'status' => '0'
+				);
+
+			$this->db->update('group_ext',$data);
+			header('Location:'.base_url().'pages/group/'.$this->input->post('groupid'));
+		}else{
+			$data = array(
+					'status' => '2'
+				);
+
+			$this->db->update('group_ext',$data);
+		}
 	}
 
 	public function addinvestor(){
