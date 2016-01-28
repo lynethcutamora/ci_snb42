@@ -25,12 +25,12 @@
   </br> </br>
     <div class="col-md-9"> 
       <?php if($this->input->post("postType")=="product"){ ?>
- <div class="box">
+            <div class="box">
                   <div class="box-header with-border">
                     <span class="pull-left"><p>Post Startup Product</p></span>
                   </div><!-- /.box-header -->
                   <!-- form start -->
-                 <?php echo form_open_multipart('../pages/postIdea',"class=form-horizontal"); ?>
+                 <form method="post" action="" id="upload_file" enctype="multipart/form-data" class="form-horizontal">
                     <div class="box-body">
                       <div class="form-group">
                         <label for="producttitle" class="col-sm-2 control-label" >Product Name*</label>
@@ -71,8 +71,8 @@
                     </div><!-- /.box-body -->
                     <div class="box-footer">
                           <small>Upload Product Branding (logo)</small>
-                         <?php echo form_upload('pic'); ?>
-                          <input class="btn btn-info pull-right" type="submit" value="Post Product" id="submit" name="button">
+                          <input type="file" name="pic" id="pic" size="20" />
+                          <button class="btn btn-info pull-right" type="submit" id="postproduct" name="postproduct">Post Product</button>
                     </div>
                   </form>
     </div><!-- /.box-->
@@ -82,7 +82,7 @@
                     <span class="pull-left"><p>Normal Post</p></span>
                   </div><!-- /.box-header -->
                   <!-- form start -->
-                 <?php echo form_open_multipart('../pages/postIdea',"class=form-horizontal"); ?>
+                 <form method="post" action="" id="upload_file" enctype="multipart/form-data" class="form-horizontal">
                     <div class="box-body">
                       <div class="form-group">
                         <label for="inputDescription"  class="col-sm-2 control-label">Description*</label>
@@ -100,7 +100,7 @@
                       </div>
                     </div><!-- /.box-body -->
                     <div class="box-footer">
-                          <input class="btn btn-info pull-right" type="submit" value="Post" id="submit" name="button">
+                        <button class="btn btn-info pull-right" type="submit" id="normal" name="normal">Post</button>
                     </div>
                   </form>
     </div><!-- /.box-->
@@ -110,7 +110,7 @@
                     <span class="pull-left"><p>Post Competition</p></span>
                   </div><!-- /.box-header -->
                   <!-- form start -->
-                 <?php echo form_open_multipart('../pages/postIdea',"class=form-horizontal"); ?>
+                   <form method="post" action="" id="upload_file" enctype="multipart/form-data" class="form-horizontal">
                     <div class="box-body">
                       <div class="form-group">
                         <label for="inputDescription"  class="col-sm-2 control-label">Description*</label>
@@ -135,7 +135,7 @@
                       </div>
                     </div><!-- /.box-body -->
                     <div class="box-footer">
-                          <input class="btn btn-info pull-right" type="submit" value="Start the Competition" id="submit" name="button">
+                          <button class="btn btn-info pull-right" type="submit" id="competition" name="competition">Start The Competition</button>
                     </div>
                   </form>
     </div><!-- /.box-->
@@ -146,7 +146,7 @@
                     <span class="pull-right"><button type="submit" class="btn btn-primary btn-xs" id="btnGenerate">Generate Title</button></span>
                   </div><!-- /.box-header -->
                   <!-- form start -->
-                 <?php echo form_open_multipart('../pages/postIdea',"class=form-horizontal"); ?>
+                 <form method="post" action="" id="upload_file" enctype="multipart/form-data" class="form-horizontal">
                     <div class="box-body">
                       <div class="form-group">
                         <label for="ideatitle" class="col-sm-2 control-label">Title*</label>
@@ -235,34 +235,16 @@
                     </div><!-- /.box-body -->
                     <div class="box-footer">
                      
-                         <?php echo form_upload('pic'); ?>
-                          <input class="btn btn-info pull-right" type="submit" value="Post Idea" id="submit" name="button">
+                       <input type="file" name="pic" id="pic" size="20" />
+                         <div id="files"></div>
+                          <button class="btn btn-info pull-right" type="submit" id="postnewidea" name="postnewidea">Post Idea</button>
                     </div>
                   </form>
     </div><!-- /.box-->
 
           <?php } ?>
-
-             <div class="box">
-                  <div class="box-header with-border">
-
-                      <div class='user-block'>
-                      
-                         <img class="img-circle" src="" alt="user image">
-                  
-                      <span class="username"><a href=""></a><i class="fa fa-star" style="color:#ffd700;"></i><b></b></span>
-                
-                        
-                      </div><!-- /.user-block -->
-                     
-                  </div><!-- /.box-header -->
-                  <div class="box-body">
-                      
-                  </div><!-- /.box-body -->
-                  <div class="box-footer">
-                  </div>
-                  
-             </div><!-- /.box-->
+          <div name="investorpost" id="investorpost"></div>
+          
   </div><!-- /.col-9-->
     
 
@@ -348,5 +330,140 @@
   document.getElementById("optional1").style.display="none";
 }
   }
-  
+
 </script>
+
+
+
+<script>
+    $('button[name="postnewidea"]').click(function(e){
+          var form = new FormData(document.getElementById('upload_file'));
+         
+            e.preventDefault();
+            
+            $.ajax({
+              type: 'post',
+              url:"<?php echo base_url().'pages/newPostIdea'?>",
+              data:form,
+              mimeType:"multipart/form-data",
+               cache: false,
+                contentType: false, //must, tell jQuery not to process the data
+                processData: false, //must, tell jQuery not to set contentType
+              success: function (data) {
+          
+                  $("#ideatitle").val('') ;
+                  $("#inputDescription").val('') ;
+                  $("#relatedlinks").val('') ;
+                  $("#pic").val('') ;
+
+
+              }
+            });
+
+
+          });
+
+
+
+</script>
+
+<script>
+    $('button[name="postproduct"]').click(function(e){
+          var form = new FormData(document.getElementById('upload_file'));
+         
+            e.preventDefault();
+            
+            $.ajax({
+              type: 'post',
+              url:"<?php echo base_url().'pages/newStartUpProduct'?>",
+              data:form,
+              mimeType:"multipart/form-data",
+               cache: false,
+                contentType: false, //must, tell jQuery not to process the data
+                processData: false, //must, tell jQuery not to set contentType
+              success: function (data) {
+          
+                  $("#producttitle").val('') ;
+                  $("#inputDescription").val('') ;
+                  $("#downloadlink").val('') ;
+                  $("#pic").val('') ;
+                  $("#optional").val('') ;
+
+
+              }
+            });
+
+
+          });
+
+
+
+</script>
+<script>
+    $('button[name="competition"]').click(function(e){
+          var form = new FormData(document.getElementById('upload_file'));
+         
+            e.preventDefault();
+            
+            $.ajax({
+              type: 'post',
+              url:"<?php echo base_url().'pages/newCompetition'?>",
+              data:form,
+              mimeType:"multipart/form-data",
+               cache: false,
+                contentType: false, //must, tell jQuery not to process the data
+                processData: false, //must, tell jQuery not to set contentType
+              success: function (data) {
+          
+                  $("#area").val('') ;
+                  $("#inputDescription").val('') ;
+                  $("#competitionnote").val('') ;
+
+
+              }
+            });
+
+
+          });
+
+
+
+</script>
+<script>
+    $('button[name="normal"]').click(function(e){
+          var form = new FormData(document.getElementById('upload_file'));
+         
+            e.preventDefault();
+            
+            $.ajax({
+              type: 'post',
+              url:"<?php echo base_url().'pages/newNormalPost'?>",
+              data:form,
+              mimeType:"multipart/form-data",
+               cache: false,
+                contentType: false, //must, tell jQuery not to process the data
+                processData: false, //must, tell jQuery not to set contentType
+              success: function (data) {
+          
+                  $("#area").val('') ;
+                  $("#inputDescription").val('') ;
+
+
+              }
+            });
+
+
+          });
+
+
+
+</script>
+
+<script>
+     function investorPost(){
+                 
+                  $("#investorpost").load("<?php echo base_url().'pages/newShowInvestorPost'; ?>"); }
+                  setInterval(function(){investorPost()}, 1000);
+
+</script>
+

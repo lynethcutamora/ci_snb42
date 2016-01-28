@@ -6,7 +6,7 @@
         {
                 $this->db->where('postId', $postId);
                 $query = $this->db->get('upvote_dtl');
-                echo $query->num_rows()." Upvotes";
+                return $query->num_rows()." Upvotes";
 
         }
         
@@ -239,7 +239,7 @@
         {
             $this->db->where('postId', $postId);
             $query = $this->db->get('comment_dtl');
-            echo $query->num_rows()." comments";
+            return $query->num_rows()." comments";
         }
         public function searchGroup($key)
         {
@@ -645,9 +645,174 @@
         }
 
 
+        public function queryInvestorPost()
+        {
+             $this->db->select('*');
+             $this->db->from('userpost');
+             $this->db->where('userId',$this->session->userdata("userId"));
+             $this->db->order_by('postDate', 'DESC');
+             $query = $this->db->get();
+             return $query;
+        }
+
+        public function getpostImg($postId)
+        {
+             $this->db->select('*');
+             $this->db->from('userpost_ext');
+             $this->db->where('postId',$postId);
+             $this->db->where('extType','2');
+             $query = $this->db->get();
+
+             $numrows= $query->num_rows();
+             if($numrows){
+                $row = $query->row_array();
+                $result = $row['extContent'];
+             }
+             else{
+                $result= '1.png';
+             }
+             return $result;
+
+        }
+
+        public function getPostCategory($postId)
+        {
+             $this->db->select('*');
+             $this->db->from('userpost_ext');
+             $this->db->where('postId',$postId);
+             $this->db->where('extType','7');
+             $query = $this->db->get();
+             
+             $numrows= $query->num_rows();
+             if($numrows){
+                $row = $query->row_array();
+                $result = $row['extContent'];
+             }
+             else{
+                $result= 'no category';
+             }
+             return $result;
+
+        } 
+        public function getPostAreas($postId)
+        {
+             $this->db->select('*');
+             $this->db->from('userpost_ext');
+             $this->db->where('postId',$postId);
+             $this->db->where('extType','3');
+             $query = $this->db->get();
+             
+             $numrows= $query->num_rows();
+             if($numrows){
+                $row = $query->row_array();
+                $result = $row['extContent'];
+             }
+             else{
+                $result= 'No Area';
+             }
+             return $result;
+
+        }   public function getPostNote($postId)
+        {
+             $this->db->select('*');
+             $this->db->from('userpost_ext');
+             $this->db->where('postId',$postId);
+             $this->db->where('extType','5');
+             $query = $this->db->get();
+             
+             $numrows= $query->num_rows();
+             if($numrows){
+                $row = $query->row_array();
+                $result = $row['extContent'];
+             }
+             else{
+                $result= 'No Notes';
+             }
+             return $result;
+
+        } public function getRelatedLinks($postId)
+        {
+             $this->db->select('*');
+             $this->db->from('userpost_ext');
+             $this->db->where('postId',$postId);
+             $this->db->where('extType','1');
+             $query = $this->db->get();
+             
+             $numrows= $query->num_rows();
+             if($numrows){
+                $row = $query->row_array();
+                $result = '<a href="'.$row['extContent'].'" >'.$row['extContent'].'</a>';
+             }
+             else{
+                $result= 'No Links';
+             }
+             return $result;
+
+        }
+        public function checkBmc($postId)
+        {
+             $this->db->select('*');
+             $this->db->from('bmc_dtl');
+             $this->db->where('postId',$postId);
+             $query = $this->db->get();
+             
+             $numrows= $query->num_rows();
+             if($numrows){
+                $row = $query->row_array();
+                $result = 'with BMC';
+             }
+             else{
+                $result= 'No BMC';
+             }
+             return $result;
+        }
+          public function checkWithBmc($postId)
+        {
+             $this->db->select('*');
+             $this->db->from('bmc_dtl');
+             $this->db->where('postId',$postId);
+             $query = $this->db->get();
+             
+             $numrows= $query->num_rows();
+             if($numrows){
+                $row = $query->row_array();
+                return true;
+             }
+             else{
+                return false;
+             }
+        }
+        public function bmcquery($postId)
+        {
+            $this->db->select('*');
+             $this->db->from('bmc_dtl');
+             $this->db->where('postId',$postId);
+             $query = $this->db->get();
+             return $query;
+        }
+
+        public function bmcexplode($str)
+        {   
+            if($str!=null){
+            $arr = explode(',', $str);
+
+            foreach ($arr as $key => $value) {
+                echo '•'.$value;
+            }
+           }else{
+            echo "none";
+           }
+        }
+
+        public function queryNewsfeedIdeator()
+        {
+            $query = $this->db->query("SELECT * FROM  userpost WHERE (postType='3' OR postType = '4' or postType ='2') OR ( userId = '".$this->session->userdata("userId")."' AND postType = '1')");
+            return $query;
+        }
+
+
+
     }
-
-
 
 
 

@@ -17,7 +17,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | environments.
 |
 */
-$config['base_url'] = 'http://192.168.43.8/ci_snb42/';
+$config['base_url'] = 'http://localhost/ci_snb42/';
 
 /*
 |--------------------------------------------------------------------------

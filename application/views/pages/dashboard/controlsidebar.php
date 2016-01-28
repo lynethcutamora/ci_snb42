@@ -50,7 +50,7 @@
                    </div>
                   <label>Leave Message:</label>
                     <textarea class="form-control" rows="3" placeholder="Enter ..." name="message1" id="message1"></textarea><br> 
-                    <?php echo $this->session->userdata('poke'); ?>
+              
                     <div name="hiddenshit" id="hiddenshit"></div>
 
                     <div name="errormsg" id="errormsg">
