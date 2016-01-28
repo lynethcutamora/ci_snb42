@@ -2408,6 +2408,32 @@ class Pages extends CI_Controller {
 			echo  '<input type="text" hidden="true" name="fromUserId" id="fromUserId" value="'.$this->session->userdata('poke').'"> ';
 		}
 
+		public function newPostIdea()
+		{
+			if(($this->session->userdata('userId')!=""))
+			{	
+
+					$datetime = date('Y-m-d'); 		
+				
+					$data = array(
+					'userId' => $userId,
+					'user_Type' =>	'Ideator',
+					'user_dateRegistered' =>	$datetime,
+					'user_emailAdd' => $this->input->post('inputEmail'),
+					'user_password' => md5($password),
+					'user_profilePicId' =>$picId,
+					'user_status' =>'0'
+					);
+
+				
+					$this->db->insert('user_md', $data);
+					$this->index();
+		        
+			}else{
+
+				$this->_landing();
+			}
+		}
 
 
 }

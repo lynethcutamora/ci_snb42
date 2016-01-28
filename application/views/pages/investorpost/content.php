@@ -1,4 +1,5 @@
     <script src="<?php echo base_url(); ?>plugins/jQuery/jQuery-2.1.4.min.js"></script>
+
 <div class="content-wrapper">
 
 
@@ -32,7 +33,7 @@
                  <?php echo form_open_multipart('../pages/postIdea',"class=form-horizontal"); ?>
                     <div class="box-body">
                       <div class="form-group">
-                        <label for="producttitle" class="col-sm-2 control-label">Product Name*</label>
+                        <label for="producttitle" class="col-sm-2 control-label" >Product Name*</label>
                         <div class="col-sm-10">
                         <?php echo form_error('ideatitle'); ?>
                           <input type="text" class="form-control" name="producttitle" id="producttitle" placeholder="Product Title" value="<?php echo set_value('ideatitle'); ?>"/>
@@ -41,16 +42,16 @@
                       <div class="form-group">
                         <label for="ideatitle" class="col-sm-2 control-label">Category*</label>
                         <div class="col-sm-4">
-                          <select name="categorytxt" class="form-control">
-                            <option value="selected">-- select category --</option>
+                          <select name="categorytxt" id="categorytxt" class="form-control" onChange="changeCategory(this)">
+                            <option value="1">-- select category --</option>
                             <option value="androidapp">android application</option>
                             <option value="website">web site</option>
                             <option value="desktopapp">desktop application</option>
                           </select>
                         </div>
-                        <label for="ideatitle" class="col-sm-2 control-label">/ others:</label>
+                        <label for="ideatitle" name="optional1" id="optional1" style="display:block" class="col-sm-2 control-label">/ others:</label>
                         <div class="col-sm-4">
-                          <input type="text" class="form-control" name="ideatitle" id="ideatitle" placeholder="Specify category" value="<?php echo set_value('ideatitle'); ?>"/>
+                          <input type="text" class="form-control" name="optional" id="optional" placeholder="Specify category" value="<?php echo set_value('ideatitle'); ?>" style="display:block" />
                         </div>
                       </div>
                       <div class="form-group">
@@ -154,19 +155,19 @@
                           <input type="text" class="form-control" name="ideatitle" id="ideatitle" placeholder="Title" value="<?php echo set_value('ideatitle'); ?>"/>
                         </div>
                       </div>
-                      <div class="form-group">
+                     <div class="form-group">
                         <label for="ideatitle" class="col-sm-2 control-label">Category*</label>
                         <div class="col-sm-4">
-                          <select name="categorytxt" class="form-control">
-                            <option value="selected">-- select category --</option>
+                          <select name="categorytxt" id="categorytxt" class="form-control" onChange="changeCategory(this)">
+                            <option value="1">-- select category --</option>
                             <option value="androidapp">android application</option>
                             <option value="website">web site</option>
                             <option value="desktopapp">desktop application</option>
                           </select>
                         </div>
-                        <label for="ideatitle" class="col-sm-2 control-label">/ others:</label>
+                        <label for="ideatitle" name="optional1" id="optional1" style="display:block" class="col-sm-2 control-label">/ others:</label>
                         <div class="col-sm-4">
-                          <input type="text" class="form-control" name="ideatitle" id="ideatitle" placeholder="Specify category" value="<?php echo set_value('ideatitle'); ?>"/>
+                          <input type="text" class="form-control" name="optional" id="optional" placeholder="Specify category" value="<?php echo set_value('ideatitle'); ?>" style="display:block" />
                         </div>
                       </div>
                       <div class="form-group">
@@ -333,3 +334,19 @@
                   }); 
               });
            </script>
+
+
+         <script>
+ function changeCategory(obj){
+   var x = document.getElementById("categorytxt").value;
+
+   if(x=='1'){
+    document.getElementById("optional").style.display="block";
+    document.getElementById("optional1").style.display="block";
+   }else{
+  document.getElementById("optional").style.display="none";
+  document.getElementById("optional1").style.display="none";
+}
+  }
+  
+</script>

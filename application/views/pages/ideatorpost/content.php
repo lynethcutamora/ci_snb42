@@ -50,16 +50,16 @@
                       <div class="form-group">
                         <label for="ideatitle" class="col-sm-2 control-label">Category*</label>
                         <div class="col-sm-4">
-                          <select name="categorytxt" class="form-control">
-                            <option value="selected">-- select category --</option>
+                          <select name="categorytxt" id="categorytxt" class="form-control" onChange="changeCategory(this)">
+                            <option value="1">-- select category --</option>
                             <option value="androidapp">android application</option>
                             <option value="website">web site</option>
                             <option value="desktopapp">desktop application</option>
                           </select>
                         </div>
-                        <label for="ideatitle" class="col-sm-2 control-label">/ others:</label>
+                        <label for="ideatitle" name="optional1" id="optional1" style="display:block" class="col-sm-2 control-label">/ others:</label>
                         <div class="col-sm-4">
-                          <input type="text" class="form-control" name="ideatitle" id="ideatitle" placeholder="Specify category" value="<?php echo set_value('ideatitle'); ?>"/>
+                          <input type="text" class="form-control" name="optional" id="optional" placeholder="Specify category" value="<?php echo set_value('ideatitle'); ?>" style="display:block" />
                         </div>
                       </div>
                       <div class="form-group">
@@ -510,3 +510,17 @@
                   }); 
               });
            </script>
+                    <script>
+ function changeCategory(obj){
+   var x = document.getElementById("categorytxt").value;
+
+   if(x=='1'){
+    document.getElementById("optional").style.display="block";
+    document.getElementById("optional1").style.display="block";
+   }else{
+  document.getElementById("optional").style.display="none";
+  document.getElementById("optional1").style.display="none";
+}
+  }
+  
+</script>
