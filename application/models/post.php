@@ -190,7 +190,18 @@
             $this->db->from('group_ext');
             $this->db->where('userId',$userId);
             $this->db->where('groupId',$groupId);
-            $this->db->where('status','0' || '1');
+            $this->db->where('status','0' && '1');
+            $query=$this->db->get();
+            $numrows = $query->num_rows();
+            if($numrows>0)  return true;
+            else return false;
+        }
+        public function groupstat($userId)
+        {
+            $this->db->select('*');
+            $this->db->from('group_ext');
+            $this->db->where('userId', $userId);
+            $this->db->where('status', '1');
             $query=$this->db->get();
             $numrows = $query->num_rows();
             if($numrows>0)  return true;
@@ -624,6 +635,13 @@
         
 
            
+        }
+
+        public function countMsg1on1($userId)
+        {
+                $query = $this->db->query("SELECT * FROM msg_dtl WHERE userId = '".$userId."'  AND msg_fromUserId = '".$this->session->userdata("userId")."' AND msg_status = '1' OR userId = '".$this->session->userdata("userId")."' AND msg_fromUserId = '".$userId."'  AND msg_status = '1'");
+                $num = $query->num_rows();
+                return $num;
         }
 
 

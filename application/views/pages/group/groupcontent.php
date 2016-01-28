@@ -391,7 +391,7 @@
                                     <p class="text-muted">&nbsp;&nbsp;'.$row['company_name'].'
                                     <span class="pull-right"><button name="btnaddmember" class="form-control btn-primary" type="submit" href="'.base_url().'pages/group/'.$groupid.'"><i class="fa fa-plus"></i></button></span></p><small>Send Request</small>';
                               }elseif($row['userId']!=$this->session->userdata('userId')){
-                                echo '<span class="pull-left"><i class="fa fa-user" style="color:gray;"></i></span>
+                                echo 'aa<span class="pull-left"><i class="fa fa-user" style="color:gray;"></i></span>
                                       <p class="text-muted">&nbsp;&nbsp;'.$row['user_fName']." ".$row['user_midInit'].". ".$row['user_lName'].'
                                       <span class="pull-right"><button name="btnaddmember" class="form-control btn-primary" type="submit"><i class="fa fa-plus"></i></button></span></p><span class="pull-right"><small>Send Request</small></span>';
                               }

@@ -25,7 +25,7 @@
                       <li class="active"><a href="<?php echo base_url()."pages/notif/msg/".$row['msg_fromUserId']?>"><?php
                        echo $this->post->userProfile($row['msg_fromUserId']);
                       ?>
-                        <span class="label label-primary pull-right">12</span></a></li>
+                        <span class="label label-primary pull-right"></span></a></li>
                       <?php 
                       }
                     ?>
@@ -47,7 +47,6 @@
               </div><!-- /. box -->
              
             </div>
-
             <div class="col-md-8">
               <?php if(isset($fromUserId)){
                echo $this->post->msgSeen($fromUserId);

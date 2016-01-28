@@ -58,7 +58,7 @@ class Pages extends CI_Controller {
 		$query=$this->_userData();
 		$data['data']=$query->result_array();
 		$data['pages']='dashboard';
-		$data['countgroup'] = $this->countGroups();
+		$data['countgroup'] = $this->countgrp();
 		$groupquery= $this->groupdetails();
 		$data['alldata']=$query->result_array();
 		$data['groupdetails'] = $groupquery->result_array();
@@ -845,7 +845,8 @@ class Pages extends CI_Controller {
 	                  'msg_Content' =>$this->input->post('inputDescription'),
 	                  'msg_fromUserId' => $this->session->userdata('userId'),
 	                  'userId' => $userId,
-	                  'msg_Date' =>$datetime
+	                  'msg_Date' =>$datetime,
+	                  'msg_status' => '1'
 	                  );
 	                  $this->db->insert('msg_dtl', $data);
 	                   redirect('pages/profile/'.$userId);
@@ -855,25 +856,23 @@ class Pages extends CI_Controller {
 
     public function submitcomment()
 	{
-		$this->form_validation->set_rules('name', 'Name', 'required|trim');
-		$this->form_validation->set_rules('email', 'email', 'required|trim');
-		$this->form_validation->set_rules('comment', 'comment', 'required|trim');
 
 		$datetime = date('Y-m-d H:i:s');
-		$valuenull = 1;
+	
 		
 		$data = array(
-		'reportId' => $this->input->post('name'),
-		'userId' => $valuenull,
-		'fromUserId' => $valuenull,
-		'reportContent' => $this->input->post('comment'),
+		'reportId' => uniqid(),
+	
+		'reportContent' => $this->input->post('comments'),
 		'reportDate' => $datetime,
-		'reportStat' => $valuenull,
-		'reportType' => $valuenull
+		'reportStat' => '1',
+		'reportType' => '1',
+		'reportName' => $this->input->post('name'),
+		'reportEmail' => $this->input->post('email')
 		);
+
 		$this->db->insert('report_dtl', $data);
-		$this->load->view('pages/content');
-		$this->load->view('pages/footer');
+		echo "Thank you for your feedback!";
 	}
 
 	public function postIdea()
@@ -995,6 +994,15 @@ class Pages extends CI_Controller {
 		$this->db->select('groupId');
 		$this->db->from('group_ext');
 		$this->db->where('userId',$this->session->userdata('userId'));
+		$num_results=$this->db->count_all_results();
+
+		return $num_results;
+	}
+	public function countgrp(){
+		$this->db->select('groupId');
+		$this->db->from('group_ext');
+		$this->db->where('userId',$this->session->userdata('userId'));
+		$this->db->where('status','0');
 		$num_results=$this->db->count_all_results();
 
 		return $num_results;
@@ -1147,13 +1155,27 @@ class Pages extends CI_Controller {
 		header('Location:'.base_url().'pages/group/'.$this->input->post('groupid'));
 	}
 	public function addmember(){
-		$data = array(
-				'groupId' => $this->input->post('groupid'),
-				'userId' => $this->input->post('userid')
-			);
+		$groupid = $this->input->post('groupid');
+		$userid = $this->input->post('userid');
 
-		$this->db->insert('group_ext',$data);
-		header('Location:'.base_url().'pages/group/'.$this->input->post('groupid'));
+		$this->db->select('*');
+		$this->db->from('group_ext');
+		$this->db->where('groupId',$groupid);
+		$this->db->where('userId',$userid);
+		if(isset($_POST['btnAccept'])){
+			$data = array(
+					'status' => '0'
+				);
+
+			$this->db->update('group_ext',$data);
+			header('Location:'.base_url().'pages/group/'.$this->input->post('groupid'));
+		}else{
+			$data = array(
+					'status' => '2'
+				);
+
+			$this->db->update('group_ext',$data);
+		}
 	}
 
 	public function addinvestor(){
@@ -2297,6 +2319,15 @@ class Pages extends CI_Controller {
            $num= $query->num_rows();
 		echo $num;
 	}
+	public function countntf()
+	{
+			$this->db->where('status','1');
+          	$this->db->where('userId', $this->session->userdata("userId"));
+          	$query = $this->db->get('group_ext');
+           	$num= $query->num_rows();
+		echo $num;
+	}
+	
 	public function notif($key=null,$id=null)
 	{
 		if(($this->session->userdata('userId')!=""))
@@ -2376,6 +2407,8 @@ class Pages extends CI_Controller {
 		{
 			echo  '<input type="text" hidden="true" name="fromUserId" id="fromUserId" value="'.$this->session->userdata('poke').'"> ';
 		}
+
+
 
 }
 

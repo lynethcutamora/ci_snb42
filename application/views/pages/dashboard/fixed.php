@@ -82,28 +82,48 @@ endforeach;
                   setInterval(function(){loadNowPlaying4()}, 1000);
 
                </script>
-              </li>
-              <!-- Notifications: style can be found in dropdown.less -->
+               </li>
               <li class="dropdown notifications-menu">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                  <i class="fa fa-bell-o"></i>
-                  <span class="label label-warning">10</span>
+                <i class="fa fa-bell-o"></i>
+                <span class="label label-warning"><div name="countntf" id="countntf"></div></span>
                 </a>
+                <script>
+                  function loadNowPlaying5(){
+                    $("#countntf").load("<?php echo base_url().'pages/countntf'; ?>"); 
+                  }
+                  setInterval(function(){loadNowPlaying5()}, 1000);
+                </script>
                 <ul class="dropdown-menu">
-                  <li class="header">You have 10 notifications</li>
+                  <li class="header">Notification</li>
                   <li>
                     <!-- inner menu: contains the actual data -->
                     <ul class="menu">
-                      <li>
-                        <a href="#">
-                          <i class="fa fa-users text-aqua"></i> 5 new members joined today
-                        </a>
-                      </li>
+                      <?php echo form_open('../pages/addmember');?>
+                        <?php foreach($groupdetails as $row):?>
+                          <input type="text" hidden="true" name="groupid" value="<?php echo $row['groupId']?>">
+                          <input type="text" hidden="true" name="userid" value="<?php echo $row['userId']?>">
+                          <?php if($this->post->groupstat($row['userId'])==false)
+                          {
+                            echo "";
+                          }
+                          else
+                          {
+                            echo $row['groupname']."<br>";
+                            echo "<small>Invite you into their group</small><br>";
+                            echo "<span class='pull-right'><input type='submit' name='btnAccept' value='Accept'>&nbsp;&nbsp;&nbsp;&nbsp;
+                            <input type='submit' name='btnDecline' value='Decline'>&nbsp;&nbsp;</span>";    
+                          } ?>
+                        <?php endforeach;?>
+                      </form>
                     </ul>
                   </li>
-                  <li class="footer"><a href="#">View all</a></li>
+                  <li class="footer">
+                    <a href="#">View all</a>
+                  </li>
                 </ul>
               </li>
+
               <!-- Tasks: style can be found in dropdown.less -->
               <li class="dropdown tasks-menu">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -319,7 +339,10 @@ endforeach;
               <ul class="treeview-menu">
                 <li><a href="<?php echo base_url(); ?>pages/newgroup"><i class="fa fa-plus"></i>Create Group</a></li>
                 <?php foreach ($groupdetails as $row):?>
+                  <?php if($this->post->groupstat($row['userId'])==false){ ?>
                   <li><a href="<?php echo base_url(); ?>pages/group/<?php echo $row['groupId']?>"><i class="fa fa-circle-o"></i><?php echo $row['groupname'];?></a></li>
+                  <?php }else{
+                  echo ""; } ?>
                 <?php endforeach;?>
               </ul>
             </li>
