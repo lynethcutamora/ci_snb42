@@ -7,7 +7,7 @@
                    <?php echo validation_errors(); ?>
                  </div>
           <?php }?>
-
+                      <h1><center>Ideator</center></h1>
                       <?php echo form_open('../pages/register',"class=form-horizontal"); ?>
                       <div class="form-group">
                         <label for="inputLName" class="col-sm-2 control-label">Last Name*</label>

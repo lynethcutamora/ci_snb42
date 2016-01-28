@@ -9,7 +9,7 @@
           <?php }?>
                    
                        
-
+                      <h1><center>Company</center></h1>
                       <?php echo form_open('../pages/register',"class=form-horizontal"); ?>
                       <div class="form-group">
                         <label for="inputCName" class="col-sm-2 control-label">Company Name*</label>
