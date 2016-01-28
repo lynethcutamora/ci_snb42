@@ -308,7 +308,13 @@
                             }else{
                               echo '<span class=\'username\'><a href="#">'.$row['user_fName'].' '.$row['user_midInit'].'. '.$row['user_lName'].'</a></span>
                                     <span class=\'description\'>Reputation:<span class="pull-right"><i class=\'fa fa-star\' style="color:#ffd700;"></i><b>&nbsp;&nbsp;'.$row['userId'].'</b></span></span>
-                                    ';
+                                    <form method="post" action="#">
+                                    <div class="input-group">
+                                    <div class="input-group-btn">
+                                   <button type="submit"class="btn btn-success pull-right" name="btnleave">Leave group</button>
+                                   </div>
+                                   </div>
+                                    </form>';
                             }
                           ?><br/>
                       </div><!-- /.user-block -->

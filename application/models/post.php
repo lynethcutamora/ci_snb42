@@ -541,7 +541,7 @@
             $this->db->join('avatar_dtl e', 'e.userId=d.userId');
             $this->db->where('d.postType','investpost');
             $this->db->order_by('postDate', 'DESC');
-            $this->db->limit('5');
+            $this->db->limit('3');
             $query = $this->db->get();
             return $query;
         }
@@ -556,7 +556,7 @@
             $this->db->join('avatar_dtl e', 'e.userId=a.userId');
             $this->db->join('userpost d', 'd.userId=a.userId');
             $this->db->order_by('postDate', 'DESC');
-            $this->db->limit('5');
+            $this->db->limit('3');
             $query = $this->db->get();
             return $query;
         }
