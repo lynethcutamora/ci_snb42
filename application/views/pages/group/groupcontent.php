@@ -337,7 +337,7 @@
                   $searchres=0;
                   foreach ($searchpeople as $row){
                     if(isset($_POST['txtsearch'])){
-                      if(trim($row['user_Type'])!='Investor'){
+                      if(trim($row['user_Type'])!='Investor' && $row['userId']!=$this->session->userdata('userId')){
                         $searchres++;
                       }
                     }
@@ -407,7 +407,7 @@
                   $searchres=0;
                   foreach ($searchinvestor as $row){
                     if(isset($_POST['txtsearch'])){
-                      if(trim($row['user_Type'])=='Investor'){
+                      if(trim($row['user_Type'])=='Investor' && $row['userId']!=$this->session->userdata('userId')){
                         $searchres++;
                       }
                     }
