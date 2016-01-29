@@ -313,13 +313,7 @@
                                       <div class="form-group">
                                         <label for="inputDescription" class="col-sm-2 control-label">About Me</label>
                                         <div class="col-sm-9">
-                                        <?php
-                                          $skills = $userdtl['user_shortSelfDescription'];
-                                          $res = explode(', ', $skills);
-                                        ?>
-                                          <input type="checkbox" name="inputDescription[]" value="Programmer" <?php if(in_array("Programmer", $res)) echo "checked";?> >Programmer<br>
-                                          <input type="checkbox" name="inputDescription[]" value="Web Designer" <?php if(in_array("Web Designer", $res)) echo "checked";?> >Web Designer<br>
-                                          <input type="checkbox" name="inputDescription[]" value="Data Gathering" <?php if(in_array("Data Gathering", $res)) echo "checked";?> >Data Gathering<br>
+                                          <input type="text" class="form-control" name="inputDescription" id="inputDescription" required="required" placeholder="Short Self-Description"  value="<?php echo $userdtl['user_shortSelfDescription']; ?>">
                                         </div>
                                       </div>
                     
@@ -764,12 +758,13 @@
                         
                         ?>
 
-                     <?php endforeach; ?>
+                     
                       </select>
                       
                       <input type="text"  hidden="true" value="<?php echo $userId;?>" name="userid">
                       <input type="text"  hidden="true" value="<?php echo $row['groupId'];?>" name="groupid">
                 </div>&nbsp;&nbsp;
+                <?php endforeach; ?>
                 <button class="btn btn-default pull-right" value="addmember"><i class="fa fa-plus"></i>&nbsp;&nbsp;&nbsp;Add member</button>
               
                 </form>
