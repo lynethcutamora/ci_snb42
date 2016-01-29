@@ -335,9 +335,8 @@ class Pages extends CI_Controller {
 				$data['groupdetails'] = $groupquery->result_array();
 				$data['alldata']=$query->result_array();
 				$postdtlquery= $this->post->postdtl($postId);
-				$data['postDetail'] = $postdtlquery->result_array();
-				$comments= $this->post->showComments($postId,'1');
-				$data['comments'] = $comments->result_array();				
+				$data['postDetail'] = $postdtlquery->result_array();		
+				$data['postId']= $postId;
 
 				if($postdtlquery->num_rows()==0) {
 				$this->pagenotfound();
@@ -2643,14 +2642,21 @@ class Pages extends CI_Controller {
 		}
 
 
-		public function newShowInvestorPost($query)
+		public function newShowInvestorPost($query,$postId=null)
 		{
-				if($query =='1'){$query=$this->post->queryInvestorPost();}
+				if($query =='1'){
+
+					$query=$this->post->queryInvestorPost();
+				}
 				elseif ($query =='2') {
 					$query=$this->post->queryNewsfeedIdeator();
 				}
 				elseif ($query =='3') {
-					$query=$this->post->queryNewsfeedInvestor();
+					if($this->post->checkInvestorStatus()){
+						$query=$this->post->queryNewsfeedInvestor();
+				    }else{
+				    	$query=$this->post->queryNewsfeedInvestor1();
+				    }
 				}
 				elseif ($query =='4') {
 					$query=$this->post->queryStartupLatest();
@@ -2660,6 +2666,9 @@ class Pages extends CI_Controller {
 				}
 				elseif ($query =='6') {
 					$query=$this->post->queryStartupTop();
+				}
+				elseif ($query =='7') {
+					$query=$this->post->query1post($postId);
 				}
 			  foreach ($query->result_array() as $row):
 
@@ -2801,9 +2810,13 @@ class Pages extends CI_Controller {
 		    echo'      </div><!-- /.container -->
 		          </div><!-- /.box-body -->
 		          <div class="box-footer">
-		            <div class="container-fluid">
-		            <button type="button" class="btn btn-success btn-xs" value="'.$row['userId'].'" name="poke" data-toggle="modal" data-target="#poke2"><i class="fa fa-hand-o-left"></i>&nbsp;&nbsp;Poke</button> 
-				              <span class="pull-right"><small><a href="#">'.$this->post->upvotecount($row['postId']).' - '.$this->post->commentCount($row['postId']).'</a></small></span>
+		            <div class="container-fluid">';
+		            if($this->post->checkUser1($row['userId'])){
+
+		            }else{
+		        echo '  <button type="button" class="btn btn-success btn-xs" value="'.$row['userId'].'" name="poke" data-toggle="modal" data-target="#poke2"><i class="fa fa-hand-o-left"></i>&nbsp;&nbsp;Poke</button> ';
+		        		}
+				echo' <span class="pull-right"><small><a href="#">'.$this->post->upvotecount($row['postId']).' - '.$this->post->commentCount($row['postId']).'</a></small></span>
 		            </div>
 		          </div>
 		      </div> <!-- /. box-widget -->';
@@ -2853,8 +2866,13 @@ class Pages extends CI_Controller {
 				        </div><!-- /.box-body -->
 				          <div class="box-footer">
 				            <div class="container-fluid">
-				            <button type="button" class="btn btn-success btn-xs" value="'.$row['userId'].'" name="poke" data-toggle="modal" data-target="#poke2"><i class="fa fa-hand-o-left"></i>&nbsp;&nbsp;Poke</button> 
-				               <span class="pull-right"><small><a href="#">'.$this->post->upvotecount($row['postId']).' - '.$this->post->commentCount($row['postId']).'</a></small></span>
+				           ';
+		            if($this->post->checkUser1($row['userId'])){
+
+		            }else{
+		        echo '  <button type="button" class="btn btn-success btn-xs" value="'.$row['userId'].'" name="poke" data-toggle="modal" data-target="#poke2"><i class="fa fa-hand-o-left"></i>&nbsp;&nbsp;Poke</button> ';
+		        		}
+				echo'  <span class="pull-right"><small><a href="#">'.$this->post->upvotecount($row['postId']).' - '.$this->post->commentCount($row['postId']).'</a></small></span>
 				            </div>
 				          </div>
 				      </div> <!-- /. box-widget -->';
@@ -2891,10 +2909,13 @@ class Pages extends CI_Controller {
 				             
 				          </div><!-- /.container -->
 				        </div><!-- /.box-body -->
-				          <div class="box-footer">
-				            <div class="container-fluid">
-				            <button type="button" class="btn btn-success btn-xs" value="'.$row['userId'].'" name="poke" data-toggle="modal" data-target="#poke2"><i class="fa fa-hand-o-left"></i>&nbsp;&nbsp;Poke</button> 
-				               <span class="pull-right"><small><a href="#">'.$this->post->upvotecount($row['postId']).' - '.$this->post->commentCount($row['postId']).'</a></small></span>
+				          <div class="box-footer">';
+		            if($this->post->checkUser1($row['userId'])){
+
+		            }else{
+		        echo '  <button type="button" class="btn btn-success btn-xs" value="'.$row['userId'].'" name="poke" data-toggle="modal" data-target="#poke2"><i class="fa fa-hand-o-left"></i>&nbsp;&nbsp;Poke</button> ';
+		        		}
+				echo' <span class="pull-right"><small><a href="#">'.$this->post->upvotecount($row['postId']).' - '.$this->post->commentCount($row['postId']).'</a></small></span>
 				            </div>
 				          </div>
 				      </div> <!-- /. box-widget -->';
@@ -2931,10 +2952,13 @@ class Pages extends CI_Controller {
 				          </div><!-- /.container -->
 				        </div><!-- /.box-body -->
 				          <div class="box-footer">
-				            <div class="container-fluid">
+				            <div class="container-fluid">';
+   					if($this->post->checkUser1($row['userId'])){
 
-				              <button type="button" class="btn btn-success btn-xs" value="'.$row['userId'].'" name="poke" data-toggle="modal" data-target="#poke2"><i class="fa fa-hand-o-left"></i>&nbsp;&nbsp;Poke</button> 
-				              <span class="pull-right"><small><a href="#">'.$this->post->upvotecount($row['postId']).' - '.$this->post->commentCount($row['postId']).'</a></small></span>
+		            }else{
+		        echo '  <button type="button" class="btn btn-success btn-xs" value="'.$row['userId'].'" name="poke" data-toggle="modal" data-target="#poke2"><i class="fa fa-hand-o-left"></i>&nbsp;&nbsp;Poke</button> ';
+		        		}
+				echo' <span class="pull-right"><small><a href="#">'.$this->post->upvotecount($row['postId']).' - '.$this->post->commentCount($row['postId']).'</a></small></span>
 				            </div>
 				          </div>
 				      </div> <!-- /. box-widget -->';
@@ -2963,6 +2987,77 @@ class Pages extends CI_Controller {
 		';
 		}
 
+		public function newCommentShow($postId)
+		{
+			
+                foreach($this->post->comment($postId)->result_array() as $row):
+                  
+				if($this->post->checkUser($row['userId'])=='false')	{
+                   echo ' <div class="direct-chat-msg">';
+                    echo '  <div class="direct-chat-info clearfix">';
+                      echo '  <span class="direct-chat-name pull-left">';
+                      echo $this->post->userProfile($row['userId']);
+                      echo '</span>
+                        <span class="direct-chat-timestamp pull-right">';
+
+                        echo $row['commentDate'];
+
+                        echo '</span>
+                      </div><!-- /.direct-chat-info -->
+                       <img class="direct-chat-img" src="';echo base_url();echo'user/';echo $this->post->getAvatar($row['userId']); echo '"><!-- /.direct-chat-img -->';
+                        echo '<div class="direct-chat-text">';
+                           echo $row['commentContent'];
+                      echo '</div><!-- /.direct-chat-text -->
+                    </div><!-- /.direct-chat-msg -->';
+                }else{
+
+                	echo '<div class="direct-chat-msg right">
+                          <div class="direct-chat-info clearfix">
+                            <span class="direct-chat-name pull-right">';
+                            echo $this->post->userProfile($row['userId']);
+                        echo '   </span>
+                            <span class="direct-chat-timestamp pull-left">';
+
+                            echo $row['commentDate'];
+                          echo '</span>
+                          </div><!-- /.direct-chat-info -->
+                         <img class="direct-chat-img" src="';echo base_url();echo'user/';echo $this->post->getAvatar($row['userId']); echo '"><!-- /.direct-chat-img -->';
+                       echo '<div class="direct-chat-text">';
+                            echo $row['commentContent'];
+                        echo '</div>
+                        </div><!-- /.direct-chat-msg -->';
+                }
+                  endforeach;
+		}
+
+		public function commentNow()
+	{
+		if(($this->session->userdata('userId')!=""))
+		{
+			if($this->input->post("message")==null){
+				echo "Please Input message";
+			}
+				else{
+
+		     $datetime = date('Y-m-d H:i:s'); 
+		  
+		     $data = array(
+					'commentContent' => $this->input->post("message"),
+					'commentDate' =>$datetime,
+					'postId' =>$this->input->post("postId"),
+					'userId' =>$this->input->post("fromUserId"),
+					'commentId' => uniqid()
+			);
+					
+			$this->db->insert('comment_dtl', $data);
+			}
+					
+		}
+		else
+		{
+			$this->_landing();
+		}
+	}
 
 
 

@@ -169,7 +169,7 @@
             $query = $this->db->get();
             return $query;
         }
-        public function showComments($postId,$type)
+        public function showComments($postId)
         {
             $this->db->select('*');
             $this->db->from('user_md a');
@@ -178,7 +178,6 @@
             $this->db->join('comment_dtl d', 'd.userId=a.userId','left');
             $this->db->join('avatar_dtl e', 'e.userId=d.userId','left');
             $this->db->where('postId',$postId);
-            $this->db->where('commentType',$type);
             $this->db->order_by('commentDate', 'ASC');
             $query = $this->db->get();
              return $query;
@@ -814,6 +813,11 @@
             $query = $this->db->query("SELECT * FROM  userpost WHERE postType='3' OR postType = '4' or postType ='2' OR   postType = '1' ORDER by postDate desc");
             return $query;
         }
+        public function queryNewsfeedInvestor1()
+        {
+            $query = $this->db->query("SELECT * FROM  userpost WHERE postType='3' OR postType = '4' or postType ='2' ORDER by postDate desc");
+            return $query;
+        }
         public function queryStartupLatest()
         {
             $query = $this->db->query("SELECT * from userpost v left join user_md b on v.userId = b.userId left join user_dtl d on b.userId = d.userId  where postType = '2' group by postDate order by postDate desc");
@@ -829,8 +833,72 @@
             $query = $this->db->query("SELECT *, COUNT(c.postId) as number_of_votes from upvote_dtl c left join userpost v on c.postId = v.postId left join user_md b on v.userId = b.userId left join user_dtl d on b.userId = d.userId where voteType = '1' AND postType = '2' group by c.postId order by number_of_votes desc");
             return $query;
         }
+        public function checkInvestorStatus()
+        {
+            $this->db->select('*');
+             $this->db->from('user_md');
+             $this->db->where('user_status','1');
+             $this->db->where('userId',$this->session->userdata("userId"));
+             $query = $this->db->get();
+            $numrow= $query->num_rows();
+            if($numrow){
+                return true;
+            }
+            else return false;
+        }
+        public function checkInvestor($userId)
+        {
+            $this->db->select('*');
+             $this->db->from('user_md');
+             $this->db->where('user_Type','Investor');
+             $this->db->or_where('user_Type','Company');
+             $this->db->where('userId',$userId);
+             $query = $this->db->get();
+            $numrow= $query->num_rows();
+            if($numrow){
+                return true;
+            }
+            else return false;
+        }
+        public function checkmypost($postId)
+        {
+             $this->db->select('*');
+             $this->db->from('userpost');
+             $this->db->where('postId',$postId);
+             $this->db->where('userId',$this->session->userdata("userId"));
+             $query = $this->db->get();
+            $numrow= $query->num_rows();
+            if($numrow){
+                return true;
+            }
+            else return false;
+        }
 
-
+           public function checkUser1($userId)
+        {
+            if($userId==$this->session->userdata('userId')){
+                return true;
+            }else
+            return false;
+        }
+        public function query1post($postId)
+        {
+             $this->db->select('*');
+             $this->db->from('userpost');
+             $this->db->where('postId',$postId);
+             $query = $this->db->get();
+             return $query;
+        
+        }
+        public function comment($postId)
+        {
+             $this->db->select('*');
+             $this->db->from('comment_dtl');
+             $this->db->where('postId',$postId);
+             $query = $this->db->get();
+             return $query;
+        
+        }
 
     }
 
