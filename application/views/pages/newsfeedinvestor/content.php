@@ -2,7 +2,7 @@
  <section class="content-header">
  <div class="row">
           <h2>
-            &nbsp;&nbsp;&nbsp;<i class="fa fa-feed"></i>&nbsp;&nbsp;Venture Capitalist Post  
+            &nbsp;&nbsp;&nbsp;<i class="fa fa-feed"></i>&nbsp;&nbsp;NEWSFEED
           </h2>
           </br>
              <div class="col-md-9">

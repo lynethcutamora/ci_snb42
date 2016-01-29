@@ -814,6 +814,21 @@
             $query = $this->db->query("SELECT * FROM  userpost WHERE postType='3' OR postType = '4' or postType ='2' OR   postType = '1' ORDER by postDate desc");
             return $query;
         }
+        public function queryStartupLatest()
+        {
+            $query = $this->db->query("SELECT * from userpost v left join user_md b on v.userId = b.userId left join user_dtl d on b.userId = d.userId  where postType = '2' group by postDate order by postDate desc");
+            return $query;
+        }
+        public function queryStartupOnfire()
+        {
+            $query = $this->db->query("SELECT *, COUNT(c.postId) as number_of_comments from comment_dtl c left join userpost v on c.postId = v.postId left join user_md b on v.userId = b.userId left join user_dtl d on b.userId = d.userId  where postType = '2' group by c.postId order by number_of_comments desc");
+            return $query;
+        }
+        public function queryStartupTop()
+        {
+            $query = $this->db->query("SELECT *, COUNT(c.postId) as number_of_votes from upvote_dtl c left join userpost v on c.postId = v.postId left join user_md b on v.userId = b.userId left join user_dtl d on b.userId = d.userId where voteType = '1' AND postType = '2' group by c.postId order by number_of_votes desc");
+            return $query;
+        }
 
 
 

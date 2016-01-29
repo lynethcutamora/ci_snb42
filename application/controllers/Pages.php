@@ -2652,6 +2652,15 @@ class Pages extends CI_Controller {
 				elseif ($query =='3') {
 					$query=$this->post->queryNewsfeedInvestor();
 				}
+				elseif ($query =='4') {
+					$query=$this->post->queryStartupLatest();
+				}
+				elseif ($query =='5') {
+					$query=$this->post->queryStartupOnfire();
+				}
+				elseif ($query =='6') {
+					$query=$this->post->queryStartupTop();
+				}
 			  foreach ($query->result_array() as $row):
 
 			  	if($row['postType']=='1'){
