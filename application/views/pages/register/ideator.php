@@ -99,11 +99,9 @@
                         </div>
                       </div>
                       <div class="form-group">
-                        <label for="inputDescription" class="col-sm-2 control-label">Skills Acquired</label>
+                        <label for="inputDescription" class="col-sm-2 control-label">About Me</label>
                         <div class="col-sm-9">
-                          <input type="checkbox" name="inputDescription[]" value="Programmer"> Programmer<br>
-                          <input type="checkbox" name="inputDescription[]" value="Web Designer"> Web Designer<br>
-                          <input type="checkbox" name="inputDescription[]" value="Data Gathering"> Data Gathering<br>
+                          <textarea class="form-control" name="inputDescription" id="inputDescription" placeholder="Short Self-Description"  value="<?php echo set_value('inputDescription'); ?>"></textarea>
                         </div>
                       </div>
                       <div class="form-group">

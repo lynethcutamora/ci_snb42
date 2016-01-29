@@ -457,14 +457,13 @@ class Pages extends CI_Controller {
 	{
 		$userId = $this->session->userdata('userId');
 		$inputDescription = implode(', ', $this->input->post('inputDescription[]'));
-		if($inputDescription == null)
-		{
+	
 		$data = array(
 			'user_lName' => ucfirst(strtolower($this->input->post('inputLName'))),
 			'user_fName' => ucfirst(strtolower($this->input->post('inputFName'))),
 			'user_midInit' => strtoupper($this->input->post('inputMI')),
 			'user_age' => $this->input->post('inputAge'),
-			'user_shortSelfDescription' => "Please update your skills",
+			'user_shortSelfDescription' => $this->input->post('inputDescription[]'),
 			);
 		$data1 = array(
 			'location_address1' => $this->input->post('inputAddress1'),
@@ -476,26 +475,7 @@ class Pages extends CI_Controller {
 		$this->db->update('user_dtl', $data);
 		$this->db->update('location_dtl', $data1);
 		redirect('pages/profile');
-		}
-		else{
-		$data = array(
-			'user_lName' => ucfirst(strtolower($this->input->post('inputLName'))),
-			'user_fName' => ucfirst(strtolower($this->input->post('inputFName'))),
-			'user_midInit' => strtoupper($this->input->post('inputMI')),
-			'user_age' => $this->input->post('inputAge'),
-			'user_shortSelfDescription' => $inputDescription,
-			);
-		$data1 = array(
-			'location_address1' => $this->input->post('inputAddress1'),
-			'location_city' => $this->input->post('inputCity'),
-			'location_country' => $this->input->post('inputCountry'),
-			);
-
-		$this->db->where('userId', $userId);
-		$this->db->update('user_dtl', $data);
-		$this->db->update('location_dtl', $data1);
-		redirect('pages/profile');
-		}
+		
 	}
 	public function _changeCompany()
 	{
@@ -612,7 +592,7 @@ class Pages extends CI_Controller {
          $this->form_validation->set_rules('inputRegion', 'Region/State', 'trim|max_length[45]');
          $this->form_validation->set_rules('inputZIP', 'Zip Code', 'alpha_numeric|max_length[10]');
          $this->form_validation->set_rules('inputCounty', 'Country', 'trim|max_length[13]');
-         $this->form_validation->set_rules('inputDescription[]', 'Skills', 'required|trim|max_length[100]');
+         $this->form_validation->set_rules('inputDescription', 'Short Description', 'required|trim|max_length[100]');
          $this->form_validation->set_rules('checkbox1', 'Terms and Condition', 'required');
 
 
@@ -628,7 +608,6 @@ class Pages extends CI_Controller {
 			$picId = uniqid('pi'); 
 			$password=$this->input->post('inputPassword');
 			$locationId = uniqid('li');
-			$inputDescription = implode(', ', $this->input->post('inputDescription[]'));
 
 			$data = array(
 			'userId' => $userId,
@@ -647,7 +626,7 @@ class Pages extends CI_Controller {
 			'user_midInit' => strtoupper($this->input->post('inputMI')),
 			'user_age' => $this->input->post('inputAge'),
 			'user_gender' => $this->input->post('r3'),
-			'user_shortSelfDescription' => $inputDescription,
+			'user_shortSelfDescription' => $this->input->post('inputDescription'),
 			);
 
 			$data2 = array(
