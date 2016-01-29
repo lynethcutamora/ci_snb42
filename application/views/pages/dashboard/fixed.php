@@ -109,6 +109,7 @@ endforeach;
                             echo "<span class='pull-right'><input type='submit' name='btnAccept' value='Accept'>&nbsp;&nbsp;&nbsp;&nbsp;
                             <input type='submit' name='btnDecline' value='Decline'>&nbsp;&nbsp;</span>";    
                           } ?>
+                          <hr>
                         <?php endforeach;?>
                       </form>
                     </ul>

@@ -356,7 +356,7 @@
                           echo '<input type="text" hidden="true" name="groupid" value="'.$groupid.'">';
                           echo '<input type="text" hidden="true" name="userid" value="'.$row['userId'].'">';
                           
-                            if($this->post->existsMember($groupid,$row['userId'])==false){
+                            if($this->post->existsMember($groupid,$row['userId'])==false && $this->post->pendingMember($groupid,$row['userId'])==false){
                               if($row['user_Type']=='Company' && $row['userId']!=$this->session->userdata('userId')){
                                  echo '<span class="pull-left"><i class="fa fa-user" style="color:gray;"></i></span>
                                     <p class="text-muted">&nbsp;&nbsp;'.$row['company_name'].'
@@ -424,7 +424,7 @@
                             echo'<div class="box-body">';
                               echo '<input type="text" hidden="true" name="groupid" value="'.$groupid.'">';
                               echo '<input type="text" hidden="true" name="userid" value="'.$row['userId'].'">';
-                                if($this->post->existsMember($groupid,$row['userId'])==false){
+                                if($this->post->existsMember($groupid,$row['userId'])==false && $this->post->pendingMember($groupid,$row['userId'])==false){
                                   if($row['userId']!=$this->session->userdata('userId')){
                                       echo '<span class="pull-left"><i class="fa fa-user" style="color:gray;"></i></span>
                                             <p class="text-muted">&nbsp;&nbsp;'.$row['user_fName']." ".$row['user_midInit'].". ".$row['user_lName'].'
