@@ -243,15 +243,7 @@
     </div><!-- /.box-->
 
           <?php } ?>
-          <table id="example2">
-                    <thead>
-                   
-                        <th>Users</th>
-                        <th></th>
-                    </thead>
-                   
-                    <tbody>
-                      <tr>
+         
 
               
           <div name="investorpost" id="investorpost"></div>
