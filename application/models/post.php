@@ -809,6 +809,11 @@
             $query = $this->db->query("SELECT * FROM  userpost WHERE (postType='3' OR postType = '4' or postType ='2') OR ( userId = '".$this->session->userdata("userId")."' AND postType = '1')");
             return $query;
         }
+        public function queryNewsfeedInvestor()
+        {
+            $query = $this->db->query("SELECT * FROM  userpost WHERE postType='3' OR postType = '4' or postType ='2' OR   postType = '1' ORDER by postDate desc");
+            return $query;
+        }
 
 
 
