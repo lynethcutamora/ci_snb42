@@ -183,22 +183,23 @@
              return $query;
         }
 
-        public function existsMember($groupId , $userId)
+        public function existsMember($groupId,$userId)
         {
             $this->db->select('*');
             $this->db->from('group_ext');
             $this->db->where('userId',$userId);
             $this->db->where('groupId',$groupId);
-            $this->db->where('status','0' && '1');
+            $this->db->where('status','0');
             $query=$this->db->get();
             $numrows = $query->num_rows();
             if($numrows>0)  return true;
             else return false;
         }
-        public function groupstat($userId)
+        public function groupstat($groupid,$userId)
         {
             $this->db->select('*');
             $this->db->from('group_ext');
+            $this->db->where('groupId',$groupid);
             $this->db->where('userId', $userId);
             $this->db->where('status', '1');
             $query=$this->db->get();

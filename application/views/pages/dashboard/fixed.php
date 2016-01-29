@@ -88,12 +88,7 @@ endforeach;
                 <i class="fa fa-bell-o"></i>
                 <span class="label label-warning"><div name="countntf" id="countntf"></div></span>
                 </a>
-                <script>
-                  function loadNowPlaying5(){
-                    $("#countntf").load("<?php echo base_url().'pages/countntf'; ?>"); 
-                  }
-                  setInterval(function(){loadNowPlaying5()}, 1000);
-                </script>
+                
                 <ul class="dropdown-menu">
                   <li class="header">Notification</li>
                   <li>
@@ -103,7 +98,7 @@ endforeach;
                         <?php foreach($groupdetails as $row):?>
                           <input type="text" hidden="true" name="groupid" value="<?php echo $row['groupId']?>">
                           <input type="text" hidden="true" name="userid" value="<?php echo $row['userId']?>">
-                          <?php if($this->post->groupstat($row['userId'])==false)
+                          <?php if($this->post->groupstat($row['groupId'],$row['userId'])==false)
                           {
                             echo "";
                           }
@@ -114,6 +109,7 @@ endforeach;
                             echo "<span class='pull-right'><input type='submit' name='btnAccept' value='Accept'>&nbsp;&nbsp;&nbsp;&nbsp;
                             <input type='submit' name='btnDecline' value='Decline'>&nbsp;&nbsp;</span>";    
                           } ?>
+                          <hr>
                         <?php endforeach;?>
                       </form>
                     </ul>
@@ -122,6 +118,12 @@ endforeach;
                     <a href="#">View all</a>
                   </li>
                 </ul>
+                <script>
+                  function loadNowPlaying5(){
+                    $("#countntf").load("<?php echo base_url().'pages/countntf'; ?>"); 
+                  }
+                  setInterval(function(){loadNowPlaying5()}, 1000);
+                </script>
               </li>
 
               <!-- Tasks: style can be found in dropdown.less -->
@@ -339,7 +341,7 @@ endforeach;
               <ul class="treeview-menu">
                 <li><a href="<?php echo base_url(); ?>pages/newgroup"><i class="fa fa-plus"></i>Create Group</a></li>
                 <?php foreach ($groupdetails as $row):?>
-                  <?php if($this->post->groupstat($row['userId'])==false){ ?>
+                  <?php if($this->post->groupstat($row['groupId'],$row['userId'])==false){?>
                   <li><a href="<?php echo base_url(); ?>pages/group/<?php echo $row['groupId']?>"><i class="fa fa-circle-o"></i><?php echo $row['groupname'];?></a></li>
                   <?php }else{
                   echo ""; } ?>

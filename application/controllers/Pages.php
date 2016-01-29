@@ -1168,12 +1168,10 @@ class Pages extends CI_Controller {
 
 			$this->db->update('group_ext',$data);
 			header('Location:'.base_url().'pages/group/'.$this->input->post('groupid'));
-		}else{
-			$data = array(
-					'status' => '2'
-				);
+		}elseif(isset($_POST['btnDecline'])){
 
-			$this->db->update('group_ext',$data);
+			$this->db->delete('group_ext');
+			header('Location:'.base_url().'pages/profile/'.$this->input->post('userId'));
 		}
 	}
 
@@ -2337,7 +2335,7 @@ class Pages extends CI_Controller {
 			   $data['fromUserId'] = $id;
 
 			}elseif($key =='group'){
-
+				
 			}else{
 				$data['msg'] = $this->post->notifmsgFirst()->result_array();
 

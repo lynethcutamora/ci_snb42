@@ -337,7 +337,7 @@
                   $searchres=0;
                   foreach ($searchpeople as $row){
                     if(isset($_POST['txtsearch'])){
-                      if(trim($row['user_Type'])!='Investor'){
+                      if(trim($row['user_Type'])!='Investor' && $row['userId']!=$this->session->userdata('userId')){
                         $searchres++;
                       }
                     }
@@ -356,7 +356,7 @@
                           echo '<input type="text" hidden="true" name="groupid" value="'.$groupid.'">';
                           echo '<input type="text" hidden="true" name="userid" value="'.$row['userId'].'">';
                           
-                            if($this->post->existsMember($groupid,$row['userId'])==false){
+                            if($this->post->existsMember($groupid,$row['userId'])==false && $this->post->pendingMember($groupid,$row['userId'])==false){
                               if($row['user_Type']=='Company' && $row['userId']!=$this->session->userdata('userId')){
                                  echo '<span class="pull-left"><i class="fa fa-user" style="color:gray;"></i></span>
                                     <p class="text-muted">&nbsp;&nbsp;'.$row['company_name'].'
@@ -372,17 +372,17 @@
                                   if($row['user_Type']=='Company' && $row['userId']!=$this->session->userdata('userId')){
                                      echo '<span class="pull-left"><i class="fa fa-user" style="color:gray;"></i></span>
                                         <p class="text-muted">&nbsp;&nbsp;'.$row['company_name'].'
-                                        <span class="pull-right"><button name="btnaddmember" class="form-control btn disabled" type="submit"><i class="fa fa-plus"></i></button></span></p>';
+                                        <span class="pull-right">Member</span></p>';
                                   }elseif($row['userId']!=$this->session->userdata('userId')){
                                     echo '<span class="pull-left"><i class="fa fa-user" style="color:gray;"></i></span>
                                           <p class="text-muted">&nbsp;&nbsp;'.$row['user_fName']." ".$row['user_midInit'].". ".$row['user_lName'].'
-                                          <span class="pull-right"><button name="btnaddmember" class="form-control btn disabled" disabled><i class="fa fa-plus"></i></button></span></p>';                      
+                                          <span class="pull-right">Member</span></p>';                      
                                   }
                                 }else{
                                   if($row['user_Type']=='Company' && $row['userId']!=$this->session->userdata('userId')){
                                      echo '<span class="pull-left"><i class="fa fa-user" style="color:gray;"></i></span>
                                         <p class="text-muted">&nbsp;&nbsp;'.$row['company_name'].'
-                                        <span class="pull-right"><button name="btnaddmember" class="form-control btn disabled" type="submit"><i class="fa fa-plus"></i></button></span></p><span class="pull-right"><small>Pending Request</small></span>';
+                                        <span class="pull-right">Already a member</span></p><span class="pull-right"><small>Pending Request</small></span>';
                                   }elseif($row['userId']!=$this->session->userdata('userId')){
                                     echo '<span class="pull-left"><i class="fa fa-user" style="color:gray;"></i></span>
                                           <p class="text-muted">&nbsp;&nbsp;'.$row['user_fName']." ".$row['user_midInit'].". ".$row['user_lName'].'
@@ -407,7 +407,7 @@
                   $searchres=0;
                   foreach ($searchinvestor as $row){
                     if(isset($_POST['txtsearch'])){
-                      if(trim($row['user_Type'])=='Investor'){
+                      if(trim($row['user_Type'])=='Investor' && $row['userId']!=$this->session->userdata('userId')){
                         $searchres++;
                       }
                     }
@@ -424,7 +424,7 @@
                             echo'<div class="box-body">';
                               echo '<input type="text" hidden="true" name="groupid" value="'.$groupid.'">';
                               echo '<input type="text" hidden="true" name="userid" value="'.$row['userId'].'">';
-                                if($this->post->existsMember($groupid,$row['userId'])==false){
+                                if($this->post->existsMember($groupid,$row['userId'])==false && $this->post->pendingMember($groupid,$row['userId'])==false){
                                   if($row['userId']!=$this->session->userdata('userId')){
                                       echo '<span class="pull-left"><i class="fa fa-user" style="color:gray;"></i></span>
                                             <p class="text-muted">&nbsp;&nbsp;'.$row['user_fName']." ".$row['user_midInit'].". ".$row['user_lName'].'
@@ -435,7 +435,7 @@
                                     if($row['userId']!=$this->session->userdata('userId')){
                                       echo '<span class="pull-left"><i class="fa fa-user" style="color:gray;"></i></span>
                                             <p class="text-muted">&nbsp;&nbsp;'.$row['user_fName']." ".$row['user_midInit'].". ".$row['user_lName'].'
-                                            <span class="pull-right"><button name="btnaddmember" class="form-control btn disabled" disabled><i class="fa fa-plus"></i></button></span></p>';                      
+                                            <span class="pull-right">Member</span></p>';                      
                                     }
                                   }
                                   else{
