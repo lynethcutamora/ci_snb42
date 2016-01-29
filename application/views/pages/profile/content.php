@@ -758,12 +758,13 @@
                         
                         ?>
 
-                     <?php endforeach; ?>
+                     
                       </select>
                       
                       <input type="text"  hidden="true" value="<?php echo $userId;?>" name="userid">
                       <input type="text"  hidden="true" value="<?php echo $row['groupId'];?>" name="groupid">
                 </div>&nbsp;&nbsp;
+                <?php endforeach; ?>
                 <button class="btn btn-default pull-right" value="addmember"><i class="fa fa-plus"></i>&nbsp;&nbsp;&nbsp;Add member</button>
               
                 </form>

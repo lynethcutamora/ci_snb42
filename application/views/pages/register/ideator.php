@@ -131,6 +131,8 @@
               <button type="button" class="close" data-dismiss="modal">&times;</button>
               <center><h4 class="modal-title">Terms and Conditions</h4></center>
             </div>
+            <div class="modal-body">
+              <div class="form-group" align="justify">
                   <p>Welcome to our website. If you continue to browse and use this website, 
                 you are agreeing to comply with and be bound by the following terms 
                 and conditions of use, which together with our privacy policy govern 
@@ -179,15 +181,22 @@
                   They do not signify that we endorse the website(s). 
                   </li>
                   <li>
-                  The website and it's owner will not abide if the users will involve money when teaming
-                  up with other users. 
+                  The website and it's owner will not abide if the users will involve money when investing
+                  with other users. 
+                  </li>
+                  <li>
+                  The website will not be able to accomodate your idea to be patented.
                   </li>
                   <li>
                   Your use of this website and any dispute arising out of such use of the website 
                   is subject to the laws of Philippines.
                   </li>
                 </ul>
-            
+                </div>
+                </div>
+              <div class="modal-footer">
+                  <span><button type="submit" class="btn btn-primary" data-dismiss="modal" name="btnAccept">Accept</button></span>
+              </div>
             </div>
             </div>
         </div>
