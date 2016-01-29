@@ -296,6 +296,7 @@
                   $("#inputDescription").val('') ;
                   $("#relatedlinks").val('') ;
                   $("#pic").val('') ;
+                  $("#optional").val('') ;
 
 
               }
@@ -343,7 +344,7 @@
 <script>
      function investorPost(){
                  
-                  $("#investorpost").load("<?php echo base_url().'pages/newShowInvestorPost'; ?>"); }
+                  $("#investorpost").load("<?php echo base_url().'pages/newShowInvestorPost/1'; ?>"); }
                   setInterval(function(){investorPost()}, 1000);
 
 </script>

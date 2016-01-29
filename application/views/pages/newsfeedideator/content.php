@@ -34,7 +34,7 @@
 <script>
      function investorPost(){
                  
-                  $("#newsfeed").load("<?php echo base_url().'pages/newnewsfeedideator'; ?>"); }
+                  $("#newsfeed").load("<?php echo base_url().'pages/newShowInvestorPost/2'; ?>"); }
                   setInterval(function(){investorPost()}, 1000);
 
 </script>
