@@ -1364,12 +1364,12 @@ class Pages extends CI_Controller {
 
 	
 	}
-	public function upvote($userId)
+	public function upvote()
 	{
 
 		$this->form_validation->set_rules('postId', 'Post Id', 'callback_postIdCheck');
 		if ($this->form_validation->run()==FALSE){
-			$this->profile($userId);
+			
 		}else{
 			if($this->input->post('postId')!=''){
 			$data = array(
@@ -2693,7 +2693,7 @@ class Pages extends CI_Controller {
 		                <div class="row">
 		                  <p>
 		                    <span style="color:green;"><i class="fa fa-bookmark"></i>&nbsp;&nbsp;&nbsp;<small>(Startup Idea)</small></span>
-		                    <span class="pull-right" style="color:orange;"><i class="fa fa-money"></i>&nbsp;&nbsp;&nbsp;<small>invested</small>&nbsp;&nbsp;&nbsp;</span>
+		                    <!--<span class="pull-right" style="color:orange;"><i class="fa fa-money"></i>&nbsp;&nbsp;&nbsp;<small>invested</small>&nbsp;&nbsp;&nbsp;</span>-->
 		                  </p>
 		                </div>
 		                  <div class="row">
@@ -2809,12 +2809,20 @@ class Pages extends CI_Controller {
 		          </div><!-- /.box-body -->
 		          <div class="box-footer">
 		            <div class="container-fluid">';
+		            if($this->post->validUpvote($row['postId'])){
+					echo '  <button type="button" class="btn btn-success btn-xs" value="'.$row['postId'].'" name="upvote" disabled><i class="glyphicon glyphicon-circle-arrow-up"></i>&nbsp;&nbsp;upvoted</button> ';
+		        
+		            }else{
+		        echo '  <button type="button" class="btn btn-success btn-xs" value="'.$row['postId'].'" name="upvote"><i class="glyphicon glyphicon-circle-arrow-up"></i>&nbsp;&nbsp;upvote</button> ';
+		        		}	
 		            if($this->post->checkUser1($row['userId'])){
 
 		            }else{
 		        echo '  <button type="button" class="btn btn-success btn-xs" value="'.$row['userId'].'" name="poke" data-toggle="modal" data-target="#poke2"><i class="fa fa-hand-o-left"></i>&nbsp;&nbsp;Poke</button> ';
 		        		}
-				echo' <span class="pull-right"><small><a href="#">'.$this->post->upvotecount($row['postId']).' - '.$this->post->commentCount($row['postId']).'</a></small></span>
+
+				echo'<a href="'.base_url().'pages/post/'.$row['postId'].'" class="btn btn-success btn-xs" ></i>&nbsp;&nbsp;View Post</a>
+				<span class="pull-right"><small><a href="#">'.$this->post->upvotecount($row['postId']).' - '.$this->post->commentCount($row['postId']).'</a></small></span>
 		            </div>
 		          </div>
 		      </div> <!-- /. box-widget -->';
@@ -2865,12 +2873,19 @@ class Pages extends CI_Controller {
 				          <div class="box-footer">
 				            <div class="container-fluid">
 				           ';
+				           if($this->post->validUpvote($row['postId'])){
+					echo '  <button type="button" class="btn btn-success btn-xs" value="'.$row['postId'].'" name="upvote" disabled><i class="glyphicon glyphicon-circle-arrow-up"></i>&nbsp;&nbsp;upvoted</button> ';
+		        
+		            }else{
+		        echo '  <button type="button" class="btn btn-success btn-xs" value="'.$row['postId'].'" name="upvote"><i class="glyphicon glyphicon-circle-arrow-up"></i>&nbsp;&nbsp;upvote</button> ';
+		        		}
 		            if($this->post->checkUser1($row['userId'])){
 
 		            }else{
 		        echo '  <button type="button" class="btn btn-success btn-xs" value="'.$row['userId'].'" name="poke" data-toggle="modal" data-target="#poke2"><i class="fa fa-hand-o-left"></i>&nbsp;&nbsp;Poke</button> ';
 		        		}
-				echo'  <span class="pull-right"><small><a href="#">'.$this->post->upvotecount($row['postId']).' - '.$this->post->commentCount($row['postId']).'</a></small></span>
+				echo'  <a href="'.base_url().'pages/post/'.$row['postId'].'" class="btn btn-success btn-xs" ></i>&nbsp;&nbsp;View Post</a>
+				<span class="pull-right"><small><a href="#">'.$this->post->upvotecount($row['postId']).' - '.$this->post->commentCount($row['postId']).'</a></small></span>
 				            </div>
 				          </div>
 				      </div> <!-- /. box-widget -->';
@@ -2908,12 +2923,19 @@ class Pages extends CI_Controller {
 				          </div><!-- /.container -->
 				        </div><!-- /.box-body -->
 				          <div class="box-footer">';
+				          if($this->post->validUpvote($row['postId'])){
+					echo '  <button type="button" class="btn btn-success btn-xs" value="'.$row['postId'].'" name="upvote" disabled><i class="glyphicon glyphicon-circle-arrow-up"></i>&nbsp;&nbsp;upvoted</button> ';
+		        
+		            }else{
+		        echo '  <button type="button" class="btn btn-success btn-xs" value="'.$row['postId'].'" name="upvote"><i class="glyphicon glyphicon-circle-arrow-up"></i>&nbsp;&nbsp;upvote</button> ';
+		        		}
 		            if($this->post->checkUser1($row['userId'])){
 
 		            }else{
 		        echo '  <button type="button" class="btn btn-success btn-xs" value="'.$row['userId'].'" name="poke" data-toggle="modal" data-target="#poke2"><i class="fa fa-hand-o-left"></i>&nbsp;&nbsp;Poke</button> ';
 		        		}
-				echo' <span class="pull-right"><small><a href="#">'.$this->post->upvotecount($row['postId']).' - '.$this->post->commentCount($row['postId']).'</a></small></span>
+				echo'<a href="'.base_url().'pages/post/'.$row['postId'].'" class="btn btn-success btn-xs" ></i>&nbsp;&nbsp;View Post</a>
+				 <span class="pull-right"><small><a href="#">'.$this->post->upvotecount($row['postId']).' - '.$this->post->commentCount($row['postId']).'</a></small></span>
 				            </div>
 				          </div>
 				      </div> <!-- /. box-widget -->';
@@ -2951,12 +2973,20 @@ class Pages extends CI_Controller {
 				        </div><!-- /.box-body -->
 				          <div class="box-footer">
 				            <div class="container-fluid">';
+				      if($this->post->validUpvote($row['postId'])){
+					echo '  <button type="button" class="btn btn-success btn-xs" value="'.$row['postId'].'" name="upvote" disabled><i class="glyphicon glyphicon-circle-arrow-up"></i>&nbsp;&nbsp;upvoted</button> ';
+		        
+		            }else{
+		        echo '  <button type="button" class="btn btn-success btn-xs" value="'.$row['postId'].'" name="upvote"></i>&nbsp;&nbsp;upvote</button> ';
+		        		}
    					if($this->post->checkUser1($row['userId'])){
 
 		            }else{
 		        echo '  <button type="button" class="btn btn-success btn-xs" value="'.$row['userId'].'" name="poke" data-toggle="modal" data-target="#poke2"><i class="fa fa-hand-o-left"></i>&nbsp;&nbsp;Poke</button> ';
 		        		}
-				echo' <span class="pull-right"><small><a href="#">'.$this->post->upvotecount($row['postId']).' - '.$this->post->commentCount($row['postId']).'</a></small></span>
+				echo' 
+				<a href="'.base_url().'pages/post/'.$row['postId'].'" class="btn btn-success btn-xs" ><i class="glyphicon glyphicon-circle-arrow-up"></i>&nbsp;&nbsp;View Post</a>
+				<span class="pull-right"><small><a href="#">'.$this->post->upvotecount($row['postId']).' - '.$this->post->commentCount($row['postId']).'</a></small></span>
 				            </div>
 				          </div>
 				      </div> <!-- /. box-widget -->';
@@ -2977,6 +3007,26 @@ class Pages extends CI_Controller {
 			              success: function (data) {
 			          
 			                document.getElementById("userid").value = userId;
+			              }
+			            });
+
+			          });
+			 		</script>
+		';
+
+			 echo '<script>
+			           $("button[name='.'upvote'.']").click(function(e){
+			          var postId = $(this).attr("value");
+			          
+			            e.preventDefault();
+			              var dataString = "postId="+ postId;
+			            $.ajax({
+			              type: "post",
+			              url:"'.base_url().'pages/upvote/",
+			              data:dataString,
+			              success: function (data) {
+			          		alert("successfully upvoted");
+			              
 			              }
 			            });
 

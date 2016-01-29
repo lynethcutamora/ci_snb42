@@ -16,10 +16,10 @@
     		$this->db->where('userId', $this->session->userdata('userId'));
             $query = $this->db->get('upvote_dtl');
             if($query->num_rows()>0){
-            	return 'true';
+            	return true;
             }
             else
-            	return 'false';
+            	return false;
     	
     	}
         public function validBadge($userdtl)
