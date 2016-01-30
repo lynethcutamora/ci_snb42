@@ -1829,6 +1829,7 @@ class Pages extends CI_Controller {
 		else{
 	
 		echo '
+  <script src="'.base_url().'plugins/jQuery/jQuery-2.1.4.min.js"></script>
 
               <!-- Profile Image -->
               <div class="box box-primary">
@@ -1839,14 +1840,32 @@ class Pages extends CI_Controller {
 
                   <ul class="list-group list-group-unbordered">
                     <li class="list-group-item">
-                      <b>Skills</b> :<p>asdasds</p>
+                    	Badge<br>
+                    	 <button type="button" class="btn btn-success btn-xs" value="'.$this->session->userdata('poke').'" name="Gold">&nbsp;&nbsp;Gold</button>
+                    	 <button type="button" class="btn btn-success btn-xs" value="'.$this->session->userdata('poke').'" name="Silver">&nbsp;&nbsp;Silver</button>
+                    	 <button type="button" class="btn btn-success btn-xs" value="'.$this->session->userdata('poke').'" name="Bronze">&nbsp;&nbsp;Bronze</button>
                     </li>
                   </ul>
 
                  
                 </div><!-- /.box-body -->
               </div><!-- /.box -->
+              <script>
+		              $("button[name="Gold"]"").click(function(e){
+		          var userId = $(this).attr("value");
+		          
+		            e.preventDefault();
+		              var dataString = "userId="+ userId;
+		            $.ajax({
+		              type: "post",
+		              url:"'.base_url().'"pages/goldbadge/"",
+		              data:dataString,
+		              success: function (data) {
+		          			alert("successfully Badge");
+		              }
+		            });
 
+		          });</script>
               ';
               }
 	}
@@ -3086,6 +3105,23 @@ class Pages extends CI_Controller {
 		}
 	}
 
+	public function goldbadge()
+	{
+
+			if($this->input->post('postId')!=''){
+			$data = array(
+					'userId' => $this->input->post("userId"),
+					'fromUserId' => $this->session->userdata("userId"),
+					'voteBadge' => '1',
+					
+				);
+
+				$this->db->insert('badge_dtl',$data);
+			}
+			
+			
+		
+	}
 
 
 

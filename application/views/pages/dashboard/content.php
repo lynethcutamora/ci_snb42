@@ -63,7 +63,6 @@
                             <th>Top</th>
                             <th>Title</th>
                              <th>Owner(s)</th>
-                            <th>Investor</th>
                             <th>Upvotes</th>
                             <!-- <th>Popularity</th> -->
                           </tr>
@@ -136,7 +135,6 @@
                             <td><?php echo $i;?></td>
                             <td><a href="<?php echo base_url()."pages/post/".$row->postId;?>"><?php echo $row->postTitle;?></a></td>
                             <td><a href="<?php echo base_url()."pages/profile/".$row->userId;?>"><?php echo $row->user_fName;?>&nbsp;<?php echo $row->user_midInit;?>.&nbsp;<?php echo $row->user_lName;?></a></td>
-                            <td>Steve Jobs</td>
                             <td>
                               <span class="label label-default"><i class="fa fa-thumbs-up">&nbsp;<?php echo $like;?></i></span>
                             </td>

@@ -358,6 +358,14 @@
                   $("#inputDescription").val('') ;
                   $("#relatedlinks").val('') ;
                   $("#pic").val('') ;
+                  $("#inputChannels").val('') ;
+                  $("#inputRevenueStreams").val('') ;
+                  $("#inputCostStructure").val('') ;
+                  $("#inputCusomerSegments").val('') ;
+                  $("#inputValuePropositions").val('') ;
+                  $("#inputKeyResources").val('') ;
+                  $("#inputKeyActivities").val('') ;
+                  $("#inputKeyPartners").val('') ;
 
 
               }

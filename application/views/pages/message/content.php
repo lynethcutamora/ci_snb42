@@ -33,18 +33,7 @@
                   </ul>
                 </div><!-- /.box-body -->
               </div><!-- /. box -->
-               <div class="box box-solid">
-                <div class="box-header with-border">
-                  <h3 class="box-title">Requests</h3>
-                 
-                </div>
-                <div class="box-body no-padding">
-                  <ul class="nav nav-pills nav-stacked">
-                    <li class="active"><a href="#"><i class="fa fa-group"></i> Group Request <span class="label label-primary pull-right">12</span></a></li>
-                   
-                  </ul>
-                </div><!-- /.box-body -->
-              </div><!-- /. box -->
+               
              
             </div>
             <div class="col-md-8">
