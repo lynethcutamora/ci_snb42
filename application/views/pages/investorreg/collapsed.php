@@ -41,11 +41,8 @@ endforeach;
   </head>
   <!-- ADD THE CLASS fixed TO GET A FIXED HEADER AND SIDEBAR LAYOUT -->
   <!-- the fixed layout is not compatible with sidebar-mini -->
-  <?php if($pages=='profile'){
-    echo '  <body class="hold-transition skin-blue sidebar-collapse sidebar-mini">';
-  }else{
-   echo '<body class="hold-transition skin-blue fixed sidebar-mini">'; 
-}?>
+
+<body class="hold-transition skin-blue sidebar-collapse sidebar-mini">
     <!-- Site wrapper -->
     <div class="wrapper">
 
@@ -69,9 +66,8 @@ endforeach;
           </a>
           <div class="navbar-custom-menu">
             <ul class="nav navbar-nav">
-              <!-- Messages: style can be found in dropdown.less-->
               <li class="dropdown messages-menu">
-                <a href="<?php echo base_url()."pages/notif"?>" >
+                <a href="#" >
                   <i class="fa fa-envelope-o"></i>
                   <span class="label label-success"><div name="countmsg" id="countmsg"></div></span>
                 </a>
@@ -174,9 +170,7 @@ endforeach;
                               {
                                 echo $row['company_name'];
                               }
-
-                          
-                       
+                                              
                       ?>
                       <small><?php echo $row['user_Type'];?></small>
                       <?php  endforeach;?>
@@ -248,77 +242,19 @@ endforeach;
               </span>
             </div>
           </form>
-          
           <!-- /.search form -->
           <!-- sidebar menu: : style can be found in sidebar.less -->
           <ul class="sidebar-menu">
             <li class="header">MAIN NAVIGATION</li>
-            
-            <li class="treeview <?php if($pages=='dashboard') {echo "active";}else echo "";?>">
-              <a href="<?php echo base_url(); ?>pages/index">
-                <i class="fa fa-dashboard"></i> <span>Dashboard</span> <!--<i class="fa fa-angle-left pull-right">--></i>
-              </a>            
-            </li>
-            <?php if($this->post->checkUserType()=='true'){?>
-            <li class="treeview <?php if($pages=='newsfeedideator') {echo "active";}else echo "";?>">
-              <a href="<?php echo base_url(); ?>pages/newsfeedideator">
+             <li class="treeview <?php if($pages=='investorlanding') {echo "active";}else echo "";?>">
+              <a href="<?php echo base_url(); ?>pages/investorlanding">
                 <i class="fa fa-feed"></i><span>News Feed</span>
               </a>
             </li>
-            <?php }else{?>
-             <li class="treeview <?php if($pages=='newsfeedinvestor') {echo "active";}else echo "";?>">
-              <a href="<?php echo base_url(); ?>pages/newsfeedinvestor">
-                <i class="fa fa-feed"></i><span>News Feed</span>
+             <li class="treeview <?php if($pages=='investormoreinfo') {echo "active";}else echo "";?>">
+              <a href="<?php echo base_url(); ?>pages/investormoreinfo">
+                <i class="fa fa-unlock"></i><span>Account</span>
               </a>
-            </li>
-            <?php } ?>
-            <?php if($this->post->checkUserType()=='true'){?>
-            <li class="treeview <?php if($pages=='ideatorpost') {echo "active";}else echo "";?>">
-              <a href="<?php echo base_url(); ?>pages/ideatorpost">
-                <i class="fa fa-edit"></i> <span>Post Idea</span>
-              </a>
-            </li>
-             <?php }else{?>
-            <li class="treeview <?php if($pages=='post') {echo "active";}else echo "";?>">
-              <a href="<?php echo base_url(); ?>pages/investorpost">
-                <i class="fa fa-edit"></i> <span>Post</span>
-              </a>
-            </li>
-
-             <?php }; ?> 
-            <li class="treeview <?php if($pages=='startup') {echo "active";}else echo "";?>">
-              <a href="#">
-                <i class="fa fa-plus-square"></i>
-                <span>Startup Products</span>
-                <i class="fa fa-angle-left pull-right"></i>
-              </a>
-              <ul class="treeview-menu">
-                <li><a href="<?php echo base_url(); ?>pages/latest"><i class="fa fa-circle-o"></i>Latest</a></li>
-                <li><a href="<?php echo base_url(); ?>pages/onfire"><i class="fa fa-fire"></i>Most Discuss</a></li>
-                <li><a href="<?php echo base_url(); ?>pages/toprated"><i class="fa fa-star"></i>Top Rated</a></li>
-              </ul>
-            </li><!-- 
-             <li class="treeview <?php if($pages=='timeline') {echo "active";}else echo "";?>">
-              <a href="<?php echo base_url(); ?>pages/timeline">
-                    <i class="fa fa-calendar"></i> <span>Timeline</span>
-                 </a>
-             
-            </li> -->
-            <li class="treeview <?php if($pages=='group') {echo "active";}else echo "";?>">
-              <a href="#">
-               <i class="fa fa-group"></i>
-                <span>My Group</span><span class="label bg-green pull-right"><?php echo $countgroup;?></span>
-               
-              </a>
-              <ul class="treeview-menu">
-                <li><a href="<?php echo base_url(); ?>pages/newgroup"><i class="fa fa-plus"></i>Create Group</a></li>
-                <?php foreach ($groupdetails as $row):?>
-                  <?php if($this->post->groupstat($row['groupId'],$row['userId'])==false){?>
-                  <li><a href="<?php echo base_url(); ?>pages/group/<?php echo $row['groupId']?>"><i class="fa fa-circle-o"></i><?php echo $row['groupname'];?></a></li>
-                  <?php }else{
-                  echo ""; } ?>
-                <?php endforeach;?>
-              </ul>
             </li>
           </ul>
         </section>

@@ -179,7 +179,41 @@ class Pages extends CI_Controller {
 		}
 	}
 
-	
+	public function investorlanding(){
+		if(($this->session->userdata('userId')!="")){
+			$query=$this->_userData();
+			$data['data']=$query->result_array();
+			$data['pages']='investorlanding';
+			$feed = $this->post->recentideator();
+			$feed = $this->post->recentideator();
+			$data['recentideator'] = $feed->result_array();
+			$feed = $this->post->recentinvestor();
+			$data['recentinvestor'] = $feed->result_array();
+			$data['alldata']=$query->result_array();
+			$this->load->view('pages/investorreg/collapsed',$data);
+			$this->load->view('pages/investorreg/content',$data);
+		}else{
+			$this->_landing();
+		}
+	}
+
+	public function investormoreinfo(){
+		if(($this->session->userdata('userId')!="")){
+			$query=$this->_userData();
+			$data['data']=$query->result_array();
+			$data['pages']='investormoreinfo';
+			$feed = $this->post->recentideator();
+			$data['recentideator'] = $feed->result_array();
+			$feed = $this->post->recentinvestor();
+			$data['recentinvestor'] = $feed->result_array();	
+			$feed = $this->post->recentinvestor();
+			$data['alldata']=$query->result_array();
+			$this->load->view('pages/investorreg/collapsed',$data);
+			$this->load->view('pages/investorreg/fillinvestorinfo',$data);
+		}else{
+			$this->_landing();
+		}
+	}
 
 	public function group($groupId=null,$projectId=null)
 	{	
@@ -2665,6 +2699,9 @@ class Pages extends CI_Controller {
 				}
 				elseif ($query =='7') {
 					$query=$this->post->query1post($postId);
+				}
+				elseif ($query =='8') {
+					$query=$this->post->queryMostD();
 				}
 			  foreach ($query->result_array() as $row):
 

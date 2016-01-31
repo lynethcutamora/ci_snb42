@@ -15,34 +15,49 @@
         <!-- Main content -->
         <section class="content">
         <!-- Callouts -->
-        <div class="col-md-9">
+        <div class="col-md-8">
           <div class="box box-default">
             <div class="box-header with-border">
               <i class="fa fa-bullhorn"></i>
               <h3 class="box-title">Callouts</h3>
             </div><!-- /.box-header -->
             <div class="box-body">
-              <div class="callout callout-info">
+              <div class="callout callout-warning">
               <?php foreach($data as $row):?>
-                <h4>Hello <?php echo $row['user_fName'];?>! You caught us before we're ready.</h4>
+                <h4>Hello <?php echo $row['user_fName'];?>! Welcome to Start&Boost!.</h4>
                 <!-- <p>Development team $index[5] is working hard to put finishing touches onto Start&Boost. Things are going well and it should be heady to help you with lean startup soon.<br/><br/>Thanks! :-)</p> -->
-                <p>There will be a Philippine Startup Challenge hosted by SMART on February 29, 2016. It's your time to shine! For more information, you can contact this number: 0932-429-765. <br/>If you wish to register, you can visit this link: <a href="#">googledocs.com/startupchallenge2k16/fillup?</a><br/><br/>Thanks! :-)</p>
+                <p>For Security purposes, Start&Boost needs to get more info from you as a Venture Capitalist. <br/><br/><b>Hurry & view what's new and trending now!</b><br/>All you have to do is to click the icon &nbsp;&nbsp;<i class="fa fa-unlock"></i>&nbsp;&nbsp; in the sidebar and complete the asked informations.<br/><br/>Thanks! :-)<br/><i class="pull-right">~ $index[5]</i><br/></p>
               <?php endforeach;?>
               </div>
             </div>
           </div><!-- /.box -->
         </div>
-        <div class="col-md-3">
-              <div>
-            <p>Having a hard time thinking of a start-up idea?</br></br> Visit our special feature by clicking the link below:</a><br/><br/><a href="<?php echo base_url()."pages/startidea"?>"><h1><u><center>Click here</h1></u></center></a><br/></p>
+        <div class="col-md-4">
+          <div class="box box-default">
+            <div class="box-body">
+              <img src="<?php echo base_url().'images/ind.png' ?>" width="100%">
+            </div>
           </div>
         </div>
 
           <div class="row">
           <!-- ====================================================================== -->
-            <div class="col-md-9">
-            <!-- TABLE: TOP 5 IDEAS -->
-                <div class="box box-info">
+            <div class="col-md-8">
+                <div class="box box-primary">
+                  <div class="box-header with-border">
+                    <i class="fa fa-fire"></i>
+                    <h3 class="box-title">Most Discuss Post</h3><br/>
+                  </div><!-- /.box-header -->
+                  <div class="box-body">
+                    <div name="newsfeed" id="newsfeed"></div>
+                  </div>
+                </div><!-- /.box -->
+            </div><!--/.col-->
+
+
+              
+            <div class="col-md-4">
+              <div class="box box-info">
                   <div class="box-header with-border">
                     <i class="fa fa-star"></i>
                     <h3 class="box-title">Top 5 Ideas</h3>
@@ -51,11 +66,6 @@
                     </div>
                   </div><!-- /.box-header -->
                   <div class="box-body">
-                    <div class="alert alert-danger alert-dismissable">
-                      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                      <h4><i class="icon fa fa-ban"></i> Alert!</h4>
-                        Note: These ideas were already owned by ideators with their investors. Illegal copying is strictly not allowed.  
-                      </div>
                     <div class="table-responsive">
                       <table class="table no-margin">
                         <thead>
@@ -151,31 +161,7 @@
                       </table>
                     </div><!-- /.table-responsive -->
                   </div><!-- /.box-body -->
-                  <div class="box-footer clearfix">
-                    <!-- <a href="<?php echo base_url()."pages/toprated/"?>" class="btn btn-sm btn-default btn-flat pull-right">View More</a> -->
-                  </div><!-- /.box-footer -->
-                </div><!-- /.box -->
-
-              <!-- ======================================================= -->
-              <!-- Box Comment -->
-                <!-- Box Comment -->
-                
-                           
-                <div class="box box-primary">
-                  <div class="box-header with-border">
-                    <i class="fa fa-fire"></i>
-                    <h3 class="box-title">Most Discuss Post</h3><br/>
-                  </div><!-- /.box-header -->
-                  <div class="box-body">
-                    <div name="newsfeed" id="newsfeed"></div>
-                  </div>
-                  
-                
-                 </div><!--/.col-->
-
-
-              
-
+            </div>
               
             </div><!--/.row-->
            
@@ -184,7 +170,7 @@
 <script>
      function investorPost(){
                  
-                  $("#newsfeed").load("<?php echo base_url().'pages/newShowInvestorPost/8'; ?>"); }
+                  $("#newsfeed").load("<?php echo base_url().'pages/newShowInvestorPost/5'; ?>"); }
                   setInterval(function(){investorPost()}, 1000);
 
 </script>
