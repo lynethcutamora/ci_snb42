@@ -184,7 +184,7 @@
 <script>
      function investorPost(){
                  
-                  $("#newsfeed").load("<?php echo base_url().'pages/newShowInvestorPost/5'; ?>"); }
+                  $("#newsfeed").load("<?php echo base_url().'pages/newShowInvestorPost/8'; ?>"); }
                   setInterval(function(){investorPost()}, 1000);
 
 </script>

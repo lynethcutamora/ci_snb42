@@ -2679,6 +2679,9 @@ class Pages extends CI_Controller {
 				elseif ($query =='7') {
 					$query=$this->post->query1post($postId);
 				}
+				elseif ($query =='8') {
+					$query=$this->post->queryMostD();
+				}
 			  foreach ($query->result_array() as $row):
 
 			  	if($row['postType']=='1'){
