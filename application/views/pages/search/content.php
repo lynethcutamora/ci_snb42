@@ -2,72 +2,16 @@
      <section class="content">
 
  <div class="row">
-  <br>
+    <br>
      <div class="col-xs-12">
               <div class="box">
                 <div class="box-header">
-                  <h3 class="box-title"><i class="fa fa-lightbulb-o"></i>Ideas</h3>
+                  <h3 class="box-title"><i class="fa fa-group"></i>&nbsp;&nbsp;&nbsp;Group</h3>
                   <div class="box-tools">
                   </div>
                 </div><!-- /.box-header -->
                 <div class="box-body table-responsive no-padding">
-                  <table class="table table-hover" id="idea">
-                    <?php 
-                      if(count($idea)==0){
-                      echo '<div class="col-xs-1"></div>
-                            <div class="alert alert-warning col-xs-10">
-                             
-                             No Results Found!
-                            </div>';
-                    }else{
-                    ?>
-                    <tr>
-                      <th>Title</th>
-                      <th>Post Content</th>
-                      <th>Posted By</th>
-                      <th>No. of Upvotes</th>
-                      <th>No. of Comments</th>
-                    </tr>
-                    <tr>
-                      <?php foreach ($idea as $idea):?>
-                      
-                      <td width="100"><a href="<?php echo base_url()."pages/post/".$idea['postId'];?>"><?php echo $idea['postTitle'];?></a></td>
-                      <td width="500"><?php echo $idea['postContent'];?></td>
-                      <td width="150"><a href="<?php echo base_url()."pages/profile/".$idea['userId'];?>">
-
-                        <?php 
-                  
-                    if($idea['user_Type']=='Ideator'||$idea['user_Type']=='Investor')
-                     {
-                        if($idea['user_midInit']==null)
-                         echo $idea['user_fName']." ".$idea['user_lName'];
-                        else
-                         echo $idea['user_fName']." ".$idea['user_midInit'].". ".$idea['user_lName'];
-                        }
-                        else
-                        {
-                          echo $idea['company_name'];
-                        }    
-                  ?></a>
-                 </td>
-                      <td width="100"><?php echo $this->post->upvotecount($idea['postId']);?></td>
-                      <td width="100"><?php echo $this->post->commentCount($idea['postId']);?></td>
-                    </tr>
-                     <?php  endforeach;}?>
-
-                  </table>
-                </div><!-- /.box-body -->
-              </div><!-- /.box -->
-            </div>
-         <br>
-     <div class="col-xs-12">
-              <div class="box">
-                <div class="box-header">
-                  <h3 class="box-title"><i class="fa fa-group"></i>Group</h3>
-                  <div class="box-tools">
-                  </div>
-                </div><!-- /.box-header -->
-                <div class="box-body table-responsive no-padding">
+                  <div class="container-fluid">
                   <table class="table table-hover">
                       <?php 
                       if(count($group)==0){
@@ -82,30 +26,45 @@
                       <th>Group Name</th> 
                       <th>Group Description</th>
                       <th>Group Creator</th>
-                     
+                      <th></th>
                     </tr>
-                     <?php foreach ($group as $group):?>
-                    <tr>
-                      <td><?php echo $group['groupname'];?></td>
-                      <td><?php echo $group['groupdescription'];?></td>
-                      <td> <a href="<?php echo base_url()."pages/profile/".$group['userId'];?>">      <?php 
-                 
-                    if($group['user_Type']=='Ideator'||$group['user_Type']=='Investor')
-                     {
-                        if($group['user_midInit']==null)
-                         echo $group['user_fName']." ".$group['user_lName'];
-                        else
-                         echo $group['user_fName']." ".$group['user_midInit'].". ".$group['user_lName'];
-                        }
-                        else
-                        {
-                          echo $group['company_name'];
-                        }    
-                  ?>
-                 </a></td>
-                     </tr>
+                     <?php 
+                     $userid = $this->session->userdata('userId');
+
+                     foreach ($group as $group):?>
+
+                    <form action="" method="POST">
+                      <tr>
+                        <td><?php echo $group['groupname'];?></td>
+                        <td><?php echo $group['groupdescription'];?></td>
+                        <td><a href="<?php echo base_url()."pages/profile/".$group['userId'];?>">      
+                            <?php 
+                              if($group['user_Type']=='Ideator'||$group['user_Type']=='Investor'){
+                                if($group['user_midInit']==null)
+                                 echo $group['user_fName']." ".$group['user_lName'];
+                                else
+                                 echo $group['user_fName']." ".$group['user_midInit'].". ".$group['user_lName'];
+                              }else{
+                                echo $group['company_name'];
+                              }    
+                            ?></a>
+                        </td>
+                        <td>
+                        <?php 
+
+                          if($this->post->existsMember($group['groupId'],$userid)){
+                            echo '<input type="button" class="btn btn-primary btn-xs disabled" value ="Request to join group"></input>';
+                          }else{
+                            echo '<input type="button" class="btn btn-primary btn-xs" value ="Request to join group"></input>';
+                          }
+                        ?>
+                        </td>
+                      </tr>
+                    </form>
+
                        <?php  endforeach;}?>
                   </table>
+                  </div>
                 </div><!-- /.box-body -->
               </div><!-- /.box -->
             </div>
