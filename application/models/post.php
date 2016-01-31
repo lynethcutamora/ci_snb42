@@ -223,15 +223,11 @@
         public function searchIdea($key)
         {
             $this->db->select('*');
-            $this->db->from('userpost a');
-            $this->db->join('user_dtl b', 'b.userId=a.userId','left');
-            $this->db->join('company_dtl c', 'c.userId=a.userId','left');
-            $this->db->join('avatar_dtl d', 'd.userId=a.userId','left');
-            $this->db->join('user_md e', 'e.userId=a.userId','left');
-
-            $this->db->like('a.postTitle', $match = $key, $side = 'both');
-            $this->db->or_like('a.postContent', $match = $key, $side = 'both');
-             $this->db->where('a.postType','1');
+            $this->db->from('userpost');
+     
+            $this->db->like('postTitle', $match = $key, $side = 'both');
+            $this->db->like('postContent', $match = $key, $side = 'both');
+            $this->db->where('postType','2');
             $query = $this->db->get();
              return $query;
         }
@@ -832,6 +828,11 @@
         public function queryStartupTop()
         {
             $query = $this->db->query("SELECT *, COUNT(c.postId) as number_of_votes from upvote_dtl c left join userpost v on c.postId = v.postId left join user_md b on v.userId = b.userId left join user_dtl d on b.userId = d.userId where voteType = '1' AND postType = '2' group by c.postId order by number_of_votes desc");
+            return $query;
+        }
+        public function queryMostD()
+        {
+            $query = $this->db->query("SELECT *, COUNT(c.postId) as number_of_votes from upvote_dtl c left join userpost v on c.postId = v.postId left join user_md b on v.userId = b.userId left join user_dtl d on b.userId = d.userId where voteType = '1' AND postType = '2' group by c.postId order by number_of_votes desc limit 1");
             return $query;
         }
         public function checkInvestorStatus()
