@@ -66,6 +66,19 @@ endforeach;
           </a>
           <div class="navbar-custom-menu">
             <ul class="nav navbar-nav">
+              <li class="dropdown messages-menu">
+                <a href="#" >
+                  <i class="fa fa-envelope-o"></i>
+                  <span class="label label-success"><div name="countmsg" id="countmsg"></div></span>
+                </a>
+               <script>
+                  function loadNowPlaying4(){
+                 
+                  $("#countmsg").load("<?php echo base_url().'pages/countmsg'; ?>"); }
+                  setInterval(function(){loadNowPlaying4()}, 1000);
+
+               </script>
+               </li>
               <li class="dropdown notifications-menu">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                 <i class="fa fa-bell-o"></i>
@@ -74,13 +87,39 @@ endforeach;
                 
                 <ul class="dropdown-menu">
                   <li class="header">Notification</li>
-                  <li class="item">
-                    Hi
+                  <li>
+                    <!-- inner menu: contains the actual data -->
+                    <ul class="menu">
+                      <?php echo form_open('../pages/addmember');?>
+                        <?php foreach($groupdetails as $row):?>
+                          <input type="text" hidden="true" name="groupid" value="<?php echo $row['groupId']?>">
+                          <input type="text" hidden="true" name="userid" value="<?php echo $row['userId']?>">
+                          <?php if($this->post->groupstat($row['groupId'],$row['userId'])==false)
+                          {
+                            echo "";
+                          }
+                          else
+                          {
+                            echo $row['groupname']."<br>";
+                            echo "<small>Invite you into their group</small><br>";
+                            echo "<span class='pull-right'><input type='submit' name='btnAccept' value='Accept'>&nbsp;&nbsp;&nbsp;&nbsp;
+                            <input type='submit' name='btnDecline' value='Decline'>&nbsp;&nbsp;</span>";    
+                          } ?>
+                          <hr>
+                        <?php endforeach;?>
+                      </form>
+                    </ul>
                   </li>
                   <li class="footer">
                     <a href="#">View all</a>
                   </li>
                 </ul>
+                <script>
+                  function loadNowPlaying5(){
+                    $("#countntf").load("<?php echo base_url().'pages/countntf'; ?>"); 
+                  }
+                  setInterval(function(){loadNowPlaying5()}, 1000);
+                </script>
               </li>
 
               <!-- Tasks: style can be found in dropdown.less -->
@@ -131,9 +170,7 @@ endforeach;
                               {
                                 echo $row['company_name'];
                               }
-
-                          
-                       
+                                              
                       ?>
                       <small><?php echo $row['user_Type'];?></small>
                       <?php  endforeach;?>
@@ -209,9 +246,14 @@ endforeach;
           <!-- sidebar menu: : style can be found in sidebar.less -->
           <ul class="sidebar-menu">
             <li class="header">MAIN NAVIGATION</li>
-             <li class="treeview active">
-              <a href="<?php echo base_url(); ?>pages/newsfeedinvestor">
+             <li class="treeview <?php if($pages=='investorlanding') {echo "active";}else echo "";?>">
+              <a href="<?php echo base_url(); ?>pages/investorlanding">
                 <i class="fa fa-feed"></i><span>News Feed</span>
+              </a>
+            </li>
+             <li class="treeview <?php if($pages=='investormoreinfo') {echo "active";}else echo "";?>">
+              <a href="<?php echo base_url(); ?>pages/investormoreinfo">
+                <i class="fa fa-unlock"></i><span>Account</span>
               </a>
             </li>
           </ul>
