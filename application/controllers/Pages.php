@@ -179,7 +179,20 @@ class Pages extends CI_Controller {
 		}
 	}
 
-	
+	public function investorlanding(){
+		if(($this->session->userdata('userId')!="")){
+			$query=$this->_userData();
+			$data['data']=$query->result_array();
+			$data['pages']='startup';
+			$data['countgroup'] = $this->countGroups();
+			$groupquery= $this->groupdetails();
+			$data['groupdetails'] = $groupquery->result_array();
+			$data['alldata']=$query->result_array();
+			$this->load->view('pages/investorreg/collapsed',$data);
+		}else{
+			$this->_landing();
+		}
+	}
 
 	public function group($groupId=null,$projectId=null)
 	{	

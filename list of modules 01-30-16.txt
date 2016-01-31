@@ -1,0 +1,91 @@
+- register as ideator, investor, company
+ 	( if investor:)
+	- can view dashboard (has to fill up important information before proceeding to view posts/ post)
+	- admin has to confirm after filling up
+- login as ideator, investor, company, admin
+- send reports to admin
+- terms and agreements
+> venture capitalist/ideators/company view
+	- search users to poke
+	> real time messages notif & alerts
+		-real time chat
+		-real time accept/ignore requests/alerts
+	- search engine/bar for startup products, ideators, company, investor, & groups only
+	- send group request
+	- admin posts/callouts/announcements
+	- advertisements
+	- list of investors
+	> profile
+		- reputation/badge
+		- change avatar
+		- edit info
+		- change pass
+		- profile info
+		(modal->2nd person view)
+		- send personal message
+		- badge user (gold, silver, bronze, black)
+		- reputation
+		- if black badge dn send report to admin
+		- add to group
+		- advertisements
+	> dashboard 
+		- retrieves top 5 startup products
+		- retrieves most discussed product
+		- retrieves investor posts/announcements
+		- advertisements
+	> news feed
+		- retrieves investor posts/competitions/startup products (ideator)
+		- retrieves ideator posts/investor posts (investor)
+		- realtime upvote/comment investor post
+		- can view another user profile
+		- poke ideator/send message 
+		- mark post as invested (investor)
+		- advertisements
+	> post
+		- auto generate title
+		- startup idea
+		- with Business Model Canvass
+		- startup product
+		- with related links/download links
+		- with picture
+		- real time post
+		- real time upvote/comment
+		- poke another user
+		- message another user
+		- badge another user
+		- retrieves own startup idea (ideator/company)
+		- retrieves own startup competition (investor)
+		- detect bad comments
+		- related study warning (ideator/company)
+		- mark as invested
+		- report post
+		- report comment
+		- advertisements
+		- compare related study warning (investor)
+		(if with warning:)
+		- investor can mark post as existing/ignore warning
+	> startup products
+		- retrieve latest product posts
+		- retrieve most discussed product posts
+		- retrieve most upvoted product posts
+		- realtime upvote, comment
+		- poke user/send message
+		- advertisements
+	> group
+		- create group
+		- add members/send member request
+		- kick member
+		- leave group
+		- realtime group chat
+		- realtime call video conference
+		- add project
+		- post project files
+		- download project files
+		- accept/ignore member request
+admin view
+	- accept investor request
+	- view reports
+	>if blackbadge(user/comment):
+		- confirm black badge (- reputation to the user)
+	> view user statistics
+		

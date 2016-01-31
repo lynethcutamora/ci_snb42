@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.2.11
+-- version 4.2.7.1
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 08, 2016 at 06:18 PM
--- Server version: 5.6.21
--- PHP Version: 5.5.19
+-- Generation Time: Jan 31, 2016 at 06:17 AM
+-- Server version: 5.6.20
+-- PHP Version: 5.5.15
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -37,10 +37,14 @@ CREATE TABLE IF NOT EXISTS `avatar_dtl` (
 --
 
 INSERT INTO `avatar_dtl` (`userId`, `avatar_name`, `avatar_id`) VALUES
-('568b3cdff0', '5403568bef6687a0c.png', 'pi568b3cdf'),
-('568bf05c94', '1.png', 'pi568bf05c'),
-('568bf0ed3a', '1.png', 'pi568bf0ed'),
-('568bf13b8f', '1.png', 'pi568bf13b');
+('56ac1c012d', '1.png', 'pi56ac1c01'),
+('56ac1ceec6', '1.png', 'pi56ac1cee'),
+('56ac1e3e5d', '1.png', 'pi56ac1e3e'),
+('56ac24cd6d', '1.png', 'pi56ac24cd'),
+('56ac2a552e', '1.png', 'pi56ac2a55'),
+('56ac46377d', '1694556ac482b5bd4e.png', 'pi56ac4637'),
+('56ac497d9a', '1.png', 'pi56ac497d'),
+('56ac4b9c79', '1.png', 'pi56ac4b9c');
 
 -- --------------------------------------------------------
 
@@ -54,6 +58,43 @@ CREATE TABLE IF NOT EXISTS `badge_dtl` (
   `voteBadge` varchar(1) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `badge_dtl`
+--
+
+INSERT INTO `badge_dtl` (`userId`, `fromUserId`, `voteBadge`) VALUES
+('56ac1ceec6', '56ac46377d', '1'),
+('56ac24cd6d', '56ac46377d', '1'),
+('56ac46377d', '56ac497d9a', '1');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `bmc_dtl`
+--
+
+CREATE TABLE IF NOT EXISTS `bmc_dtl` (
+  `postId` varchar(10) DEFAULT NULL,
+  `key_partners` varchar(1000) DEFAULT NULL,
+  `key_activities` varchar(1000) DEFAULT NULL,
+  `value_proposition` varchar(1000) DEFAULT NULL,
+  `customer_relationships` varchar(1000) DEFAULT NULL,
+  `channels` varchar(1000) DEFAULT NULL,
+  `customer_segments` varchar(1000) DEFAULT NULL,
+  `cost_structure` varchar(1000) DEFAULT NULL,
+  `revenue_streams` varchar(1000) DEFAULT NULL,
+  `key_resources` varchar(1000) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `bmc_dtl`
+--
+
+INSERT INTO `bmc_dtl` (`postId`, `key_partners`, `key_activities`, `value_proposition`, `customer_relationships`, `channels`, `customer_segments`, `cost_structure`, `revenue_streams`, `key_resources`) VALUES
+('56ac20a637', 'facebook, twitter', '', 'wala ra oie', 'friends', 'channel 3, 23, 7', '', '', 'ads', NULL),
+('56ac474ca2', 'Bus company', 'sample', 'sample', 'sample', 'sample', 'sample', 'sample', 'sample', NULL),
+('56ac537d97', 'facebook', 'as', '', '', '', '', '', '', NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -61,13 +102,13 @@ CREATE TABLE IF NOT EXISTS `badge_dtl` (
 --
 
 CREATE TABLE IF NOT EXISTS `comment_dtl` (
-  `commentContent` varchar(100) DEFAULT NULL,
+  `commentContent` varchar(1000) DEFAULT NULL,
   `commentDate` datetime DEFAULT NULL,
   `commentType` varchar(1) DEFAULT NULL,
   `postId` varchar(10) NOT NULL,
   `userId` varchar(10) NOT NULL,
-  `commentId` varchar(10) DEFAULT NULL,
-  `disallowed` int(11) NOT NULL
+  `commentId` varchar(10) NOT NULL,
+  `disallowed` varchar(5) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -75,10 +116,12 @@ CREATE TABLE IF NOT EXISTS `comment_dtl` (
 --
 
 INSERT INTO `comment_dtl` (`commentContent`, `commentDate`, `commentType`, `postId`, `userId`, `commentId`, `disallowed`) VALUES
-('this a sample shit comment', '2016-01-08 17:57:48', '1', '568b40e982', '568b3cdff0', '568fea8c9b', 1),
-('normal comment', '2016-01-08 18:00:15', '1', '568b40e982', '568b3cdff0', '568feb1f94', 0),
-('fucking asshole you brainless! better shut up', '2016-01-08 18:08:42', '1', '568b40e982', '568b3cdff0', '568fed1a2f', 1),
-('The world comes to life and everything''s right from beginning to end when you have a friend by your ', '2016-01-08 18:14:20', '1', '568b40e982', '568b3cdff0', '568fee6c50', 0);
+('yeas...i want to be like one punch man HAHAHAHA', '2016-01-30 06:21:18', NULL, '56ac21ac48', '56ac46377d', '56ac484e97', NULL),
+('wow..this system is amazing!! congratulations :-)', '2016-01-30 06:22:06', NULL, '56ac279d62', '56ac46377d', '56ac487e70', NULL),
+('This is a nice idea :-) i hope ya''ll like it :-)', '2016-01-30 06:31:36', NULL, '56ac4a448a', '56ac497d9a', '56ac4ab818', NULL),
+('Great website ! :-) this will be helpful for future entrepreneurs.. Congratulations! ', '2016-01-30 06:33:12', NULL, '56ac4a2370', '56ac497d9a', '56ac4b1877', NULL),
+('this is really nice.. can i team up with you? you can ping me any time :-)', '2016-01-30 06:36:05', NULL, '56ac4a448a', '56ac46377d', '56ac4bc5b1', NULL),
+('nice', '2016-01-30 07:07:22', NULL, '56ac48c0c8', '56ac46377d', '56ac531a29', NULL);
 
 -- --------------------------------------------------------
 
@@ -97,13 +140,6 @@ CREATE TABLE IF NOT EXISTS `company_dtl` (
   `company_about` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `company_dtl`
---
-
-INSERT INTO `company_dtl` (`userId`, `company_name`, `company_businessType`, `company_yearFounded`, `company_lName`, `company_fName`, `company_midInit`, `company_about`) VALUES
-('568bf0ed3a', 'Teradyne', 'Semi conductor test', 1965, 'Jagella', 'Mark', '', 'We measure quality');
-
 -- --------------------------------------------------------
 
 --
@@ -114,7 +150,7 @@ CREATE TABLE IF NOT EXISTS `conference_dtl` (
   `msgId` varchar(10) DEFAULT NULL,
   `dateSent` datetime DEFAULT NULL,
   `userId` varchar(10) DEFAULT NULL,
-  `msgContent` varchar(255) DEFAULT NULL
+  `msgContent` varchar(1000) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -122,21 +158,15 @@ CREATE TABLE IF NOT EXISTS `conference_dtl` (
 --
 
 INSERT INTO `conference_dtl` (`msgId`, `dateSent`, `userId`, `msgContent`) VALUES
-('gi568be0ae', '2016-01-05 16:58:28', '568b3cdff0', 'hi'),
-('gi568be0ae', '2016-01-05 19:24:46', '568bf0ed3a', 'hello every one..');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `conference_ext`
---
-
-CREATE TABLE IF NOT EXISTS `conference_ext` (
-  `conExtId` varchar(10) NOT NULL,
-  `timeStarted` datetime DEFAULT NULL,
-  `timeEnded` datetime DEFAULT NULL,
-  `conId` varchar(10) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+('gi56ac223e', '2016-01-30 03:52:42', '56ac24cd6d', 'gwapo'),
+('gi56ac223e', '2016-01-30 03:52:54', '56ac1c012d', 'ok'),
+('gi56ac223e', '2016-01-30 03:53:08', '56ac1ceec6', '(y)'),
+('gi56ac4ca5', '2016-01-30 06:45:18', '56ac46377d', 'hi rinesu, thanks for adding me :-)'),
+('gi56ac4a8d', '2016-01-30 06:47:38', '56ac1ceec6', 'manang'),
+('gi56ac4ca5', '2016-01-30 06:51:31', '56ac1ceec6', 'manang'),
+('gi56ac4ca5', '2016-01-30 06:51:50', '56ac1ceec6', 'jason pisot'),
+('gi56ac5234', '2016-01-30 07:05:28', '56ac46377d', 'hi'),
+('gi56ac5234', '2016-01-30 07:05:32', '56ac4b9c79', 'hello');
 
 -- --------------------------------------------------------
 
@@ -147,16 +177,28 @@ CREATE TABLE IF NOT EXISTS `conference_ext` (
 CREATE TABLE IF NOT EXISTS `group_ext` (
   `groupId` varchar(10) NOT NULL,
   `userId` varchar(10) DEFAULT NULL,
-  `addedDate` datetime DEFAULT NULL
+  `addedDate` datetime DEFAULT NULL,
+  `status` varchar(1) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `group_ext`
 --
 
-INSERT INTO `group_ext` (`groupId`, `userId`, `addedDate`) VALUES
-('gi568be0ae', '568b3cdff0', '0000-00-00 00:00:00'),
-('gi568be0ae', '568bf0ed3a', NULL);
+INSERT INTO `group_ext` (`groupId`, `userId`, `addedDate`, `status`) VALUES
+('gi56ac223e', '56ac1ceec6', '0000-00-00 00:00:00', '0'),
+('gi56ac223e', '56ac1c012d', NULL, '0'),
+('gi56ac223e', '56ac24cd6d', NULL, '0'),
+('gi56ac4a8d', '56ac1e3e5d', '0000-00-00 00:00:00', '0'),
+('gi56ac4ca5', '56ac497d9a', '0000-00-00 00:00:00', '0'),
+('gi56ac4ca5', '56ac46377d', NULL, '0'),
+('gi56ac4a8d', '56ac4b9c79', NULL, '0'),
+('gi56ac4a8d', '56ac1ceec6', NULL, '0'),
+('gi56ac4ca5', '56ac4b9c79', NULL, '0'),
+('gi56ac4ca5', '56ac2a552e', NULL, '1'),
+('gi56ac4ca5', '56ac1ceec6', NULL, '0'),
+('gi56ac5234', '56ac46377d', '0000-00-00 00:00:00', '0'),
+('gi56ac5234', '56ac4b9c79', NULL, '0');
 
 -- --------------------------------------------------------
 
@@ -177,7 +219,10 @@ CREATE TABLE IF NOT EXISTS `group_md` (
 --
 
 INSERT INTO `group_md` (`groupId`, `groupname`, `groupdescription`, `groupCoverPic`, `userId`) VALUES
-('gi568be0ae', 'introverts', 'wala lang hehehe', 'defaultcover.png', '568b3cdff0');
+('gi56ac223e', 'heroes association', 'ONe Punch', 'defaultcover.png', '56ac1ceec6'),
+('gi56ac4a8d', 'Research forum', 'Today is the day , tommorow is tommorow', 'defaultcover.png', '56ac1e3e5d'),
+('gi56ac4ca5', 'CarInn', 'The Start :-)', 'defaultcover.png', '56ac497d9a'),
+('gi56ac5234', 'group1', 'gwapo ra pwede', 'defaultcover.png', '56ac46377d');
 
 -- --------------------------------------------------------
 
@@ -190,13 +235,6 @@ CREATE TABLE IF NOT EXISTS `investor_dtl` (
   `postId` varchar(10) DEFAULT NULL,
   `userId` varchar(10) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `investor_dtl`
---
-
-INSERT INTO `investor_dtl` (`investorId`, `postId`, `userId`) VALUES
-('', 'pr568c070f', '568bf05c94');
 
 -- --------------------------------------------------------
 
@@ -220,9 +258,14 @@ CREATE TABLE IF NOT EXISTS `location_dtl` (
 --
 
 INSERT INTO `location_dtl` (`locationId`, `userId`, `location_address1`, `location_address2`, `location_city`, `location_prov`, `location_zipcode`, `location_country`) VALUES
-('li568b3cdf', '568b3cdff0', 'Looc, Mandaue City', '', 'Cebu', 'VII', '6014', 'Philippines'),
-('li568bf05c', '568bf05c94', 'Silicon Valley', '', 'Los Angeles', 'LA', '1024', 'United States'),
-('li568bf13b', '568bf13b8f', 'Labogon', '', 'Mandaue', 'VII', '6014', 'Philippines');
+('li56ac1c01', '56ac1c012d', 'Lapu-lapu, Sangi Road', 'Cebu', 'Cebu', '7', '6015', 'Philippines'),
+('li56ac1cee', '56ac1ceec6', 'Labogon, Mandaue City', '', 'Cebu', 'Cebu', '6014', 'Philippines'),
+('li56ac1e3e', '56ac1e3e5d', 'Labogon, Mandaue City', '', 'Mandaue', 'Cebu', '6014', 'Philippines'),
+('li56ac24cd', '56ac24cd6d', 'sangi new road', '', 'Cebu', 'Region 7', '6015', 'Philippines'),
+('li56ac2a55', '56ac2a552e', 'Silicon Valley', '', 'Los Angeles', 'LA', '1024', 'USA'),
+('li56ac4637', '56ac46377d', 'looc', '', 'mandaue', 'city', '6014', 'Philippines'),
+('li56ac497d', '56ac497d9a', 'Japan', '', 'Tokyo', 'VII', '3540', 'Japan'),
+('li56ac4b9c', '56ac4b9c79', 'sangi new road Lapu2', '', 'cebu', 'region7', '6015', 'philippines');
 
 -- --------------------------------------------------------
 
@@ -231,12 +274,30 @@ INSERT INTO `location_dtl` (`locationId`, `userId`, `location_address1`, `locati
 --
 
 CREATE TABLE IF NOT EXISTS `msg_dtl` (
-  `msgId` varchar(10) NOT NULL,
+  `msgId` varchar(10) DEFAULT NULL,
   `userId` varchar(10) DEFAULT NULL,
   `msg_fromUserId` varchar(10) DEFAULT NULL,
   `msg_Content` varchar(255) DEFAULT NULL,
-  `msg_Date` datetime DEFAULT NULL
+  `msg_Date` datetime DEFAULT NULL,
+  `msg_status` varchar(1) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `msg_dtl`
+--
+
+INSERT INTO `msg_dtl` (`msgId`, `userId`, `msg_fromUserId`, `msg_Content`, `msg_Date`, `msg_status`) VALUES
+('56ac21f6dc', '56ac1ceec6', '56ac1c012d', 'hi alfie i want to be a hero', '2016-01-30 03:37:42', '0'),
+('56ac2209b5', '56ac1c012d', '56ac1ceec6', 'ok', '2016-01-30 03:38:01', '0'),
+('56ac221d11', '56ac1ceec6', '56ac1c012d', 'yes!!', '2016-01-30 03:38:21', '0'),
+('56ac300cf1', '56ac24cd6d', '56ac2a552e', 'gwapo', '2016-01-30 04:37:48', '1'),
+('56ac4b2f39', '56ac1c012d', '56ac1ceec6', 'Son', '2016-01-30 06:33:35', '0'),
+('56ac4b6342', '56ac1c012d', '56ac1ceec6', 'Crush nko si Lyneth', '2016-01-30 06:34:27', '1'),
+('56ac4c1541', '56ac497d9a', '56ac46377d', 'Hi Rinesu, imlyneth.. specializig in android aplication..can i team up with you? :)', '2016-01-30 06:37:25', '0'),
+('56ac4c665a', '56ac46377d', '56ac497d9a', 'Hi Lyneth.. if you wish to team up with me..it''s okay :-) but first we should look for an investor', '2016-01-30 06:38:46', '0'),
+('56ac4c891a', '56ac46377d', '56ac497d9a', 'I can create now our group page.. i''ll add you.', '2016-01-30 06:39:21', '0'),
+('56ac526970', '56ac4b9c79', '56ac46377d', 'Hi Investor', '2016-01-30 07:04:25', '0'),
+('56ac54ac54', '56ac46377d', '56ac4b9c79', 'THanks for watching!', '2016-01-30 07:14:04', '1');
 
 -- --------------------------------------------------------
 
@@ -248,11 +309,20 @@ CREATE TABLE IF NOT EXISTS `report_dtl` (
   `reportId` varchar(10) NOT NULL,
   `userId` varchar(10) DEFAULT NULL,
   `fromUserId` varchar(10) DEFAULT NULL,
-  `reportContent` varchar(255) DEFAULT NULL,
+  `reportContent` varchar(1000) DEFAULT NULL,
   `reportDate` datetime DEFAULT NULL,
   `reportStat` varchar(1) DEFAULT NULL,
-  `reportType` varchar(1) DEFAULT NULL
+  `reportType` varchar(1) DEFAULT NULL,
+  `reportName` varchar(50) DEFAULT NULL,
+  `reportEmail` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `report_dtl`
+--
+
+INSERT INTO `report_dtl` (`reportId`, `userId`, `fromUserId`, `reportContent`, `reportDate`, `reportStat`, `reportType`, `reportName`, `reportEmail`) VALUES
+('56ac29a85c', NULL, NULL, 'asdsadasdasdasd', '2016-01-30 04:10:32', '1', '1', 'Jason', 'jason@gmail.com');
 
 -- --------------------------------------------------------
 
@@ -268,6 +338,26 @@ CREATE TABLE IF NOT EXISTS `upvote_dtl` (
   `voteId` varchar(45) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `upvote_dtl`
+--
+
+INSERT INTO `upvote_dtl` (`voteStat`, `voteType`, `postId`, `userId`, `voteId`) VALUES
+('1', '1', '56ac20a637', '56ac1c012d', '56ac20be6b51a'),
+('1', '1', '56ac279d62', '56ac24cd6d', '56ac27a774902'),
+('1', '1', '56ac21ac48', '56ac46377d', '56ac467f5904e'),
+('1', '1', '56ac279d62', '56ac46377d', '56ac468abeace'),
+('1', '1', '56ac46dab8', '56ac46377d', '56ac46e75df07'),
+('1', '1', '56ac474ca2', '56ac46377d', '56ac4764819bb'),
+('1', '1', '56ac279d62', '56ac497d9a', '56ac499a0cea7'),
+('1', '1', '56ac4a448a', '56ac497d9a', '56ac4a5ee7c46'),
+('1', '1', '56ac4a2370', '56ac497d9a', '56ac4a666ce19'),
+('1', '1', '56ac4a2370', '56ac46377d', '56ac4b97b901e'),
+('1', '1', '56ac4a448a', '56ac46377d', '56ac4b9d44b7d'),
+('1', '1', '56ac4ca7b1', '56ac1e3e5d', '56ac4cab7b553'),
+('1', '1', '56ac48c0c8', '56ac46377d', '56ac53009320a'),
+('1', '1', '56ac4ca7b1', '56ac46377d', '56ac53ab5bce9');
+
 -- --------------------------------------------------------
 
 --
@@ -276,7 +366,7 @@ CREATE TABLE IF NOT EXISTS `upvote_dtl` (
 
 CREATE TABLE IF NOT EXISTS `userpost` (
   `postId` varchar(10) NOT NULL,
-  `postContent` varchar(255) DEFAULT NULL,
+  `postContent` varchar(1000) DEFAULT NULL,
   `postDate` datetime DEFAULT NULL,
   `postType` varchar(10) DEFAULT NULL,
   `postTitle` varchar(45) DEFAULT NULL,
@@ -288,9 +378,21 @@ CREATE TABLE IF NOT EXISTS `userpost` (
 --
 
 INSERT INTO `userpost` (`postId`, `postContent`, `postDate`, `postType`, `postTitle`, `userId`) VALUES
-('568b401f74', '“You''re going to meet many people with domineering personalities: the loud, the obnoxious, those that noisily stake their claims in your territory and everywhere else they set foot on. This is the blueprint of a predator. Predators prey on gentleness, pea', '2016-01-05 05:01:35', '1', 'You are silk', '568b3cdff0'),
-('568b40e982', 'It is a wish that you make all alone. It''s easy to feel like you don''t need help but it''s harder to walk on your own.', '2016-01-05 05:04:57', '1', 'Dream', '568b3cdff0'),
-('pr568c070f', 'Start & Boost lang', NULL, 'gi568be0ae', 'Start&Boost Project', '568b3cdff0');
+('56ac20a637', 'Nothing', '2016-01-30 03:32:06', '1', 'A reliable parallelizing system embedded in h', '56ac1c012d'),
+('56ac21ac48', 'who want to be hero?', '2016-01-30 03:36:28', '4', NULL, '56ac1ceec6'),
+('56ac279d62', 'Product1', '2016-01-30 04:01:49', '2', 'Product 1', '56ac24cd6d'),
+('56ac3273b6', 'My work :)', '2016-01-30 04:48:03', '1', 'An integrated bioinformatic database', '56ac1e3e5d'),
+('56ac46dab8', 'a solid waste management system', '2016-01-30 06:15:06', '1', 'Trashman', '56ac46377d'),
+('56ac474ca2', 'android application for bus fares', '2016-01-30 06:17:00', '1', 'myBusTransFare', '56ac46377d'),
+('56ac48c0c8', 'online schedule plotter', '2016-01-30 06:23:12', '1', 'PlantItUp', '56ac46377d'),
+('56ac4a2370', 'Start up Of all start up', '2016-01-30 06:29:07', '2', 'Start and Boost', '56ac1e3e5d'),
+('56ac4a448a', 'Online Parking area reservation system', '2016-01-30 06:29:40', '2', 'CarInn', '56ac497d9a'),
+('56ac4ca7b1', 'Finding Jobs here', '2016-01-30 06:39:51', '2', 'Go Job Search', '56ac1e3e5d'),
+('56ac537d97', 'nicetry', '2016-01-30 07:09:01', '1', 'Idea new', '56ac46377d'),
+('56ac547b4b', 'I want new Start up ideas', '2016-01-30 07:13:15', '4', NULL, '56ac4b9c79'),
+('gp56ac235a', 'gwapo', '2016-01-30 03:43:38', 'pr56ac2271', NULL, '56ac1c012d'),
+('pr56ac2271', 'TIME TRAVEL', NULL, 'gi56ac223e', 'PROJECT ALMANAC', '56ac1ceec6'),
+('pr56ac524f', 'time travel', NULL, 'gi56ac5234', 'Project almanac', '56ac46377d');
 
 -- --------------------------------------------------------
 
@@ -304,6 +406,32 @@ CREATE TABLE IF NOT EXISTS `userpost_ext` (
   `extType` varchar(1) DEFAULT NULL,
   `postId` varchar(10) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `userpost_ext`
+--
+
+INSERT INTO `userpost_ext` (`extId`, `extContent`, `extType`, `postId`) VALUES
+('56ac20a64a', 'androidapp', '7', '56ac20a637'),
+('56ac21ac74', 'powerful', '3', '56ac21ac48'),
+('56ac21ac84', '1million pesos ', '5', '56ac21ac48'),
+('56ac279d72', 'androidapp', '7', '56ac279d62'),
+('56ac3273e4', 'desktopapp', '7', '56ac3273b6'),
+('56ac46dad0', 'website', '7', '56ac46dab8'),
+('56ac46dadd', '1222756ac46dadafc4.png', '2', '56ac46dab8'),
+('56ac474cbe', 'androidapp', '7', '56ac474ca2'),
+('56ac474ce9', 'www.google.com', '1', '56ac474ca2'),
+('56ac48c0d8', 'website', '7', '56ac48c0c8'),
+('56ac48c0e7', 'www.planitup.com.ph', '1', '56ac48c0c8'),
+('56ac4a2394', 'androidapp', '7', '56ac4a2370'),
+('56ac4a44a0', 'Android and Web', '7', '56ac4a448a'),
+('56ac4a44ce', 'www.googleplay.com/carinn', '1', '56ac4a448a'),
+('56ac4a44e0', '2871356ac4a44db8a3.png', '2', '56ac4a448a'),
+('56ac4ca7bd', 'website', '7', '56ac4ca7b1'),
+('56ac4ca7c6', '713456ac4ca7c6267.png', '2', '56ac4ca7b1'),
+('56ac537dad', 'desktopapp', '7', '56ac537d97'),
+('56ac547b8e', 'Mobile', '3', '56ac547b4b'),
+('56ac547b99', 'Prizes 1 million pesos', '5', '56ac547b4b');
 
 -- --------------------------------------------------------
 
@@ -320,17 +448,23 @@ CREATE TABLE IF NOT EXISTS `user_dtl` (
   `user_gender` varchar(1) DEFAULT NULL,
   `user_shortSelfDescription` varchar(100) DEFAULT NULL,
   `user_nameOfBusiness` varchar(45) DEFAULT NULL,
-  `user_businessType` varchar(15) DEFAULT NULL
+  `user_businessType` varchar(15) DEFAULT NULL,
+  `user_reasons` varchar(1000) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `user_dtl`
 --
 
-INSERT INTO `user_dtl` (`userId`, `user_lName`, `user_fName`, `user_midInit`, `user_age`, `user_gender`, `user_shortSelfDescription`, `user_nameOfBusiness`, `user_businessType`) VALUES
-('568b3cdff0', 'Cutamora', 'Lyneth', 'C', '19', 'F', 'Hinata &lt;3 Naruto-kun', NULL, NULL),
-('568bf05c94', 'Jobs', 'Steve', 'C', '23', 'M', 'Think Differently', 'Apple', 'Technology'),
-('568bf13b8f', 'Albaracin', 'Edelito', 'D', '20', 'M', 'I am James Red', NULL, NULL);
+INSERT INTO `user_dtl` (`userId`, `user_lName`, `user_fName`, `user_midInit`, `user_age`, `user_gender`, `user_shortSelfDescription`, `user_nameOfBusiness`, `user_businessType`, `user_reasons`) VALUES
+('56ac1c012d', 'Pitogo', 'Jason', 'D', '20', 'M', 'Programmer sa Index5', NULL, NULL, NULL),
+('56ac1ceec6', 'Dimpas', 'Alfie', 'C', '20', 'M', 'Investor ko', 'Start&Boost', 'startup', NULL),
+('56ac1e3e5d', 'Dimpas', 'Jm', 'C', '19', 'F', 'I am ideator', NULL, NULL, NULL),
+('56ac24cd6d', 'Isidro', 'Estose', 'C', '20', 'M', 'Master of all masters', NULL, NULL, NULL),
+('56ac2a552e', 'Jobs', 'Steve', 'C', '25', 'M', 'Think Differently', 'Apple', 'Technology', NULL),
+('56ac46377d', 'Cutamora', 'Lyneth', 'C', '19', 'F', 'Think Differently', NULL, NULL, NULL),
+('56ac497d9a', 'Kutamura', 'Rinesu', '', '19', 'F', 'Im a princess', NULL, NULL, NULL),
+('56ac4b9c79', 'Pitogo', 'Kitkat', 'D', '20', 'F', 'Im Investor', 'StartBoost', 'startup', NULL);
 
 -- --------------------------------------------------------
 
@@ -353,10 +487,14 @@ CREATE TABLE IF NOT EXISTS `user_md` (
 --
 
 INSERT INTO `user_md` (`userId`, `user_Type`, `user_dateRegistered`, `user_emailAdd`, `user_password`, `user_profilePicId`, `user_status`) VALUES
-('568b3cdff0', 'Ideator', '2016-01-05 04:47:43', 'lyneth.cutamora@gmail.com', '18e709a19ff1a1c600aa268af2206327', 'pi568b3cdf', '0'),
-('568bf05c94', 'Investor', '2016-01-05 17:33:32', 'stevejobs@gmail.com', '9f6290f4436e5a2351f12e03b6433c3c', 'pi568bf05c', '0'),
-('568bf0ed3a', 'Company', '2016-01-05 17:35:57', 'hr@teradyne.com', 'b36b23a3aa8afa1c84b4c45c1fdf168b', 'pi568bf0ed', '0'),
-('568bf13b8f', 'Ideator', '2016-01-05 17:37:15', 'edelitoalbaracin@gmail.com', 'a47843f9e650c40fbb27e57c61cf8d23', 'pi568bf13b', '0');
+('56ac1c012d', 'Admin', '2016-01-30 03:12:17', 'jason@yahoo.com', '00bfc8c729f5d4d529a412b12c58ddd2', 'pi56ac1c01', '0'),
+('56ac1ceec6', 'Investor', '2016-01-30 03:16:14', 'alfiedimpas@icloud.com', '00bfc8c729f5d4d529a412b12c58ddd2', 'pi56ac1cee', '1'),
+('56ac1e3e5d', 'Ideator', '2016-01-30 03:21:50', 'jm@gmail.com', '00bfc8c729f5d4d529a412b12c58ddd2', 'pi56ac1e3e', '0'),
+('56ac24cd6d', 'Ideator', '2016-01-30 03:49:49', 'estose@gmail.com', '00bfc8c729f5d4d529a412b12c58ddd2', 'pi56ac24cd', '0'),
+('56ac2a552e', 'Investor', '2016-01-30 04:13:25', 'steve.jobs@gmail.com', '00bfc8c729f5d4d529a412b12c58ddd2', 'pi56ac2a55', '1'),
+('56ac46377d', 'Ideator', '2016-01-30 06:12:23', 'lyneth.cutamora@gmail.com', '18e709a19ff1a1c600aa268af2206327', 'pi56ac4637', '0'),
+('56ac497d9a', 'Ideator', '2016-01-30 06:26:21', 'kutamuralyn@yahoo.com', '18e709a19ff1a1c600aa268af2206327', 'pi56ac497d', '0'),
+('56ac4b9c79', 'Investor', '2016-01-30 06:35:24', 'kitkat@gmail.com', '00bfc8c729f5d4d529a412b12c58ddd2', 'pi56ac4b9c', '0');
 
 --
 -- Indexes for dumped tables
@@ -375,10 +513,16 @@ ALTER TABLE `badge_dtl`
  ADD KEY `fk_badge_dtl_User_MD1_idx` (`userId`), ADD KEY `fk_badge_dtl_User_MD2_idx` (`fromUserId`);
 
 --
+-- Indexes for table `bmc_dtl`
+--
+ALTER TABLE `bmc_dtl`
+ ADD KEY `fk_bmc_dtl_userpost1_idx` (`postId`);
+
+--
 -- Indexes for table `comment_dtl`
 --
 ALTER TABLE `comment_dtl`
- ADD KEY `fk_comment_dtl_User_MD1_idx` (`userId`), ADD KEY `fk_comment_dtl_userpost1` (`postId`);
+ ADD PRIMARY KEY (`commentId`), ADD KEY `fk_comment_dtl_User_MD1_idx` (`userId`), ADD KEY `fk_comment_dtl_userpost1` (`postId`);
 
 --
 -- Indexes for table `company_dtl`
@@ -391,12 +535,6 @@ ALTER TABLE `company_dtl`
 --
 ALTER TABLE `conference_dtl`
  ADD KEY `fk_conference_dtl_User_MD1_idx` (`userId`);
-
---
--- Indexes for table `conference_ext`
---
-ALTER TABLE `conference_ext`
- ADD PRIMARY KEY (`conExtId`), ADD KEY `fk_conference_ext_group_md1_idx` (`conId`);
 
 --
 -- Indexes for table `group_ext`
@@ -426,7 +564,7 @@ ALTER TABLE `location_dtl`
 -- Indexes for table `msg_dtl`
 --
 ALTER TABLE `msg_dtl`
- ADD PRIMARY KEY (`msgId`), ADD KEY `fk_msg_dtl_User_MD1_idx` (`userId`), ADD KEY `fk_msg_dtl_User_MD2_idx` (`msg_fromUserId`);
+ ADD KEY `fk_msg_dtl_User_MD1_idx` (`userId`), ADD KEY `fk_msg_dtl_User_MD2_idx` (`msg_fromUserId`);
 
 --
 -- Indexes for table `report_dtl`
@@ -482,6 +620,12 @@ ADD CONSTRAINT `fk_badge_dtl_User_MD1` FOREIGN KEY (`userId`) REFERENCES `user_m
 ADD CONSTRAINT `fk_badge_dtl_User_MD2` FOREIGN KEY (`fromUserId`) REFERENCES `user_md` (`userId`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
+-- Constraints for table `bmc_dtl`
+--
+ALTER TABLE `bmc_dtl`
+ADD CONSTRAINT `fk_bmc_dtl_userpost1` FOREIGN KEY (`postId`) REFERENCES `userpost` (`postId`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
 -- Constraints for table `comment_dtl`
 --
 ALTER TABLE `comment_dtl`
@@ -499,12 +643,6 @@ ADD CONSTRAINT `fk_Company_dtl_User_MD` FOREIGN KEY (`userId`) REFERENCES `user_
 --
 ALTER TABLE `conference_dtl`
 ADD CONSTRAINT `fk_conference_dtl_User_MD1` FOREIGN KEY (`userId`) REFERENCES `user_md` (`userId`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `conference_ext`
---
-ALTER TABLE `conference_ext`
-ADD CONSTRAINT `fk_conference_ext_group_md1` FOREIGN KEY (`conId`) REFERENCES `group_md` (`groupId`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `group_ext`
