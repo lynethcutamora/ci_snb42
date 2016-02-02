@@ -76,7 +76,7 @@
                   <h4 class="modal-title" id="myModalLabel">Edit</h4>
                 </div>
                 <div class="modal-body">
-                      
+                    <div name="edit" id="edit"></div>
                 </div><!-- /.register-box -->
 
               </div>
@@ -151,12 +151,7 @@
 
         });
 
-         $('button[name="delete"]').click(function(e){
-              alert("deleted");
-          
-
-          });
-
+        
 
 
         </script>
