@@ -1192,6 +1192,7 @@ class Pages extends CI_Controller {
 		$this->db->insert('group_ext',$data);
 		header('Location:'.base_url().'pages/group/'.$this->input->post('groupid'));
 	}
+	
 	public function addmember(){
 		$groupid = $this->input->post('groupid');
 		$userid = $this->input->post('userid');
