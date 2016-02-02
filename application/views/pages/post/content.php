@@ -1,4 +1,11 @@
     <script src="<?php echo base_url(); ?>plugins/jQuery/jQuery-2.1.4.min.js"></script>
+    <?php if(!$this->post->checkPostType($postId)){
+              if($this->post->checkNewInvestor()){
+                header('Location:'.base_url().'pages/investormoreinfo');
+              }
+
+           }
+    ?>
    <div class="content-wrapper">
  <section class="content-header">
  <div class="row"> 

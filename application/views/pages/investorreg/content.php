@@ -143,8 +143,8 @@
 
                         <tr>
                             <td><?php echo $i;?></td>
-                            <td><a href="<?php echo base_url()."pages/post/".$row->postId;?>"><?php echo $row->postTitle;?></a></td>
-                            <td><a href="<?php echo base_url()."pages/profile/".$row->userId;?>"><?php echo $row->user_fName;?>&nbsp;<?php echo $row->user_midInit;?>.&nbsp;<?php echo $row->user_lName;?></a></td>
+                            <td><?php echo $row->postTitle;?></td>
+                            <td><?php echo $row->user_fName;?>&nbsp;<?php echo $row->user_midInit;?>.&nbsp;<?php echo $row->user_lName;?></td>
                             <td>
                               <span class="label label-default"><i class="fa fa-thumbs-up">&nbsp;<?php echo $like;?></i></span>
                             </td>
@@ -170,7 +170,7 @@
 <script>
      function investorPost(){
                  
-                  $("#newsfeed").load("<?php echo base_url().'pages/newShowInvestorPost/5'; ?>"); }
+                  $("#newsfeed").load("<?php echo base_url().'pages/newShowInvestorPost/8'; ?>"); }
                   setInterval(function(){investorPost()}, 1000);
 
 </script>

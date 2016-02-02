@@ -31,6 +31,8 @@ endforeach;
     <!-- AdminLTE Skins. Choose a skin from the css/skins
          folder instead of downloading all of them to reduce the load. -->
     <link rel="stylesheet" href="<?php echo base_url(); ?>dist/css/skins/_all-skins.min.css">
+    <link rel="shortcut icon" href="<?php echo base_url(); ?>images/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="<?php echo base_url(); ?>images/favicon.ico" type="image/x-icon">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -251,7 +253,40 @@ endforeach;
               </span>
             </div>
           </form>
-          
+          <?php if($this->post->checkNewInvestor()){ ?>
+          <ul class="sidebar-menu">
+            <li class="header">MAIN NAVIGATION</li>
+             <li class="treeview <?php if($pages=='dashboard') {echo "active";}else echo "";?>">
+              <a href="<?php echo base_url(); ?>pages/dashboard">
+                <i class="fa fa-feed"></i><span>News Feed</span>
+              </a>
+            </li>
+             <li class="treeview <?php if($pages=='investormoreinfo') {echo "active";}else echo "";?>">
+              <a href="<?php echo base_url(); ?>pages/investormoreinfo">
+                <i class="fa fa-unlock"></i><span>Account</span>
+              </a>
+            </li>
+            <li class="treeview <?php if($pages=='startup') {echo "active";}else echo "";?>">
+              <a href="#">
+                <i class="fa fa-plus-square"></i>
+                <span>Startup Products</span>
+                <i class="fa fa-angle-left pull-right"></i>
+              </a>
+              <ul class="treeview-menu">
+                <li><a href="<?php echo base_url(); ?>pages/latest"><i class="fa fa-circle-o"></i>Latest</a></li>
+                <li><a href="<?php echo base_url(); ?>pages/onfire"><i class="fa fa-fire"></i>Most Discuss</a></li>
+                <li><a href="<?php echo base_url(); ?>pages/toprated"><i class="fa fa-star"></i>Top Rated</a></li>
+              </ul>
+            </li><!-- 
+             <li class="treeview <?php if($pages=='timeline') {echo "active";}else echo "";?>">
+              <a href="<?php echo base_url(); ?>pages/timeline">
+                    <i class="fa fa-calendar"></i> <span>Timeline</span>
+                 </a>
+             
+            </li> -->
+          </ul>
+          <?php } else{?>
+
           <!-- /.search form -->
           <!-- sidebar menu: : style can be found in sidebar.less -->
           <ul class="sidebar-menu">
@@ -324,6 +359,7 @@ endforeach;
               </ul>
             </li>
           </ul>
+          <?php }?>
         </section>
         <!-- /.sidebar -->
       </aside>

@@ -901,6 +901,7 @@
              return $query;
         
         }
+
         public function groupcreator($groupId,$userId)
         {
             $this->db->select('*');
@@ -940,8 +941,40 @@
             }
             else return false;
         }
+
+
+
+        public function checkNewInvestor()
+        {
+             $this->db->select('user_status,userId');
+             $this->db->from('user_md');
+             $this->db->where('userId',$this->session->userdata("userId"));
+             $this->db->where('user_status','0');
+             $query = $this->db->get();
+             $numrow = $query->num_rows();
+             if($numrow)
+             {
+                return true;
+             }else
+                return false;
+        
+        }
+
+        public function checkPostType($postId)
+        {
+          
+             $this->db->select('postType,postId');
+             $this->db->from('userpost');
+             $this->db->where('postId',$postId);
+             $this->db->where('postType','2');
+             $query = $this->db->get();
+             $numrow = $query->num_rows();
+             if($numrow)
+             {
+                return true;
+             }else
+                return false;
+        }
     }
-
-
 
 ?>
