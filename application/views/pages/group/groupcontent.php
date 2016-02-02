@@ -304,13 +304,16 @@
                   </div><!-- /.box-header -->
                     <div class='box-header with-border'>
                       <?php foreach($memberinfo as $row):?>
-                      <form method="post" action="'.base_url().'pages/memberinvite">
+                      <form method="post" action="'.base_url().'pages/diskikliv">
                       <div class='user-block'>
                         <img class='img-circle' src='<?php echo base_url();?>/user/<?php echo $this->post->getAvatar($row["userId"]);?>' alt='user image'>
                           <?php echo "<span class='username'><a href='#'>".$this->post->userProfile($row['userId'])."</a></span>";
                                 
                                 if($this->post->groupmember($row['groupId'],$row['userId'])==true)
                                 {
+                                  echo '<input type="text" hidden="true" name="groupid" value="'.$groupid.'">';
+                                  echo '<input type="text" hidden="true" name="userid" value="'.$row['userId'].'">';
+                          
                                   if($this->post->groupcreator($row['groupId'],$row['userId'])==true)
                                   {
                                     if($this->post->creatorview($row['groupId'])==true){

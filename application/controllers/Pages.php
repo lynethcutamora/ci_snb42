@@ -3195,9 +3195,30 @@ class Pages extends CI_Controller {
 		}
 	}
 
+	public function diskikliv()
+	{
+		$groupid = $this->input->post('groupid');
+		$userid = $this->input->post('userid');
 
+		$this->db->select('*');
+		$this->db->from('group_ext');
+		$this->db->where('groupId',$groupid);
+		$this->db->where('userId',$userid);
 
+		if($this->session->userdata('userId')!="")
+		{
+
+			if(isset($_POST['btndisband'])){
+
+			}
+			elseif(isset($_POST['btnleave'])){
+				$this->db->delete('group_ext');
+				header('Location:'.base_url().'pages/newgroup/'.$this->input->post('userId'));
+			}
+			elseif(isset($_POST['btnkick'])){
+				$this->db->delete('group_ext');
+				header('Location:'.base_url().'pages/group/'.$this->input->post('groupId'));
+			}
+		}
+	}
 }
-
-
-
