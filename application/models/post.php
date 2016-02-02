@@ -902,6 +902,47 @@
         
         }
 
+        public function groupcreator($groupId,$userId)
+        {
+            $this->db->select('*');
+            $this->db->from('group_md');
+            $this->db->where('groupId',$groupId);
+            $this->db->where('userId',$userId);
+            $query = $this->db->get();
+            $row = $query->num_rows();
+            if($row){
+                return true;
+            }
+            else return false;
+        }
+        public function groupmember($groupId,$userId)
+        {
+            $this->db->select('*');
+            $this->db->from('group_ext');
+            $this->db->where('groupId',$groupId);
+            $this->db->where('userId',$userId);
+            $query = $this->db->get();
+            $row = $query->num_rows();
+            if($row){
+                return true;
+            }
+            else return false;
+        }
+        public function creatorview($groupId)
+        {
+            $this->db->select('*');
+            $this->db->from('group_md');
+            $this->db->where('groupId',$groupId);
+            $this->db->where('userId',$this->session->userdata('userId'));
+            $query = $this->db->get();
+            $row = $query->num_rows();
+            if($row){
+                return true;
+            }
+            else return false;
+        }
+
+
 
         public function checkNewInvestor()
         {
@@ -934,9 +975,6 @@
              }else
                 return false;
         }
-
     }
-
-
 
 ?>
