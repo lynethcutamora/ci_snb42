@@ -1,3 +1,8 @@
+    <?php 
+        if($this->post->checkNewInvestor()){
+                header('Location:'.base_url().'pages/investormoreinfo');
+              }
+  ?>
 <!-- Content Wrapper. Contains page content -->
     <script src="<?php echo base_url(); ?>plugins/jQuery/jQuery-2.1.4.min.js"></script>
       <div class="content-wrapper">

@@ -12,6 +12,8 @@ class Pages extends CI_Controller {
 				$this->_welcome();
 		}
 		else{
+
+
 			$this->_landing();
 		}
 
@@ -28,7 +30,9 @@ class Pages extends CI_Controller {
 	{
 		if(($this->session->userdata('userId')!=""))
 		{		
+
 			$this->_dashboard();
+
 		}
 		else
 		{
@@ -67,7 +71,13 @@ class Pages extends CI_Controller {
 		$feed = $this->post->recentinvestor();
 		$data['recentinvestor'] = $feed->result_array();
 		$this->load->view('pages/dashboard/fixed',$data);
-		$this->load->view('pages/dashboard/content',$data);
+		if($this->post->checkNewInvestor()){
+			$this->load->view('pages/investorreg/content',$data);
+		}
+		else{
+			$this->load->view('pages/dashboard/content',$data);
+		}
+	
 		$this->load->view('pages/dashboard/footer');
 		$this->load->view('pages/dashboard/controlsidebar');
 		$this->load->view('pages/dashboard/end');		
@@ -208,8 +218,16 @@ class Pages extends CI_Controller {
 			$data['recentinvestor'] = $feed->result_array();	
 			$feed = $this->post->recentinvestor();
 			$data['alldata']=$query->result_array();
-			$this->load->view('pages/investorreg/collapsed',$data);
-			$this->load->view('pages/investorreg/fillinvestorinfo',$data);
+
+			$data['countgroup'] = $this->countGroups();
+			$groupquery= $this->groupdetails();
+			$data['groupdetails'] = $groupquery->result_array();
+
+		
+			$this->load->view('pages/dashboard/fixed',$data);
+				$this->load->view('pages/investorreg/fillinvestorinfo',$data);
+			$this->load->view('pages/dashboard/controlsidebar');
+			$this->load->view('pages/dashboard/end');
 		}else{
 			$this->_landing();
 		}
@@ -2675,8 +2693,8 @@ class Pages extends CI_Controller {
 		public function newShowInvestorPost($query,$postId=null)
 		{
 				if($query =='1'){
-
-					$query=$this->post->queryInvestorPost();
+					
+						$query=$this->post->queryInvestorPost();
 				}
 				elseif ($query =='2') {
 					$query=$this->post->queryNewsfeedIdeator();
@@ -3158,6 +3176,26 @@ class Pages extends CI_Controller {
 			
 			
 		
+	}
+	public function investorInformation()
+	{
+		if(($this->session->userdata('userId')!=""))
+		{
+			if($this->input->post("reason")==null){
+				
+			}
+				else{
+
+				$this->db->set('user_reasons', $this->input->post("reason"));
+				$this->db->where('userId', $this->session->userdata("userId"));
+				$this->db->update('user_dtl'); 
+			}
+					
+		}
+		else
+		{
+			$this->_landing();
+		}
 	}
 
 

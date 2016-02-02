@@ -1,3 +1,8 @@
+  <?php 
+        if($this->post->checkNewInvestor()){
+                header('Location:'.base_url().'pages/investormoreinfo');
+              }
+  ?>
    <div class="content-wrapper">
  <section class="content-header">
  <div class="row">
