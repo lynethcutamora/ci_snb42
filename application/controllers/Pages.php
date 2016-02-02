@@ -3134,6 +3134,26 @@ class Pages extends CI_Controller {
 			          
 
 			          });
+ 					$("button[name='.'btnDelete'.']").click(function(e){
+			              if (confirm("Do you want to delete this post?")) {
+							     var postId = $(this).attr("value");
+							        e.preventDefault();
+			             			 var dataString = "postId="+ postId;
+							       $.ajax({
+					              type: "post",
+					              url:"'.base_url().'pages/deletepost/",
+					              data:dataString,
+					              success: function (data) {
+					          		alert("successfully deleted");
+					              
+					              }
+					            });
+							} else {
+							    // Do nothing!
+							}
+			          
+
+			          });
 
 			 		</script>
 		';
@@ -3182,7 +3202,7 @@ class Pages extends CI_Controller {
                   endforeach;
 		}
 
-		public function commentNow()
+	public function commentNow()
 	{
 		if(($this->session->userdata('userId')!=""))
 		{
@@ -3210,7 +3230,7 @@ class Pages extends CI_Controller {
 			$this->_landing();
 		}
 	}
-
+	
 	public function goldbadge()
 	{
 
@@ -3285,10 +3305,12 @@ class Pages extends CI_Controller {
 		$groupid = $this->input->post('groupid');
 		$userid = $this->input->post('userid');
 
+
 		$this->db->select('*');
 		$this->db->from('group_ext');
 		$this->db->where('groupId',$groupid);
 		$this->db->where('userId',$userid);
+
 
 		if($this->session->userdata('userId')!="")
 		{
@@ -3306,4 +3328,11 @@ class Pages extends CI_Controller {
 			}
 		}
 	}
+
+	public function editStartupidea($value='')
+	{
+		
+	}
+
+
 }
