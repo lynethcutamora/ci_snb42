@@ -975,6 +975,16 @@
              }else
                 return false;
         }
+
+        public function getPostType($postId)
+        {
+            $this->db->select('postId,postType');
+            $this->db->from('userpost');
+            $query =$this->db->where('postId',$postId);
+            $query = $this->db->get();
+            $row = $query->row_array();
+            return $row['postType'];
+        }
     }
 
 ?>

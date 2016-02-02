@@ -2747,7 +2747,7 @@ class Pages extends CI_Controller {
 		            if(!$this->post->checkUser1($row['userId'])){
 
 		            }else{
-		      	  echo '    <button class="btn btn-box-tool" data-toggle="modal" data-target="#edit"><i class="fa fa-edit"></i></button>
+		      	  echo '    <a href="'.base_url().'pages/editpost/'.$row['postId'].'"  class="btn btn-box-tool" ><i class="fa fa-edit"></i></a>
 		      	  		<button type="submit" class="btn btn-box-tool" name="btnDelete" id="btnDelete" value="'.$row['postId'].'"><i class="fa fa-times"></i></button>';
                   	 }
 		           
@@ -2908,8 +2908,8 @@ class Pages extends CI_Controller {
 		            if(!$this->post->checkUser1($row['userId'])){
 
 		            }else{
-		      	  echo '    <button class="btn btn-box-tool" data-toggle="modal" data-target="#edit"><i class="fa fa-edit"></i></button>
-		      	  		<button type="submit" class="btn btn-box-tool" name="btnDelete" id="btnDelete" value="'.$row['postId'].'"><i class="fa fa-times"></i></button>';
+		      	  echo '    <a href="'.base_url().'pages/editpost/'.$row['postId'].'"  class="btn btn-box-tool" ><i class="fa fa-edit"></i></a>
+		      	  			<button type="submit" class="btn btn-box-tool" name="btnDelete" id="btnDelete" value="'.$row['postId'].'"><i class="fa fa-times"></i></button>';
                   	 }
 		           
 		    echo'     </div><!-- /.box-tools -->
@@ -2976,7 +2976,7 @@ class Pages extends CI_Controller {
 		            if(!$this->post->checkUser1($row['userId'])){
 
 		            }else{
-		      	  echo '    <button class="btn btn-box-tool" data-widget="edit"><i class="fa fa-edit"></i></button>
+		      	  echo '    <a href="'.base_url().'pages/editpost/'.$row['postId'].'"  class="btn btn-box-tool" ><i class="fa fa-edit"></i></a>
 		      	  		<button type="submit" class="btn btn-box-tool" name="btnDelete" id="btnDelete" value="'.$row['postId'].'"><i class="fa fa-times"></i></button>';
                   	 }
 		           
@@ -3031,7 +3031,7 @@ class Pages extends CI_Controller {
 		            if(!$this->post->checkUser1($row['userId'])){
 
 		            }else{
-		      	  echo '    <button class="btn btn-box-tool"  data-toggle="modal" data-target="#edit"><i class="fa fa-edit"></i></button>
+		      	  echo '    <a href="'.base_url().'pages/editpost/'.$row['postId'].'"  class="btn btn-box-tool" ><i class="fa fa-edit"></i></a>
 		      	  		<button type="submit" class="btn btn-box-tool" name="btnDelete" id="btnDelete" value="'.$row['postId'].'"><i class="fa fa-times"></i></button>';
                   	 }
 		           
@@ -3113,26 +3113,7 @@ class Pages extends CI_Controller {
 			          });
 
 
-			         $("button[name='.'btnDelete'.']").click(function(e){
-			              if (confirm("Do you want to delete this post?")) {
-							     var postId = $(this).attr("value");
-							        e.preventDefault();
-			             			 var dataString = "postId="+ postId;
-							       $.ajax({
-					              type: "post",
-					              url:"'.base_url().'pages/deletepost/",
-					              data:dataString,
-					              success: function (data) {
-					          		alert("successfully deleted");
-					              
-					              }
-					            });
-							} else {
-							    // Do nothing!
-							}
-			          
 
-			          });
  					$("button[name='.'btnDelete'.']").click(function(e){
 			              if (confirm("Do you want to delete this post?")) {
 							     var postId = $(this).attr("value");
@@ -3328,9 +3309,36 @@ class Pages extends CI_Controller {
 		}
 	}
 
-	public function editStartupidea($value='')
+	 public function editpost($postId)
 	{
-		
+		if(($this->session->userdata('userId')!="")){
+			$query=$this->_userData();
+			$data['data']=$query->result_array();
+			$data['pages']='edit';
+			$data['countgroup'] = $this->countGroups();
+			$groupquery= $this->groupdetails();
+			$data['groupdetails'] = $groupquery->result_array();
+
+			$postdtlquery= $this->post->postdtl($postId);
+			$data['postDetail'] = $postdtlquery->result_array();
+
+			$this->load->view('pages/dashboard/fixed',$data);
+
+			if($this->post->getPostType($postId)=='1'){
+				$this->load->view('pages/edit/startupidea',$data);
+			}elseif($this->post->getPostType($postId)=='2'){
+				$this->load->view('pages/edit/startupproduct',$data);
+			}elseif($this->post->getPostType($postId)=='3'){
+				$this->load->view('pages/edit/normal',$data);
+			}elseif($this->post->getPostType($postId)=='4'){
+				$this->load->view('pages/edit/competition',$data);
+			}
+
+			$this->load->view('pages/dashboard/controlsidebar');
+			$this->load->view('pages/dashboard/end');
+		}else{
+			$this->_landing();
+		}
 	}
 
 
