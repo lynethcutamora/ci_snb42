@@ -89,43 +89,30 @@ endforeach;
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                 <i class="fa fa-bell-o"></i>
                 <span class="label label-warning"><div name="countntf" id="countntf"></div></span>
-                </a>
-                
-                <ul class="dropdown-menu">
-                  <li class="header">Notification</li>
-                  <li class="body">
+                </a>                
+
+            
                     <!-- inner menu: contains the actual data -->
-                    <div class="form-group" align="justify">
-                    <ul class="menu">
-                      <?php echo form_open('../pages/addmember');?>
-                        <?php foreach($groupdetails as $row):?>
-                          <input type="text" hidden="true" name="groupid" value="<?php echo $row['groupId']?>">
-                          <input type="text" hidden="true" name="userid" value="<?php echo $row['userId']?>">
-                          <?php if($this->post->groupstat($row['groupId'],$row['userId'])==false)
-                          {
-                            echo "";
-                          }
-                          else
-                          {
-                            echo $row['groupname']."<br>";
-                            echo "<small>Invite you to their group</small><br>";
-                            echo "<span class='pull-right'><input type='submit' name='btnAccept' value='Accept'>&nbsp;&nbsp;&nbsp;&nbsp;
-                            <input type='submit' name='btnDecline' value='Decline'>&nbsp;&nbsp;</span><br><hr>";    
-                          } ?>
-                          
-                          
-                        <?php endforeach;?>
-                      </form>
-                    </ul>
-                    </div>
-                  </li>
-                  <li class="footer">
-                    <a href="#">View all</a>
-                  </li>
-                </ul>
-                <script>
+                    <ul class="dropdown-menu">
+                 
+                          <li>
+                   
+                      <div name="notif1" id="notif1">  
+                       <ul class="dropdown-menu">
+                 
+                          <li>
+                                 </li>
+                        </ul>
+
+                      </div>
+                            </li>
+                        </ul>
+                      
+                    
+                                 <script>
                   function loadNowPlaying5(){
-                    $("#countntf").load("<?php echo base_url().'pages/countntf'; ?>"); 
+                    $("#countntf").load("<?php echo base_url().'pages/groupnotif'; ?>"); 
+                    $("#notif1").load("<?php echo base_url().'pages/groupnotif1'; ?>"); 
                   }
                   setInterval(function(){loadNowPlaying5()}, 1000);
                 </script>
