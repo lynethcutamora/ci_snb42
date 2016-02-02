@@ -669,7 +669,7 @@ class Pages extends CI_Controller {
 			'user_emailAdd' => $this->input->post('inputEmail'),
 			'user_password' => md5($password),
 			'user_profilePicId' =>$picId,
-			'user_status' =>'0'
+			'user_status' =>'1'
 			);
 
 			$data1 = array(
@@ -825,7 +825,7 @@ class Pages extends CI_Controller {
 			'user_emailAdd' => $this->input->post('inputEmail'),
 			'user_password' => md5($password),
 			'user_profilePicId' =>$picId,
-			'user_status' =>'0'
+			'user_status' =>'1'
 			);
 
 			$data1 = array(
@@ -2732,10 +2732,15 @@ class Pages extends CI_Controller {
 		            <span class="description"><i class="fa fa-star" style="color:gold;"></i><small><b>&nbsp;'.$this->post->reputation($row['userId']).'</b></small>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;date posted:&nbsp;&nbsp;&nbsp;<small>'.$row['postDate'].'</small></span>
 		          </div><!-- /.user-block -->
 		          <div class="box-tools">
-		            <button class="btn btn-box-tool" data-widget="edit"><i class="fa fa-edit"></i></button>
-		            <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-		            <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-		          </div><!-- /.box-tools -->
+		          ';
+		            if(!$this->post->checkUser1($row['userId'])){
+
+		            }else{
+		      	  echo '    <button class="btn btn-box-tool" data-toggle="modal" data-target="#edit"><i class="fa fa-edit"></i></button>
+		      	  		<button type="submit" class="btn btn-box-tool" name="btnDelete" id="btnDelete" value="'.$row['postId'].'"><i class="fa fa-times"></i></button>';
+                  	 }
+		           
+		    echo'      </div><!-- /.box-tools -->
 		        </div><!-- /.box-header --> 
 		        <div class="box-body">
 		          <div class="container-fluid">
@@ -2888,11 +2893,15 @@ class Pages extends CI_Controller {
 				            </span>
 				            <span class="description"><i class="fa fa-star" style="color:gold;"></i><small><b>&nbsp;'.$this->post->reputation($row['userId']).'</b></small>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;date posted:&nbsp;&nbsp;&nbsp;<small>'.$row['postDate'].'</small></span>
 				          </div><!-- /.user-block -->
-				          <div class="box-tools">
-				            <button class="btn btn-box-tool" data-widget="edit"><i class="fa fa-edit"></i></button>
-				            <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-				            <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-				          </div><!-- /.box-tools -->
+				          <div class="box-tools">  ';
+		            if(!$this->post->checkUser1($row['userId'])){
+
+		            }else{
+		      	  echo '    <button class="btn btn-box-tool" data-toggle="modal" data-target="#edit"><i class="fa fa-edit"></i></button>
+		      	  		<button type="submit" class="btn btn-box-tool" name="btnDelete" id="btnDelete" value="'.$row['postId'].'"><i class="fa fa-times"></i></button>';
+                  	 }
+		           
+		    echo'     </div><!-- /.box-tools -->
 				        </div><!-- /.box-header --> 
 				        <div class="box-body">
 				          <div class="container-fluid">
@@ -2952,10 +2961,15 @@ class Pages extends CI_Controller {
 				            <span class="description"><i class="fa fa-star" style="color:gold;"></i><small><b>&nbsp;'.$this->post->reputation($row['userId']).'</b></small>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;date posted:&nbsp;&nbsp;&nbsp;<small>'.$row['postDate'].'</small></span>
 				          </div><!-- /.user-block -->
 				          <div class="box-tools">
-				            <button class="btn btn-box-tool" data-widget="edit"><i class="fa fa-edit"></i></button>
-				            <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-				            <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-				          </div><!-- /.box-tools -->
+				             ';
+		            if(!$this->post->checkUser1($row['userId'])){
+
+		            }else{
+		      	  echo '    <button class="btn btn-box-tool" data-widget="edit"><i class="fa fa-edit"></i></button>
+		      	  		<button type="submit" class="btn btn-box-tool" name="btnDelete" id="btnDelete" value="'.$row['postId'].'"><i class="fa fa-times"></i></button>';
+                  	 }
+		           
+		    echo'     </div><!-- /.box-tools -->
 				        </div><!-- /.box-header --> 
 				        <div class="box-body">
 				          <div class="container-fluid">
@@ -3002,10 +3016,15 @@ class Pages extends CI_Controller {
 				            <span class="description"><i class="fa fa-star" style="color:gold;"></i><small><b>&nbsp;'.$this->post->reputation($row['userId']).'</b></small>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;date posted:&nbsp;&nbsp;&nbsp;<small>'.$row['postDate'].'</small></span>
 				          </div><!-- /.user-block -->
 				          <div class="box-tools">
-				            <button class="btn btn-box-tool" data-widget="edit"><i class="fa fa-edit"></i></button>
-				            <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-				            <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-				          </div><!-- /.box-tools -->
+				           ';
+		            if(!$this->post->checkUser1($row['userId'])){
+
+		            }else{
+		      	  echo '    <button class="btn btn-box-tool"  data-toggle="modal" data-target="#edit"><i class="fa fa-edit"></i></button>
+		      	  		<button type="submit" class="btn btn-box-tool" name="btnDelete" id="btnDelete" value="'.$row['postId'].'"><i class="fa fa-times"></i></button>';
+                  	 }
+		           
+		    echo'    </div><!-- /.box-tools -->
 				        </div><!-- /.box-header --> 
 				        <div class="box-body">
 				          <div class="container-fluid">
@@ -3081,6 +3100,29 @@ class Pages extends CI_Controller {
 			            });
 
 			          });
+
+
+			         $("button[name='.'btnDelete'.']").click(function(e){
+			              if (confirm("Do you want to delete this post?")) {
+							     var postId = $(this).attr("value");
+							        e.preventDefault();
+			             			 var dataString = "postId="+ postId;
+							       $.ajax({
+					              type: "post",
+					              url:"'.base_url().'pages/deletepost/",
+					              data:dataString,
+					              success: function (data) {
+					          		alert("successfully deleted");
+					              
+					              }
+					            });
+							} else {
+							    // Do nothing!
+							}
+			          
+
+			          });
+
 			 		</script>
 		';
 		}
@@ -3186,6 +3228,37 @@ class Pages extends CI_Controller {
 				$this->db->set('user_reasons', $this->input->post("reason"));
 				$this->db->where('userId', $this->session->userdata("userId"));
 				$this->db->update('user_dtl'); 
+			}
+					
+		}
+		else
+		{
+			$this->_landing();
+		}
+	}
+	public function deletepost()
+	{
+		if(($this->session->userdata('userId')!=""))
+		{
+			if($this->input->post("postId")==null){
+				
+			}
+			else{
+
+					$this->db->where('postId',$this->input->post("postId"));
+					$this->db->delete('bmc_dtl');
+
+					$this->db->where('postId',$this->input->post("postId"));
+					$this->db->delete('userpost_ext');
+
+					$this->db->where('postId',$this->input->post("postId"));
+					$this->db->delete('upvote_dtl');
+
+					$this->db->where('postId',$this->input->post("postId"));
+					$this->db->delete('comment_dtl');
+
+					$this->db->where('postId',$this->input->post("postId"));
+					$this->db->delete('userpost');
 			}
 					
 		}
