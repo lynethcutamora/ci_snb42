@@ -304,7 +304,7 @@
                   </div><!-- /.box-header -->
                     <div class='box-header with-border'>
                       <?php foreach($memberinfo as $row):?>
-                      <form method="post" action="'.base_url().'pages/diskikliv">
+                      <?php echo '<form method="post" action="'.base_url().'pages/diskikliv">';?>
                       <div class='user-block'>
                         <img class='img-circle' src='<?php echo base_url();?>/user/<?php echo $this->post->getAvatar($row["userId"]);?>' alt='user image'>
                           <?php echo "<span class='username'><a href='#'>".$this->post->userProfile($row['userId'])."</a></span>";
