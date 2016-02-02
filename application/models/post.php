@@ -195,6 +195,43 @@
             if($numrows>0)  return true;
             else return false;
         }
+
+        public function ifgrouprequestmember($groupId,$userId)
+        {
+            $this->db->select('*');
+            $this->db->from('group_ext');
+            $this->db->where('userId',$userId);
+            $this->db->where('groupId',$groupId);
+            $this->db->where_not_in('status','1');
+            $query=$this->db->get();
+            $numrows = $query->num_rows();
+            if($numrows>0)  return true;
+            else return false;
+        }
+
+        public function ifgroupadmin($userid){
+            $this->db->select('groupId, userId');
+            $this->db->from('group_md ');
+            $this->db->where('userId',$userid);
+            $query=$this->db->get();
+            $numrows = $query->num_rows();
+            if($numrows>0)  return true;
+            else return false;
+        }
+
+        public function memberGroupRequest($userid){
+            if (ifgroupadmin($userid)){
+                $this->db->select('e.groupId,e.userId,e.status');
+                $this->db->from('group_ext e');
+                $this->db->join('group_md m','e.groupId=m.groupId','left');
+                $this->db->where('m.userId',$userid);
+                $this->db->where('e.status','2');
+                $query=$this->db->get();
+                return $query;
+            }else
+                return false;
+        }
+
         public function groupstat($groupid,$userId)
         {
             $this->db->select('*');
@@ -974,6 +1011,27 @@
                 return true;
              }else
                 return false;
+        }
+        public function getAdmingroup($groupId)
+        {
+            $this->db->select('groupId,userId');
+             $this->db->from('group_md');
+             $this->db->where('groupId',$groupId);
+             $query = $this->db->get();
+              $row = $query->row_array();
+             return $row['userId'];
+
+        }
+
+        public function getGroupname($groupId)
+        {
+            $this->db->select('groupId,groupname');
+             $this->db->from('group_md');
+             $this->db->where('groupId',$groupId);
+             $query = $this->db->get();
+              $row = $query->row_array();
+             return $row['groupname'];
+
         }
     }
 

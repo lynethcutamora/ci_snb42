@@ -100,7 +100,7 @@
                         <td>
                         <?php 
 
-                          if($this->post->existsMember($group['groupId'],$userid)){
+                          if($this->post->ifgrouprequestmember($group['groupId'],$userid)){
                             echo '<input type="submit" class="btn btn-primary btn-xs disabled" value ="Request to join group"></input>';
                           }else{
                             echo '<input type="submit" class="btn btn-primary btn-xs" value ="Request to join group"></input>';

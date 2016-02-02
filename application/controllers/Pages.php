@@ -2383,7 +2383,80 @@ class Pages extends CI_Controller {
            	$num= $query->num_rows();
 		echo $num;
 	}
-	
+	public function groupnotif()
+	{
+
+          	$this->db->where('userId', $this->session->userdata("userId"));
+          	$query = $this->db->get('group_md');
+          		$numrows = $query->num_rows();
+          		if($numrows==0)
+          		{
+          			echo "0";
+          		}
+
+           	foreach ($query->result_array() as $key) {
+           			$this->db->where('status','1');
+           			$this->db->where('userId',$this->session->userdata("userId"));
+          			$query1 = $this->db->get('group_ext');
+            		$numrows = $query1->num_rows();
+
+            		$this->db->where('groupId',$key['groupId']);
+           			$this->db->where('status','2');
+          			$query2 = $this->db->get('group_ext');
+            		$numrows1 = $query2->num_rows();
+            		if(($numrows+$numrows1)==0){
+            			echo "0";
+            		}
+            		else
+           			echo $numrows+$numrows1;
+           	}
+	}
+	public function groupnotif1()
+	{
+          	$this->db->where('userId', $this->session->userdata("userId"));
+          	$query = $this->db->get('group_md');
+          	$num = $query->num_rows();
+          
+           	foreach ($query->result_array() as $key) {
+           			$this->db->where('status','1');
+           			$this->db->where('userId',$this->session->userdata("userId"));
+          			$query1 = $this->db->get('group_ext');
+          			
+            			foreach ($query1->result_array() as $key1) {
+            				
+            				echo '
+            					
+            					   <li>
+			                        &nbsp;<p> &nbsp;'.$this->post->userProfile($this->post->getAdmingroup($key1['groupId'])).' wants you to joingroup to '.$this->post->getGroupname($key1['groupId']).'</p>
+			                        	 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<button>accept</button> &nbsp; &nbsp; &nbsp;<button>decline</button>
+			                        <hr>
+			                     
+			                      </li>
+
+			                     ';
+            			}
+
+            		$this->db->where('groupId',$key['groupId']);
+           			$this->db->where('status','2');
+          			$query2 = $this->db->get('group_ext');
+          				foreach ($query2->result_array() as $key2) {
+
+            				echo '
+            					
+            					 <li>
+			                        <p>'.$this->post->userProfile($key2['userId']).' want to join your Group '.$this->post->getGroupname($key2['groupId']).' </p>
+			                        	 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<button>accept</button> &nbsp; &nbsp; &nbsp;<button>decline</button>
+			                        <hr>
+			                     
+
+			                      </li>
+			                      
+			                      ';
+            			}           		
+           	}
+           	
+	}
+
 	public function notif($key=null,$id=null)
 	{
 		if(($this->session->userdata('userId')!=""))
