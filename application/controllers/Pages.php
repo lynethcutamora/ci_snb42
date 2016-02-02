@@ -1174,6 +1174,17 @@ class Pages extends CI_Controller {
 
 		return $query;
 	}
+
+	public function requestjoingroup($key=null){
+		$data = array(
+			'groupid' => $this->input->post('groupid'),
+			'userid' => $this->input->post('userid'),
+			'status' => '2'
+		);
+		$this->db->insert('group_ext',$data);
+		header('Location:'.base_url().'pages/search/'.$key);
+	}
+
 	public function memberinvite()
 	{
 		$data = array(
@@ -1449,7 +1460,7 @@ class Pages extends CI_Controller {
 		$data['countgroup'] = $this->countGroups();
 		$groupquery= $this->groupdetails();
 		$data['groupdetails'] = $groupquery->result_array();
-
+		$data['key']=$key;
 		if($key==null){
 			$idea= $this->post->searchIdea('asdsdwq1qweskdqw213ew9eqwek12ewe91ewkqe212945rfre544e331e23d32d!#$2');
 			$data['idea'] = $idea->result_array();

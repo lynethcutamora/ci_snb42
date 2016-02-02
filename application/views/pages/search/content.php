@@ -79,7 +79,9 @@
                        $userid = $this->session->userdata('userId');
                        foreach ($group as $group):?>
 
-                    <form action="" method="POST">
+                    <form action="<?php echo base_url()?>pages/requestjoingroup/<?php echo $key; ?>" method="POST">
+                      <input type="text" hidden="true" name="groupid" value="<?php echo $group['groupId']; ?>"/>
+                      <input type="text" hidden="true" name="userid" value="<?php echo $userid; ?>"/>
                       <tr>
                         <td><?php echo $group['groupname'];?></td>
                         <td><?php echo $group['groupdescription'];?></td>
@@ -99,9 +101,9 @@
                         <?php 
 
                           if($this->post->existsMember($group['groupId'],$userid)){
-                            echo '<input type="button" class="btn btn-primary btn-xs disabled" value ="Request to join group"></input>';
+                            echo '<input type="submit" class="btn btn-primary btn-xs disabled" value ="Request to join group"></input>';
                           }else{
-                            echo '<input type="button" class="btn btn-primary btn-xs" value ="Request to join group"></input>';
+                            echo '<input type="submit" class="btn btn-primary btn-xs" value ="Request to join group"></input>';
                           }
                         ?>
                         </td>
