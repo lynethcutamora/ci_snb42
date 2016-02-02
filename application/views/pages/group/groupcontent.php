@@ -304,26 +304,74 @@
                   </div><!-- /.box-header -->
                     <div class='box-header with-border'>
                       <?php foreach($memberinfo as $row):?>
+                      <?php echo '<form method="post" action="'.base_url().'pages/diskikliv">';?>
                       <div class='user-block'>
-                        <img class='img-circle' src='<?php echo base_url();?>/user/<?php echo $row['avatar_name']?>' alt='user image'>
-                          <?php if($row['user_Type']=="Company"){
-                              echo '<span class=\'username\'><a href="#">'.$row['company_name'].'</a></span>
-                                    <span class=\'description\'>Reputation:<span class="pull-right"><i class=\'fa fa-star\' style="color:#ffd700;"></i><b>&nbsp;&nbsp;'.$row['userId'].'</b></span></span>
-                                    ';
-                            }else{
-                              echo '<span class=\'username\'><a href="#">'.$row['user_fName'].' '.$row['user_midInit'].'. '.$row['user_lName'].'</a></span>
-                                    <span class=\'description\'>Reputation:<span class="pull-right"><i class=\'fa fa-star\' style="color:#ffd700;"></i><b>&nbsp;&nbsp;'.$row['userId'].'</b></span></span>
-                                    <form method="post" action="#">
-                                    <div class="input-group">
-                                    <div class="input-group-btn">
-                                   <button type="submit"class="btn btn-success pull-right" name="btnleave">Leave group</button>
-                                   </div>
-                                   </div>
-                                    </form>';
-                            }
-                          ?><br/>
+                        <img class='img-circle' src='<?php echo base_url();?>/user/<?php echo $this->post->getAvatar($row["userId"]);?>' alt='user image'>
+                          <?php echo "<span class='username'><a href='#'>".$this->post->userProfile($row['userId'])."</a></span>";
+                                
+                                if($this->post->groupmember($row['groupId'],$row['userId'])==true)
+                                {
+                                  echo '<input type="text" hidden="true" name="groupid" value="'.$groupid.'">';
+                                  echo '<input type="text" hidden="true" name="userid" value="'.$row['userId'].'">';
+                          
+                                  if($this->post->groupcreator($row['groupId'],$row['userId'])==true)
+                                  {
+                                    if($this->post->creatorview($row['groupId'])==true){
+                                      echo "<span class='description'>(Admin)</span>";
+                                      echo "<span class='description'>Reputation:<span class='pull-right'><i class='fa fa-star' style='color:#ffd700;'></i><b>&nbsp;&nbsp;</b></span></span>";
+                                     
+                                    
+                                            echo '<div class="input-group">
+                                            <div class="input-group-btn">
+                                           <button type="submit"class="btn btn-success pull-right" name="btndisband">Disband group</button>
+                                           </div>
+                                           </div>';
+                                    }elseif($this->post->groupcreator($row['groupId'],$row['userId'])==true && $row['userId']!=$this->session->userdata('userId'))
+                                    {
+                                        echo "<span class='description'>(Admin)</span>";
+                                        echo "<span class='description'>Reputation:<span class='pull-right'><i class='fa fa-star' style='color:#ffd700;'></i><b>&nbsp;&nbsp;</b></span></span>";
+                                        
+        
+                                    }
+                                  }
+                                  elseif($this->post->groupcreator($row['groupId'],$row['userId'])==false && $row['userId']==$this->session->userdata('userId')){
+                                        echo "<span class='description'>Reputation:<span class='pull-right'><i class='fa fa-star' style='color:#ffd700;'></i><b>&nbsp;&nbsp;</b></span></span>";
+                             
+                                        echo '<div class="input-group">
+                                        <div class="input-group-btn">
+                                       <button type="submit"class="btn btn-success pull-right" name="btnleave">Leave</button>
+                                       </div>
+                                       </div>';
+                                  }
+                                  elseif($this->post->groupmember($row['groupId'],$row['userId'])==true && $this->post->groupcreator($row['groupId'],$row['userId'])==false){
+                                        if($row['userId']!=$this->session->userdata('userId') && $this->post->groupcreator($row['groupId'],$row['userId'])==false && $this->post->creatorview($row['groupId'])==true)
+                                        {
+                                          echo "<span class='description'>Reputation:<span class='pull-right'><i class='fa fa-star' style='color:#ffd700;'></i><b>&nbsp;&nbsp;</b></span></span>";
+                                          echo '<div class="input-group">
+                                          <div class="input-group-btn">
+                                         <button type="submit"class="btn btn-success pull-right" name="btnkick">Kick</button>
+                                         </div>
+                                         </div>';
+                                        }
+                                         else 
+                                            echo "<span class='description'>Reputation:<span class='pull-right'><i class='fa fa-star' style='color:#ffd700;'></i><b>&nbsp;&nbsp;</b></span></span>";
+                                  }
+                                }
+                               
+                               
+                                    ?>               
+                                    <?php
+                                    
+                                      
+                                  
+                                    ?><br/>
+                      
                       </div><!-- /.user-block -->
-                      <?php  endforeach;?>
+                      </form>
+                      <?php endforeach;?>  
+                      
+                       
+                      
                     </div><!-- /.box-header -->
                     <div class="box-footer">
                       <form method="post" action="#">

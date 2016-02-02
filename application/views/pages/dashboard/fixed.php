@@ -93,8 +93,9 @@ endforeach;
                 
                 <ul class="dropdown-menu">
                   <li class="header">Notification</li>
-                  <li>
+                  <li class="body">
                     <!-- inner menu: contains the actual data -->
+                    <div class="form-group" align="justify">
                     <ul class="menu">
                       <?php echo form_open('../pages/addmember');?>
                         <?php foreach($groupdetails as $row):?>
@@ -107,14 +108,16 @@ endforeach;
                           else
                           {
                             echo $row['groupname']."<br>";
-                            echo "<small>Invite you into their group</small><br>";
+                            echo "<small>Invite you to their group</small><br>";
                             echo "<span class='pull-right'><input type='submit' name='btnAccept' value='Accept'>&nbsp;&nbsp;&nbsp;&nbsp;
-                            <input type='submit' name='btnDecline' value='Decline'>&nbsp;&nbsp;</span>";    
+                            <input type='submit' name='btnDecline' value='Decline'>&nbsp;&nbsp;</span><br><hr>";    
                           } ?>
-                          <hr>
+                          
+                          
                         <?php endforeach;?>
                       </form>
                     </ul>
+                    </div>
                   </li>
                   <li class="footer">
                     <a href="#">View all</a>

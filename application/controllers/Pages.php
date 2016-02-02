@@ -250,19 +250,6 @@ class Pages extends CI_Controller {
 					header('Location:'.base_url().'pages/pagenotfound');
 
 				}else{
-					if(isset($projectId)){
-						$projectdtl= $this->projectdtl($groupId,$projectId);
-						$data['projectdtl'] = $projectdtl->result_array();
-						$data['projectId'] = $projectId;
-
-					}else{
-						$data['projectId'] = '0';
-						$allproject= $this->allproject($groupId);
-
-						$projectdtl= $this->projectdtl($groupId,$this->post->firstProject($groupId));
-						$data['projectdtl'] = $projectdtl->result_array();
-
-					}
 					$query=$this->post->alluserData($this->session->userdata('userId'));
 					$data['alldata']=$query->result_array();
 					$query=$this->projectfiles($projectId);
@@ -280,6 +267,20 @@ class Pages extends CI_Controller {
 					$data['searchpeople'] = $search->result_array();
 					$searchinvestor= $this->_searchinvestor();
 					$data['searchinvestor'] = $searchinvestor->result_array();
+					if(isset($projectId)){
+						$projectdtl= $this->projectdtl($groupId,$projectId);
+						$data['projectdtl'] = $projectdtl->result_array();
+						$data['projectId'] = $projectId;
+
+					}else{
+						$data['projectId'] = '0';
+						$allproject= $this->allproject($groupId);
+
+						$projectdtl= $this->projectdtl($groupId,$this->post->firstProject($groupId));
+						$data['projectdtl'] = $projectdtl->result_array();
+
+					}
+					
 				}
 			}			
 			else $this->index();
@@ -1151,13 +1152,9 @@ class Pages extends CI_Controller {
 	}
 	public function memberinfo($groupid){
 		$this->db->select('*');
-		$this->db->from('group_ext a');
-		$this->db->join('avatar_dtl b', 'a.userId=b.userId','left');
-		$this->db->join('user_md d', 'a.userId=d.userId', 'left');
-		$this->db->join('user_dtl e', 'd.userId=e.userId', 'left');
-		$this->db->join('company_dtl f', 'd.userId=f.userId', 'left');
-		$this->db->where('a.groupId',$groupid);
-		$this->db->where('a.status','0');
+		$this->db->from('group_ext');
+		$this->db->where('groupId',$groupid);
+		$this->db->where('status','0');
 		$query=$this->db->get();
 
 		return $query;
@@ -3282,9 +3279,30 @@ class Pages extends CI_Controller {
 		}
 	}
 
+	public function diskikliv()
+	{
+		$groupid = $this->input->post('groupid');
+		$userid = $this->input->post('userid');
 
+		$this->db->select('*');
+		$this->db->from('group_ext');
+		$this->db->where('groupId',$groupid);
+		$this->db->where('userId',$userid);
 
+		if($this->session->userdata('userId')!="")
+		{
+
+			if(isset($_POST['btndisband'])){
+
+			}
+			elseif(isset($_POST['btnleave'])){
+				$this->db->delete('group_ext');
+				header('Location:'.base_url().'pages/newgroup/'.$this->input->post('userId'));
+			}
+			elseif(isset($_POST['btnkick'])){
+				$this->db->delete('group_ext');
+				header('Location:'.base_url().'pages/group/'.$this->input->post('groupId'));
+			}
+		}
+	}
 }
-
-
-
