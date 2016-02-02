@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Start&Boost</title>
     <!-- Tell the browser to be responsive to screen width -->
+
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.5 -->
     <link rel="stylesheet" href="<?php echo base_url(); ?>bootstrap/css/bootstrap.min.css">
@@ -36,6 +37,10 @@
     <link href="font/css/font-awesome.min.css" rel="stylesheet">
 
     <link rel="stylesheet" href="<?php echo base_url(); ?>css/section.css" />
+
+    <link rel="shortcut icon" href="<?php echo base_url(); ?>images/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="<?php echo base_url(); ?>images/favicon.ico" type="image/x-icon">
+
   </head>
   <body class="hold-transition skin-blue sidebar-mini">
     <header class="header">
