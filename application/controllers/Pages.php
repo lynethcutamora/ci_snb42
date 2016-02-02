@@ -668,7 +668,7 @@ class Pages extends CI_Controller {
 			'user_emailAdd' => $this->input->post('inputEmail'),
 			'user_password' => md5($password),
 			'user_profilePicId' =>$picId,
-			'user_status' =>'0'
+			'user_status' =>'1'
 			);
 
 			$data1 = array(
@@ -824,7 +824,7 @@ class Pages extends CI_Controller {
 			'user_emailAdd' => $this->input->post('inputEmail'),
 			'user_password' => md5($password),
 			'user_profilePicId' =>$picId,
-			'user_status' =>'0'
+			'user_status' =>'1'
 			);
 
 			$data1 = array(
