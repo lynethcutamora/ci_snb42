@@ -2595,7 +2595,9 @@ class Pages extends CI_Controller {
 					'postTitle' => $this->input->post('ideatitle'),
 					'userId' =>$this->session->userdata("userId"));	
 
-					 $this->db->insert('userpost', $data);
+					 
+					$this->db->insert('userpost', $data);
+
 
 					if($this->input->post('categorytxt')=='1'){
 						$category = $this->input->post('optional');
@@ -2622,7 +2624,9 @@ class Pages extends CI_Controller {
 						'postId'=>$postId
 						);	
 
-							 $this->db->insert('userpost_ext', $data);
+						
+						$this->db->insert('userpost_ext', $data);
+
 					 }
 
 					
@@ -2635,8 +2639,8 @@ class Pages extends CI_Controller {
 						'extType' =>'2'	,
 						'postId'=>$postId
 						);	
-
-						$this->db->insert('userpost_ext', $data);
+						
+							$this->db->insert('userpost_ext', $data);
 
 					 }
 
@@ -2656,11 +2660,149 @@ class Pages extends CI_Controller {
 						'postId' => $postId
 						);	
 
-					
 						$this->db->insert('bmc_dtl', $data);
 
+			}else{
 
+				$this->_landing();
+			}
+		}
+	}
+
+	public function updateIdea()
+		{
+			if(($this->session->userdata('userId')!=""))
+			{	
+
+					$datetime = date('Y-m-d H:i:s');  		
+					$postId = $this->input->post('postid');
+
+					$data = array(
+						'postContent' =>$this->input->post('inputDescription'),
+						'postDate' =>	$datetime,
+						'postType' => '1',
+						'postTitle' => $this->input->post('ideatitle'),
+						'userId' =>$this->session->userdata("userId")
+					);	
+
+					$this->db->where('postId', $postId);
+					$this->db->update('userpost', $data); 
+
+					if($this->input->post('categorytxt')=='1'){
+						$category = $this->input->post('optional');
+					}else{
+						$category = $this->input->post('categorytxt');
+					}
+
+					$extId = $this->input->post('extId');
+					if($extId==""){
+						$data = array(
+						'extId' => uniqid(),
+						'extContent' =>$category,
+						'extType' =>'7'	,
+						'postId'=>$postId
+						);	
+
+						 $this->db->insert('userpost_ext', $data);
+
+					}else{
+						$data = array(
+						'extContent' =>$category,
+						'extType' =>'7'	,
+						'postId'=>$postId
+						);	
+
+						$this->db->where('extId', $extId);
+						$this->db->update('userpost_ext', $data);
+					}
+
+					 if($this->input->post('relatedlinks')!=null){
+					 	$extId1 = $this->input->post('extId1');
+					 	if($extId1==""){
+							$data = array(
+							'extId' => uniqid(),
+							'extContent' =>$category,
+							'extType' =>'1'	,
+							'postId'=>$postId
+							);	
+
+							 $this->db->insert('userpost_ext', $data);
+						 
+						}else{
+							$data = array(
+							'extContent' =>$this->input->post('relatedlinks'),
+							'extType' =>'1'	,
+							'postId'=>$postId
+							);	
+
+							$this->db->where('extId', $extId1);
+							$this->db->update('userpost_ext', $data); 
+						}
+	
 					 }
+
+					
+					 $url = $this->do_upload();
+					 if($url !=null){
+					 	$extId2 = $this->input->post('extId2');
+					 	if($extId2==""){
+							$data = array(
+							'extId' => uniqid(),
+							'extContent' =>$category,
+							'extType' =>'2'	,
+							'postId'=>$postId
+							);
+
+							 $this->db->insert('userpost_ext', $data);
+						 
+						}else{
+						 	$data = array(
+							'extId' => uniqid(),
+							'extContent' =>$url,
+							'extType' =>'2'	,
+							'postId'=>$postId
+							);	
+							
+							$this->db->where('extId', $extId2);
+							$this->db->update('userpost_ext', $data); 
+						}
+					 }
+
+					if($this->input->post('inputKeyPartners')!=null OR $this->input->post('inputKeyActivities')!=null OR $this->input->post('inputValuePropositions')!=null 
+					 	OR $this->input->post('inputCustomerRelationship')!=null OR $this->input->post('inputCusomerSegments')!=null OR $this->input->post('inputKeyResources')!=null OR
+					 	$this->input->post('inputChannels')!=null OR $this->input->post('inputCostStructure')!=null OR $this->input->post('inputRevenueStreams')!=null){
+
+					 	if($this->post->checkWithBmc($postId)){
+						 	$data = array(
+								'key_partners' => $this->input->post('inputKeyPartners'),
+								'key_activities' =>$this->input->post('inputKeyActivities'),
+								'value_proposition' =>$this->input->post('inputValuePropositions'),
+								'customer_relationships' =>$this->input->post('inputCustomerRelationship'),
+								'channels' =>$this->input->post('inputChannels'),
+								'customer_segments' =>$this->input->post('inputCusomerSegments'),
+								'cost_structure' =>$this->input->post('inputCostStructure'),
+								'revenue_streams' =>$this->input->post('inputRevenueStreams')
+							);	
+
+							$this->db->where('postId', $postId);
+							$this->db->update('bmc_dtl', $data); 
+						}else{
+							$data = array(
+								'key_partners' => $this->input->post('inputKeyPartners'),
+								'key_activities' =>$this->input->post('inputKeyActivities'),
+								'value_proposition' =>$this->input->post('inputValuePropositions'),
+								'customer_relationships' =>$this->input->post('inputCustomerRelationship'),
+								'channels' =>$this->input->post('inputChannels'),
+								'customer_segments' =>$this->input->post('inputCusomerSegments'),
+								'cost_structure' =>$this->input->post('inputCostStructure'),
+								'revenue_streams' =>$this->input->post('inputRevenueStreams'),
+								'postId' => $postId
+								);	
+
+								$this->db->insert('bmc_dtl', $data);
+						}
+					}
+
 
 			}else{
 
@@ -2673,7 +2815,7 @@ class Pages extends CI_Controller {
 			if(($this->session->userdata('userId')!=""))
 			{	
 
-						 	$datetime = date('Y-m-d H:i:s'); 	
+					$datetime = date('Y-m-d H:i:s'); 	
 					$postId = uniqid();
 					$data = array(
 					'postId' => $postId ,

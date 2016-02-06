@@ -707,6 +707,25 @@
 
         }
 
+         public function getPostImgId($postId){
+            $this->db->select('extId');
+            $this->db->from('userpost_ext');
+            $this->db->where('postId',$postId);
+            $this->db->where('extType','2');
+            $query = $this->db->get();
+
+            $query->row_array();
+            $numrows= $query->num_rows();
+             if($numrows){
+                $row = $query->row_array();
+                $result = $row['extId'];
+             }
+             else{
+                $result= '';
+             }
+             return $result;
+        }
+
         public function getPostCategory($postId)
         {
              $this->db->select('*');
@@ -725,7 +744,25 @@
              }
              return $result;
 
-        } 
+        }
+        public function getCategoryId($postId){
+            $this->db->select('extId');
+            $this->db->from('userpost_ext');
+            $this->db->where('postId',$postId);
+            $this->db->where('extType','7');
+            $query = $this->db->get();
+
+            $query->row_array();
+            $numrows= $query->num_rows();
+             if($numrows){
+                $row = $query->row_array();
+                $result = $row['extId'];
+             }
+             else{
+                $result= '';
+             }
+             return $result;
+        }
         public function getPostAreas($postId)
         {
              $this->db->select('*');
@@ -787,6 +824,24 @@
              }
              return $result;
 
+        }
+        public function getRelatedLinksId($postId){
+            $this->db->select('extId');
+            $this->db->from('userpost_ext');
+            $this->db->where('postId',$postId);
+            $this->db->where('extType','1');
+            $query = $this->db->get();
+
+            $query->row_array();
+            $numrows= $query->num_rows();
+             if($numrows){
+                $row = $query->row_array();
+                $result = $row['extId'];
+             }
+             else{
+                $result= '';
+             }
+             return $result;
         }
         public function getLinkEdit($postId){
             $this->db->select('*');

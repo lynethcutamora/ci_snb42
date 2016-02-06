@@ -24,18 +24,20 @@
             </div><!-- /.box-header -->
             <div class="box-body">
                   <!-- form start -->
-                 <form method="post" action="" id="udpate_file" enctype="multipart/form-data" class="form-horizontal">
+                 <form method="post" action="" id="upload_file" enctype="multipart/form-data" class="form-horizontal">
                     <div class="box-body">
                       <div class="form-group">
                         <label for="ideatitle" class="col-sm-2 control-label">Title*</label>
                         <div class="col-sm-10">
                         <?php echo form_error('ideatitle'); ?>
+                          <input type="hidden" class="form-control" name="postid" value="<?php echo $row['postId']; ?>"/>
                           <input type="text" class="form-control" name="ideatitle" id="ideatitle" placeholder="Title" value="<?php echo strtoupper($row['postTitle']); ?>"/>
                         </div>
                       </div>
                      <div class="form-group">
                         <label for="ideatitle" class="col-sm-2 control-label">Category*</label>
                         <div class="col-sm-4">
+                          <input type="hidden" class="form-control" name="extid" value="<?php echo $this->post->getCategoryId($row['postId']); ?>"/>
                           <select name="categorytxt" id="categorytxt" class="form-control" onChange="changeCategory(this)">
                             <option value="1">-- select category --</option>
                             <option value="androidapp"<?php if($this->post->getPostCategory($row['postId'])=="androidapp"){echo "selected";} ?>>android application</option>
@@ -59,6 +61,7 @@
                         <label for="inputLinks" class="col-sm-2 control-label">Links</label>  
                         <div class="col-sm-10">
                         <?php echo form_error('relatedlinks'); ?>
+                          <input type="hidden" class="form-control" name="extid1" value="<?php echo $this->post->getRelatedLinksId($row['postId']); ?>"/>
                           <input type="text" class="form-control" name="relatedlinks" id="relatedlinks" placeholder="Related Links (Separated by comma)" <?php echo "value=\"".$this->post->getLinkEdit($row['postId'])."\"" ?> />
                         </div>
                       </div>
@@ -177,7 +180,8 @@
                         <tr>
                           <td>
                             <div class="col-md-2">
-                             <img src="<?php echo base_url().'/post_image/'.$this->post->getpostImg($row['postId']).''; ?>" height="100px" width="100px" alt="Attachment image">
+                              <input type="hidden" class="form-control" name="extid2" value="<?php echo $this->post->getPostImgId($row['postId']); ?>"/>
+                              <img src="<?php echo base_url().'/post_image/'.$this->post->getpostImg($row['postId']).''; ?>" height="100px" width="100px" alt="Attachment image">
                             </div>
                           </td>
                           <td>
@@ -197,6 +201,7 @@
         </section><!-- /.content -->
   </div><!-- /.container-->
   </div><!-- /.content-wrapper -->
+
 <script>
  function changeCategory(obj){
    var x = document.getElementById("categorytxt").value;
@@ -212,13 +217,13 @@
 </script>
 <script>
   $('button[name="updateidea"]').click(function(e){
-    var form = new FormData(document.getElementById('update_file'));
+    var form = new FormData(document.getElementById('upload_file'));
          
     e.preventDefault();
             
     $.ajax({
       type: 'post',
-      url:"<?php echo base_url().'pages/newPostIdea'?>",
+      url:"<?php echo base_url().'pages/updateIdea'?>",
         data:form,
         mimeType:"multipart/form-data",
         cache: false,
@@ -230,7 +235,10 @@
           $("#relatedlinks").val('') ;
           $("#pic").val('') ;
           $("#optional").val('') ;
+
+          alert("successfully updated");
       }
     });
   });
+
 </script>
