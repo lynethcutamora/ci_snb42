@@ -3686,4 +3686,23 @@ class Pages extends CI_Controller {
 		echo "Thank you for your the report you made!";
 	}
 
+	public function changePassword()
+	{
+
+		if(md5($this->input->post("inputOldPassword"))==$this->post->checkPassword())
+		{
+			
+			if($this->input->post("inputNewPassword")==$this->input->post("inputNewRepassword")){
+				$this->db->set('user_password',md5($this->input->post("inputNewPassword")));
+				$this->db->where('userId', $this->session->userdata("userId"));
+				$this->db->update('user_md'); 
+
+				echo "successfully changed password!";
+			}else
+				echo "confirm password not match";
+		}else 
+			echo "incorrect password";
+			
+	}
+
 }

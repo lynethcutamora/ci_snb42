@@ -451,7 +451,7 @@
                         <div class="row">
                         <div class="col-sm-12">
                         
-                              <?php form_open('../pages/');?>   
+                              <form method="post" action="changePassword" > 
                               <div class='form-group'>
                                       <label for='inputOldPassword' class='col-sm-2 control-label'>Old Password</label>
                                       <div class='col-sm-9'>
@@ -481,6 +481,31 @@
                                           <button type='submit' class='btn btn-primary' name='btnSave' value='Ideator'>Save</button>
                                         </div>
                                     </div>
+
+                                    <script>
+                                       $('button[name="btnSave"]').click(function(e){
+                                          var inputOldPassword = $("#inputOldPassword").val();
+                                          var inputNewPassword = $("#inputNewPassword").val();
+                                          var inputNewRepassword = $("#inputNewRepassword").val();
+                                          
+                                            e.preventDefault();
+                                              var dataString = 'inputOldPassword='+ inputOldPassword  + '&inputNewPassword=' + inputNewPassword+ '&inputNewRepassword=' + inputNewRepassword   ;
+                                            $.ajax({
+                                              type: 'post',
+                                              url:"<?php echo base_url().'pages/changePassword/'?>",
+                                              data:dataString,
+                                              success: function (data) {
+                                          
+                                                 alert(data);
+                                                  $("#inputOldPassword").val('') ;
+                                                  $("#inputNewPassword").val('') ;
+                                                  $("#inputNewRepassword").val('') ;
+
+                                              }
+                                            });
+
+                                          });
+                                    </script>
                      
                         </div>
                         </div>

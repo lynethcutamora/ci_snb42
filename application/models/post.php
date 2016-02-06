@@ -1131,6 +1131,17 @@
             $query = $this->db->get();
             return $query;
         }
+
+
+        public function checkPassword()
+        {
+             $this->db->select('userId,user_password');
+             $this->db->from('user_md');
+             $this->db->where('userId',$this->session->userdata("userId"));
+             $query = $this->db->get();
+              $row = $query->row_array();
+             return $row['user_password'];
+        }
     }
 
 
