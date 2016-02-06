@@ -80,7 +80,7 @@
           var typeofinvestor = $("#typeofinvestor").val();
           var nameofbusiness = $("#nameofbusiness").val();
           var typeofbusiness = $("#typeofbusiness").val();
-          var reason = occupationalbg+"|"+investmenthistory+"|"+currentinvestment+"|"+typeofinvestor+"|"+nameofbusiness+"|"+typeofbusiness
+          var reason = "Occupational Background:"+occupationalbg+"<br>Investment History:"+investmenthistory+"<br>Current investment:"+currentinvestment+"<br>type of Investor:"+typeofinvestor+"<br>Name of business:"+nameofbusiness+"<br>Type of business:"+typeofbusiness
 
           
             e.preventDefault();
@@ -91,8 +91,7 @@
               data:dataString,
               success: function (data) {
           
-                 alert(data);
-
+               
               }
             });
 

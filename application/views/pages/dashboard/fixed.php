@@ -337,9 +337,9 @@ endforeach;
               </a>
               <ul class="treeview-menu">
                 <li><a href="<?php echo base_url(); ?>pages/newgroup"><i class="fa fa-plus"></i>Create Group</a></li>
-                <?php foreach ($groupdetails as $row):?>
-                  <?php if($this->post->groupstat($row['groupId'],$row['userId'])==false){?>
-                  <li><a href="<?php echo base_url(); ?>pages/group/<?php echo $row['groupId']?>"><i class="fa fa-circle-o"></i><?php echo $row['groupname'];?></a></li>
+                <?php foreach ($this->post->groupdetails1()->result_array() as $row):?>
+                  <?php if($this->post->groupstat($row['groupId'])==false){?>
+                  <li><a href="<?php echo base_url(); ?>pages/group/<?php echo $row['groupId']?>"><i class="fa fa-circle-o"></i><?php echo $this->post->getGroupname($row['groupId']);?></a></li>
                   <?php }else{
                   echo ""; } ?>
                 <?php endforeach;?>

@@ -94,7 +94,7 @@
                         $this->db->select('*');
                         $this->db->from('badge_dtl');
                         $this->db->where('voteBadge','2');
-                        $this->db->where('userId',$row->userId);
+                        $this->db->where('userId',$row->userId);  
                         $query = $this->db->get();
                         $silver = $query->num_rows();
 
