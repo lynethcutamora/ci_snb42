@@ -1022,20 +1022,23 @@ class Pages extends CI_Controller {
 
 	#THIS SECTION IS FOR GROUP SECTION
 	public function countGroups(){
-		$this->db->select('groupId');
-		$this->db->from('group_ext');
-		$this->db->where('userId',$this->session->userdata('userId'));
-		$num_results=$this->db->count_all_results();
-
+		
+		$this->db->select('*');
+		$this->db->from('group_md a');
+		$this->db->join('group_ext b','b.groupId=a.groupId','left');
+		$this->db->where('b.userId',$this->session->userdata('userId'));
+		$this->db->where('b.status','3');
+		$query=$this->db->get();
+		$num_results=$query->num_rows();
 		return $num_results;
 	}
 	public function countgrp(){
-		$this->db->select('groupId');
-		$this->db->from('group_ext');
-		$this->db->where('userId',$this->session->userdata('userId'));
-		$this->db->where('status','0');
-		$num_results=$this->db->count_all_results();
-
+		$this->db->select('*');
+		$this->db->from('group_md a');
+		$this->db->join('group_ext b','b.groupId=a.groupId','left');
+		$this->db->where('b.userId',$this->session->userdata('userId'));
+		$query=$this->db->get();
+		$num_results=$query->num_rows();
 		return $num_results;
 	}
 
@@ -1061,7 +1064,7 @@ class Pages extends CI_Controller {
 				'groupId' => $groupId,
 				'userId' => $this->session->userdata('userId'),
 				'addedDate' => now(),
-				'status' => '0',
+				'status' => '3',
 			);
 
 			$this->db->insert('group_md',$data);
@@ -1154,7 +1157,7 @@ class Pages extends CI_Controller {
 		$this->db->select('*');
 		$this->db->from('group_ext');
 		$this->db->where('groupId',$groupid);
-		$this->db->where('status','0');
+		$this->db->where('status','3');
 		$query=$this->db->get();
 
 		return $query;
@@ -1249,7 +1252,7 @@ class Pages extends CI_Controller {
 				);
 
 				$this->db->insert('badge_dtl', $data);
-				header('Location:'.base_url().'pages/profile/'.$userId);		
+				header('Location:'.base_url().'pages/profilenew/'.$userId);		
 			}
 			else if($post=='silver')
 			{
@@ -1262,7 +1265,7 @@ class Pages extends CI_Controller {
 
 				$this->db->insert('badge_dtl', $data);
 			
-				header('Location:'.base_url().'pages/profile/'.$userId);
+				header('Location:'.base_url().'pages/profilenew/'.$userId);
 			}
 			else if($post=='bronze')
 			{
@@ -1274,7 +1277,7 @@ class Pages extends CI_Controller {
 
 				$this->db->insert('badge_dtl', $data);
 			
-				header('Location:'.base_url().'pages/profile/'.$userId);
+				header('Location:'.base_url().'pages/profilenew/'.$userId);
 			}
 			elseif ($post=='black') 
 			{
@@ -1286,7 +1289,7 @@ class Pages extends CI_Controller {
 
 				$this->db->insert('badge_dtl', $data);
 			
-				header('Location:'.base_url().'pages/profile/'.$userId);
+				header('Location:'.base_url().'pages/profilenew/'.$userId);
 			}
 		
 			else{
@@ -1899,20 +1902,14 @@ class Pages extends CI_Controller {
                   <h3 class="profile-username text-center">'.$this->post->userProfile($this->session->userdata('poke')).'</h3>
                   <p class="text-muted text-center">'.$this->post->getUserType($this->session->userdata('poke')).'</p>
 
-                  <ul class="list-group list-group-unbordered">
-                    <li class="list-group-item">
-                    	Badge<br>
-                    	 <button type="button" class="btn btn-success btn-xs" value="'.$this->session->userdata('poke').'" name="Gold">&nbsp;&nbsp;Gold</button>
-                    	 <button type="button" class="btn btn-success btn-xs" value="'.$this->session->userdata('poke').'" name="Silver">&nbsp;&nbsp;Silver</button>
-                    	 <button type="button" class="btn btn-success btn-xs" value="'.$this->session->userdata('poke').'" name="Bronze">&nbsp;&nbsp;Bronze</button>
-                    </li>
-                  </ul>
+                 <a href="'.base_url().'pages/profilenew/'.$this->session->userdata('poke').'">view Profile</a>
 
                  
                 </div><!-- /.box-body -->
               </div><!-- /.box -->
+
               <script>
-		              $("button[name="Gold"]"").click(function(e){
+		             $("button[name='.'Gold'.']").click(function(e){
 		          var userId = $(this).attr("value");
 		          
 		            e.preventDefault();
@@ -2394,22 +2391,27 @@ class Pages extends CI_Controller {
           			echo "0";
           		}
 
-           	foreach ($query->result_array() as $key) {
+          
            			$this->db->where('status','1');
            			$this->db->where('userId',$this->session->userdata("userId"));
           			$query1 = $this->db->get('group_ext');
             		$numrows = $query1->num_rows();
-
+            		$numrows2=0;
+ 			foreach ($query->result_array() as $key) {
             		$this->db->where('groupId',$key['groupId']);
            			$this->db->where('status','2');
           			$query2 = $this->db->get('group_ext');
             		$numrows1 = $query2->num_rows();
-            		if(($numrows+$numrows1)==0){
+            		$numrows2+=$numrows1;
+           			
+          	}
+          		if(($numrows+$numrows2)==0){
             			echo "0";
             		}
+            		
             		else
-           			echo $numrows+$numrows1;
-           	}
+            			 echo $numrows+$numrows2;
+
 	}
 	public function groupnotif1()
 	{
@@ -2417,7 +2419,7 @@ class Pages extends CI_Controller {
           	$query = $this->db->get('group_md');
           	$num = $query->num_rows();
           
-           	foreach ($query->result_array() as $key) {
+       
            			$this->db->where('status','1');
            			$this->db->where('userId',$this->session->userdata("userId"));
           			$query1 = $this->db->get('group_ext');
@@ -2428,14 +2430,14 @@ class Pages extends CI_Controller {
             					
             					   <li>
 			                        &nbsp;<p> &nbsp;'.$this->post->userProfile($this->post->getAdmingroup($key1['groupId'])).' wants you to joingroup to '.$this->post->getGroupname($key1['groupId']).'</p>
-			                        	 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<button>accept</button> &nbsp; &nbsp; &nbsp;<button>decline</button>
+			                        	 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<button class="btn btn-primary" name="btnGroupacc" id="btnGroupacc" value="'.$key1['groupId'].','.$key1['userId'].'">accept</button> &nbsp; &nbsp; &nbsp;<button class="btn btn-primary">decline</button>
 			                        <hr>
 			                     
 			                      </li>
 
 			                     ';
             			}
-
+    	foreach ($query->result_array() as $key) {
             		$this->db->where('groupId',$key['groupId']);
            			$this->db->where('status','2');
           			$query2 = $this->db->get('group_ext');
@@ -2445,7 +2447,7 @@ class Pages extends CI_Controller {
             					
             					 <li>
 			                        <p>'.$this->post->userProfile($key2['userId']).' want to join your Group '.$this->post->getGroupname($key2['groupId']).' </p>
-			                        	 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<button>accept</button> &nbsp; &nbsp; &nbsp;<button>decline</button>
+			                        	 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<button class="btn btn-primary" name="btnAcceptreq" id="btnAcceptreq" value="'.$key2['groupId'].','.$key2['userId'].'">accept</button> &nbsp; &nbsp; &nbsp;<button class="btn btn-primary">decline</button>
 			                        <hr>
 			                     
 
@@ -2454,6 +2456,47 @@ class Pages extends CI_Controller {
 			                      ';
             			}           		
            	}
+
+           	echo '<script>
+ 					$("button[name='.'btnAcceptreq'.']").click(function(e){
+			     			   
+							     var str = $(this).attr("value");
+								 var res = str.split(","); 
+							        e.preventDefault();
+			             			 var dataString = "groupId="+ res[0] + "&userId=" + res[1];
+							       $.ajax({
+					              type: "post",
+					              url:"'.base_url().'pages/acceptgroup/",
+					              data:dataString,
+					              success: function (data) {
+					          		
+					              	alert("successfully accepted");
+					              }
+					            });
+						
+			          
+
+			          });
+ 					$("button[name='.'btnGroupacc'.']").click(function(e){
+			     			   
+							     var str = $(this).attr("value");
+								 var res = str.split(","); 
+							        e.preventDefault();
+			             			 var dataString = "groupId="+ res[0] + "&userId=" + res[1];
+							       $.ajax({
+					              type: "post",
+					              url:"'.base_url().'pages/acceptgroup/",
+					              data:dataString,
+					              success: function (data) {
+					          		
+					              	alert("successfully accepted");
+					              }
+					            });
+						
+			          
+
+			          });
+			 		</script>';
            	
 	}
 
@@ -2811,8 +2854,14 @@ class Pages extends CI_Controller {
 		        <div class="box-header with-border">
 		          <div class="user-block">
 		            <img class="img-circle" src="'.base_url().'/user/'.$this->post->getAvatar($row['userId']).'" alt="user image">
-		            <span class="username">
-		              <a href="#"><small>'.$this->post->userProfile($row['userId']).'</small></a>
+		            <span class="username">';
+		            if($this->post->checkUser1($row['userId']))
+		            {
+		            	  echo'     <a href="'.base_url().'pages/profile/'.$row['userId'].'"><small>'.$this->post->userProfile($row['userId']).'</small></a>';
+		            }else{
+		    echo'     <a href="'.base_url().'pages/profilenew/'.$row['userId'].'"><small>'.$this->post->userProfile($row['userId']).'</small></a>';
+		    		}
+		    	echo '
 		            </span>
 		            <span class="description"><i class="fa fa-star" style="color:gold;"></i><small><b>&nbsp;'.$this->post->reputation($row['userId']).'</b></small>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;date posted:&nbsp;&nbsp;&nbsp;<small>'.$row['postDate'].'</small></span>
 		          </div><!-- /.user-block -->
@@ -2974,7 +3023,7 @@ class Pages extends CI_Controller {
 				          <div class="user-block">
 				            <img class="img-circle" src="'.base_url().'/user/'.$this->post->getAvatar($row['userId']).'" alt="user image">
 				            <span class="username">
-				              <a href="#"><small>'.$this->post->userProfile($row['userId']).'</small></a>
+				              <a href="'.base_url().'pages/profilenew/'.$row['userId'].'"><small>'.$this->post->userProfile($row['userId']).'</small></a>
 				            </span>
 				            <span class="description"><i class="fa fa-star" style="color:gold;"></i><small><b>&nbsp;'.$this->post->reputation($row['userId']).'</b></small>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;date posted:&nbsp;&nbsp;&nbsp;<small>'.$row['postDate'].'</small></span>
 				          </div><!-- /.user-block -->
@@ -3041,7 +3090,7 @@ class Pages extends CI_Controller {
 				          <div class="user-block">
 				            <img class="img-circle" src="'.base_url().'/user/'.$this->post->getAvatar($row['userId']).'" alt="user image">
 				            <span class="username">
-				              <a href="#"><small>'.$this->post->userProfile($row['userId']).'</small></a>
+				              <a href="'.base_url().'pages/profilenew/'.$row['userId'].'"><small>'.$this->post->userProfile($row['userId']).'</small></a>
 				            </span>
 				            <span class="description"><i class="fa fa-star" style="color:gold;"></i><small><b>&nbsp;'.$this->post->reputation($row['userId']).'</b></small>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;date posted:&nbsp;&nbsp;&nbsp;<small>'.$row['postDate'].'</small></span>
 				          </div><!-- /.user-block -->
@@ -3096,7 +3145,7 @@ class Pages extends CI_Controller {
 				          <div class="user-block">
 				            <img class="img-circle" src="'.base_url().'/user/'.$this->post->getAvatar($row['userId']).'" alt="user image">
 				            <span class="username">
-				              <a href="#"><small>'.$this->post->userProfile($row['userId']).'</small></a>
+				              <a href="'.base_url().'pages/profilenew/'.$row['userId'].'"><small>'.$this->post->userProfile($row['userId']).'</small></a>
 				            </span>
 				            <span class="description"><i class="fa fa-star" style="color:gold;"></i><small><b>&nbsp;'.$this->post->reputation($row['userId']).'</b></small>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;date posted:&nbsp;&nbsp;&nbsp;<small>'.$row['postDate'].'</small></span>
 				          </div><!-- /.user-block -->
@@ -3322,6 +3371,28 @@ class Pages extends CI_Controller {
 			$this->_landing();
 		}
 	}
+
+	public function acceptgroup()
+	{
+		if(($this->session->userdata('userId')!=""))
+		{
+			if($this->input->post("groupId")==null){
+				
+			}
+				else{
+
+				$this->db->set('status','3');
+				$this->db->where('userId', $this->input->post("userId"));
+				$this->db->where('groupId', $this->input->post("groupId"));
+				$this->db->update('group_ext'); 
+			}
+					
+		}
+		else
+		{
+			$this->_landing();
+		}
+	}
 	public function deletepost()
 	{
 		if(($this->session->userdata('userId')!=""))
@@ -3360,23 +3431,32 @@ class Pages extends CI_Controller {
 		$userid = $this->input->post('userid');
 
 
-		$this->db->select('*');
-		$this->db->from('group_ext');
-		$this->db->where('groupId',$groupid);
-		$this->db->where('userId',$userid);
+	
 
 
 		if($this->session->userdata('userId')!="")
 		{
 
 			if(isset($_POST['btndisband'])){
+				
+				$this->db->where('groupId',$groupid);
+				$this->db->delete('group_ext');
+				header('Location:'.base_url().'pages/newgroup/'.$this->input->post('userId'));
 
 			}
 			elseif(isset($_POST['btnleave'])){
+					$this->db->select('*');
+		$this->db->from('group_ext');
+		$this->db->where('groupId',$groupid);
+		$this->db->where('userId',$userid);
 				$this->db->delete('group_ext');
 				header('Location:'.base_url().'pages/newgroup/'.$this->input->post('userId'));
 			}
 			elseif(isset($_POST['btnkick'])){
+					$this->db->select('*');
+		$this->db->from('group_ext');
+		$this->db->where('groupId',$groupid);
+		$this->db->where('userId',$userid);
 				$this->db->delete('group_ext');
 				header('Location:'.base_url().'pages/group/'.$this->input->post('groupId'));
 			}
@@ -3415,5 +3495,51 @@ class Pages extends CI_Controller {
 		}
 	}
 
+	public function profilenew($postId = null)
+	{
+		if(($this->session->userdata('userId')!=""))
+		{
+				$query=$this->_userData();
+				$data['data']=$query->result_array();
+				$data['pages']='newsfeedinvestor';
+				$data['countgroup'] = $this->countGroups();
+				$groupquery= $this->groupdetails();
+				$data['groupdetails'] = $groupquery->result_array();
+				$feed = $this->post->newsfeedinvestor();
+				$data['ideatorpost'] = $feed->result_array();
+				$postdtlquery= $this->post->postdtl($postId);		
+				$data['postdtl']=$postdtlquery->result_array();
+				$data['postId'] = $postId;
+
+				$this->load->view('pages/dashboard/fixed',$data);
+				$this->load->view('pages/profile/newprofile'); 
+				$this->load->view('pages/dashboard/controlsidebar');
+				$this->load->view('pages/dashboard/end');
+		}else
+		{
+			$this->_landing();
+		}
+	}
+
+
+	public function reportUser()
+	{
+		$datetime = date('Y-m-d H:i:s');
+	
+		
+		$data = array(
+		'reportId' => uniqid(),
+	
+		'reportContent' => $this->input->post('comments'),
+		'reportDate' => $datetime,
+		'reportStat' => '1',
+		'reportType' => '1',
+		'userId' => $this->input->post('userId'),
+		'fromUserId' => $this->session->userdata("userId")
+		);
+
+		$this->db->insert('report_dtl', $data);
+		echo "Thank you for your the report you made!";
+	}
 
 }

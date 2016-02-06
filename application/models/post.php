@@ -1,5 +1,4 @@
 <?php 
-
     class Post extends CI_Model 
     {
         public function upvotecount($postId)
@@ -232,17 +231,17 @@
                 return false;
         }
 
-        public function groupstat($groupid,$userId)
+        public function groupstat($groupid)
         {
             $this->db->select('*');
             $this->db->from('group_ext');
             $this->db->where('groupId',$groupid);
-            $this->db->where('userId', $userId);
-            $this->db->where('status', '1');
+            $this->db->where('userId', $this->session->userdata("userId"));
+            $this->db->where('status', '3');
             $query=$this->db->get();
             $numrows = $query->num_rows();
-            if($numrows>0)  return true;
-            else return false;
+            if($numrows)  return false;
+            else return true;
         }
         public function pendingMember($groupId , $userId)
         {
@@ -745,7 +744,8 @@
              }
              return $result;
 
-        }   public function getPostNote($postId)
+        } 
+        public function getPostNote($postId)
         {
              $this->db->select('*');
              $this->db->from('userpost_ext');
@@ -763,7 +763,8 @@
              }
              return $result;
 
-        } public function getRelatedLinks($postId)
+        } 
+        public function getRelatedLinks($postId)
         {
              $this->db->select('*');
              $this->db->from('userpost_ext');
@@ -774,7 +775,12 @@
              $numrows= $query->num_rows();
              if($numrows){
                 $row = $query->row_array();
-                $result = '<a href="'.$row['extContent'].'" >'.$row['extContent'].'</a>';
+                $arr = explode(",",$row['extContent']);
+                $result = "";
+                foreach ($arr as $key) {
+                    
+                 $result .= "<a href='https://".$key."' target='_blank'>".$key."</a>";
+                }
              }
              else{
                 $result= 'No Links';
@@ -788,7 +794,6 @@
              $this->db->from('bmc_dtl');
              $this->db->where('postId',$postId);
              $query = $this->db->get();
-             
              $numrows= $query->num_rows();
              if($numrows){
                 $row = $query->row_array();
@@ -1044,6 +1049,17 @@
              return $row['groupname'];
 
         }
+
+        public function groupdetails1()
+        {
+            $this->db->select('*');
+            $this->db->from('group_ext');
+            $this->db->where('userId', $this->session->userdata("userId"));
+            $this->db->where('status', '3');
+            $query = $this->db->get();
+            return $query;
+        }
     }
+
 
 ?>
