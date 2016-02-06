@@ -1,5 +1,6 @@
       <!-- Content Wrapper. Contains page content -->
       <div class="content-wrapper">
+      <div class="container">
         <!-- Content Header (Page header) -->
         <section class="content-header">
           <h1>
@@ -23,7 +24,7 @@
             </div><!-- /.box-header -->
             <div class="box-body">
                   <!-- form start -->
-                 <form method="post" action="" id="upload_file" enctype="multipart/form-data" class="form-horizontal">
+                 <form method="post" action="" id="udpate_file" enctype="multipart/form-data" class="form-horizontal">
                     <div class="box-body">
                       <div class="form-group">
                         <label for="ideatitle" class="col-sm-2 control-label">Title*</label>
@@ -51,7 +52,7 @@
                         <label for="inputDescription"  class="col-sm-2 control-label">Description*</label>
                         <div class="col-sm-10">
                          <?php echo form_error('inputDescription'); ?>
-                          <input type="text" class="form-control"name="inputDescription" id="inputDescription" placeholder="Description" value="<?php echo $row['postContent']; ?>"></input>
+                          <textarea class="form-control"name="inputDescription" id="inputDescription" placeholder="Description" ><?php echo $row['postContent']; ?></textarea>
                         </div>
                       </div>
                       <div class="form-group">
@@ -62,7 +63,7 @@
                         </div>
                       </div>
 
-                    <?php       if($this->post->checkWithBmc($row['postId'])==true){
+                    <?php if($this->post->checkWithBmc($row['postId'])==true){
 
                     foreach($this->post->bmcquery($row['postId'])->result_array() as $row1): ?>
                              <div class="col-md-12">
@@ -172,10 +173,21 @@
 
                     </div><!-- /.box-body -->
                     <div class="box-footer">
-                     
-                       <input type="file" name="pic" id="pic" size="20" />
-                         <div id="files"></div>
-                          <button class="btn btn-info pull-right" type="submit" id="postnewidea" name="postnewidea">Update Idea</button>
+                      <table>
+                        <tr>
+                          <td>
+                            <div class="col-md-2">
+                             <img src="<?php echo base_url().'/post_image/'.$this->post->getpostImg($row['postId']).''; ?>" height="100px" width="100px" alt="Attachment image">
+                            </div>
+                          </td>
+                          <td>
+                            <small>Change Image</small>
+                            <input type="file" name="pic" id="pic" size="20" />
+                            <div id="files"></div>
+                          </td>
+                        </tr>
+                      </table>
+                      <button class="btn btn-info pull-right" type="submit" id="updateidea" name="updateidea">Update Idea</button>
                     </div>
                   </form>
             </div><!-- /.box-body -->
@@ -183,8 +195,8 @@
         </div><!-- /. col-md-8-->
         <?php endforeach; ?>
         </section><!-- /.content -->
-      </div><!-- /.content-wrapper -->
-
+  </div><!-- /.container-->
+  </div><!-- /.content-wrapper -->
 <script>
  function changeCategory(obj){
    var x = document.getElementById("categorytxt").value;
@@ -197,4 +209,28 @@
     document.getElementById("optional1").style.display="none";
   }
 } 
+</script>
+<script>
+  $('button[name="updateidea"]').click(function(e){
+    var form = new FormData(document.getElementById('update_file'));
+         
+    e.preventDefault();
+            
+    $.ajax({
+      type: 'post',
+      url:"<?php echo base_url().'pages/newPostIdea'?>",
+        data:form,
+        mimeType:"multipart/form-data",
+        cache: false,
+        contentType: false, //must, tell jQuery not to process the data
+        processData: false, //must, tell jQuery not to set contentType
+        success: function (data) {
+          $("#ideatitle").val('') ;
+          $("#inputDescription").val('') ;
+          $("#relatedlinks").val('') ;
+          $("#pic").val('') ;
+          $("#optional").val('') ;
+      }
+    });
+  });
 </script>
