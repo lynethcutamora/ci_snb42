@@ -2656,6 +2656,7 @@ class Pages extends CI_Controller {
 						'postId' => $postId
 						);	
 
+					
 						$this->db->insert('bmc_dtl', $data);
 
 
@@ -3489,6 +3490,7 @@ class Pages extends CI_Controller {
 			}
 
 			$this->load->view('pages/dashboard/controlsidebar');
+			$this->load->view('pages/dashboard/footer');
 			$this->load->view('pages/dashboard/end');
 		}else{
 			$this->_landing();

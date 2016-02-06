@@ -297,8 +297,6 @@
                   $("#relatedlinks").val('') ;
                   $("#pic").val('') ;
                   $("#optional").val('') ;
-
-
               }
             });
 

@@ -788,6 +788,23 @@
              return $result;
 
         }
+        public function getLinkEdit($postId){
+            $this->db->select('*');
+             $this->db->from('userpost_ext');
+             $this->db->where('postId',$postId);
+             $this->db->where('extType','1');
+             $query = $this->db->get();
+             
+             $numrows= $query->num_rows();
+             if($numrows){
+                $row = $query->row_array();
+                $result = $row['extContent'];
+             }
+             else{
+                $result= 'No Links';
+             }
+             return $result;
+        }
         public function checkBmc($postId)
         {
              $this->db->select('*');
