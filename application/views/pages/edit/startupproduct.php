@@ -1,3 +1,4 @@
+      <script src="<?php echo base_url(); ?>plugins/jQuery/jQuery-2.1.4.min.js"></script>
       <!-- Content Wrapper. Contains page content -->
       <div class="content-wrapper">
       <div class="container">
@@ -30,11 +31,13 @@
                         <label for="producttitle" class="col-sm-2 control-label" >Product Name*</label>
                         <div class="col-sm-10">
                         <?php echo form_error('ideatitle'); ?>
+                          <input type="hidden" class="form-control" name="postid" value="<?php echo $row['postId']; ?>"/>
                           <input type="text" class="form-control" name="producttitle" id="producttitle" placeholder="Product Title" value="<?php echo strtoupper($row['postTitle']); ?>"/>
                         </div>
                       </div>
                       <div class="form-group">
                         <label for="ideatitle" class="col-sm-2 control-label">Category*</label>
+                        <input type="hidden" class="form-control" name="extid" value="<?php echo $this->post->getCategoryId($row['postId']); ?>"/>
                         <div class="col-sm-4">
                           <select name="categorytxt" id="categorytxt" class="form-control" onChange="changeCategory(this)">
                             <option value="1">-- select category --</option>
@@ -58,7 +61,8 @@
                       <div class="form-group">
                         <label for="downloadlink" class="col-sm-2 control-label">Links</label>
                         <div class="col-sm-10">
-                        <?php echo form_error('relatedlinks'); ?>
+                        <?php echo form_error('downloadlink'); ?>
+                          <input type="hidden" class="form-control" name="extid1" value="<?php echo $this->post->getRelatedLinksId($row['postId']); ?>"/>
                           <input type="text" class="form-control" name="downloadlink" id="downloadlink" placeholder="Download Link" <?php echo "value=\"".$this->post->getLinkEdit($row['postId'])."\"" ?> />
                         </div>
                       </div>
@@ -79,7 +83,7 @@
                           </td>
                         </tr>
                       </table>
-                          <button class="btn btn-info pull-right" type="submit" id="postproduct" name="postproduct">Update Product</button>
+                          <button class="btn btn-info pull-right" type="submit" id="updateproduct" name="updateproduct">Update Product</button>
                     </div>
                   </form>
             </div>
@@ -103,4 +107,31 @@
     document.getElementById("optional1").style.display="none";
   }
 } 
+</script>
+<script>
+  $('button[name="updateproduct"]').click(function(e){
+    var form = new FormData(document.getElementById('upload_file'));
+         
+    e.preventDefault();
+            
+    $.ajax({
+      type: 'post',
+      url:"<?php echo base_url().'pages/upateStartupProduct'?>",
+        data:form,
+        mimeType:"multipart/form-data",
+        cache: false,
+        contentType: false, //must, tell jQuery not to process the data
+        processData: false, //must, tell jQuery not to set contentType
+        success: function (data) {
+          $("#ideatitle").val('') ;
+          $("#inputDescription").val('') ;
+          $("#relatedlinks").val('') ;
+          $("#pic").val('') ;
+          $("#optional").val('') ;
+
+          alert("successfully updated");
+      }
+    });
+  });
+
 </script>
