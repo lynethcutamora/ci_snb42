@@ -2748,7 +2748,7 @@ class Pages extends CI_Controller {
 					 	if($extId2==""){
 							$data = array(
 							'extId' => uniqid(),
-							'extContent' =>$category,
+							'extContent' =>$url,
 							'extType' =>'2'	,
 							'postId'=>$postId
 							);
@@ -2802,7 +2802,7 @@ class Pages extends CI_Controller {
 								$this->db->insert('bmc_dtl', $data);
 						}
 					}
-
+				header('Location:'.base_url().'pages/post/'.$postId);
 
 			}else{
 
@@ -2876,6 +2876,113 @@ class Pages extends CI_Controller {
 			}
 		}
 
+		public function upateStartupProduct()
+		{
+			if(($this->session->userdata('userId')!=""))
+			{	
+
+					$datetime = date('Y-m-d H:i:s'); 	
+					$postId = $this->input->post('postid');
+
+					$data = array(
+						'postContent' =>$this->input->post('inputDescription'),
+						'postDate' =>	$datetime,
+						'postType' => '2',
+						'postTitle' => $this->input->post('producttitle'),
+						'userId' =>$this->session->userdata("userId")
+					);	
+
+					$this->db->where('postId', $postId);
+					$this->db->update('userpost', $data);
+
+
+					if($this->input->post('categorytxt')=='1'){
+						$category = $this->input->post('optional');
+					}else{
+						$category = $this->input->post('categorytxt');
+					}
+
+					$extId = $this->input->post('extId');
+					if($extId==""){
+						$data = array(
+						'extId' => uniqid(),
+						'extContent' =>$category,
+						'extType' =>'7'	,
+						'postId'=>$postId
+						);	
+
+						 $this->db->insert('userpost_ext', $data);
+
+					}else{
+						$data = array(
+						'extContent' =>$category,
+						'extType' =>'7'	,
+						'postId'=>$postId
+						);	
+
+						$this->db->where('extId', $extId);
+						$this->db->update('userpost_ext', $data);
+					}
+
+					 if($this->input->post('downloadlink')!=null){
+					 	$extId1 = $this->input->post('extId1');
+					 	if($extId1==""){
+							$data = array(
+							'extId' => uniqid(),
+							'extContent' =>$this->input->post('downloadlink'),
+							'extType' =>'1'	,
+							'postId'=>$postId
+							);	
+
+							 $this->db->insert('userpost_ext', $data);
+						 
+						}else{
+							$data = array(
+							'extContent' =>$this->input->post('downloadlink'),
+							'extType' =>'1'	,
+							'postId'=>$postId
+							);	
+
+							$this->db->where('extId', $extId1);
+							$this->db->update('userpost_ext', $data); 
+						}
+	
+					 }
+
+					
+					 $url = $this->do_upload();
+					 if($url !=null){
+					 	$extId2 = $this->input->post('extId2');
+					 	if($extId2==""){
+							$data = array(
+							'extId' => uniqid(),
+							'extContent' =>$url,
+							'extType' =>'2'	,
+							'postId'=>$postId
+							);
+
+							 $this->db->insert('userpost_ext', $data);
+						 
+						}else{
+						 	$data = array(
+							'extId' => uniqid(),
+							'extContent' =>$url,
+							'extType' =>'2'	,
+							'postId'=>$postId
+							);	
+							
+							$this->db->where('extId', $extId2);
+							$this->db->update('userpost_ext', $data); 
+						}
+					 }
+				
+				
+
+			}else{
+
+				$this->_landing();
+			}
+		}
 
 		public function newCompetition()
 		{
