@@ -1044,17 +1044,17 @@ class Pages extends CI_Controller {
 
 	public function createGroup(){
 
-		$this->form_validation->set_rules('inputGroupName', 'Group Name', 'required');
-		$this->form_validation->set_rules('inputDescription', 'Group Description', 'trim');
+		$this->form_validation->set_rules('inputGroupName', 'Group Name', 'required|alpha_numeric');
+		$this->form_validation->set_rules('inputDescription', 'Group Description', 'trim|required|alpha_numeric');
 
 		if ($this->form_validation->run()==FALSE){
-			$this->group();
+			$this->newgroup();
 		}else{
 			$groupId = uniqid('gi');
-
+	
 			$data = array (
 			'groupId' => $groupId,
-				'groupname' => $this->input->post('inputGroupName'),
+				'groupname' =>html_escape($this->input->post('inputGroupName')),
 				'groupdescription'=> $this->input->post('inputDescription'),
 				'groupCoverPic' =>'defaultcover.png',
 				'userId' => $this->session->userdata('userId'),
