@@ -12,6 +12,8 @@
             <div class="col-md-8">
               <form action="createGroup" method="post">
                 <div class="form-group">
+                  <?php echo form_error('inputGroupName'); ?>
+                  <?php echo form_error('inputDescription'); ?>
                   <label for="inputGroupName" class="col-sm-2 control-label">Group Name</label>
                     <div class="col-sm-9">
                       <input type="text" class="form-control" name="inputGroupName" id="inputGroupName" placeholder="Group Name"  value="">
