@@ -763,6 +763,42 @@
              }
              return $result;
         }
+        public function getAreaId($postId){
+            $this->db->select('extId');
+            $this->db->from('userpost_ext');
+            $this->db->where('postId',$postId);
+            $this->db->where('extType','3');
+            $query = $this->db->get();
+
+            $query->row_array();
+            $numrows= $query->num_rows();
+             if($numrows){
+                $row = $query->row_array();
+                $result = $row['extId'];
+             }
+             else{
+                $result= '';
+             }
+             return $result;
+        }
+        public function getNoteId($postId){
+            $this->db->select('extId');
+            $this->db->from('userpost_ext');
+            $this->db->where('postId',$postId);
+            $this->db->where('extType','5');
+            $query = $this->db->get();
+
+            $query->row_array();
+            $numrows= $query->num_rows();
+             if($numrows){
+                $row = $query->row_array();
+                $result = $row['extId'];
+             }
+             else{
+                $result= '';
+             }
+             return $result;
+        }
         public function getPostAreas($postId)
         {
              $this->db->select('*');
