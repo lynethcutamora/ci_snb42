@@ -108,6 +108,7 @@
   }
 } 
 </script>
+
 <script>
   $('button[name="updateproduct"]').click(function(e){
     var form = new FormData(document.getElementById('upload_file'));
@@ -123,12 +124,7 @@
         contentType: false, //must, tell jQuery not to process the data
         processData: false, //must, tell jQuery not to set contentType
         success: function (data) {
-          $("#ideatitle").val('') ;
-          $("#inputDescription").val('') ;
-          $("#relatedlinks").val('') ;
-          $("#pic").val('') ;
-          $("#optional").val('') ;
-
+         
           alert("successfully updated");
       }
     });
