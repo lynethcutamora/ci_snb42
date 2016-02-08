@@ -2809,7 +2809,75 @@ class Pages extends CI_Controller {
 				$this->_landing();
 			}
 		}
+		public function updateComp()
+		{
+			if($this->session->userdata('userId')!="")
+			{
+				if(isset($_POST['updateComp']))
+				{
+					$updatedDate = date('Y-m-d H:i:s');
+					$postId = $this->input->post('postid');
 
+					$data = array(
+							'postContent' => $this->input->post('inputDescription'),
+							'postDate' => $updatedDate
+						);
+
+					$this->db->where('postId', $postId);
+					$this->db->update('userpost', $data);
+
+					$extId = $this->input->post('area');
+					if($extId!=""){
+						$data1 = array(
+								'extContent' => $this->input->post('area')
+							);
+
+						$this->db->where('extId', $this->post->getAreaId($postId));
+						$this->db->update('userpost_ext', $data1);
+					}
+					if($extId!=""){
+						$data2 = array(
+								'extContent' => $this->input->post('competitionnote')
+							);
+
+						$this->db->where('extId', $this->post->getNoteId($postId));
+						$this->db->update('userpost_ext', $data2);
+					}
+					header('Location:'.base_url().'pages/investorpost');
+				}
+			}
+		}
+		public function updateNormalPost()
+		{
+			if($this->session->userdata('userId')!="")
+			{
+				if(isset($_POST['normal']))
+				{
+					$updatedDate = date('Y-m-d H:i:s');
+					$postId = $this->input->post('postid');
+
+					$data = array(
+							'postContent' => $this->input->post('inputDescription'),
+							'postDate' => $updatedDate
+						);
+
+					$this->db->where('postId', $postId);
+					$this->db->update('userpost', $data);
+
+					$extId = $this->input->post('area');
+					if($extId!=""){
+						$data1 = array(
+								'extContent' => $this->input->post('area')
+							);
+
+						$this->db->where('extId', $this->post->getAreaId($postId));
+						$this->db->update('userpost_ext', $data1);
+					}
+					
+					header('Location:'.base_url().'pages/investorpost');
+				}
+			}
+		}
 		public function newStartUpProduct()
 		{
 			if(($this->session->userdata('userId')!=""))
