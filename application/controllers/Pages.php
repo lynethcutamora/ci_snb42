@@ -1044,8 +1044,8 @@ class Pages extends CI_Controller {
 
 	public function createGroup(){
 
-		$this->form_validation->set_rules('inputGroupName', 'Group Name', 'required|alpha_numeric');
-		$this->form_validation->set_rules('inputDescription', 'Group Description', 'trim|required|alpha_numeric');
+		$this->form_validation->set_rules('inputGroupName', 'Group Name', 'required|alpha_numeric_spaces|max_length[30]');
+		$this->form_validation->set_rules('inputDescription', 'Group Description', 'trim|required|alpha_numeric_spaces|max_length[255]');
 
 		if ($this->form_validation->run()==FALSE){
 			$this->newgroup();
