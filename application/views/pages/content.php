@@ -134,7 +134,7 @@
             <br/>
             <div class="heading text-center">
                 <!-- Heading -->
-                <h2>TOP 5 IDEAS</h2>   
+                <h2 style="color:white">TOP Startup Products</h2>   
 
             </div>
             <?php 

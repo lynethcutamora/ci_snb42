@@ -703,6 +703,12 @@ class Pages extends CI_Controller {
 			$this->db->insert('user_dtl', $data1);
 			$this->db->insert('location_dtl', $data2);
 			$this->db->insert('avatar_dtl', $data3);
+			$data = array(
+						'userId' =>  substr($userId,0,10)
+						
+					);
+			$this->session->set_userdata($data);
+			echo "<script>alert('Successfully Registered , Welcome".$this->input->post('inputLName')."');</script>";
 			$this->index();
         }
 	}
@@ -786,6 +792,12 @@ class Pages extends CI_Controller {
 			$this->db->insert('user_dtl', $data1);
 			$this->db->insert('location_dtl', $data2);
 			$this->db->insert('avatar_dtl', $data3);
+			$data = array(
+				'userId' =>  substr($userId,0,10)
+				
+			);
+			$this->session->set_userdata($data);
+			echo "<script>alert('Successfully Registered , Welcome".$this->input->post('inputLName')."');</script>";
 			$this->index();
         }
 	}
@@ -848,6 +860,12 @@ class Pages extends CI_Controller {
 			$this->db->insert('user_md', $data);
 			$this->db->insert('company_dtl', $data1);
 			$this->db->insert('avatar_dtl', $data3);
+				$data = array(
+				'userId' =>  substr($userId,0,10)
+				
+			);
+			$this->session->set_userdata($data);
+			echo "<script>alert('Successfully Registered , Welcome ".ucfirst(strtolower($this->input->post('inputCName')))."!');</script>";
 			$this->index();
         }
 	}
@@ -1611,7 +1629,7 @@ class Pages extends CI_Controller {
 				$data['postDetail'] = $postdtlquery->result_array();
 				$comments= $this->post->showComments($postId,'1');
 				$data['comments'] = $comments->result_array();				
-
+				$data['postId'] =$postId;
 			
 				$this->load->view('pages/post1/collapsed',$data);
 				$this->load->view('pages/post1/content',$data);
@@ -2585,7 +2603,20 @@ class Pages extends CI_Controller {
 			if(($this->session->userdata('userId')!=""))
 			{	
 
-					 	$datetime = date('Y-m-d H:i:s');  		
+				 $this->form_validation->set_rules('inputDescription', 'Description', 'required');
+				 $this->form_validation->set_rules('ideatitle', 'Title', 'required');
+				
+		         
+
+
+		        if ($this->form_validation->run() == FALSE)
+		        {
+		          	echo form_error('inputDescription','<div class="alert alert-danger alert-dismissable"> <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>','</div>');
+		          	echo form_error('ideatitle','<div class="alert alert-danger alert-dismissable"> <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>','</div>');
+		        }
+		        else
+				{
+					$datetime = date('Y-m-d H:i:s');  		
 					$postId = uniqid();
 					$data = array(
 					'postId' => $postId ,
@@ -2662,10 +2693,12 @@ class Pages extends CI_Controller {
 
 						$this->db->insert('bmc_dtl', $data);
 
-			}else{
+					}else{
 
-				$this->_landing();
-			}
+							$this->_landing();
+						}
+				}
+
 		}
 	}
 
@@ -3384,6 +3417,9 @@ class Pages extends CI_Controller {
 				          <div class="box-footer">
 				            <div class="container-fluid">
 				           ';
+				           if($this->session->userdata("userId")==null){
+
+				           }else{
 				           if($this->post->validUpvote($row['postId'])){
 					echo '  <button type="button" class="btn btn-success btn-xs" value="'.$row['postId'].'" name="upvote" disabled><i class="glyphicon glyphicon-circle-arrow-up"></i>&nbsp;&nbsp;upvoted</button> ';
 		        
@@ -3395,11 +3431,13 @@ class Pages extends CI_Controller {
 		            }else{
 		        echo '  <button type="button" class="btn btn-success btn-xs" value="'.$row['userId'].'" name="poke" data-toggle="modal" data-target="#poke2"><i class="fa fa-hand-o-left"></i>&nbsp;&nbsp;Poke</button> ';
 		        		}
+
 				echo'  <a href="'.base_url().'pages/post/'.$row['postId'].'" class="btn btn-success btn-xs" ></i>&nbsp;&nbsp;View Post</a>
 				<span class="pull-right"><small><a href="#">'.$this->post->upvotecount($row['postId']).' - '.$this->post->commentCount($row['postId']).'</a></small></span>
 				            </div>
 				          </div>
 				      </div> <!-- /. box-widget -->';
+				  }
 		  }elseif ($row['postType']=='3') {
 		  	echo '  <!-- sample normal idea post -->
 
@@ -3863,21 +3901,51 @@ class Pages extends CI_Controller {
 
 	public function changePassword()
 	{
-
-		if(md5($this->input->post("inputOldPassword"))==$this->post->checkPassword())
+		if(($this->session->userdata('userId')!=""))
 		{
-			
-			if($this->input->post("inputNewPassword")==$this->input->post("inputNewRepassword")){
-				$this->db->set('user_password',md5($this->input->post("inputNewPassword")));
-				$this->db->where('userId', $this->session->userdata("userId"));
-				$this->db->update('user_md'); 
+			if(md5($this->input->post("inputOldPassword"))==$this->post->checkPassword())
+			{
+				
+				if($this->input->post("inputNewPassword")==$this->input->post("inputNewRepassword")){
+					$this->db->set('user_password',md5($this->input->post("inputNewPassword")));
+					$this->db->where('userId', $this->session->userdata("userId"));
+					$this->db->update('user_md'); 
 
-				echo "successfully changed password!";
-			}else
-				echo "confirm password not match";
-		}else 
-			echo "incorrect password";
+					echo "successfully changed password!";
+				}else
+					echo "confirm password not match";
+			}else 
+				echo "incorrect password";
+		}else
+		{
+			$this->_landing();
+		}
 			
 	}
+
+	public function editGroup()
+	{
+		if(($this->session->userdata('userId')!=""))
+		{
+			if($this->input->post("inputGroupName")!=null && $this->input->post("inputDescription")!=null)
+			{
+				
+				
+					$this->db->set('groupname',$this->input->post("inputGroupName"));
+					$this->db->set('groupdescription',$this->input->post("inputDescription"));
+					$this->db->where('groupId', $this->input->post("groupid"));
+					$this->db->update('group_md'); 
+
+					header('Location:'.base_url().'pages/group/'.$this->input->post('groupid'));
+			
+			}
+		}else
+		{
+			$this->_landing();
+		}
+			
+	}
+
+
 
 }

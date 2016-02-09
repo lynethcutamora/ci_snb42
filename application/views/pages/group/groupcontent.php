@@ -12,8 +12,7 @@
             <h4 class="text-muted"><b>Group Page</b></h4>
           </div>
             <div class="btn-group col-md-7">
-              <button type="button" class="btn btn-default pull-right" data-toogle="tooltip" title="Group Settings"><i class="fa fa-gear"></i></button>
-              <button type="button" class="btn btn-default pull-right" data-toogle="tooltip" title="change coverphoto"><i class="fa fa-camera"></i></button>              
+              <button type="button" class="btn btn-default pull-right" data-toogle="tooltip" title="Group Settings"  data-toggle="modal" data-target="#editgroup"><i class="fa fa-gear"></i></button>          
               <button type="button" class="btn btn-default pull-right" data-toogle="tooltip" title="add project" data-toggle="modal" data-target="#addproject" title="Add group project"><i class="fa fa-plus"></i>&nbsp;&nbsp;Project</button>
             </div>
           <ol class="breadcrumb">
@@ -537,5 +536,42 @@
             </div><!--/.modal content-->   
           </div><!--/.modal dialog-->
         </div><!--add project-->
+          <div id="editgroup" class="modal fade" role="dialog">
+          <div class="modal-dialog">
+          <!-- Modal content-->
+            <div class="modal-content">
+              <?php echo '<form method="post" action="'.base_url().'pages/editGroup">'; ?>
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  <h4 class="modal-title">Edit Group</h4>
+                </div>
+                <div class="modal-body">
+          
+                    <div class="form-group">
+                      <?php echo form_error('inputGroupName'); ?>
+                      <?php echo form_error('inputDescription'); ?>
+                      <label for="inputGroupName" class="col-sm-2 control-label">Group Name</label>
+                        <div class="col-sm-9">
+                          <input type="text" class="form-control" name="inputGroupName" id="inputGroupName" placeholder="Group Name"  value="<?php echo $this->post->getGroupname($groupid);?>">
+                          <br/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="inputDescription" class="col-sm-2 control-label">Description</label>
+                      <div class="col-sm-9">
+                        <input type="text" hidden="true" name="groupid" value="<?php echo $groupid; ?>">
+                        <textarea class="form-control" name="inputDescription" id="inputDescription" placeholder="Short Group Description"><?php echo $this->post->getGroupDes($groupid);?></textarea>
+                        <br/>
+                      </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="submit" class="btn btn-primary pull-right">Edit</button>
+                </div><!--/.modal footer-->
+              </form>
+            </div><!--/.modal content-->   
+          </div><!--/.modal dialog-->
+        </div><!--add project-->
       </div><!--/.content wrapper-->
+
 

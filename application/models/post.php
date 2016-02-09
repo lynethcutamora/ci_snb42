@@ -489,7 +489,7 @@
 
         public function checkUserType()
         {
-            if($this->getUserType($this->session->userdata('userId'))=='Ideator')
+            if($this->getUserType($this->session->userdata('userId'))=='Ideator' OR $this->getUserType($this->session->userdata('userId'))=='Company')
                 return 'true'; 
             else 
                 return 'false';
@@ -1155,6 +1155,16 @@
              $query = $this->db->get();
               $row = $query->row_array();
              return $row['groupname'];
+
+        }
+        public function getGroupDes($groupId)
+        {
+            $this->db->select('groupId,groupdescription');
+             $this->db->from('group_md');
+             $this->db->where('groupId',$groupId);
+             $query = $this->db->get();
+              $row = $query->row_array();
+             return $row['groupdescription'];
 
         }
 

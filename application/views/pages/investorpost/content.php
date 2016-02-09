@@ -153,6 +153,7 @@
                   <!-- form start -->
                  <form method="post" action="" id="upload_file" enctype="multipart/form-data" class="form-horizontal">
                     <div class="box-body">
+                      <div name="error" id="error"></div>
                       <div class="form-group">
                         <label for="ideatitle" class="col-sm-2 control-label">Title*</label>
                         <div class="col-sm-10">
@@ -358,8 +359,10 @@
                 contentType: false, //must, tell jQuery not to process the data
                 processData: false, //must, tell jQuery not to set contentType
               success: function (data) {
-          
+               
+                  $("#error").html(data) ;
                   $("#ideatitle").val('') ;
+               
                   $("#inputDescription").val('') ;
                   $("#relatedlinks").val('') ;
                   $("#pic").val('') ;
