@@ -116,23 +116,36 @@ endforeach;
             </li>
             <li class="treeview <?php if($pages=='statistics') {echo "active";}else echo "";?>">
               <a href="<?php echo base_url(); ?>pages/adminpage3">
-                <i class="fa fa-dashboard"></i> <span>Statistical Report</span> <!--<i class="fa fa-angle-left pull-right">--></i>
+                <i class="glyphicon glyphicon-file"></i> <span>Statistical Report</span> <!--<i class="fa fa-angle-left pull-right">--></i>
               </a>            
             </li>
                <li class="treeview <?php if($pages=='reported') {echo "active";}else echo "";?>">
               <a href="<?php echo base_url(); ?>pages/adminpage4">
-                <i class="fa fa-dashboard"></i> <span>Reported users</span> <!--<i class="fa fa-angle-left pull-right">--></i>
+                <i class="glyphicon glyphicon-file"></i> <span>Reported users</span> <!--<i class="fa fa-angle-left pull-right">--></i>
               </a>            
             </li>
             <li class="treeview <?php if($pages=='investors') {echo "active";}else echo "";?>">
               <a href="<?php echo base_url(); ?>pages/investorRequest">
-                <i class="fa fa-dashboard"></i> <span>Investor Request</span> <!--<i class="fa fa-angle-left pull-right">--></i>
+                <i class="glyphicon glyphicon-file"></i> <span>Investor Request</span> <!--<i class="fa fa-angle-left pull-right">--></i>
               </a>            
             </li>
              <li class="treeview <?php if($pages=='ads') {echo "active";}else echo "";?>">
               <a href="<?php echo base_url(); ?>pages/ads">
-                <i class="fa fa-dashboard"></i> <span>ADS Section</span> <!--<i class="fa fa-angle-left pull-right">--></i>
+                <i class="glyphicon glyphicon-file"></i> <span>ADS Section</span> <!--<i class="fa fa-angle-left pull-right">--></i>
               </a>            
+            </li>
+               <li class="treeview <?php if($pages=='startup') {echo "active";}else echo "";?>">
+              <a href="#">
+                <i class="fa fa-plus-square"></i>
+                <span>View Post</span>
+                <i class="fa fa-angle-left pull-right"></i>
+              </a>
+              <ul class="treeview-menu">
+                <li><a href="<?php echo base_url(); ?>pages/adminpage5"><i class="fa fa-star"></i>Ideas</a></li>
+                <li><a href="<?php echo base_url(); ?>pages/onfire"><i class="fa fa-star"></i>Startup Products</a></li>
+                <li><a href="<?php echo base_url(); ?>pages/toprated"><i class="fa fa-star"></i>Competition </a></li>
+                <li><a href="<?php echo base_url(); ?>pages/toprated"><i class="fa fa-star"></i>Normal Post</a></li>
+              </ul>
             </li>
 
            

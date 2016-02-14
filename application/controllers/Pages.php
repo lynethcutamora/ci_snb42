@@ -2154,7 +2154,7 @@ class Pages extends CI_Controller {
        
                 </div><!--/.body-->      ';
 	}
-	public function admin($value='')
+	public function admin()
 	{
 	
 		if(($this->session->userdata('userId')!=""))
@@ -2164,7 +2164,7 @@ class Pages extends CI_Controller {
 			$data['pages']='dashboard';
 			$this->load->view('pages/admindashboard/fixed',$data);
 			$this->load->view('pages/admindashboard/content'); 
-			$this->load->view('pages/dashboard/end');
+		$this->load->view('pages/adminonline/end');
 			}else{
 				$this->_landing();
 			}
@@ -2236,6 +2236,24 @@ class Pages extends CI_Controller {
 		$data['groupdetails'] = $groupquery->result_array();
 		$this->load->view('pages/admindashboard/fixed',$data);
 		$this->load->view('pages/adminoverallreports/contentreported'); 
+		}else{
+			$this->_landing();
+		}
+	}
+
+		public function adminPage5()
+	{
+		if(($this->session->userdata('userId')!=""))
+		{
+		$query=$this->_userData();
+		$data['data']=$query->result_array();
+		$data['pages']='post';
+		$data['countgroup'] = $this->countGroups();
+		$groupquery= $this->groupdetails();
+		$data['groupdetails'] = $groupquery->result_array();
+		$this->load->view('pages/admindashboard/fixed',$data);
+		$this->load->view('pages/adminoverallreports/allIdeas'); 
+		
 		}else{
 			$this->_landing();
 		}
@@ -2567,7 +2585,7 @@ class Pages extends CI_Controller {
 
                         echo '</span>
                       </div><!-- /.direct-chat-info -->
-                       <img class="direct-chat-img" src="';echo base_url();echo'user/';echo $this->post->getAvatar($row['userId']); echo '"><!-- /.direct-chat-img -->';
+                       <img class="direct-chat-img" src="';echo base_url();echo'user/';echo $this->post->getAvatar($row['msg_fromUserId']); echo '"><!-- /.direct-chat-img -->';
                         echo '<div class="direct-chat-text">';
                            echo $row['msg_Content'];
                       echo '</div><!-- /.direct-chat-text -->
@@ -2584,7 +2602,7 @@ class Pages extends CI_Controller {
                             echo $row['msg_Date'];
                           echo '</span>
                           </div><!-- /.direct-chat-info -->
-                         <img class="direct-chat-img" src="';echo base_url();echo'user/';echo $this->post->getAvatar($row['userId']); echo '"><!-- /.direct-chat-img -->';
+                         <img class="direct-chat-img" src="';echo base_url();echo'user/';echo $this->post->getAvatar($row['msg_fromUserId']); echo '"><!-- /.direct-chat-img -->';
                        echo '<div class="direct-chat-text">';
                             echo $row['msg_Content'];
                         echo '</div>
