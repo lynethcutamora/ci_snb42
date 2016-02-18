@@ -1,3 +1,4 @@
+                    <script src="<?php echo base_url(); ?>plugins/jQuery/jQuery-2.1.4.min.js"></script>
           <?php 
             if(validation_errors()!=""){
           ?>
@@ -316,7 +317,7 @@
                         <div class="col-sm-offset-2 col-sm-10">
                           <div class="checkbox">
                             <label>
-                              <input type="checkbox" name="checkbox1"> I agree to the <a data-toggle="modal" data-target="#investor">terms and conditions</a>
+                              <input type="checkbox" name="checkbox1" id="checkbox1"> I agree to the <a data-toggle="modal" data-target="#investor">terms and conditions</a>
                             </label>
                           </div>
                         </div>
@@ -407,3 +408,16 @@
             </div>
             </div>
         </div>
+   
+   <script>
+          $('button[name="btnAccept"]').click(function(e){
+          
+            e.preventDefault();
+              
+            document.getElementById("checkbox1").checked = true;
+
+          });
+
+
+
+</script>

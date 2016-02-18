@@ -45,7 +45,7 @@
   <body class="hold-transition skin-blue sidebar-mini">
     <header class="header">
         <div class="">
-            <nav class="navbar-inverse" role="navigation">
+            <nav class="navbar-inverse " role="navigation">
                 <div class="navbar-header">
                     <button type="button" id="nav-toggle" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-nav">
                         <span class="sr-only">Toggle navigation</span>

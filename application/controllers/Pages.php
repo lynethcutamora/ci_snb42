@@ -1849,7 +1849,7 @@ class Pages extends CI_Controller {
 		{
 				$query=$this->_userData();
 				$data['data']=$query->result_array();
-				$data['pages']='post';
+				$data['pages']='newsfeedideator';
 				$data['countgroup'] = $this->countGroups();
 				$groupquery= $this->groupdetails();
 				$data['groupdetails'] = $groupquery->result_array();
@@ -1919,29 +1919,13 @@ class Pages extends CI_Controller {
                   <img class="profile-user-img img-responsive img-circle" src="';echo base_url().'user/'.$this->post->getAvatar($this->session->userdata('poke')).'" alt="User profile picture">
                   <h3 class="profile-username text-center">'.$this->post->userProfile($this->session->userdata('poke')).'</h3>
                   <p class="text-muted text-center">'.$this->post->getUserType($this->session->userdata('poke')).'</p>
-
+                  	  <br>
                  <a href="'.base_url().'pages/profilenew/'.$this->session->userdata('poke').'">view Profile</a>
 
                  
                 </div><!-- /.box-body -->
               </div><!-- /.box -->
 
-              <script>
-		             $("button[name='.'Gold'.']").click(function(e){
-		          var userId = $(this).attr("value");
-		          
-		            e.preventDefault();
-		              var dataString = "userId="+ userId;
-		            $.ajax({
-		              type: "post",
-		              url:"'.base_url().'"pages/goldbadge/"",
-		              data:dataString,
-		              success: function (data) {
-		          			alert("successfully Badge");
-		              }
-		            });
-
-		          });</script>
               ';
               }
 	}
@@ -2162,9 +2146,11 @@ class Pages extends CI_Controller {
 			$query=$this->_userData();
 			$data['data']=$query->result_array();
 			$data['pages']='dashboard';
+
 			$this->load->view('pages/admindashboard/fixed',$data);
 			$this->load->view('pages/admindashboard/content'); 
-		$this->load->view('pages/adminonline/end');
+			$this->load->view('pages/adminonline/end');
+			
 			}else{
 				$this->_landing();
 			}
@@ -2199,8 +2185,6 @@ class Pages extends CI_Controller {
 		$data['groupdetails'] = $groupquery->result_array();
 		$this->load->view('pages/admindashboard/fixed',$data);
 		$this->load->view('pages/adminonline/content'); 
-		$this->load->view('pages/adminonline/controlsidebar');
-		$this->load->view('pages/adminonline/end');
 		$this->load->view('pages/adminonline/table');
 		}else{
 			$this->_landing();
@@ -2253,6 +2237,57 @@ class Pages extends CI_Controller {
 		$data['groupdetails'] = $groupquery->result_array();
 		$this->load->view('pages/admindashboard/fixed',$data);
 		$this->load->view('pages/adminoverallreports/allIdeas'); 
+		
+		}else{
+			$this->_landing();
+		}
+	}	
+	public function adminPage6()
+	{
+		if(($this->session->userdata('userId')!=""))
+		{
+		$query=$this->_userData();
+		$data['data']=$query->result_array();
+		$data['pages']='post';
+		$data['countgroup'] = $this->countGroups();
+		$groupquery= $this->groupdetails();
+		$data['groupdetails'] = $groupquery->result_array();
+		$this->load->view('pages/admindashboard/fixed',$data);
+		$this->load->view('pages/adminoverallreports/startup'); 
+		
+		}else{
+			$this->_landing();
+		}
+	}
+	public function adminPage7()
+	{
+		if(($this->session->userdata('userId')!=""))
+		{
+		$query=$this->_userData();
+		$data['data']=$query->result_array();
+		$data['pages']='post';
+		$data['countgroup'] = $this->countGroups();
+		$groupquery= $this->groupdetails();
+		$data['groupdetails'] = $groupquery->result_array();
+		$this->load->view('pages/admindashboard/fixed',$data);
+		$this->load->view('pages/adminoverallreports/competition'); 
+		
+		}else{
+			$this->_landing();
+		}
+	}
+	public function adminPage8()
+	{
+		if(($this->session->userdata('userId')!=""))
+		{
+		$query=$this->_userData();
+		$data['data']=$query->result_array();
+		$data['pages']='post';
+		$data['countgroup'] = $this->countGroups();
+		$groupquery= $this->groupdetails();
+		$data['groupdetails'] = $groupquery->result_array();
+		$this->load->view('pages/admindashboard/fixed',$data);
+		$this->load->view('pages/adminoverallreports/normal'); 
 		
 		}else{
 			$this->_landing();
@@ -2711,9 +2746,9 @@ class Pages extends CI_Controller {
 
 						$this->db->insert('bmc_dtl', $data);
 
-					}else{
 
-							$this->_landing();
+					}else{
+							echo "Successfully posted";
 						}
 				}
 
@@ -3895,7 +3930,58 @@ class Pages extends CI_Controller {
 			$this->_landing();
 		}
 	}
-
+	public function videocall($msgId=null)
+	{
+		if(($this->session->userdata('userId')!=""))
+		{
+				if(isset($msgId)){
+				$query=$this->_userData();
+				$data['data']=$query->result_array();
+				$data['pages']='newsfeedinvestor';
+				$data['countgroup'] = $this->countGroups();
+				$groupquery= $this->groupdetails();
+				$data['groupdetails'] = $groupquery->result_array();
+				$feed = $this->post->newsfeedinvestor();
+				$data['ideatorpost'] = $feed->result_array();	
+				$data['msgId'] = $msgId;
+				$this->load->view('pages/dashboard/fixed',$data);
+				$this->load->view('pages/message/videocall'); 
+				$this->load->view('pages/dashboard/controlsidebar');
+				$this->load->view('pages/dashboard/end');
+				}else{
+					$this->pagenotfound();
+				}
+		}else
+		{
+			$this->_landing();
+		}
+	}	
+	public function videocall1($msgId=null)
+	{
+		if(($this->session->userdata('userId')!=""))
+		{
+				if(isset($msgId)){
+				$query=$this->_userData();
+				$data['data']=$query->result_array();
+				$data['pages']='newsfeedinvestor';
+				$data['countgroup'] = $this->countGroups();
+				$groupquery= $this->groupdetails();
+				$data['groupdetails'] = $groupquery->result_array();
+				$feed = $this->post->newsfeedinvestor();
+				$data['ideatorpost'] = $feed->result_array();	
+				$data['msgId'] = $msgId;
+				$this->load->view('pages/dashboard/fixed',$data);
+				$this->load->view('pages/message/videocall1'); 
+				$this->load->view('pages/dashboard/controlsidebar');
+				$this->load->view('pages/dashboard/end');
+				}else{
+					$this->pagenotfound();
+				}
+		}else
+		{
+			$this->_landing();
+		}
+	}
 
 	public function reportUser()
 	{
@@ -3964,7 +4050,33 @@ class Pages extends CI_Controller {
 			
 	}
 
+	public function call()
+	{
+		if(($this->session->userdata('userId')!=""))
+		{
+			
 
+		     $datetime = date('Y-m-d H:i:s'); 
+		     $msgId = uniqid();
+		     $data = array(
+					'msgId' => $msgId,
+					'userId' =>$this->input->post("fromUserId"),
+					'msg_fromUserId' =>$this->session->userdata("userId"),
+					'msg_Content' =>$this->post->userProfile($this->session->userdata("userId"))."is calling you",
+					'msg_Date' => $datetime,
+					'msg_status' => '4',
+			);
+					
+			$this->db->insert('msg_dtl', $data);
+			header('Location:'.base_url().'pages/videocall/'.substr($msgId, 0,10));
+			
+					
+		}
+		else
+		{
+			$this->_landing();
+		}
+	}
 
 
 

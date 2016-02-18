@@ -13,32 +13,29 @@
             <div class="col-md-12">
                <div class="box">
                 <div class="box-header">
-                  <h3 class="box-title">New Ideas</h3>
+                  <h3 class="box-title">Competition Post</h3>
                 </div><!-- /.box-header -->
                 <div class="box-body">
                   <table id="example1" class="table table-bordered table-striped">
                     <thead>
                       <tr>
                         <th>Name</th>
-                        <th>Post title</th>
+                    
                         <th>Description</th>
-                        <th>Category</th>
-                        <th>Related Links</th>
-                        <th>Image</th>
+                        <th>Areas</th>
+                        <th>Notes</th>
                         <th>Date Posted</th>
                         <th>Action  </th>
                       
                       </tr>
                     </thead>
                     <tbody>
-                      <?php foreach ($this->post->queryAllIdea()->result_array() as $value):?>
+                      <?php foreach ($this->post->queryAllCompetition()->result_array() as $value):?>
                       <tr>
                         <td><?php echo $this->post->userProfile($this->post->getPostUser($value['postId']));?></td>
-                        <td><?php echo $this->post->getPostTitle($value['postId']);?></td>
                         <td><?php echo $this->post->getPostDescription($value['postId']);?></td>
-                        <td><?php echo $this->post->getextContent($this->post->getCategoryId($value['postId']));?></td>
-                        <td><?php echo $this->post->getextContent($this->post->getRelatedLinksId($value['postId']));?></td>
-                        <td>   <img src="<?php echo base_url().'/post_image/'.$this->post->getpostImg($value['postId']);?>" height="200px" width="200px" alt="Attachment image"></td>
+                        <td><?php echo $this->post->getPostAreas($value['postId']);?></td>
+                        <td><?php echo $this->post->getPostNote($value['postId']);?></td>
                         <td><?php echo $this->post->getPostDate($value['postId']);?></td>
                         <td>  <button type="submit" class="btn btn-box-tool" name="btnDelete" id="btnDelete" value="<?php echo $value['postId']?>"><i class="fa fa-times"></i></button></td>
                       </tr>
@@ -95,7 +92,7 @@
                         data:dataString,
                         success: function (data) {
                         alert("successfully deleted");
-                         window.location.assign("<?php echo base_url().'pages/adminpage5/'?>");
+                         window.location.assign("<?php echo base_url().'pages/adminpage7/'?>");
                         }
                       });
               } else {
@@ -104,4 +101,4 @@
                 
 
      });
-   </script>
+   </script>s

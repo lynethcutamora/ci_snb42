@@ -298,7 +298,7 @@ endforeach;
             </li>
             <?php } ?>
             <?php if($this->post->checkUserType()=='true'){?>
-            <li class="treeview <?php if($pages=='ideatorpost') {echo "active";}else echo "";?>">
+            <li class="treeview <?php if($pages=='post') {echo "active";}else echo "";?>">
               <a href="<?php echo base_url(); ?>pages/ideatorpost">
                 <i class="fa fa-edit"></i> <span>Post Idea</span>
               </a>

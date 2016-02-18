@@ -13,7 +13,7 @@
             <div class="col-md-12">
                <div class="box">
                 <div class="box-header">
-                  <h3 class="box-title">New Ideas</h3>
+                  <h3 class="box-title">Startup Products Post</h3>
                 </div><!-- /.box-header -->
                 <div class="box-body">
                   <table id="example1" class="table table-bordered table-striped">
@@ -31,7 +31,7 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <?php foreach ($this->post->queryAllIdea()->result_array() as $value):?>
+                      <?php foreach ($this->post->queryAllstartup()->result_array() as $value):?>
                       <tr>
                         <td><?php echo $this->post->userProfile($this->post->getPostUser($value['postId']));?></td>
                         <td><?php echo $this->post->getPostTitle($value['postId']);?></td>
@@ -95,7 +95,7 @@
                         data:dataString,
                         success: function (data) {
                         alert("successfully deleted");
-                         window.location.assign("<?php echo base_url().'pages/adminpage5/'?>");
+                         window.location.assign("<?php echo base_url().'pages/adminpage6/'?>");
                         }
                       });
               } else {
@@ -104,4 +104,4 @@
                 
 
      });
-   </script>
+   </script>s

@@ -37,6 +37,9 @@
                     </li>
                   </ul>
 
+                  <form action="<?php echo base_url().'pages/call';?>" method="post">
+                       <button type="submit" class="btn btn-primary btn-block" name="fromUserId" value="<?php echo $postId?>">Call<br></button>
+                   </form>
                   <a href="#" class="btn btn-primary btn-block" data-toggle="modal" data-target="#badge"><b>Badge</b></a>
                     <a href="#" class="btn btn-primary btn-block" data-toggle="modal" data-target="#report"><b>Report User</b></a>
                 </div><!-- /.box-body -->
@@ -136,52 +139,44 @@
                 <?php echo form_open('../pages/badge'); 
                 echo '<input type="text" hidden="true" name="userId" value="'.$postId.'">';
                   echo '<div class="row">
-                    <div class="col-sm-3 border-right">
+                    <div class="col-sm-4 border-right">
                       <div class="description-block"> 
                         <span class="description-text"><button type="submit" class="btn btn-default btn-lg" name="btnRate" id="gold" value="gold"><i class="fa fa-star" style="color:Gold;"></i> </button></span>
                       </div><!-- /.description-block -->
                     </div><!-- /.col -->
-                    <div class="col-sm-3 border-right">
+                    <div class="col-sm-4 border-right">
                       <div class="description-block"> 
                         <span class="description-text"><button type="submit" class="btn btn-default btn-lg" name="btnRate" id="silver" value="silver"><i class="fa fa-star" style="color:Silver;"></i> </button></span>
                       </div><!-- /.description-block -->
                     </div><!-- /.col -->
-                    <div class="col-sm-3 border-right">
+                    <div class="col-sm-4 border-right">
                       <div class="description-block">
                         <span class="description-text"><button type="submit" class="btn btn-default btn-lg" name="btnRate" id="bronze" value="bronze"><i class="fa fa-star" style="color:SandyBrown;"></i> </button></span>
                       </div><!-- /.description-block -->
                     </div><!-- /.col -->
-                    <div class="col-sm-3">
-                      <div class="description-block">
-                        <span class="description-text"><button type="submit" class="btn btn-default btn-lg" name="btnRate" id="black" value="black"><i class="fa fa-star" style="color:Black;"></i> </button></span>
-                      </div><!-- /.description-block -->
-                    </div><!-- /.col -->
+                    
                   </div><!-- /.row -->';
                   echo "</form>";
                   }
                   else
                     {
                       echo '<div class="row">
-                    <div class="col-sm-3 border-right">
+                    <div class="col-sm-4 border-right">
                       <div class="description-block"> 
                         <span class="description-text"><button type="submit" class="btn btn-default btn-lg disabled" disabled name="btnRate" id="gold" value="gold"><i class="fa fa-star" style="color:Gold;"></i></button></span>
                       </div><!-- /.description-block -->
                     </div><!-- /.col -->
-                    <div class="col-sm-3 border-right">
+                    <div class="col-sm-4 border-right">
                       <div class="description-block"> 
                         <span class="description-text"><button type="submit" class="btn btn-default btn-lg disabled" disabled name="btnRate" id="silver" value="silver"><i class="fa fa-star" style="color:Silver;"></i> </button></span>
                       </div><!-- /.description-block -->
                     </div><!-- /.col -->
-                    <div class="col-sm-3 border-right">
+                    <div class="col-sm-4 border-right">
                       <div class="description-block">
                         <span class="description-text"><button type="submit" class="btn btn-default btn-lg disabled" disabled name="btnRate" id="bronze" value="bronze"><i class="fa fa-star" style="color:SandyBrown;"></i> </button></span>
                       </div><!-- /.description-block -->
                     </div><!-- /.col -->
-                    <div class="col-sm-3">
-                      <div class="description-block">
-                        <span class="description-text"><button type="submit" class="btn btn-default btn-lg disabled" disabled name="btnRate" id="black" value="black"><i class="fa fa-star" style="color:Black;"></i> </button></span>
-                      </div><!-- /.description-block -->
-                    </div><!-- /.col -->
+                   
                   </div><!-- /.row -->';
                     }?>                            
               

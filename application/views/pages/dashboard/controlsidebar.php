@@ -48,6 +48,7 @@
 
 
                    </div>
+                    
                   <label>Leave Message:</label>
                     <textarea class="form-control" rows="3" placeholder="Enter ..." name="message1" id="message1"></textarea><br> 
               
@@ -68,7 +69,22 @@
             </div>
           </div>
 
-         
+      <?php $num_rows =$this->post->countCall1on1(); ?>
+      <?php $getCall1on1 = $this->post->getCall1on1();?>
+
+    <script type="text/javascript"> 
+    var num_rows = <?php echo (is_int($num_rows)) ? $num_rows : 0; ?>; 
+    if(num_rows){
+          if (confirm("Someone calling you... Do you want to accept this call?")) {
+                          window.location.assign("<?php echo base_url().'pages/videocall/'.$getCall1on1?>");
+                          
+                
+                        }
+           
+            
+    }
+
+    </script>
     
       <script>
       $(function () {
@@ -85,6 +101,10 @@
     </script>
 
         <script>
+       function vid(){
+                 
+                  $("#session").load("<?php echo base_url().'pages/sessionpoke'; ?>"); }
+                  setInterval(function(){vid()}, 1000);
        function loadNowPlaying1(){
                  
                   $("#session").load("<?php echo base_url().'pages/sessionpoke'; ?>"); }

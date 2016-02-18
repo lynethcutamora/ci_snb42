@@ -852,7 +852,7 @@
                 $result = "";
                 foreach ($arr as $key) {
                     
-                 $result .= "<a href='https://".$key."' target='_blank'>".$key."</a>";
+                 $result .= ",<a href='https://".$key."' target='_blank'>".$key."</a>";
                 }
              }
              else{
@@ -1188,6 +1188,115 @@
               $row = $query->row_array();
              return $row['user_password'];
         }
+        public function getPostTitle($postId)
+        {
+             $this->db->select('postTitle');
+             $this->db->from('userpost');
+             $this->db->where('postId',$postId);
+             $query = $this->db->get();
+              $row = $query->row_array();
+             return $row['postTitle'];
+        }
+        public function getPostDescription($postId)
+        {
+             $this->db->select('postContent');
+             $this->db->from('userpost');
+             $this->db->where('postId',$postId);
+             $query = $this->db->get();
+              $row = $query->row_array();
+             return $row['postContent'];
+        }
+        public function getextContent($extId)
+        {
+             $this->db->select('extContent');
+             $this->db->from('userpost_ext');
+             $this->db->where('extId',$extId);
+             $query = $this->db->get();
+             $row = $query->row_array();
+             return $row['extContent'];
+        }
+        public function getPostDate($postId)
+        {
+             $this->db->select('postDate');
+             $this->db->from('userpost');
+             $this->db->where('postId',$postId);
+             $query = $this->db->get();
+             $row = $query->row_array();
+             return $row['postDate'];
+        }
+        public function getPostUser($postId)
+        {
+             $this->db->select('userId');
+             $this->db->from('userpost');
+             $this->db->where('postId',$postId);
+             $query = $this->db->get();
+             $row = $query->row_array();
+             return $row['userId'];
+        }
+
+
+        public function queryAllIdea()
+        {
+            $this->db->select('postId');
+            $this->db->from('userpost');
+            $this->db->where('postType', '1');
+             $this->db->order_by("postDate","desc");
+            $query = $this->db->get();
+            return $query;
+        }
+        public function queryAllstartup()
+        {
+            $this->db->select('postId');
+            $this->db->from('userpost');
+            $this->db->where('postType', '2');
+             $this->db->order_by("postDate","desc");
+            $query = $this->db->get();
+            return $query;
+        }
+        public function queryAllCompetition()
+        {
+            $this->db->select('postId');
+            $this->db->from('userpost');
+            $this->db->where('postType', '4');
+            $this->db->order_by("postDate","desc");
+            $query = $this->db->get();
+            return $query;
+        }
+        public function queryAllNormal()
+        {
+            $this->db->select('postId');
+            $this->db->from('userpost');
+            $this->db->where('postType', '3');
+            $this->db->order_by("postDate","desc");
+            $query = $this->db->get();
+            return $query;
+        }
+           public function countCall1on1()
+        {
+                $query = $this->db->query("SELECT * FROM msg_dtl WHERE  userId = '".$this->session->userdata("userId")."' AND msg_status = '4'");
+                $num = $query->num_rows();
+                return $num;
+        }  
+        public function getCall1on1()
+        {
+             $this->db->select('*');
+             $this->db->from('msg_dtl');
+             $this->db->where('userId',$this->session->userdata("userId"));
+             $this->db->where('msg_status','4');
+             $query = $this->db->get();
+             $row = $query->row_array();
+             return $row['msgId'];
+        }
+
+        public function updatevid()
+        {
+            $this->db->set('msg_status', '0', FALSE);
+            $this->db->where('userId', $this->session->userdata("userId"));
+            $this->db->update('msg_dtl'); // gives UPDATE mytable SET field = field+1 WHERE id = 2
+
+        }
+
+
     }
 
 

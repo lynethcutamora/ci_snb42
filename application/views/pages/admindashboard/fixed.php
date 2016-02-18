@@ -128,11 +128,11 @@ endforeach;
               <a href="<?php echo base_url(); ?>pages/investorRequest">
                 <i class="glyphicon glyphicon-file"></i> <span>Investor Request</span> <!--<i class="fa fa-angle-left pull-right">--></i>
               </a>            
-            </li>
+            </li><!--
              <li class="treeview <?php if($pages=='ads') {echo "active";}else echo "";?>">
               <a href="<?php echo base_url(); ?>pages/ads">
-                <i class="glyphicon glyphicon-file"></i> <span>ADS Section</span> <!--<i class="fa fa-angle-left pull-right">--></i>
-              </a>            
+                <i class="glyphicon glyphicon-file"></i> <span>ADS Section</span> <i class="fa fa-angle-left pull-right"></i>
+              </a>     -->       
             </li>
                <li class="treeview <?php if($pages=='startup') {echo "active";}else echo "";?>">
               <a href="#">
@@ -142,9 +142,9 @@ endforeach;
               </a>
               <ul class="treeview-menu">
                 <li><a href="<?php echo base_url(); ?>pages/adminpage5"><i class="fa fa-star"></i>Ideas</a></li>
-                <li><a href="<?php echo base_url(); ?>pages/onfire"><i class="fa fa-star"></i>Startup Products</a></li>
-                <li><a href="<?php echo base_url(); ?>pages/toprated"><i class="fa fa-star"></i>Competition </a></li>
-                <li><a href="<?php echo base_url(); ?>pages/toprated"><i class="fa fa-star"></i>Normal Post</a></li>
+                <li><a href="<?php echo base_url(); ?>pages/adminpage6"><i class="fa fa-star"></i>Startup Products</a></li>
+                <li><a href="<?php echo base_url(); ?>pages/adminpage7"><i class="fa fa-star"></i>Competition </a></li>
+                <li><a href="<?php echo base_url(); ?>pages/adminpage8"><i class="fa fa-star"></i>Normal Post</a></li>
               </ul>
             </li>
 

@@ -24,6 +24,7 @@
                         <th>Report Content(s)</th>
                         <th>Report Date</th>
                         <th>Report Type</th>
+                        <th>Action</th>
                       
                       </tr>
                     </thead>
@@ -35,6 +36,7 @@
                         <td><?php echo $value['reportContent'];?></td>
                         <td><?php echo $value['reportDate'];?></td>
                         <td><?php echo $value['reportType'];?></td>
+                        <td><input type="text" hidden="true" name="btnRate" id="btnRate" value="black"> <button type="submit"  class="btn btn-primary btn-block" name='userId' id='userId' value="<?php echo $value['userId'];?>">Black Badge</button></td>
                         
                       </tr>
                     <?php endforeach;?>
@@ -75,4 +77,27 @@
           "autoWidth": false
         });
       });
+    </script>
+
+    <script>
+     $('button[name="userId"]').click(function(e){
+          var userId = $(this).attr("value");
+          var btnRate = $("#btnRate").val();
+          
+            e.preventDefault();
+              var dataString = 'btnRate='+ btnRate  + '&userId=' + userId ;
+            $.ajax({
+              type: 'post',
+              url:"<?php echo base_url().'pages/badge/'?>",
+              data:dataString,
+              success: function (data) {
+          
+                 alert("successfully black badged");
+
+              }
+            });
+
+          });
+
+
     </script>
