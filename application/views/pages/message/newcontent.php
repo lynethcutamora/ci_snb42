@@ -104,7 +104,7 @@
 
                       <form method="post"  onsubmit="SubmitFormData();">
                         <div class="input-group">
-                          <input type="text" name="message" placeholder="Type Message ..." class="form-control">
+                          <input type="text" name="message" required="required" placeholder="Type Message ..." class="form-control">
                           <span class="input-group-btn">
                             <button type="button" class="btn btn-primary btn-flat">Send</button>
                           </span>

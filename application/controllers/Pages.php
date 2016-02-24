@@ -3451,6 +3451,7 @@ class Pages extends CI_Controller {
 				                    
 				                  <!-- Attachment -->
 				                  <div class="attachment-block clearfix">
+
 				                    <img class="attachment-img" src="'.base_url().'/post_image/'.$this->post->getpostImg($row['postId']).'" alt="attachment image">
 				                    <div class="attachment-pushed">
 
