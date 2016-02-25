@@ -2754,7 +2754,8 @@ class Pages extends CI_Controller {
 						}
 				}
 				else{
-						echo "you already post this post";
+						echo '<div class="alert alert-danger alert-dismissable"> <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>';
+						echo "This startup idea is identical to the last one you posted. Try posting something different, or delete your previous update.";
 				}
 				}
 
