@@ -69,6 +69,63 @@
             </div>
           </div>
 
+          <div class="modal fade" id="duplicate" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                  <h4 class="modal-title" id="myModalLabel">Mark as Duplicate</h4>
+                </div>
+                <div class="modal-body">
+                  <center>      
+                   <div name="session" id="session">
+
+
+                   </div>
+                    
+                  <label>Paste Link:</label>
+                    <textarea class="form-control" rows="3" placeholder="Enter duplicate post link" name="duplicatepostlink" id="duplicatepostlink"></textarea><br> 
+              
+                    <div name="hiddenshit" id="hiddenshit"></div>
+
+                      <button type="submit" class="btn btn-primary btn-block" name='btnSend' id='btnSend'>send</button>
+                  
+                  
+                  </center>
+                </div><!-- /.register-box -->
+
+              </div>
+            </div>
+          </div>
+          <div class="modal fade" id="invest" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                  <h4 class="modal-title" id="myModalLabel">Invest this Idea</h4>
+                </div>
+                <div class="modal-body">
+                  <center>      
+                   <div name="session" id="session">
+
+
+                   </div>
+                    
+                  <label>Leave message</label>
+                    <textarea class="form-control" rows="3" placeholder="Send message for investment" name="investpost" id="investpost"></textarea><br> 
+              
+                    <div name="hiddenshit" id="hiddenshit"></div>
+
+                      <button type="submit" class="btn btn-primary btn-block" name='btnSend' id='btnSend'>send</button>
+                  
+                  
+                  </center>
+                </div><!-- /.register-box -->
+
+              </div>
+            </div>
+          </div>
+
       <?php $num_rows =$this->post->countCall1on1(); ?>
       <?php $getCall1on1 = $this->post->getCall1on1();?>
 
