@@ -21,6 +21,25 @@
             	return false;
     	
     	}
+        public function validMarkDuplicate($postId)
+        {
+            $this->db->where('postId', $postId);
+            $this->db->where('extType', '8');
+            $this->db->where('extContent', $this->session->userdata('userId'));
+            $query = $this->db->get('userpost_ext');
+            if($query->num_rows()>0){
+                return true;
+            }
+            else
+                return false;
+        
+        }
+        public function countMarked($postId){
+            $this->db->where('postId', $postId);
+            $this->db->where('extType', '8');
+            $query = $this->db->get('userpost_ext');
+            return $query->num_rows();
+        }
         public function validBadge($userdtl)
         {
             $this->db->where('userId', $userdtl);

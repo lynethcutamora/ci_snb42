@@ -1447,6 +1447,21 @@ class Pages extends CI_Controller {
 			
 		}
 	}
+	public function markedexisting()
+	{
+			if($this->input->post('postId')!=''){
+			$data = array(
+					'extId' =>uniqid(),
+					'extContent' => $this->session->userdata('userId'),
+					'extType' => '8',
+					'postId'=> $this->input->post('postId')
+				);
+
+				$this->db->insert('userpost_ext',$data);
+				header('Location:'.base_url().'pages/post/'.$this->input->post('postId'));
+			}
+			else {$this->index();}
+	}
 	public function postIdCheck($str)
 	{	
 		$isCheck=false;
@@ -1906,7 +1921,8 @@ class Pages extends CI_Controller {
 	{
 
 	unset($_SESSION['duplicate']);
-	$_SESSION['duplicate'] = $_POST['userId'];
+	$_SESSION['touser'] = $_POST['userId'];
+	$_SESSION['duplicate'] = $_POST['postId'];
 		
 	}
 	public function sessionpoke()
@@ -1934,6 +1950,23 @@ class Pages extends CI_Controller {
 
               ';
               }
+	}
+	
+	public function sessionmarkduplicate()
+	{	
+		if($this->session->userdata('touser')==''){
+			header('location:base_url()');
+		}
+		else{
+	/*
+		echo '
+			<script src="'.base_url().'plugins/jQuery/jQuery-2.1.4.min.js"></script>
+				<h5 class="text-center"><b>Post ID: <span class="text-muted">&nbsp;&nbsp;'.$this->session->userdata('touser').'</span></b>
+				<br/><p class="text-muted text-center">'.$this->post->getPostTitle($_SESSION['duplicate']).'</p>
+				</h5>
+              ';
+              }
+	*/}
 	}
 
 	public function ideatorpost()
@@ -3295,20 +3328,45 @@ class Pages extends CI_Controller {
 		              <div class="info-box">
 		                <div class="row">';
 
-		                	if($this->post->checkUser1($row['userId']) && $this->post->checkUserType()){
+		                	if($this->post->checkUser1($row['userId'])){
 		                  	}else{
-		                  		echo '<span class="pull-right">';
-				        		echo '  <button type="button" class="btn btn-warning btn-xs" value="'.$row['userId'].'" name="invest" data-toggle="modal" data-target="#invest"><i class="fa fa-money"></i>&nbsp;&nbsp;invest</button> ';
-				        		echo '  <button type="button" class="btn btn-danger btn-xs" value="'.$row['userId'].'" name="duplicate" data-toggle="modal" data-target="#duplicate"><i class="fa fa-flag"></i>&nbsp;&nbsp;duplicate</button> ';
-				        		echo '</span>';
+		                  		if($this->post->getUserType($this->session->userdata('userId'))=='Investor'){
+			                  	echo '<span class="pull-right">';
+			                  	echo '  <button type="button" class="btn btn-warning btn-xs" value="'.$row['userId'].'" name="invest" data-toggle="modal" data-target="#invest"><i class="fa fa-money"></i>&nbsp;&nbsp;Invest</button> ';
+					       		
+			                  	if($this->post->validMarkDuplicate($row['postId'])){
+									echo '  <button type="button" class="btn btn-danger btn-xs" value="'.$row['postId'].'" name="duplicate" disabled><i class="fa fa-flag"></i>&nbsp;&nbsp;Existed</button> ';
+						        	
+						        }else{
+						        	echo '  <button type="button" class="btn btn-danger btn-xs" value="'.$row['postId'].'" name="duplicate"><i class="fa fa-flag"></i>&nbsp;&nbsp;Existing</button> ';
+						        }
+					        	
+					       		echo '</span>';
+				        		}
 				        	}
 
 		            echo'      <p>
 		                    <span style="color:green;"><i class="fa fa-bookmark"></i>&nbsp;&nbsp;&nbsp;<small>(Startup Idea)</small></span>
 		                    <!--<span class="pull-right" style="color:orange;"><i class="fa fa-money"></i>&nbsp;&nbsp;&nbsp;<small>invested</small>&nbsp;&nbsp;&nbsp;</span>-->
 		                  </p>
-		                </div>
-		                  <div class="row">
+		                </div>';
+		            if($this->post->validMarkDuplicate($row['postId'])){
+		            echo'<div class="row">
+		                	<div class="col-md-12">';
+			            if($this->post->countMarked($row['postId'])<10){
+			            	echo '<div class="alert alert-warning alert-dismissable">';
+			            }else{
+			            	echo '<div class="alert alert-danger alert-dismissable">';
+			            }
+			            echo ' <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+			                   <h4><i class="icon fa fa-warning"></i> Warning!</h4>
+			                        This idea was marked as existing by '.$this->post->countMarked($row['postId']).''; if($this->post->countMarked($row['postId'])==1){ echo ' person.';}else{ echo ' people.';}
+			         
+		                 echo '	</div>
+	                     	</div>
+		                </div>';
+		            }
+		            echo'<div class="row">
 
 		                    <div class="col-md-3">
 		                     <img src="'.base_url().'/post_image/'.$this->post->getpostImg($row['postId']).'" height="200px" width="200px" alt="Attachment image">
@@ -3633,24 +3691,42 @@ class Pages extends CI_Controller {
 
    			 endforeach;
 
-   			 	echo '<script>
+   			//  	echo '<script>
+			   //         $("button[name='.'invest'.']").click(function(e){
+			   //         	var str = str.split(",", $(this).attr("value"));
+				  //         var userId = str[0]+"";
+				  //         var postId = str[1]+"";
+			   //          e.preventDefault();
+			   //            var dataString = "userId="+ userId +"&postId="+postId;
+			   //          $.ajax({
+			   //            type: "post",
+			   //            url:"'.base_url().'pages/markDup/",
+			   //            data:dataString,
+			   //            success: function (data) {
+			   //              document.getElementById("userid").value = userId;
+			   //              document.getElementById("postId").value = postId;
+			   //            }
+			   //          });
+
+			   //        });
+			 		// </script>';
+
+ 				echo '<script>
 			           $("button[name='.'duplicate'.']").click(function(e){
-			          var userId = $(this).attr("value");
+			          var postId = $(this).attr("value");
 			          
 			            e.preventDefault();
-			              var dataString = "userId="+ userId;
+			              var dataString = "postId="+ postId;
 			            $.ajax({
 			              type: "post",
-			              url:"'.base_url().'pages/getAll/",
+			              url:"'.base_url().'pages/markedexisting/",
 			              data:dataString,
 			              success: function (data) {
-			          
-			                document.getElementById("userid").value = userId;
+			          		alert("You marked this idea as existing");
 			              }
 			            });
-
 			          });
-			 		</script>';
+				</script>';
 
 	   			 echo '<script>
 			           $("button[name='.'poke'.']").click(function(e){
