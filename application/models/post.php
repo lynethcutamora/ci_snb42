@@ -1316,11 +1316,7 @@
         }
         public function duplicateQuery($title,$des)
         {
-            $this->db->from('userpost');
-             $this->db->where('postTitle',$title);
-             $this->db->where('userId',$this->session->userdata('userId'));
-             $this->db->or_where('postContent',$des);
-             $query = $this->db->get();
+           $query = $this->db->query("SELECT * FROM  userpost WHERE (postContent = '".$des."' OR postTitle = '".$title."') AND userId = '".$this->session->userdata('userId')."'");
              return $query;
         }
 

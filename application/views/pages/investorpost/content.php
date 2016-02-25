@@ -15,7 +15,7 @@
   <div class="col-md-4">                          
     <select id="postType" name="postType" class="form-control select2" style="width: 100%;">
       <option name="postType" selected="selected">-- Select Post Type --</option>
-      <option name="postType" value="idea">Post New Idea</option>
+
       <option name="postType" value="product">Post Startup Product</option>
       <option name="postType" value="competition">Post a competition</option>
       <option name="postType" value="normal">Normal Post</option>
@@ -49,9 +49,22 @@
                         <div class="col-sm-4">
                           <select name="categorytxt" id="categorytxt" class="form-control" onChange="changeCategory(this)">
                             <option value="1">-- select category --</option>
-                            <option value="androidapp">android application</option>
-                            <option value="website">web site</option>
-                            <option value="desktopapp">desktop application</option>
+                        
+                            <option value="androidapp">Android Application</option>
+                            <option value="website">Web site</option>
+                            <option value="desktopapp">Desktop Application</option>
+                            <option value="agricultural">Agricultural</option>
+                            <option value="industrial">Industrial</option>
+                            <option value="travel&transportation">Travel & Transportation</option>
+                            <option value="reservation">Reservation</option>
+                            <option value="health&medicine">Health & Medicine</option>
+                            <option value="food&dining">Food & Dining</option>
+                            <option value="environmental">Environmental</option>
+                            <option value="automotive">Automotive</option>
+                            <option value="businesssupport&supplies">Business Support & Supplies</option>
+                            <option value="education">Education</option>
+                            <option value="realstate">Real State</option>
+                            <option value="merchants">Merchants (Retail)</option>
                           </select>
                         </div>
                         <label for="ideatitle" name="optional1" id="optional1" style="display:block" class="col-sm-2 control-label">/ others:</label>
@@ -166,9 +179,21 @@
                         <div class="col-sm-4">
                           <select name="categorytxt" id="categorytxt" class="form-control" onChange="changeCategory(this)">
                             <option value="1">-- select category --</option>
-                            <option value="androidapp">android application</option>
-                            <option value="website">web site</option>
-                            <option value="desktopapp">desktop application</option>
+                            <option value="androidapp">Android Application</option>
+                            <option value="website">Web site</option>
+                            <option value="desktopapp">Desktop Application</option>
+                            <option value="agricultural">Agricultural</option>
+                            <option value="industrial">Industrial</option>
+                            <option value="travel&transportation">Travel & Transportation</option>
+                            <option value="reservation">Reservation</option>
+                            <option value="health&medicine">Health & Medicine</option>
+                            <option value="food&dining">Food & Dining</option>
+                            <option value="environmental">Environmental</option>
+                            <option value="automotive">Automotive</option>
+                            <option value="businesssupport&supplies">Business Support & Supplies</option>
+                            <option value="education">Education</option>
+                            <option value="realstate">Real State</option>
+                            <option value="merchants">Merchants (Retail)</option>
                           </select>
                         </div>
                         <label for="ideatitle" name="optional1" id="optional1" style="display:block" class="col-sm-2 control-label">/ others:</label>
