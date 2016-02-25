@@ -1295,7 +1295,15 @@
             $this->db->update('msg_dtl'); // gives UPDATE mytable SET field = field+1 WHERE id = 2
 
         }
-
+        public function duplicateQuery($title,$des)
+        {
+            $this->db->from('userpost');
+             $this->db->where('postTitle',$title);
+             $this->db->where('userId',$this->session->userdata('userId'));
+             $this->db->or_where('postContent',$des);
+             $query = $this->db->get();
+             return $query;
+        }
 
     }
 

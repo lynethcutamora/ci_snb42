@@ -2669,6 +2669,7 @@ class Pages extends CI_Controller {
 		        }
 		        else
 				{
+					if($this->post->duplicateQuery($this->input->post('ideatitle'),$this->input->post('inputDescription'))->num_rows()==0){
 					$datetime = date('Y-m-d H:i:s');  		
 					$postId = uniqid();
 					$data = array(
@@ -2747,9 +2748,14 @@ class Pages extends CI_Controller {
 						$this->db->insert('bmc_dtl', $data);
 
 
-					}else{
+					}
+					else{
 							echo "Successfully posted";
 						}
+				}
+				else{
+						echo "you already post this post";
+				}
 				}
 
 		}
