@@ -3,7 +3,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Pages extends CI_Controller {
 
-
 	#HOME PAGE mao ni ang Una mo gawas basta mo adto sa ato site
 	public function index()
 	{
@@ -1903,6 +1902,13 @@ class Pages extends CI_Controller {
 	$_SESSION['poke'] = $_POST['userId'];
 		
 	}
+	public function markDup()
+	{
+
+	unset($_SESSION['duplicate']);
+	$_SESSION['duplicate'] = $_POST['userId'];
+		
+	}
 	public function sessionpoke()
 	{
 		if($this->session->userdata('poke')==''){
@@ -1929,8 +1935,6 @@ class Pages extends CI_Controller {
               ';
               }
 	}
-
-
 
 	public function ideatorpost()
 	{
@@ -3290,8 +3294,17 @@ class Pages extends CI_Controller {
 		        <div class="box-body">
 		          <div class="container-fluid">
 		              <div class="info-box">
-		                <div class="row">
-		                  <p>
+		                <div class="row">';
+
+		                	if($this->post->checkUser1($row['userId']) && $this->post->checkUserType()){
+		                  	}else{
+		                  		echo '<span class="pull-right">';
+				        		echo '  <button type="button" class="btn btn-warning btn-xs" value="'.$row['userId'].'" name="invest" data-toggle="modal" data-target="#invest"><i class="fa fa-money"></i>&nbsp;&nbsp;invest</button> ';
+				        		echo '  <button type="button" class="btn btn-danger btn-xs" value="'.$row['userId'].'" name="duplicate" data-toggle="modal" data-target="#duplicate"><i class="fa fa-flag"></i>&nbsp;&nbsp;duplicate</button> ';
+				        		echo '</span>';
+				        	}
+
+		            echo'      <p>
 		                    <span style="color:green;"><i class="fa fa-bookmark"></i>&nbsp;&nbsp;&nbsp;<small>(Startup Idea)</small></span>
 		                    <!--<span class="pull-right" style="color:orange;"><i class="fa fa-money"></i>&nbsp;&nbsp;&nbsp;<small>invested</small>&nbsp;&nbsp;&nbsp;</span>-->
 		                  </p>
@@ -3451,8 +3464,15 @@ class Pages extends CI_Controller {
 				        <div class="box-body">
 				          <div class="container-fluid">
 				              <div class="info-box">
-				                <div class="row">
-				                  <p style="color:green;"><i class="fa fa-bookmark"></i>&nbsp;&nbsp;&nbsp;<small>(Startup Product)</small></p>
+				                <div class="row">';
+
+				                if($this->post->checkUser1($row['userId']) && $this->post->checkUserType()){
+			                  	}else{
+			                  		echo '<span class="pull-right">';
+					        		echo '  <button type="button" class="btn btn-warning btn-xs" value="'.$row['userId'].'" name="invest" data-toggle="modal" data-target="#poke2"><i class="fa fa-money"></i>&nbsp;&nbsp;invest</button> ';
+					        		echo '</span>';
+					        	}
+				        echo ' <p style="color:green;"><i class="fa fa-bookmark"></i>&nbsp;&nbsp;&nbsp;<small>(Startup Product)</small></p>
 				                </div>
 				                <p style="text-align:justify;text-justify:inter-word;">'.$row['postContent'].'</p>
 				                    
@@ -3613,6 +3633,25 @@ class Pages extends CI_Controller {
 		  }
 
    			 endforeach;
+
+   			 	echo '<script>
+			           $("button[name='.'duplicate'.']").click(function(e){
+			          var userId = $(this).attr("value");
+			          
+			            e.preventDefault();
+			              var dataString = "userId="+ userId;
+			            $.ajax({
+			              type: "post",
+			              url:"'.base_url().'pages/getAll/",
+			              data:dataString,
+			              success: function (data) {
+			          
+			                document.getElementById("userid").value = userId;
+			              }
+			            });
+
+			          });
+			 		</script>';
 
 	   			 echo '<script>
 			           $("button[name='.'poke'.']").click(function(e){
