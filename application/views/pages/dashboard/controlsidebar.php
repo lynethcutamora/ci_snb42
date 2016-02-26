@@ -78,12 +78,9 @@
                 </div>
                 <div class="modal-body">
                   <center>      
-                   <div name="session" id="session">
-
-
-                   </div>
+                   <div name="sessionD" id="sessionD"></div>
                     
-                  <label>Paste Link:</label>
+                  <!-- <label>Paste Link:</label> -->
                     <textarea class="form-control" rows="3" placeholder="Enter duplicate post link" name="duplicatepostlink" id="duplicatepostlink"></textarea><br> 
               
                     <div name="hiddenshit" id="hiddenshit"></div>
@@ -106,16 +103,12 @@
                 </div>
                 <div class="modal-body">
                   <center>      
-                   <div name="session" id="session">
-
-
-                   </div>
+                   <div name="session" id="session"></div>
                     
                   <label>Leave message</label>
                     <textarea class="form-control" rows="3" placeholder="Send message for investment" name="investpost" id="investpost"></textarea><br> 
               
                     <div name="hiddenshit" id="hiddenshit"></div>
-
                       <button type="submit" class="btn btn-primary btn-block" name='btnSend' id='btnSend'>send</button>
                   
                   
@@ -156,8 +149,14 @@
         });
       });
     </script>
-
+      <script>
+        function mdupicate(){
+          $("#sessionD").load("<?php echo base_url().'pages/sessionmarkduplicate'; ?>"); }
+          setInterval(function(){mdupicate()}, 1000);
+      </script>
+      
         <script>
+        
        function vid(){
                  
                   $("#session").load("<?php echo base_url().'pages/sessionpoke'; ?>"); }
