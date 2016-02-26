@@ -2245,6 +2245,24 @@ class Pages extends CI_Controller {
 		}else{
 			$this->_landing();
 		}
+	}
+	public function admincomment($postId=null)
+	{
+		if(($this->session->userdata('userId')!=""))
+		{
+		$query=$this->_userData();
+		$data['data']=$query->result_array();
+		$data['pages']='post';
+		$data['postId'] = $postId;
+		$data['countgroup'] = $this->countGroups();
+		$groupquery= $this->groupdetails();
+		$data['groupdetails'] = $groupquery->result_array();
+		$this->load->view('pages/admindashboard/fixed',$data);
+		$this->load->view('pages/adminoverallreports/comment'); 
+		
+		}else{
+			$this->_landing();
+		}
 	}	
 	public function adminPage6()
 	{
@@ -3761,6 +3779,74 @@ class Pages extends CI_Controller {
                   endforeach;
 		}
 
+		public function printcommentadmin($postId)
+		{
+				foreach($this->post->comment($postId)->result_array() as $row):
+                  
+				if($this->post->checkUser($row['userId'])=='false')	{
+                   echo ' <div class="direct-chat-msg">';
+                    echo '  <div class="direct-chat-info clearfix">';
+                      echo '  <span class="direct-chat-name pull-left">';
+                      echo $this->post->userProfile($row['userId']);
+                      echo '</span>
+                        <span class="direct-chat-timestamp pull-right">';
+
+                        echo $row['commentDate'];
+
+                        echo '</span>
+                      </div><!-- /.direct-chat-info -->
+                       <img class="direct-chat-img" src="';echo base_url();echo'user/';echo $this->post->getAvatar($row['userId']); echo '"><!-- /.direct-chat-img -->';
+                        echo '<div class="direct-chat-text">';
+                           echo $row['commentContent'];
+                          echo ' <button type="submit" class="btn btn-box-tool" name="btnDelete" id="btnDelete" value="'.$row['commentId'].'"><i class="fa fa-times"></i></button>';
+                      echo '</div><!-- /.direct-chat-text -->
+                    </div><!-- /.direct-chat-msg -->';
+                }else{
+
+                	echo '<div class="direct-chat-msg right">
+                          <div class="direct-chat-info clearfix">
+                            <span class="direct-chat-name pull-right">';
+                            echo $this->post->userProfile($row['userId']);
+                        echo '   </span>
+                            <span class="direct-chat-timestamp pull-left">';
+
+                            echo $row['commentDate'];
+                          echo '</span>
+                          </div><!-- /.direct-chat-info -->
+                         <img class="direct-chat-img" src="';echo base_url();echo'user/';echo $this->post->getAvatar($row['userId']); echo '"><!-- /.direct-chat-img -->';
+                       echo '<div class="direct-chat-text">';
+                            echo $row['commentContent'];
+                                 echo ' <button type="submit" class="btn btn-box-tool" name="btnDelete" id="btnDelete" value="'.$row['commentId'].'"><i class="fa fa-times"></i></button>';
+                     
+                        echo '</div>
+                        </div><!-- /.direct-chat-msg -->';
+                }
+                  endforeach;
+
+                  echo '	<script>
+                  $("button[name='.'btnDelete'.']").click(function(e){
+			              if (confirm("Do you want to delete this post?")) {
+							     var postId = $(this).attr("value");
+							        e.preventDefault();
+			             			 var dataString = "postId="+ postId;
+							       $.ajax({
+					              type: "post",
+					              url:"'.base_url().'pages/commentDelete/",
+					              data:dataString,
+					              success: function (data) {
+					          		alert("successfully deleted");
+					              
+					              }
+					            });
+							} else {
+							    // Do nothing!
+							}
+			          
+
+			          });
+
+			 		</script>';
+		}
 	public function commentNow()
 	{
 		if(($this->session->userdata('userId')!=""))
@@ -3880,7 +3966,28 @@ class Pages extends CI_Controller {
 			$this->_landing();
 		}
 	}
+	public function commentDelete()
+	{
+		if(($this->session->userdata('userId')!=""))
+		{
+			if($this->input->post("postId")==null){
+				
+			}
+			else{
+					$this->db->set('commentContent',"This comment is being admin. It contains foul words.");
+					
+					$this->db->where('commentId', $this->input->post("postId"));
+					$this->db->update('comment_dtl'); 
 
+					
+			}
+					
+		}
+		else
+		{
+			$this->_landing();
+		}
+	}
 	public function diskikliv()
 	{
 		$groupid = $this->input->post('groupid');

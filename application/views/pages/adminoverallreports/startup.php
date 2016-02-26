@@ -24,6 +24,7 @@
                         <th>Description</th>
                         <th>Category</th>
                         <th>Related Links</th>
+                        <th>Comments</th>
                         <th>Image</th>
                         <th>Date Posted</th>
                         <th>Action  </th>
@@ -38,6 +39,8 @@
                         <td><?php echo $this->post->getPostDescription($value['postId']);?></td>
                         <td><?php echo $this->post->getextContent($this->post->getCategoryId($value['postId']));?></td>
                         <td><?php echo $this->post->getextContent($this->post->getRelatedLinksId($value['postId']));?></td>
+                        <td><a href="<?php echo base_url().'pages/admincomment/'.$value['postId']; ?>" ><?php echo $this->post->commentCount($value['postId']);?></a></td>
+                        
                         <td>   <img src="<?php echo base_url().'/post_image/'.$this->post->getpostImg($value['postId']);?>" height="200px" width="200px" alt="Attachment image"></td>
                         <td><?php echo $this->post->getPostDate($value['postId']);?></td>
                         <td>  <button type="submit" class="btn btn-box-tool" name="btnDelete" id="btnDelete" value="<?php echo $value['postId']?>"><i class="fa fa-times"></i></button></td>
