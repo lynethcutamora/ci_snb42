@@ -34,6 +34,18 @@
                 return false;
         
         }
+        public function isExistingIdea($postId)
+        {
+            $this->db->where('postId', $postId);
+            $this->db->where('extType', '8');
+            $query = $this->db->get('userpost_ext');
+            if($query->num_rows()>0){
+                return true;
+            }
+            else
+                return false;
+        
+        }
         public function countMarked($postId){
             $this->db->where('postId', $postId);
             $this->db->where('extType', '8');
