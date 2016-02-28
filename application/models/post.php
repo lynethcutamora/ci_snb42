@@ -21,6 +21,40 @@
             	return false;
     	
     	}
+
+        public function getinvestor($userId){
+            $this->db->where('userId',$userId);
+            $query = $this->db->get('user_dtl');
+            $row = $query->row_array();
+            $name = $row['user_fName']." ";
+            if($row['user_midInit']!=""){
+                $name = $name.$row['user_midInit'].". ";
+            }
+            $name = $name.$row['user_lName'];
+
+            return $name;
+        }
+
+        public function getideatitle($postId){
+            $this->db->where('postId',$postId);
+            $query = $this->db->get('userpost');
+            $row = $query->row_array();
+            
+            return $row['postTitle'];
+        }
+
+        public function sentInvestmentRequest($postId){
+            $this->db->where('postId', $postId);
+            $this->db->where('extType', '-');
+            $this->db->where('extContent', $this->session->userdata('userId'));
+            $query = $this->db->get('userpost_ext');
+            if($query->num_rows()>0){
+                return true;
+            }
+            else
+                return false;
+        }
+
         public function validMarkDuplicate($postId)
         {
             $this->db->where('postId', $postId);

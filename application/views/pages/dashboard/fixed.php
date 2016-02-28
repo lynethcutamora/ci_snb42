@@ -90,33 +90,53 @@ endforeach;
                 <i class="fa fa-bell-o"></i>
                 <span class="label label-warning"><div name="countntf" id="countntf"></div></span>
                 </a>                
-
-            
                     <!-- inner menu: contains the actual data -->
                     <ul class="dropdown-menu">
-                 
-                          <li>
-                   
-                      <div name="notif1" id="notif1">  
-                       <ul class="dropdown-menu">
-                 
-                          <li>
-                                 </li>
-                        </ul>
-
-                      </div>
-                            </li>
-                        </ul>
-                      
+                      <li>
+                        <div class="container-fluid" name="notif1" id="notif1">  
+                        </div><hr/>
+                      </li>
+                    </ul>
                     
-                                 <script>
+                <script>
                   function loadNowPlaying5(){
                     $("#countntf").load("<?php echo base_url().'pages/groupnotif'; ?>"); 
                     $("#notif1").load("<?php echo base_url().'pages/groupnotif1'; ?>"); 
                   }
                   setInterval(function(){loadNowPlaying5()}, 1000);
                 </script>
+
               </li>
+
+            <?php foreach($data as $row):
+              if($row['user_Type']!='Investor'){?>
+                <li class="dropdown notifications-menu">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                  <i class="fa fa-money"></i>
+                  <span class="label label-danger"><div name="countinvest" id="countinvest"></div></span>
+                  </a>                
+                      <!-- inner menu: contains the actual data -->
+                      <ul class="dropdown-menu">
+                        <li>
+                          <div class="container-fluid" name="investmentNotif" id="investmentNotif">  
+                          </div><hr/>
+                        </li>
+                      </ul>
+                      
+                  <script>
+                    function loadNowPlaying6(){
+                      $("#countinvest").load("<?php echo base_url().'pages/countInvestmentRequest'; ?>"); 
+                      $("#investmentNotif").load("<?php echo base_url().'pages/investmentNotif'; ?>"); 
+                    }
+                    setInterval(function(){loadNowPlaying6()}, 1000);
+                  </script>
+                  
+                </li>
+            <?php }
+                endforeach;
+            ?>
+              
+
 
               <!-- Tasks: style can be found in dropdown.less -->
           

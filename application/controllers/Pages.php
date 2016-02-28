@@ -2524,6 +2524,16 @@ class Pages extends CI_Controller {
            	$num= $query->num_rows();
 		echo $num;
 	}
+	public function countInvestmentRequest(){
+			$this->db->select('b.extId');
+			$this->db->from('userpost a');
+			$this->db->join('userpost_ext b','a.postId=b.postId','left');
+			$this->db->where('a.userId',$this->session->userdata("userId"));
+			$this->db->where('extType','-');
+			$query = $this->db->get();
+			$num = $query->num_rows();
+		return $num;
+	}
 	public function groupnotif()
 	{
 
@@ -2571,13 +2581,10 @@ class Pages extends CI_Controller {
             			foreach ($query1->result_array() as $key1) {
             				
             				echo '
-            					
-            					   <li>
-			                        &nbsp;<p> &nbsp;'.$this->post->userProfile($this->post->getAdmingroup($key1['groupId'])).' wants you to joingroup to '.$this->post->getGroupname($key1['groupId']).'</p>
-			                        	 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<button class="btn btn-primary" name="btnGroupacc" id="btnGroupacc" value="'.$key1['groupId'].','.$key1['userId'].'">accept</button> &nbsp; &nbsp; &nbsp;<button class="btn btn-primary">decline</button>
-			                        <hr>
-			                     
-			                      </li>
+            						<br/><hr/>
+            					   <li><p>'.$this->post->userProfile($this->post->getAdmingroup($key1['groupId'])).' wants you to joingroup to '.$this->post->getGroupname($key1['groupId']).'</p>
+			                        <button class="btn btn-flat btn-sm pull-right">decline</button><button class="btn btn-flat btn-primary btn-sm pull-right" name="btnGroupacc" id="btnGroupacc" value="'.$key1['groupId'].','.$key1['userId'].'">accept</button>
+			                     	</li>
 
 			                     ';
             			}
@@ -2587,17 +2594,11 @@ class Pages extends CI_Controller {
           			$query2 = $this->db->get('group_ext');
           				foreach ($query2->result_array() as $key2) {
 
-            				echo '
-            					
-            					 <li>
-			                        <p>'.$this->post->userProfile($key2['userId']).' want to join your Group '.$this->post->getGroupname($key2['groupId']).' </p>
-			                        	 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<button class="btn btn-primary" name="btnAcceptreq" id="btnAcceptreq" value="'.$key2['groupId'].','.$key2['userId'].'">accept</button> &nbsp; &nbsp; &nbsp;<button class="btn btn-primary">decline</button>
-			                        <hr>
-			                     
-
-			                      </li>
-			                      
-			                      ';
+            				echo '<br/><hr/>
+            					 <li>'.$this->post->userProfile($key2['userId']).' wants to join your Group '.$this->post->getGroupname($key2['groupId']).'<br/>
+			                        	<button class="btn btn-flat btn-xs pull-right">decline</button><button class="btn btn-flat btn-primary btn-xs pull-right" name="btnAcceptreq" id="btnAcceptreq" value="'.$key2['groupId'].','.$key2['userId'].'">accept</button>
+			                     </li>
+			                    ';
             			}           		
            	}
 
@@ -2642,6 +2643,24 @@ class Pages extends CI_Controller {
 			          });
 			 		</script>';
            	
+	}
+
+	public function investmentNotif(){
+		$this->db->select('*');
+		$this->db->from('userpost a');
+		$this->db->join('userpost_ext b','a.postId=b.postId','left');
+		$this->db->where('a.userId',$this->session->userdata("userId"));
+		$this->db->where('extType','-');
+		$query = $this->db->get();
+
+		$data= $query->result_array();
+		foreach ($data as $row) {
+			echo '<br/><hr/>
+            	<li>'.$this->post->getinvestor($row['extContent']).' wants to invest <b>'.$this->post->getideatitle($row['postId']).'</b><br/>
+			    <button class="btn btn-flat btn-xs pull-right">decline</button><button class="btn btn-flat btn-primary btn-xs pull-right" name="btnAcceptreq" id="btnAcceptreq" value="">accept</button>
+			    </li>
+			    ';
+		}
 	}
 
 	public function notif($key=null,$id=null)
@@ -3374,7 +3393,12 @@ class Pages extends CI_Controller {
 		                  	}else{
 		                  		if($this->post->getUserType($this->session->userdata('userId'))=='Investor'){
 			                  	echo '<span class="pull-right">';
-			                  	echo '  <button type="button" class="btn btn-warning btn-xs" value="'.$row['postId'].'" name="invest" data-toggle="modal" data-target="#invest"><i class="fa fa-money"></i>&nbsp;&nbsp;Invest</button> ';
+
+			                  	if($this->post->sentInvestmentRequest($row['postId'])){
+			                  		echo '  <button type="button" class="btn btn-warning btn-xs" value="'.$row['postId'].'" name="invest" disabled><i class="fa fa-money"></i>&nbsp;&nbsp;Request sent</button> ';
+			                  	}else{
+			                  		echo '  <button type="button" class="btn btn-warning btn-xs" value="'.$row['postId'].'" name="invest" data-toggle="modal" data-target="#invest"><i class="fa fa-money"></i>&nbsp;&nbsp;Invest</button> ';
+			                  	}
 					       		
 			                  	if($this->post->validMarkDuplicate($row['postId'])){
 									echo '  <button type="button" class="btn btn-danger btn-xs" value="'.$row['postId'].'" name="duplicate" disabled><i class="fa fa-flag"></i>&nbsp;&nbsp;Existed</button> ';
@@ -3405,7 +3429,9 @@ class Pages extends CI_Controller {
 			            echo ' <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
 			                   <h4><i class="icon fa fa-warning"></i> Warning!</h4>
 			                        This idea was marked as existing by '.$this->post->countMarked($row['postId']).''; if($this->post->countMarked($row['postId'])==1){ echo ' person.';}else{ echo ' people.';}
-			         
+			         				if($this->session->userdata('userId')==$row['userId']){
+			         					echo '<br/>Sorry, your idea already existed. Please try another.';
+			         				}
 		                 echo '	</div>
 	                     	</div>
 		                </div>';
