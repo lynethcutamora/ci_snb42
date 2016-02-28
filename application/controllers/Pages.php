@@ -1917,12 +1917,11 @@ class Pages extends CI_Controller {
 	$_SESSION['poke'] = $_POST['userId'];
 		
 	}
-	public function markDup()
+	public function investmentRequest()
 	{
 
-	unset($_SESSION['duplicate']);
-	$_SESSION['touser'] = $_POST['userId'];
-	$_SESSION['duplicate'] = $_POST['postId'];
+	unset($_SESSION['invest']);
+	$_SESSION['invest'] = $_POST['postId'];
 		
 	}
 	public function sessionpoke()
@@ -1952,21 +1951,20 @@ class Pages extends CI_Controller {
               }
 	}
 	
-	public function sessionmarkduplicate()
+	public function sessionInvestmentRequest()
 	{	
 		if($this->session->userdata('touser')==''){
 			header('location:base_url()');
 		}
 		else{
-	/*
-		echo '
-			<script src="'.base_url().'plugins/jQuery/jQuery-2.1.4.min.js"></script>
-				<h5 class="text-center"><b>Post ID: <span class="text-muted">&nbsp;&nbsp;'.$this->session->userdata('touser').'</span></b>
-				<br/><p class="text-muted text-center">'.$this->post->getPostTitle($_SESSION['duplicate']).'</p>
-				</h5>
-              ';
+	
+		// echo '
+		// 	<script src="'.base_url().'plugins/jQuery/jQuery-2.1.4.min.js"></script>
+		// 		<h5 class="text-center"><b>Post ID: <span class="text-muted">&nbsp;&nbsp;'.$this->session->userdata('touser').'</span></b>
+		// 		<br/><p class="text-muted text-center">'.$this->post->getPostTitle($_SESSION['duplicate']).'</p>
+		// 		</h5>
+  //             ';
               }
-	*/}
 	}
 
 	public function ideatorpost()
@@ -2490,6 +2488,26 @@ class Pages extends CI_Controller {
 			$this->_landing();
 		}
 	}
+	public function sendInvestmentRequest()
+	{
+		if(($this->session->userdata('userId')!=""))
+		{
+			 
+		    $data = array(
+				'extId' =>uniqid(),
+				'extContent' => $this->session->userdata('userId'),
+				'extType' => '-',
+				'postId'=> $this->input->post("thisPostId")
+			);
+
+			$this->db->insert('userpost_ext',$data);
+			echo "Request sent";	
+		}
+		else
+		{
+			$this->_landing();
+		}
+	}
 	public function countmsg()
 	{	
 		  $this->db->where('msg_status','1');
@@ -2704,6 +2722,11 @@ class Pages extends CI_Controller {
 		public function hiddenShit()
 		{
 			echo  '<input type="text" hidden="true" name="fromUserId" id="fromUserId" value="'.$this->session->userdata('poke').'"> ';
+		}
+
+		public function hiddenShit2()
+		{
+			echo  '<input type="text" hidden="true" name="thisPostId" id="thisPostId" value="'.$this->session->userdata('invest').'"> ';
 		}
 
 		public function newPostIdea()
@@ -3351,7 +3374,7 @@ class Pages extends CI_Controller {
 		                  	}else{
 		                  		if($this->post->getUserType($this->session->userdata('userId'))=='Investor'){
 			                  	echo '<span class="pull-right">';
-			                  	echo '  <button type="button" class="btn btn-warning btn-xs" value="'.$row['userId'].'" name="invest" data-toggle="modal" data-target="#invest"><i class="fa fa-money"></i>&nbsp;&nbsp;Invest</button> ';
+			                  	echo '  <button type="button" class="btn btn-warning btn-xs" value="'.$row['postId'].'" name="invest" data-toggle="modal" data-target="#invest"><i class="fa fa-money"></i>&nbsp;&nbsp;Invest</button> ';
 					       		
 			                  	if($this->post->validMarkDuplicate($row['postId'])){
 									echo '  <button type="button" class="btn btn-danger btn-xs" value="'.$row['postId'].'" name="duplicate" disabled><i class="fa fa-flag"></i>&nbsp;&nbsp;Existed</button> ';
@@ -3543,11 +3566,14 @@ class Pages extends CI_Controller {
 				              <div class="info-box">
 				                <div class="row">';
 
-				                if($this->post->checkUser1($row['userId']) && $this->post->checkUserType()){
+				                if($this->post->checkUser1($row['userId'])){
 			                  	}else{
-			                  		echo '<span class="pull-right">';
-					        		echo '  <button type="button" class="btn btn-warning btn-xs" value="'.$row['userId'].'" name="invest" data-toggle="modal" data-target="#poke2"><i class="fa fa-money"></i>&nbsp;&nbsp;invest</button> ';
-					        		echo '</span>';
+			                  		if($this->post->getUserType($this->session->userdata('userId'))=='Investor'){
+				                  	echo '<span class="pull-right">';
+				                  	echo '  <button type="button" class="btn btn-warning btn-xs" value="'.$row['userId'].'" name="invest" data-toggle="modal" data-target="#invest"><i class="fa fa-money"></i>&nbsp;&nbsp;Invest</button> ';
+						       		
+						       		echo '</span>';
+					        		}
 					        	}
 				        echo ' <p style="color:green;"><i class="fa fa-bookmark"></i>&nbsp;&nbsp;&nbsp;<small>(Startup Product)</small></p>
 				                </div>
@@ -3743,6 +3769,23 @@ class Pages extends CI_Controller {
 			              data:dataString,
 			              success: function (data) {
 			          		alert("You marked this idea as existing");
+			              }
+			            });
+			          });
+				</script>';
+
+				echo '<script>
+			           $("button[name='.'invest'.']").click(function(e){
+			          var postId = $(this).attr("value");
+			          
+			            e.preventDefault();
+			              var dataString = "postId="+ postId;
+			            $.ajax({
+			              type: "post",
+			              url:"'.base_url().'pages/investmentRequest/",
+			              data:dataString,
+			              success: function (data) {
+			          		document.getElementById("postid").value = postId;
 			              }
 			            });
 			          });

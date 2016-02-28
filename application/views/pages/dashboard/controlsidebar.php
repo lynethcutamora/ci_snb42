@@ -102,14 +102,11 @@
                   <h4 class="modal-title" id="myModalLabel">Invest this Idea</h4>
                 </div>
                 <div class="modal-body">
-                  <center>      
-                   <div name="session" id="session"></div>
-                    
-                  <label>Leave message</label>
-                    <textarea class="form-control" rows="3" placeholder="Send message for investment" name="investpost" id="investpost"></textarea><br> 
-              
-                    <div name="hiddenshit" id="hiddenshit"></div>
-                      <button type="submit" class="btn btn-primary btn-block" name='btnSend' id='btnSend'>send</button>
+                  <center>                          
+                    <p><b>Would you like to invest for this idea?</b></p>
+                    <p class="text-muted">(We'll notify the user for your investment request)</p><br/>
+                    <div name="hiddenshit2" id="hiddenshit2"></div>
+                    <button type="submit" class="btn btn-primary btn-block" name='btnInvRequest' id='btnSend'>Send Investment Request</button>
                   
                   
                   </center>
@@ -149,14 +146,13 @@
         });
       });
     </script>
-      <script>
-        function mdupicate(){
-          $("#sessionD").load("<?php echo base_url().'pages/sessionmarkduplicate'; ?>"); }
-          setInterval(function(){mdupicate()}, 1000);
-      </script>
-      
+
         <script>
-        
+        function loadNowPlaying4(){
+                 
+                  $("#hiddenshit2").load("<?php echo base_url().'pages/hiddenShit2'; ?>"); }
+                  setInterval(function(){loadNowPlaying4()}, 1000);
+
        function vid(){
                  
                   $("#session").load("<?php echo base_url().'pages/sessionpoke'; ?>"); }
@@ -165,7 +161,7 @@
                  
                   $("#session").load("<?php echo base_url().'pages/sessionpoke'; ?>"); }
                   setInterval(function(){loadNowPlaying1()}, 1000);
- function loadNowPlaying3(){
+        function loadNowPlaying3(){
                  
                   $("#hiddenshit").load("<?php echo base_url().'pages/hiddenShit'; ?>"); }
                   setInterval(function(){loadNowPlaying3()}, 1000);
@@ -209,7 +205,23 @@
 
           });
 
+           $('button[name="btnInvRequest"]').click(function(e){
+          var thisPostId = $("#thisPostId").val();
+          
+            e.preventDefault();
+              var dataString = 'thisPostId='+ thisPostId;
+            $.ajax({
+              type: 'post',
+              url:"<?php echo base_url().'pages/sendInvestmentRequest/'?>",
+              data:dataString,
+              success: function (data) {
+          
+                 alert(data);
 
+              }
+            });
+
+          });
 
         });
 
