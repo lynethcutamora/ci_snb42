@@ -2657,10 +2657,27 @@ class Pages extends CI_Controller {
 		foreach ($data as $row) {
 			echo '<br/><hr/>
             	<li>'.$this->post->getinvestor($row['extContent']).' wants to invest <b>'.$this->post->getideatitle($row['postId']).'</b><br/>
-			    <button class="btn btn-flat btn-xs pull-right">decline</button><button class="btn btn-flat btn-primary btn-xs pull-right" name="btnAcceptreq" id="btnAcceptreq" value="">accept</button>
+			    <button class="btn btn-flat btn-xs pull-right">decline</button><button class="btn btn-flat btn-primary btn-xs pull-right" name="btnAccept" id="btnAccept" value="'.$row['extId'].'">accept</button>
 			    </li>
 			    ';
 		}
+
+		echo '<script>
+ 				$("button[name='.'btnAccept'.']").click(function(e){
+			     	var extId = $(this).attr("value");
+					e.preventDefault();
+			        var dataString = "extId="+ extId;
+					$.ajax({
+					    type: "post",
+					    url:"'.base_url().'pages/acceptInvestmentRequest/",
+					    data:dataString,
+					    success: function (data) {
+					        alert("Investment request successfully accepted");
+					    }
+				});
+			});
+
+			</script>';
 	}
 
 	public function notif($key=null,$id=null)
@@ -3394,10 +3411,14 @@ class Pages extends CI_Controller {
 		                  		if($this->post->getUserType($this->session->userdata('userId'))=='Investor'){
 			                  	echo '<span class="pull-right">';
 
-			                  	if($this->post->sentInvestmentRequest($row['postId'])){
-			                  		echo '  <button type="button" class="btn btn-warning btn-xs" value="'.$row['postId'].'" name="invest" disabled><i class="fa fa-money"></i>&nbsp;&nbsp;Request sent</button> ';
+			                  	if($this->post->alreadyInvested($row['postId'])){
+			                  		echo '  <button type="button" class="btn btn-warning btn-xs" value="'.$row['postId'].'" name="invest" disabled><i class="fa fa-money"></i>&nbsp;&nbsp;Invested</button> ';
 			                  	}else{
-			                  		echo '  <button type="button" class="btn btn-warning btn-xs" value="'.$row['postId'].'" name="invest" data-toggle="modal" data-target="#invest"><i class="fa fa-money"></i>&nbsp;&nbsp;Invest</button> ';
+				                  	if($this->post->sentInvestmentRequest($row['postId'])){
+				                  		echo '  <button type="button" class="btn btn-warning btn-xs" value="'.$row['postId'].'" name="invest" disabled><i class="fa fa-money"></i>&nbsp;&nbsp;Request sent</button> ';
+				                  	}else{
+				                  		echo '  <button type="button" class="btn btn-warning btn-xs" value="'.$row['postId'].'" name="invest" data-toggle="modal" data-target="#invest"><i class="fa fa-money"></i>&nbsp;&nbsp;Invest</button> ';
+				                  	}
 			                  	}
 					       		
 			                  	if($this->post->validMarkDuplicate($row['postId'])){
@@ -4081,6 +4102,18 @@ class Pages extends CI_Controller {
 			$this->_landing();
 		}
 	}
+
+	public function acceptInvestmentRequest(){
+		if(($this->session->userdata('userId')!="")){
+			$this->db->set('extType','9');
+			$this->db->where('extId', $this->input->post("extId"));
+			$this->db->update('userpost_ext'); 					
+		}
+		else{
+			$this->_landing();
+		}
+	}
+
 	public function deletepost()
 	{
 		if(($this->session->userdata('userId')!=""))

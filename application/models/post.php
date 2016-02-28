@@ -39,13 +39,25 @@
             $this->db->where('postId',$postId);
             $query = $this->db->get('userpost');
             $row = $query->row_array();
-            
+
             return $row['postTitle'];
         }
 
         public function sentInvestmentRequest($postId){
             $this->db->where('postId', $postId);
             $this->db->where('extType', '-');
+            $this->db->where('extContent', $this->session->userdata('userId'));
+            $query = $this->db->get('userpost_ext');
+            if($query->num_rows()>0){
+                return true;
+            }
+            else
+                return false;
+        }
+
+        public function alreadyInvested($postId){
+            $this->db->where('postId', $postId);
+            $this->db->where('extType', '9');
             $this->db->where('extContent', $this->session->userdata('userId'));
             $query = $this->db->get('userpost_ext');
             if($query->num_rows()>0){
