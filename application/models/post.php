@@ -971,7 +971,7 @@
 
         public function queryNewsfeedIdeator()
         {
-            $query = $this->db->query("SELECT * FROM  userpost WHERE (postType='3' OR postType = '4' or postType ='2') OR ( userId = '".$this->session->userdata("userId")."' AND postType = '1')");
+            $query = $this->db->query("SELECT * FROM  userpost WHERE (postType='3' OR postType = '4' or postType ='2') OR ( userId = '".$this->session->userdata("userId")."' AND postType = '1') ORDER by postDate desc ");
             return $query;
         }
         public function queryNewsfeedInvestor()
@@ -1277,6 +1277,8 @@
             $this->db->select('postId');
             $this->db->from('userpost');
             $this->db->where('postType', '4');
+            $this->db->or_where('postType', '5');
+            $this->db->or_where('postType', '6');
             $this->db->order_by("postDate","desc");
             $query = $this->db->get();
             return $query;

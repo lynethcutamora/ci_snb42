@@ -3211,7 +3211,7 @@ class Pages extends CI_Controller {
 					'postId' => $postId ,
 					'postContent' =>$this->input->post('inputDescription'),
 					'postDate' =>	$datetime,
-					'postType' => '4',
+					'postType' => '5',
 					'userId' =>$this->session->userdata("userId"));	
 
 					 $this->db->insert('userpost', $data);
@@ -3706,7 +3706,84 @@ class Pages extends CI_Controller {
 				            </div>
 				          </div>
 				      </div> <!-- /. box-widget -->';
+		  }elseif ($row['postType']=='5') {
+		  	 if(!$this->post->checkUser1($row['userId'])){
+
+		            }else{
+		  			echo '  <!-- sample normal idea post -->
+
+				      <div class="box box-widget">
+				       <div class="box-header with-border">
+				          <div class="user-block">
+				            <img class="img-circle" src="'.base_url().'/user/'.$this->post->getAvatar($row['userId']).'" alt="user image">
+				            <span class="username">
+				              <a href="'.base_url().'pages/profilenew/'.$row['userId'].'"><small>'.$this->post->userProfile($row['userId']).'</small></a>
+				            </span>
+				            <span class="description"><i class="fa fa-star" style="color:gold;"></i><small><b>&nbsp;'.$this->post->reputation($row['userId']).'</b></small>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;date posted:&nbsp;&nbsp;&nbsp;<small>'.$row['postDate'].'</small></span>
+				          </div><!-- /.user-block -->
+				          <div class="box-tools">
+				           ';
+		            if(!$this->post->checkUser1($row['userId'])){
+
+		            }else{
+		      	  echo '    <a href="'.base_url().'pages/editpost/'.$row['postId'].'"  class="btn btn-box-tool" ><i class="fa fa-edit"></i></a>
+		      	  		<button type="submit" class="btn btn-box-tool" name="btnDelete" id="btnDelete" value="'.$row['postId'].'"><i class="fa fa-times"></i></button>';
+                  	 }
+		           
+		    echo'    </div><!-- /.box-tools -->
+				        </div><!-- /.box-header --> 
+				        <div class="box-body">
+				          <div class="container-fluid">
+				              <div class="alert alert-warning ">
+			               
+			                    <h4><i class="icon fa fa-warning"></i>Warning!</h4>
+			                    Your competition is being Reviewed by admins.Please wait for admins approval.
+			                  </div>
+				          </div><!-- /.container -->
+				        </div><!-- /.box-body -->
+				         
+				      </div> <!-- /. box-widget -->';
+				      }
+		  }elseif ($row['postType']=='6') {
+		  	 if(!$this->post->checkUser1($row['userId'])){
+
+		            }else{
+		  			echo '  <!-- sample normal idea post -->
+
+				      <div class="box box-widget">
+				       <div class="box-header with-border">
+				          <div class="user-block">
+				            <img class="img-circle" src="'.base_url().'/user/'.$this->post->getAvatar($row['userId']).'" alt="user image">
+				            <span class="username">
+				              <a href="'.base_url().'pages/profilenew/'.$row['userId'].'"><small>'.$this->post->userProfile($row['userId']).'</small></a>
+				            </span>
+				            <span class="description"><i class="fa fa-star" style="color:gold;"></i><small><b>&nbsp;'.$this->post->reputation($row['userId']).'</b></small>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;date posted:&nbsp;&nbsp;&nbsp;<small>'.$row['postDate'].'</small></span>
+				          </div><!-- /.user-block -->
+				          <div class="box-tools">
+				           ';
+		            if(!$this->post->checkUser1($row['userId'])){
+
+		            }else{
+		      	  echo '    <a href="'.base_url().'pages/editpost/'.$row['postId'].'"  class="btn btn-box-tool" ><i class="fa fa-edit"></i></a>
+		      	  		<button type="submit" class="btn btn-box-tool" name="btnDelete" id="btnDelete" value="'.$row['postId'].'"><i class="fa fa-times"></i></button>';
+                  	 }
+		           
+		    echo'    </div><!-- /.box-tools -->
+				        </div><!-- /.box-header --> 
+				        <div class="box-body">
+				          <div class="container-fluid">
+				              <div class="alert alert-danger ">
+			               
+			                    <h4><i class="icon fa fa-warning"></i>Alert!</h4>
+			                     The Admin disapprove this competition because of some reasons. please contact the admins.
+			                  </div>
+				          </div><!-- /.container -->
+				        </div><!-- /.box-body -->
+				      
+				      </div> <!-- /. box-widget -->';
+				      }
 		  }
+
 
    			 endforeach;
 
@@ -4050,7 +4127,7 @@ class Pages extends CI_Controller {
 				
 			}
 			else{
-					$this->db->set('commentContent',"This comment is being admin. It contains foul words.");
+					$this->db->set('commentContent',"<p style='color:red'>This comment is being deleted by admin. It contains foul words.</p>");
 					
 					$this->db->where('commentId', $this->input->post("postId"));
 					$this->db->update('comment_dtl'); 
@@ -4307,6 +4384,29 @@ class Pages extends CI_Controller {
 			$this->_landing();
 		}
 	}
+
+	public function approvecom()
+	{
+		if(($this->session->userdata('userId')!=""))
+		{
+			if($this->input->post("postId")==null){
+				
+			}
+			else{
+				$this->db->set('postType','4');
+				$this->db->where('postId', $this->input->post("postId"));
+				$this->db->update('userpost'); 
+				
+			}
+					
+		}
+		else
+		{
+			$this->_landing();
+		}
+	}
+
+
 
 
 
