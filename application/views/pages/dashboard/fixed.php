@@ -316,6 +316,11 @@ endforeach;
                 <i class="fa fa-feed"></i><span>News Feed</span>
               </a>
             </li>
+             <li class="treeview <?php if($pages=='startupidea') {echo "active";}else echo "";?>">
+              <a href="<?php echo base_url(); ?>pages/newsfeedinvestor">
+                <i class="fa fa-feed"></i><span>Startup Ideas</span>
+              </a>
+            </li>
             <?php } ?>
             <?php if($this->post->checkUserType()=='true'){?>
             <li class="treeview <?php if($pages=='post') {echo "active";}else echo "";?>">

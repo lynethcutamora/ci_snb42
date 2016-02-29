@@ -45,7 +45,7 @@
                 <div class="box box-info">
                   <div class="box-header with-border">
                     <i class="fa fa-star"></i>
-                    <h3 class="box-title">Top 5 Ideas</h3>
+                    <h3 class="box-title">Top 5 Startup products</h3>
                     <div class="box-tools pull-right">
                       <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
                     </div>

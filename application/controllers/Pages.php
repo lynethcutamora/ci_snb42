@@ -3371,6 +3371,9 @@ class Pages extends CI_Controller {
 				elseif ($query =='8') {
 					$query=$this->post->queryMostD();
 				}
+				elseif ($query =='9') {
+					$query=$this->post->extCategory($postId);
+				}
 			  foreach ($query->result_array() as $row):
 
 			  	if($row['postType']=='1'){
@@ -4529,6 +4532,58 @@ class Pages extends CI_Controller {
 		}
 	}
 
+	public function startupidea($key=null)
+	{	if(($this->session->userdata('userId')!=""))
+		{
+			if(isset($key))
+			{
+				$query=$this->_userData();
+				$data['data']=$query->result_array();
+				$data['pages']='post';
+				$data['countgroup'] = $this->countGroups();
+				$groupquery= $this->groupdetails();
+				$data['groupdetails'] = $groupquery->result_array();	
+				$data['key']= $key;
+
+			
+
+						$this->load->view('pages/dashboard/fixed',$data);
+						$this->load->view('pages/investorideas/content',$data); 
+						$this->load->view('pages/dashboard/controlsidebar');
+						$this->load->view('pages/dashboard/end');
+			
+
+			}else{
+				$query=$this->_userData();
+				$data['data']=$query->result_array();
+				$data['pages']='post';
+				$data['countgroup'] = $this->countGroups();
+				$groupquery= $this->groupdetails();
+				$data['groupdetails'] = $groupquery->result_array();	
+				$data['key']= '';
+
+			
+
+						$this->load->view('pages/dashboard/fixed',$data);
+						$this->load->view('pages/investorideas/content',$data); 
+						$this->load->view('pages/dashboard/controlsidebar');
+						$this->load->view('pages/dashboard/end');
+			}
+
+			
+		}else{
+			$this->_landing();
+		}
+	}
+	public function searchCategory()
+	{	
+		if($this->input->post('categorytxt')!='1'){
+			$key = $this->input->post('categorytxt');
+		}else
+		    $key = $this->input->post('category');
+
+		header('Location:'.base_url().'pages/startupidea/'.$key);
+	}
 
 
 

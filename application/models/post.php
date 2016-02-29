@@ -1119,6 +1119,17 @@
              return $query;
         
         }
+        public function extCategory($key)
+        {
+             $this->db->select('*');
+             $this->db->from('userpost_ext a');
+             $this->db->join('userpost b', 'a.postId=b.postId','left');
+             $this->db->where('a.extType','7');
+             $this->db->like('a.extContent',$key);
+             $query = $this->db->get();
+             return $query;
+        
+        }
         public function comment($postId)
         {
              $this->db->select('*');
