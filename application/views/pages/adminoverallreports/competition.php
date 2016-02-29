@@ -42,8 +42,8 @@
                              <td><?php if($this->post->getPostType($value['postId'])=='4') echo "approved"; elseif($this->post->getPostType($value['postId'])=='6')echo "declined"; else echo "waiting";?></td>
                         <td> 
                        <?php  if($this->post->getPostType($value['postId'])=='5'){?>
-                         <button type="submit" class="btn btn-box-tool" name="btnDelete" id="btnDelete" value="<?php echo $value['postId']?>"><i class="fa fa-check-square"></i></button>
-                          <button type="submit" class="btn btn-box-tool" name="btnDelete" id="btnDelete" value="<?php echo $value['postId']?>"><i class="fa  fa-minus-circle"></i></button>
+                         <button type="submit" class="btn btn-box-tool" name="btnApprove" id="btnApprove" value="<?php echo $value['postId']?>"><i class="fa fa-check-square"></i></button>
+                          <button type="submit" class="btn btn-box-tool" name="btnDecline" id="btnDecline" value="<?php echo $value['postId']?>"><i class="fa  fa-minus-circle"></i></button>
 
                           <button type="submit" class="btn btn-box-tool" name="btnDelete" id="btnDelete" value="<?php echo $value['postId']?>"><i class="fa fa-times"></i></button></td>
                       <?php }else{?>
@@ -121,7 +121,7 @@
      <script>
 
 
-    $('button[name="btnDelete"]').click(function(e){
+    $('button[name="btnApprove"]').click(function(e){
                     if (confirm("Do you want to approve this competition?")) {
                    var postId = $(this).attr("value");
                      e.preventDefault();
@@ -132,6 +132,30 @@
                         data:dataString,
                         success: function (data) {
                         alert("successfully approved");
+                         window.location.assign("<?php echo base_url().'pages/adminpage7/'?>");
+                        }
+                      });
+              } else {
+                  // Do nothing!
+              }
+                
+
+     });
+   </script>
+     <script>
+
+
+    $('button[name="btnDecline"]').click(function(e){
+                    if (confirm("Disapprove this competition?")) {
+                   var postId = $(this).attr("value");
+                     e.preventDefault();
+                    var dataString = 'postId='+ postId;
+                     $.ajax({
+                        type: 'post',
+                         url:"<?php echo base_url().'pages/declinecom/'?>",
+                        data:dataString,
+                        success: function (data) {
+                        alert("successfully Disapprove");
                          window.location.assign("<?php echo base_url().'pages/adminpage7/'?>");
                         }
                       });

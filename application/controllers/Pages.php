@@ -4449,6 +4449,26 @@ class Pages extends CI_Controller {
 			$this->_landing();
 		}
 	}
+	public function declinecom()
+	{
+		if(($this->session->userdata('userId')!=""))
+		{
+			if($this->input->post("postId")==null){
+				
+			}
+			else{
+				$this->db->set('postType','6');
+				$this->db->where('postId', $this->input->post("postId"));
+				$this->db->update('userpost'); 
+				
+			}
+					
+		}
+		else
+		{
+			$this->_landing();
+		}
+	}
 
 
 
