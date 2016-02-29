@@ -4556,7 +4556,7 @@ class Pages extends CI_Controller {
 			}else{
 				$query=$this->_userData();
 				$data['data']=$query->result_array();
-				$data['pages']='post';
+				$data['pages']='startupidea';
 				$data['countgroup'] = $this->countGroups();
 				$groupquery= $this->groupdetails();
 				$data['groupdetails'] = $groupquery->result_array();	

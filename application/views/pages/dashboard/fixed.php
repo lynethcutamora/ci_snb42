@@ -317,7 +317,7 @@ endforeach;
               </a>
             </li>
              <li class="treeview <?php if($pages=='startupidea') {echo "active";}else echo "";?>">
-              <a href="<?php echo base_url(); ?>pages/newsfeedinvestor">
+              <a href="<?php echo base_url(); ?>pages/startupidea">
                 <i class="fa fa-feed"></i><span>Startup Ideas</span>
               </a>
             </li>
