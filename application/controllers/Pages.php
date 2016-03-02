@@ -3436,7 +3436,13 @@ class Pages extends CI_Controller {
 				        	}
 
 		            echo'      <p>
-		                    <span style="color:green;"><i class="fa fa-bookmark"></i>&nbsp;&nbsp;&nbsp;<small>(Startup Idea)</small></span>
+		                    <span style="color:green;"><i class="fa fa-bookmark"></i>&nbsp;&nbsp;&nbsp;<small>(Startup Idea)</small>';
+		                    	if($this->post->getUserType($this->session->userdata('userId'))!='Investor'){
+		                    		if($this->post->isInvested($row['postId'])){
+		                      			echo '<span class="label label-warning pull-right"><i class="fa fa-money"></i>&nbsp;&nbsp;INVESTED</span>';
+		                      		}
+		                      	}
+		            echo'   </span>
 		                    <!--<span class="pull-right" style="color:orange;"><i class="fa fa-money"></i>&nbsp;&nbsp;&nbsp;<small>invested</small>&nbsp;&nbsp;&nbsp;</span>-->
 		                  </p>
 		                </div>';
@@ -3620,12 +3626,25 @@ class Pages extends CI_Controller {
 			                  	}else{
 			                  		if($this->post->getUserType($this->session->userdata('userId'))=='Investor'){
 				                  	echo '<span class="pull-right">';
-				                  	echo '  <button type="button" class="btn btn-warning btn-xs" value="'.$row['userId'].'" name="invest" data-toggle="modal" data-target="#invest"><i class="fa fa-money"></i>&nbsp;&nbsp;Invest</button> ';
-						       		
+					                  	if($this->post->alreadyInvested($row['postId'])){
+					                  		echo '  <button type="button" class="btn btn-warning btn-xs" value="'.$row['postId'].'" name="invest" disabled><i class="fa fa-money"></i>&nbsp;&nbsp;Invested</button> ';
+					                  	}else{
+						                  	if($this->post->sentInvestmentRequest($row['postId'])){
+						                  		echo '  <button type="button" class="btn btn-warning btn-xs" value="'.$row['postId'].'" name="invest" disabled><i class="fa fa-money"></i>&nbsp;&nbsp;Request sent</button> ';
+						                  	}else{
+						                  		echo '  <button type="button" class="btn btn-warning btn-xs" value="'.$row['postId'].'" name="invest" data-toggle="modal" data-target="#invest"><i class="fa fa-money"></i>&nbsp;&nbsp;Invest</button> ';
+						                  	}
+					                  	}
 						       		echo '</span>';
 					        		}
 					        	}
-				        echo ' <p style="color:green;"><i class="fa fa-bookmark"></i>&nbsp;&nbsp;&nbsp;<small>(Startup Product)</small></p>
+				        echo ' <p style="color:green;"><i class="fa fa-bookmark"></i>&nbsp;&nbsp;&nbsp;<small>(Startup Product)</small>';
+				        			if($this->post->getUserType($this->session->userdata('userId'))!='Investor'){
+			         					if($this->post->isInvested($row['postId'])){
+		                      				echo '<span class="label label-warning pull-right"><i class="fa fa-money"></i>&nbsp;&nbsp;INVESTED</span>';
+		                      			}
+			         				}
+				        echo ' </p>
 				                </div>
 				                <p style="text-align:justify;text-justify:inter-word;">'.$row['postContent'].'</p>
 				                    

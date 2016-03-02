@@ -67,6 +67,17 @@
                 return false;
         }
 
+        public function isInvested($postId){
+            $this->db->where('postId', $postId);
+            $this->db->where('extType', '9');
+            $query = $this->db->get('userpost_ext');
+            if($query->num_rows()>0){
+                return true;
+            }
+            else
+                return false;
+        }
+
         public function validMarkDuplicate($postId)
         {
             $this->db->where('postId', $postId);
