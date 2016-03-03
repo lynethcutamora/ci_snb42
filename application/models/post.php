@@ -967,6 +967,34 @@
              }
              return $result;
         }
+        public function getOldPost($postId){
+            $this->db->select('extContent');
+            $this->db->from('userpost_ext');
+            $this->db->where('postId',$postId);
+            $this->db->where('extType','A');
+            $query = $this->db->get();
+
+            $query->row_array();
+            $numrows= $query->num_rows();
+             if($numrows){
+                $row = $query->row_array();
+                $result = $row['extContent'];
+             }
+             else{
+                $result= '';
+             }
+             return $result;
+        }
+        public function checkVersion($postId)
+        {
+            $this->db->select('*');
+            $this->db->from('userpost_ext');
+            $this->db->where('postId',$postId);
+            $this->db->where('extType','A');
+            $query = $this->db->get();
+            return $query;
+
+        }
         public function getLinkEdit($postId){
             $this->db->select('*');
              $this->db->from('userpost_ext');
@@ -1040,17 +1068,22 @@
 
         public function queryNewsfeedIdeator()
         {
-            $query = $this->db->query("SELECT * FROM  userpost WHERE (postType='3' OR postType = '4' or postType ='2') OR ( userId = '".$this->session->userdata("userId")."' AND postType = '1') ORDER by postDate desc ");
+            $query = $this->db->query("SELECT * FROM  userpost WHERE (postType='3' OR postType = '4' or postType ='2') OR ( userId = '".$this->session->userdata("userId")."' AND postType = '1'AND postType = 'C') ORDER by postDate desc ");
             return $query;
         }
         public function queryNewsfeedInvestor()
         {
-            $query = $this->db->query("SELECT * FROM  userpost WHERE postType='3' OR postType = '4' or postType ='2' OR   postType = '1' ORDER by postDate desc");
+            $query = $this->db->query("SELECT * FROM  userpost WHERE postType='3' OR postType = '4' or postType ='2' OR   postType = '1'  OR ( userId = '".$this->session->userdata("userId")."' AND postType = 'C')ORDER by postDate desc");
             return $query;
         }
         public function queryNewsfeedInvestor1()
         {
-            $query = $this->db->query("SELECT * FROM  userpost WHERE postType='3' OR postType = '4' or postType ='2' ORDER by postDate desc");
+            $query = $this->db->query("SELECT * FROM  userpost WHERE postType='3' OR postType = '4' or postType ='2'  OR (  postType = 'C')ORDER by postDate desc");
+            return $query;
+        }
+        public function competitionquery()
+        {
+            $query = $this->db->query("SELECT * FROM  userpost WHERE postType='C' ORDER by postDate desc");
             return $query;
         }
         public function queryStartupLatest()
@@ -1364,6 +1397,7 @@
             $query = $this->db->get();
             return $query;
         }
+        
         public function queryAllNormal()
         {
             $this->db->select('postId');
@@ -1401,6 +1435,20 @@
         {
            $query = $this->db->query("SELECT * FROM  userpost WHERE (postContent = '".$des."' OR postTitle = '".$title."') AND userId = '".$this->session->userdata('userId')."'");
              return $query;
+        }
+
+
+        public function checkcompetition($postId)
+        {
+            $this->db->where('postId', $postId);
+            $this->db->where('postType','4');
+            $query = $this->db->get('userpost');
+            if($query->num_rows()>0){
+                return true;
+            }
+            else
+                return false;
+        
         }
 
     }

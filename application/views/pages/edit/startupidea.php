@@ -193,6 +193,7 @@
                         </tr>
                       </table>
                       <button class="btn btn-info pull-right" type="submit" id="updateidea" name="updateidea">Update Idea</button>
+                      <button class="btn btn-info pull-right" type="submit" id="versionidea" name="versionidea">New Version of Idea</button>
                     </div>
                   </form>
             </div><!-- /.box-body -->
@@ -225,6 +226,31 @@
     $.ajax({
       type: 'post',
       url:"<?php echo base_url().'pages/updateIdea'?>",
+        data:form,
+        mimeType:"multipart/form-data",
+        cache: false,
+        contentType: false, //must, tell jQuery not to process the data
+        processData: false, //must, tell jQuery not to set contentType
+        success: function (data) {
+          $("#ideatitle").val('') ;
+          $("#inputDescription").val('') ;
+          $("#relatedlinks").val('') ;
+          $("#pic").val('') ;
+          $("#optional").val('') ;
+
+          alert("successfully updated");
+      }
+    });
+  });
+  
+  $('button[name="versionidea"]').click(function(e){
+    var form = new FormData(document.getElementById('upload_file'));
+         
+    e.preventDefault();
+            
+    $.ajax({
+      type: 'post',
+      url:"<?php echo base_url().'pages/versionIdea'?>",
         data:form,
         mimeType:"multipart/form-data",
         cache: false,
