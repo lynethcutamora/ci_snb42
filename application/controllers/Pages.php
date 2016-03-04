@@ -1427,10 +1427,7 @@ class Pages extends CI_Controller {
 	public function upvote()
 	{
 
-		$this->form_validation->set_rules('postId', 'Post Id', 'callback_postIdCheck');
-		if ($this->form_validation->run()==FALSE){
-			
-		}else{
+		
 			if($this->input->post('postId')!=''){
 			$data = array(
 					'voteStat' => '1',
@@ -1445,7 +1442,29 @@ class Pages extends CI_Controller {
 			}
 			else {$this->index();}
 			
-		}
+		
+	}
+	
+
+	public function rate()
+	{
+
+		
+			if($this->input->post('postId')!=''){
+			$data = array(
+					'voteStat' => $this->input->post("rate"),
+					'voteType' => '2',
+					'postId' => $this->input->post('postId'),
+					'userId' => $this->session->userdata('userId'),
+					'voteId' =>uniqid()
+				);
+
+				$this->db->insert('upvote_dtl',$data);
+			
+			}
+			else {$this->index();}
+			
+		
 	}
 	public function markedexisting()
 	{
@@ -3748,7 +3767,7 @@ class Pages extends CI_Controller {
 		                      <h5><b><a href="#" >'.strtoupper($row['postTitle']).'</a></b><span class="label label-default pull-right">'.$this->post->checkBmc($row['postId']).'</span></h5>
 		                      <h6><small>category: &nbsp;&nbsp;'.$this->post->getPostCategory($row['postId']).'</small></h6>';
 		                      if($this->post->checkVersion($row['postId'])->num_rows()){
-		                      echo '<span class="label label-default pull-right"><h4><a href="'.base_url().'pages/post/'.$this->post->getOldPost($row['postId']).'">Newer version of this Idea</a></h4></span></h6>';
+		                      echo '<span class="label label-default pull-right"><small><a href="'.base_url().'pages/post/'.$this->post->getOldPost($row['postId']).'">show old version</a></small></span></h6>';
 		                      }
 		                      else
 		                      	echo '';
@@ -3922,8 +3941,21 @@ class Pages extends CI_Controller {
 		                      			}
 			         				}
 				        echo ' </p>
-				                </div>
-				                <p style="text-align:justify;text-justify:inter-word;">'.$row['postContent'].'</p>
+				                </div>';
+				                if(!$this->post->checkRate($row['postId'])){
+				              echo '  
+				                <div class="row">
+				                	<span class="pull-right">
+				                      		<button value="1" name="btnRate"><i class="fa fa-star" style="color:gold;"></i><font color="black">&nbsp;1</font></button>
+				                      		<button value="2" name="btnRate"><i class="fa fa-star" style="color:gold;"></i><font color="black">&nbsp;2</font></button>
+				                      		<button value="3" name="btnRate"><i class="fa fa-star" style="color:gold;"></i><font color="black">&nbsp;3</font></button>
+				                      		<button value="4" name="btnRate"><i class="fa fa-star" style="color:gold;"></i><font color="black">&nbsp;4</font></button>
+				                      		<button value="5" name="btnRate"><i class="fa fa-star" style="color:gold;"></i><font color="black">&nbsp;5</font></button>
+				                      		<input type="text" hidden="true" value="'.$row['postId'].'" name="postId" id="postId">
+				                      	<span>
+				                </div>';
+				                }
+				               echo' <p style="text-align:justify;text-justify:inter-word;">'.$row['postContent'].'</p>
 				                    
 				                  <!-- Attachment -->
 				                  <div class="attachment-block clearfix">
@@ -3931,11 +3963,14 @@ class Pages extends CI_Controller {
 				                    <img class="attachment-img" src="'.base_url().'/post_image/'.$this->post->getpostImg($row['postId']).'" alt="attachment image">
 				                    <div class="attachment-pushed">
 
-				                      <h5 class="attachment-heading"><b><a href="#">'.strtoupper($row['postTitle']).'</a></b></h5>
+				                      <h5 class="attachment-heading"><b><a href="#">'.strtoupper($row['postTitle']).'</a></b>
+				                      	
+				                      </h5>
 				                      
 				                      <div class="attachment-text">
 				                        <h6><small>category: &nbsp;&nbsp;'.$this->post->getPostCategory($row['postId']).'</small></h6>
-				                        <i class="fa fa-star" style="color:gold;"></i><i class="fa fa-star" style="color:gold;"></i><i class="fa fa-star" style="color:gold;"></i><i class="fa fa-star-half" style="color:gold;"></i>
+				                        <i class="fa fa-star" style="color:gold;"></i>&nbsp;&nbsp;&nbsp;'.$this->post->rateCount($row['postId']).'
+				                        
 				                      </div><!-- /.attachment-text -->
 				                    </div><!-- /.attachment-pushed -->
 				                  </div><!-- /.attachment-block -->
@@ -4246,6 +4281,23 @@ class Pages extends CI_Controller {
 			              data:dataString,
 			              success: function (data) {
 			          		alert("successfully upvoted");
+			              
+			              }
+			            });
+
+			          });
+
+ 					$("button[name='.'btnRate'.']").click(function(e){
+			          var rate = $(this).attr("value");
+			            var postId = $("#postId").val();
+			            e.preventDefault();
+			              var dataString = "rate="+ rate+"&postId="+postId;
+			            $.ajax({
+			              type: "post",
+			              url:"'.base_url().'pages/rate/",
+			              data:dataString,
+			              success: function (data) {
+			          		alert("successfully rated");
 			              
 			              }
 			            });

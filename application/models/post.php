@@ -4,14 +4,29 @@
         public function upvotecount($postId)
         {
                 $this->db->where('postId', $postId);
+                $this->db->where('voteStat','1');
                 $query = $this->db->get('upvote_dtl');
                 return $query->num_rows()." Upvotes";
 
         }
         
+        public function rateCount($postId)
+        {       
+                $this->db->where('postId', $postId);
+                $this->db->where('voteType','2');
+                $query = $this->db->get('upvote_dtl');
+                $sum = 0;
+                foreach ($query->result_array() as $data){
+                    $sum = $sum + $data['voteStat'];
+                }
+                return $sum;
+
+        }
+        
     	public function validUpvote($postId)
     	{
-    		$this->db->where('postId', $postId);
+            $this->db->where('postId', $postId);
+    		$this->db->where('voteType','1');
     		$this->db->where('userId', $this->session->userdata('userId'));
             $query = $this->db->get('upvote_dtl');
             if($query->num_rows()>0){
@@ -1098,7 +1113,7 @@
         }
         public function queryStartupTop()
         {
-            $query = $this->db->query("SELECT *, COUNT(c.postId) as number_of_votes from upvote_dtl c left join userpost v on c.postId = v.postId left join user_md b on v.userId = b.userId left join user_dtl d on b.userId = d.userId where voteType = '1' AND postType = '2' group by c.postId order by number_of_votes desc");
+            $query = $this->db->query("SELECT *, COUNT(c.postId) as number_of_votes from upvote_dtl c left join userpost v on c.postId = v.postId left join user_md b on v.userId = b.userId left join user_dtl d on b.userId = d.userId where voteType = '2' AND postType = '2' group by c.postId order by SUM(voteStat) DESC");
             return $query;
         }
         public function queryMostD()
@@ -1451,7 +1466,23 @@
         
         }
 
+   public function checkRate($postId)
+        {
+            $this->db->where('postId', $postId);
+            $this->db->where('userId', $this->session->userdata('userId'));
+            $query = $this->db->get('upvote_dtl');
+            if($query->num_rows()>0){
+                return true;
+            }
+            else
+                return false;
+        
+        }
+
     }
+
+
+
 
 
 ?>
